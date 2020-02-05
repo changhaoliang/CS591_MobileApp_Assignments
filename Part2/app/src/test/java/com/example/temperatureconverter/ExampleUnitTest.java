@@ -1,4 +1,4 @@
-package com.example.part2;
+package com.example.temperatureconverter;
 
 import org.junit.Test;
 
@@ -13,12 +13,5 @@ public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() {
         assertEquals(4, 2 + 2);
-    }
-
-    @Test
-    public void test() {
-        String s = "asd3";
-        double a = Double.valueOf(s);
-        System.out.println(a);
     }
 }

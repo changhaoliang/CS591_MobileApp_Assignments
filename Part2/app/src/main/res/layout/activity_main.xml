@@ -6,52 +6,97 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/btn_swap"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/swap"
-        android:gravity="center_horizontal"
-        android:layout_marginStart="165dp"
-        android:layout_marginTop="110dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent">
 
-    <Button
-        android:id="@+id/btn_convert"
-        android:layout_width="wrap_content"
-        android:gravity="center_horizontal"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="113dp"
-        android:layout_marginTop="170dp"
-        android:text="@string/celsius_fahrenheit"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
 
-    <EditText
-        android:id="@+id/txt_left"
-        android:layout_width="120dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="324dp"
-        android:ems="10"
-        android:hint="@string/enter_celsius"
-        android:maxLength="4"
-        android:inputType="textPersonName"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/c_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:text="Celsius"
+                android:textSize="40dp"
+                tools:layout_editor_absoluteX="138dp"
+                tools:layout_editor_absoluteY="83dp" />
 
-    <EditText
-        android:id="@+id/txt_right"
-        android:layout_width="120dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="238dp"
-        android:layout_marginTop="324dp"
-        android:ems="10"
-        android:maxLength="4"
-        android:hint="@string/fahrenheit"
-        android:inputType="textPersonName"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+            <SeekBar
+                android:id="@+id/c_seekBar"
+                android:layout_width="400dp"
+                android:max="100"
+                android:progress="-32"
+                android:layout_height="50dp"
+                android:layout_below="@id/c_textView" />
+
+            <TextView
+                android:id="@+id/c_temp_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/c_seekBar"
+                android:text="temperature"
+                android:textSize="30dp"
+                tools:layout_editor_absoluteX="183dp"
+                tools:layout_editor_absoluteY="186dp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/f_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fahrenheit"
+                android:textSize="40dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_editor_absoluteX="144dp" />
+
+            <SeekBar
+                android:id="@+id/f_seekBar"
+                android:layout_width="400dp"
+                android:max="132"
+                android:progress="0"
+                android:layout_height="50dp"
+                android:layout_below="@id/f_textView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:layout_editor_absoluteY="395dp" />
+
+            <TextView
+                android:id="@+id/f_temp_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/f_seekBar"
+                android:text="temperature"
+                android:textSize="30dp"
+                tools:layout_editor_absoluteX="200dp"
+                tools:layout_editor_absoluteY="449dp" />
+        </RelativeLayout>
+        <TextView
+            android:id="@+id/message_textview"
+            android:layout_width="400dp"
+            android:layout_height="50dp"
+            android:textSize="35dp"
+            android:text="Interesting Message"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="123dp" />
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
