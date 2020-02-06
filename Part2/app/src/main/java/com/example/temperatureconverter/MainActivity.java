@@ -1,4 +1,4 @@
-package com.example.part2;
+package com.example.temperatureconverter;
 
 import androidx.appcompat.app.AppCompatActivity;
 

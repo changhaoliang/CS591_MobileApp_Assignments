@@ -1,4 +1,4 @@
-package com.example.part2;
+package com.example.temperatureconverter;
 
 public class TempConverter {
 
