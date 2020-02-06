@@ -9,6 +9,7 @@ public class DivisionGame {
     }
 
     public DivisionProblem[] playGame(int maxRound) {
+        this.maxRound = maxRound;
         DivisionProblem[] problem = new DivisionProblem[maxRound];
         for (int i = 0; i < maxRound; i++) {
             problem[i] = new DivisionProblem();

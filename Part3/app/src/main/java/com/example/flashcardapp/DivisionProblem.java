@@ -5,6 +5,7 @@ import java.util.Random;
 public class DivisionProblem {
     private int divider;
     private int dividend;
+    private int result;
 
     public DivisionProblem() {
         dividend = 0;
@@ -18,10 +19,11 @@ public class DivisionProblem {
             n2 = random.nextInt(20);
         }
         dividend = n1;
-        divider = n1 * n2;
+        result = n2;
+        divider = dividend * result;
     }
     public boolean ifWin(String input) {
-        return (Integer.parseInt(input)) == (divider / dividend);
+        return (Integer.parseInt(input)) == result;
     }
 
     public int getDivider() {

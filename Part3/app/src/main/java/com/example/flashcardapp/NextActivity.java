@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class NextActivity extends AppCompatActivity {
     private Button btnSubmit;
@@ -15,12 +16,12 @@ public class NextActivity extends AppCompatActivity {
     private TextView dividerText;
     private TextView divedentText;
     private TextView messageText;
-
     private EditText answerText;
-    DivisionProblem[] problems = new DivisionProblem[10];
-    private DivisionProblem currentProblem;
+    DivisionProblem[] problems;
+    private int round;
 
-    DivisionGame game = new DivisionGame();
+    DivisionGame game;
+    boolean playing;
     boolean ifSubmit = true;
 
     @Override
@@ -35,39 +36,33 @@ public class NextActivity extends AppCompatActivity {
         divedentText = (TextView)findViewById(R.id.dividend_textview);
         answerText = (EditText)findViewById(R.id.answer_edit);
         messageText = (TextView)findViewById(R.id.messages);
-        currentProblem = new DivisionProblem();
+        problems = new DivisionProblem[10];
+        game = new DivisionGame();
 
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                round = 0;
                 problems = game.playGame(10);
-                play(problems);
+                play(problems[round]);
+            }
+        });
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String input = answerText.getText().toString();
+                game.updateScore(input, problems[round]);
+                messageText.setText("Your score: " + game.getScore());
+                answerText.setText("");
+                round++;
+                play(problems[round]);
+                //ifSubmit = true;
             }
         });
     }
 
-    public void play(DivisionProblem[] problems) {
-        System.out.println("==========================");
-        //////////////////////////////////////////////
-        ////////////!!!!!!!!!!!!!!!!!!!!不会写！！！！！！！！！！！！！！！！！！！！！！
-        ////////////////////////////////////////////////
-        for (int i = 0; i < 1; i ++) {
-            dividerText.setText(String.valueOf(problems[i].getDivider()));
-            divedentText.setText(String.valueOf(problems[i].getDividend()));
-            //ifSubmit = false;
-
-            currentProblem = problems[i];
-            btnSubmit.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String input = answerText.getText().toString();
-                    game.updateScore(input, currentProblem);
-                    messageText.setText("Your score: " + game.getScore());
-                    //ifSubmit = true;
-                }
-            });
-
-
-        }
+    public void play(DivisionProblem problem) {
+        dividerText.setText(String.valueOf(problem.getDivider()));
+        divedentText.setText(String.valueOf(problem.getDividend()));
     }
 }
