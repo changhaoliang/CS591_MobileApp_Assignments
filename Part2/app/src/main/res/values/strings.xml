@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">Part2</string>
-    <string name="celsius_fahrenheit"><![CDATA[CELSIUS >> FAHRENHEIT]]></string>
+    <string name="celsius">Celsius</string>
     <string name="enter_celsius">Enter Celsius</string>
     <string name="fahrenheit">Fahrenheit</string>
-    <string name="swap">Swap</string>
+    <string name="message_cold">it\'s cold</string>
+    <string name="message_not_cold">it\'s not cold</string>
 </resources>

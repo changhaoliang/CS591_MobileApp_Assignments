@@ -6,52 +6,82 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/btn_swap"
+    <SeekBar
+        android:id="@+id/SeekBarC"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:max="11778"
+        android:progress="1778"
+        app:layout_constraintStart_toStartOf="@id/TextC"
+        app:layout_constraintTop_toBottomOf="@id/TextC" />
+
+    <TextView
+        android:id="@+id/TextF"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/swap"
-        android:gravity="center_horizontal"
-        android:layout_marginStart="165dp"
-        android:layout_marginTop="110dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        android:layout_marginTop="50dp"
+        android:text="@string/fahrenheit"
+        android:textSize="50sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintStart_toStartOf="@id/TextC"
+        app:layout_constraintTop_toBottomOf="@id/ValueC" />
 
-    <Button
-        android:id="@+id/btn_convert"
+    <TextView
+        android:id="@+id/ValueF"
         android:layout_width="wrap_content"
-        android:gravity="center_horizontal"
         android:layout_height="wrap_content"
-        android:layout_marginStart="113dp"
-        android:layout_marginTop="170dp"
-        android:text="@string/celsius_fahrenheit"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginStart="225dp"
+        android:layout_marginTop="30dp"
+        android:text="32.00"
+        android:textSize="30sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintStart_toStartOf="@id/SeekBarF"
+        app:layout_constraintTop_toBottomOf="@id/SeekBarF" />
 
-    <EditText
-        android:id="@+id/txt_left"
-        android:layout_width="120dp"
-        android:layout_height="40dp"
+    <TextView
+        android:id="@+id/TextC"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
-        android:layout_marginTop="324dp"
-        android:ems="10"
-        android:hint="@string/enter_celsius"
-        android:maxLength="4"
-        android:inputType="textPersonName"
+        android:layout_marginTop="50dp"
+        android:text="@string/celsius"
+        android:textSize="50sp"
+        android:textStyle="bold|italic"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/txt_right"
-        android:layout_width="120dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="238dp"
-        android:layout_marginTop="324dp"
-        android:ems="10"
-        android:maxLength="4"
-        android:hint="@string/fahrenheit"
-        android:inputType="textPersonName"
+    <SeekBar
+        android:id="@+id/SeekBarF"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:progress="3200"
+        android:max="21200"
+        app:layout_constraintStart_toStartOf="@id/TextF"
+        app:layout_constraintTop_toBottomOf="@id/TextF" />
+
+    <TextView
+        android:id="@+id/ValueC"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="225dp"
+        android:layout_marginTop="30dp"
+        android:text="0.00"
+        android:textSize="30sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintStart_toStartOf="@id/SeekBarC"
+        app:layout_constraintTop_toBottomOf="@id/SeekBarC" />
+
+    <TextView
+        android:id="@+id/Message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="120dp"
+        android:layout_marginTop="60dp"
+        android:text="@string/message_cold"
+        android:textSize="40sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/ValueF" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,22 +1,19 @@
 package com.example.part2;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
+import android.widget.SeekBar;
+import android.widget.TextView;
 
+public class MainActivity extends AppCompatActivity{
 
-public class MainActivity extends AppCompatActivity {
-    private Button btn_convert;
-    private Button btn_swap;
-    private EditText txt_left;
-    private EditText txt_right;
     TempConverter tempConverter;
-    Boolean fToC = false;
+    TextView textC, textF, valueC, valueF, message;
+    SeekBar seekBarC, seekBarF;
+    boolean isSeekBarCChanging;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,67 +21,67 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         tempConverter = new TempConverter();
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
-        btn_convert = findViewById(R.id.btn_convert);
-        btn_swap = findViewById(R.id.btn_swap);
-        txt_left = findViewById(R.id.txt_left);
-        txt_right = findViewById(R.id.txt_right);
-
-        if(fToC){
-            btn_convert.setText("Fahrenheit -> Celsius");
-            txt_left.setHint("Fahrenheit");
-            txt_right.setHint("Celsius");
-        }
-        else{
-            btn_convert.setText("Celsius -> Fahrenheit");
-            txt_left.setHint("Celsius");
-            txt_right.setHint("Fahrenheit");
-        }
-
-        btn_convert.setOnClickListener(new View.OnClickListener() {
+        textC = (TextView)findViewById(R.id.TextC);
+        textF = (TextView)findViewById(R.id.TextF);
+        valueC = (TextView)findViewById(R.id.ValueC);
+        valueF = (TextView)findViewById(R.id.ValueF);
+        message = (TextView)findViewById(R.id.Message);
+        seekBarC = (SeekBar)findViewById(R.id.SeekBarC);
+        seekBarF = (SeekBar)findViewById(R.id.SeekBarF);
+        seekBarC.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
-            public void onClick(View view) {
-                try {
-                    if(fToC){
-                        txt_right.setText(String.valueOf(tempConverter.fToC(Double.valueOf(txt_left.getText().toString()))));
-                    }
-                    else{
-                        txt_right.setText(String.valueOf(tempConverter.cToF(Double.valueOf(txt_left.getText().toString()))));
-                    }
-
-                }catch (NumberFormatException e) {
-                    AlertDialog alertDialog1 = new AlertDialog.Builder(MainActivity.this)
-                            .setTitle("Warning")
-                            .setMessage("Please enter a correct number!")
-                            .setPositiveButton("Confirm", null)
-                            .create();
-                    alertDialog1.show();
-
-                    txt_left.setHint("");
-                    txt_right.setHint("");
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                if (isSeekBarCChanging) {
+                    double value = (i - 1777.77) / 100f;
+                    valueC.setText(String.format("%.2f", value));
+                    double invert = tempConverter.cToF(value);
+                    valueF.setText(String.format("%.2f", invert));
+                    int invertInt = (int) (invert * 100);
+                    seekBarF.setProgress(invertInt);
                 }
+                showMessage();
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                isSeekBarCChanging = true;
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
             }
         });
-        btn_swap.setOnClickListener(new View.OnClickListener() {
+        seekBarF.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
-            public void onClick(View view) {
-                if(fToC){
-                    fToC = false;
-                }
-                else{
-                    fToC = true;
-                }
-                if(fToC){
-                    btn_convert.setText("Fahrenheit -> Celsius");
-                    txt_left.setHint("Fahrenheit");
-                    txt_right.setHint("Celsius");
-                }
-                else{
-                    btn_convert.setText("Celsius -> Fahrenheit");
-                    txt_left.setHint("Celsius");
-                    txt_right.setHint("Fahrenheit");
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                if (!isSeekBarCChanging) {
+                    double value = i / 100f;
+                    valueF.setText(String.format("%.2f", value));
+                    double invert = tempConverter.fToC(value);
+                    valueC.setText(String.format("%.2f", invert));
+                    int invertInt = (int) ((invert * 100 + 1778));
+                    seekBarC.setProgress(invertInt);
                 }
             }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                isSeekBarCChanging = false;
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
         });
+    }
+
+    private void showMessage() {
+        if (seekBarC.getProgress() < 2978) {
+            message.setText(getResources().getString(R.string.message_cold));
+        } else {
+            message.setText(getResources().getString(R.string.message_not_cold));
+        }
     }
 }

@@ -9,7 +9,6 @@ public class TempConverter {
     }
 
     public Double cToF(Double input){
-        return input * 5 / 9 + 32;
-
+        return input * 9 / 5 + 32;
     }
 }
