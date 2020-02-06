@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">FlashCardApp</string>
+    <string name="start_game">Generate 10 Random problems</string>
+    <string name="number">number</string>
+    <string name="your_answer">Your Answer</string>
+    <string name="submit">SUBMIT</string>
+    <string name="message">messages</string>
 </resources>
