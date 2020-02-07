@@ -86,11 +86,7 @@ public class NextActivity extends AppCompatActivity {
                                 .setPositiveButton("Confirm", null)
                                 .create();
                         alertDialog.show();
-                        isPlaying = false;
-                        game.resetGame();
-                        divisorText.setText("number");
-                        dividendText.setText("number");
-                        messageText.setText("message");
+                        reset();
                     }
                 }catch (NumberFormatException e) {
                     AlertDialog alertDialog = new AlertDialog.Builder(NextActivity.this)
@@ -104,6 +100,14 @@ public class NextActivity extends AppCompatActivity {
                 //ifSubmit = true;
             }
         });
+    }
+
+    public void reset() {
+        isPlaying = false;
+        game.resetGame();
+        divisorText.setText("number");
+        dividendText.setText("number");
+        messageText.setText("message");
     }
 
     public void play(DivisionProblem problem) {
