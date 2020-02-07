@@ -18,7 +18,7 @@ public class DivisionGame {
         return problem;
     }
 
-    public void updateScore(String input, DivisionProblem problem) {
+    public void updateScore(int input, DivisionProblem problem) {
         if (problem.ifWin(input)) {
             score ++;
         }

@@ -5,4 +5,5 @@
     <string name="your_answer">Your Answer</string>
     <string name="submit">SUBMIT</string>
     <string name="message">messages</string>
+    <string name="divider">÷</string>
 </resources>
