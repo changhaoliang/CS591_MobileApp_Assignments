@@ -1,15 +1,18 @@
 package com.example.flashcardapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 public class NextActivity extends AppCompatActivity {
@@ -20,7 +23,7 @@ public class NextActivity extends AppCompatActivity {
     private TextView dividendText;
     private TextView messageText;
     private EditText answerText;
-    DivisionProblem[] problems;
+    private ArrayList<DivisionProblem> problems;
     private int round;
 
     DivisionGame game;
@@ -42,7 +45,7 @@ public class NextActivity extends AppCompatActivity {
         dividendText = (TextView)findViewById(R.id.dividend_textView);
         answerText = (EditText)findViewById(R.id.answer_edit);
         messageText = (TextView)findViewById(R.id.messages);
-        problems = new DivisionProblem[10];
+        problems = new ArrayList<DivisionProblem>(10);
         game = new DivisionGame();
         isPlaying = false;
         message = "Round: %d/%d     Your score: %d.";
@@ -55,7 +58,7 @@ public class NextActivity extends AppCompatActivity {
                     round = 0;
                     problems = game.playGame(10);
                     messageText.setText(String.format(Locale.ENGLISH, message, round + 1, 10, game.getScore()));
-                    play(problems[round]);
+                    play(problems.get(round));
                 }else{
                     AlertDialog alertDialog = new AlertDialog.Builder(NextActivity.this)
                             .setTitle("Warning")
@@ -73,12 +76,12 @@ public class NextActivity extends AppCompatActivity {
                 String inputString = answerText.getText().toString();
                 try {
                     int input = Integer.valueOf(inputString);
-                    game.updateScore(input, problems[round]);
+                    game.updateScore(input, problems.get(round));
                     answerText.setText("");
                     round++;
                     if(round < 10) {
                         messageText.setText(String.format(Locale.ENGLISH, message, round + 1, 10, game.getScore()));
-                        play(problems[round]);
+                        play(problems.get(round));
                     } else{
                         AlertDialog alertDialog = new AlertDialog.Builder(NextActivity.this)
                                 .setTitle("Information")
@@ -100,6 +103,37 @@ public class NextActivity extends AppCompatActivity {
                 //ifSubmit = true;
             }
         });
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        // save all values of parameters
+        outState.putString("divisor", divisorText.getText().toString());
+        outState.putString("dividend", dividendText.getText().toString());
+        outState.putString("message", messageText.getText().toString());
+        outState.putString("answer", answerText.getText().toString());
+        outState.putInt("round", round);
+        outState.putParcelableArrayList("problems", problems);
+
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        String divisor = savedInstanceState.getString("divisor");
+        String dividend = savedInstanceState.getString("dividend");
+        String message = savedInstanceState.getString("message");
+        String answer = savedInstanceState.getString("answer");
+
+        divisorText.setText(divisor);
+        dividendText.setText(dividend);
+        messageText.setText(message);
+        answerText.setText(answer);
+
+        round = savedInstanceState.getInt("round");
+
+        problems = savedInstanceState.getParcelableArrayList("problems");
     }
 
     public void reset() {
