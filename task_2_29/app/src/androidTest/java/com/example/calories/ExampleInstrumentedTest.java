@@ -1,4 +1,4 @@
-package com.example.chessboard;
+package com.example.calories;
 
 import android.content.Context;
 
@@ -22,6 +22,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
-        assertEquals("com.example.chessboard", appContext.getPackageName());
+        assertEquals("com.example.calories", appContext.getPackageName());
     }
 }
