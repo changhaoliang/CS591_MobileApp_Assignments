@@ -126,6 +126,7 @@ public class NextActivity extends AppCompatActivity {
         outState.putString("answer", answerText.getText().toString());
         outState.putInt("round", round);
         outState.putParcelableArrayList("problems", problems);
+        outState.putParcelable("game", game);
 
         super.onSaveInstanceState(outState);
     }
@@ -140,10 +141,12 @@ public class NextActivity extends AppCompatActivity {
 
         divisorText.setText(divisor);
         dividendText.setText(dividend);
-        messageText.setText(message);
-        answerText.setText(answer);
+        game = savedInstanceState.getParcelable("game");
+        int score = game.getScore();
+        int round = savedInstanceState.getInt("round");
 
-        round = savedInstanceState.getInt("round");
+        messageText.setText(String.format(Locale.ENGLISH, message, round, 10, score));
+        answerText.setText(answer);
 
         problems = savedInstanceState.getParcelableArrayList("problems");
     }

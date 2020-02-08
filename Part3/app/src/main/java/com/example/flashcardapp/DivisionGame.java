@@ -1,13 +1,26 @@
 package com.example.flashcardapp;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 
-public class DivisionGame {
+public class DivisionGame implements Parcelable {
     private int maxRound; // 10
     private int score;
 
     public DivisionGame() {
         score = 0;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
     }
 
     public ArrayList<DivisionProblem> playGame(int maxRound) {
