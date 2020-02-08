@@ -153,9 +153,9 @@ public class NextActivity extends AppCompatActivity {
         dividendText.setText(dividend);
         game = savedInstanceState.getParcelable("game");
         int score = game.getScore();
-        int round = savedInstanceState.getInt("round");
+        round = savedInstanceState.getInt("round");
 
-        messageText.setText(String.format(Locale.ENGLISH, message, round, 10, score));
+        messageText.setText(String.format(Locale.ENGLISH, message, round + 1, 10, score));
         answerText.setText(answer);
 
         problems = savedInstanceState.getParcelableArrayList("problems");
