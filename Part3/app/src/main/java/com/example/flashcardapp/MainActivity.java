@@ -1,5 +1,7 @@
 package com.example.flashcardapp;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
@@ -7,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.text.InputType;
 import android.view.Gravity;
 import android.view.View;
@@ -25,6 +28,7 @@ public class MainActivity extends Activity {
         //setContentView(R.layout.activity_main);
         buildGuiByCode();
     }
+
     public void buildGuiByCode() {
         // rootLayout
         LinearLayout loginLayout = new LinearLayout(this);
@@ -37,7 +41,7 @@ public class MainActivity extends Activity {
 
         // User account layout, horizontal layout
         LinearLayout userLayout = new LinearLayout(this);
-        userLayout .setOrientation(LinearLayout.HORIZONTAL);
+        userLayout.setOrientation(LinearLayout.HORIZONTAL);
         loginLayout.addView(userLayout);
 
         LinearLayout.LayoutParams userLayoutParams = (LinearLayout.LayoutParams) userLayout.getLayoutParams();
@@ -104,6 +108,7 @@ public class MainActivity extends Activity {
                 if (ua.checkValidAccount(username, password)) {
                     System.out.println("11111");
                     Intent intent = new Intent(MainActivity.this, NextActivity.class);
+                    intent.putExtra("username", username);
                     startActivity(intent);
                 }
             }
