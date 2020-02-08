@@ -1,4 +1,4 @@
-package com.example.chessboard;
+package com.example.calories;
 
 import org.junit.Test;
 

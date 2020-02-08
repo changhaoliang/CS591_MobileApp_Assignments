@@ -7,12 +7,169 @@
     tools:context=".MainActivity">
 
     <TextView
+        android:id="@+id/lblMenu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="80dp"
+        android:text="Menu"
+        style="@style/MenuStyle"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/lblFood1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="160dp"
+        android:text="Sandwich"
+        style="@style/FoodStyle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/lblCal4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0 Cal."
+        style="@style/CalStyle"
+        app:layout_constraintStart_toStartOf="@+id/lblCal3"
+        app:layout_constraintTop_toTopOf="@+id/lblFood4" />
+
+    <TextView
+        android:id="@+id/lblCal1"
+        style="@style/CalStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="75dp"
+        android:text="390 Cal."
+        app:layout_constraintStart_toEndOf="@+id/lblFood1"
+        app:layout_constraintTop_toTopOf="@+id/lblFood1" />
+
+    <TextView
+        android:id="@+id/lblFood4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="Sparkling Water"
+        style="@style/FoodStyle"
+        app:layout_constraintStart_toStartOf="@+id/lblFood3"
+        app:layout_constraintTop_toBottomOf="@+id/lblFood3" />
+
+    <TextView
+        android:id="@+id/lblFood3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="Drink"
+        style="@style/FoodStyle"
+        app:layout_constraintStart_toStartOf="@+id/lblFood2"
+        app:layout_constraintTop_toBottomOf="@+id/lblFood2" />
+
+    <TextView
+        android:id="@+id/lblFood2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="PIzza"
+        style="@style/FoodStyle"
+        app:layout_constraintStart_toStartOf="@+id/lblFood1"
+        app:layout_constraintTop_toBottomOf="@+id/lblFood1" />
+
+    <TextView
+        android:id="@+id/lblCal3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="250 Cal."
+        style="@style/CalStyle"
+        app:layout_constraintStart_toStartOf="@+id/lblCal2"
+        app:layout_constraintTop_toTopOf="@+id/lblFood3" />
+
+    <TextView
+        android:id="@+id/lblCal2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="570 Cal."
+        style="@style/CalStyle"
+        app:layout_constraintStart_toStartOf="@+id/lblCal1"
+        app:layout_constraintTop_toTopOf="@+id/lblFood2" />
+
+
+    <TextView
+        android:id="@+id/lblNum"
+        style="@style/TotalStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="324dp"
+        android:layout_marginTop="84dp"
+        android:text="Num."
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/textNum1"
+        style="@style/NumStyle"
+        android:layout_width="65dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintBottom_toBottomOf="@+id/lblCal1"
+        app:layout_constraintStart_toEndOf="@+id/lblCal1"
+        app:layout_constraintTop_toTopOf="@+id/lblCal1" />
+
+    <TextView
+        android:id="@+id/lblTotal"
+        style="@style/TotalStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="Total Calories:"
+        app:layout_constraintStart_toStartOf="@+id/lblFood4"
+        app:layout_constraintTop_toBottomOf="@+id/lblFood4" />
+
+    <EditText
+        android:id="@+id/textNum2"
+        style="@style/NumStyle"
+        android:layout_width="65dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintBottom_toBottomOf="@+id/lblCal2"
+        app:layout_constraintStart_toStartOf="@+id/textNum1"
+        app:layout_constraintTop_toTopOf="@+id/lblCal2" />
+
+    <EditText
+        android:id="@+id/textNum3"
+        style="@style/NumStyle"
+        android:layout_width="65dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintBottom_toBottomOf="@+id/lblCal3"
+        app:layout_constraintStart_toStartOf="@+id/textNum2"
+        app:layout_constraintTop_toTopOf="@+id/lblCal3" />
+
+    <EditText
+        android:id="@+id/textNum4"
+        style="@style/NumStyle"
+        android:layout_width="65dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintBottom_toBottomOf="@+id/lblCal4"
+        app:layout_constraintStart_toStartOf="@+id/textNum3"
+        app:layout_constraintTop_toTopOf="@+id/lblCal4" />
+
+    <TextView
+        android:id="@+id/lblTotalCal"
+        style="@style/TotalStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:text="0"
+        app:layout_constraintStart_toEndOf="@+id/lblTotal"
+        app:layout_constraintTop_toTopOf="@+id/lblTotal" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
