@@ -1,11 +1,24 @@
 package com.example.flashcardapp;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.Random;
 
-public class DivisionProblem {
+public class DivisionProblem implements Parcelable{
     private int divider;
     private int dividend;
     private int result;
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
+    }
 
     public DivisionProblem() {
         dividend = 0;

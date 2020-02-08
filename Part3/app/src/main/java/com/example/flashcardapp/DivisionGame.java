@@ -1,5 +1,7 @@
 package com.example.flashcardapp;
 
+import java.util.ArrayList;
+
 public class DivisionGame {
     private int maxRound; // 10
     private int score;
@@ -8,12 +10,13 @@ public class DivisionGame {
         score = 0;
     }
 
-    public DivisionProblem[] playGame(int maxRound) {
+    public ArrayList<DivisionProblem> playGame(int maxRound) {
         this.maxRound = maxRound;
-        DivisionProblem[] problem = new DivisionProblem[maxRound];
+        ArrayList<DivisionProblem> problem = new ArrayList<DivisionProblem>(maxRound);
         for (int i = 0; i < maxRound; i++) {
-            problem[i] = new DivisionProblem();
-            problem[i].generateProblem();
+            DivisionProblem newProblem = new DivisionProblem();
+            newProblem.generateProblem();
+            problem.add(newProblem);
         }
         return problem;
     }
