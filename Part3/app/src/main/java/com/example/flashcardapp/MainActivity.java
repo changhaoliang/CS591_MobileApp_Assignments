@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,6 +74,7 @@ public class MainActivity extends Activity {
 
         // password EditText
         final EditText pwdEdit = new EditText(this);
+        pwdEdit.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD|InputType.TYPE_CLASS_TEXT);
         pwdEdit.setHint("password");
         pwdEdit.setTextSize(30);
         pwdLayout.addView(pwdEdit);

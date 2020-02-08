@@ -1,33 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.androidxz.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".NextActivity">
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:orientation="vertical">
 
         <Button
             android:id="@+id/start_game_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="20sp"
+            android:layout_marginTop="30sp"
             android:text="@string/start_game"
-            android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="99dp" />
+            android:textSize="20sp" />
+
         <TextView
-            android:id="@+id/divider_textView"
+            android:id="@+id/divisor_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -36,24 +30,38 @@
             android:textSize="40sp"
             android:textStyle="bold|italic" />
 
-        <TextView
-            android:id="@+id/dividend_textview"
+        <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="20sp"
-            android:layout_marginTop="@android:dimen/app_icon_size"
-            android:text="@string/number"
-            android:textSize="40sp"
-            android:textStyle="bold|italic" />
+            android:layout_height="wrap_content">
 
+            <ImageView
+                android:id="@+id/division_sign"
+                android:layout_width="50sp"
+                android:layout_height="50sp"
+                android:layout_marginTop="50sp"
+                android:layout_marginStart="40sp"
+                android:scaleType="fitXY"
+                android:src="@drawable/division_sign" />
 
+            <TextView
+                android:id="@+id/dividend_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@android:dimen/app_icon_size"
+                android:layout_toEndOf="@+id/division_sign"
+                android:layout_marginStart="80sp"
+                android:text="@string/number"
+                android:textSize="40sp"
+                android:textStyle="bold|italic" />
+
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="300sp">
+            android:layout_marginTop="50sp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -80,13 +88,13 @@
                     android:id="@+id/answer_edit"
                     android:layout_width="100sp"
                     android:layout_height="50sp"
-                    android:layout_marginLeft="20sp">
+                    android:layout_marginStart="20sp">
 
                 </EditText>
 
                 <Button
                     android:id="@+id/submit_button"
-                    android:layout_marginLeft="20sp"
+                    android:layout_marginStart="20sp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/submit" />
@@ -100,12 +108,10 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1"
                 android:textSize="20sp"
-                android:text="@string/message"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                android:text="@string/message" />
 
         </LinearLayout>
 
     </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

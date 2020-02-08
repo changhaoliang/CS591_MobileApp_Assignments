@@ -22,8 +22,9 @@ public class DivisionProblem {
         result = n2;
         divider = dividend * result;
     }
-    public boolean ifWin(String input) {
-        return (Integer.parseInt(input)) == result;
+
+    public boolean ifWin(int input) {
+        return input == result;
     }
 
     public int getDivider() {
