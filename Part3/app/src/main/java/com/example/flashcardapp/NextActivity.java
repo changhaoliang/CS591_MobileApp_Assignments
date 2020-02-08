@@ -85,34 +85,42 @@ public class NextActivity extends AppCompatActivity {
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String inputString = answerText.getText().toString();
-                try {
-                    int input = Integer.valueOf(inputString);
-                    game.updateScore(input, problems.get(round));
-                    answerText.setText("");
-                    round++;
-                    if(round < 10) {
-                        messageText.setText(String.format(Locale.ENGLISH, message, round + 1, 10, game.getScore()));
-                        play(problems.get(round));
-                    } else{
+                if(isPlaying) {
+                    String inputString = answerText.getText().toString();
+                    try {
+                        int input = Integer.valueOf(inputString);
+                        game.updateScore(input, problems.get(round));
+                        answerText.setText("");
+                        round++;
+                        if (round < 10) {
+                            messageText.setText(String.format(Locale.ENGLISH, message, round + 1, 10, game.getScore()));
+                            play(problems.get(round));
+                        } else {
+                            AlertDialog alertDialog = new AlertDialog.Builder(NextActivity.this)
+                                    .setTitle("Information")
+                                    .setMessage(String.format("Game over! Your score is %d.", game.getScore()))
+                                    .setPositiveButton("Confirm", null)
+                                    .create();
+                            alertDialog.show();
+                            reset();
+                        }
+                    } catch (NumberFormatException e) {
                         AlertDialog alertDialog = new AlertDialog.Builder(NextActivity.this)
-                                .setTitle("Information")
-                                .setMessage(String.format("Game over! Your score is %d.", game.getScore()))
+                                .setTitle("Warning")
+                                .setMessage("Please enter a correct number!")
                                 .setPositiveButton("Confirm", null)
                                 .create();
                         alertDialog.show();
-                        reset();
                     }
-                }catch (NumberFormatException e) {
+                }else {
                     AlertDialog alertDialog = new AlertDialog.Builder(NextActivity.this)
                             .setTitle("Warning")
-                            .setMessage("Please enter a correct number!")
+                            .setMessage("Please click the top button to generate 10 random problems!")
                             .setPositiveButton("Confirm", null)
                             .create();
                     alertDialog.show();
+                    reset();
                 }
-
-                //ifSubmit = true;
             }
         });
     }
