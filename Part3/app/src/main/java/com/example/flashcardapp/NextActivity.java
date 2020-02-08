@@ -136,6 +136,7 @@ public class NextActivity extends AppCompatActivity {
         outState.putParcelableArrayList("problems", problems);
         outState.putParcelable("game", game);
 
+        outState.putBoolean("play_flag", isPlaying);
         super.onSaveInstanceState(outState);
     }
 
@@ -146,6 +147,7 @@ public class NextActivity extends AppCompatActivity {
         String dividend = savedInstanceState.getString("dividend");
         String message = savedInstanceState.getString("message");
         String answer = savedInstanceState.getString("answer");
+        isPlaying = savedInstanceState.getBoolean("play_flag");
 
         divisorText.setText(divisor);
         dividendText.setText(dividend);
