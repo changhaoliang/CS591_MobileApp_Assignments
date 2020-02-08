@@ -9,6 +9,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Locale;
 
@@ -34,6 +35,10 @@ public class NextActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         setContentView(R.layout.activity_next);
+        Bundle bundle = getIntent().getExtras();
+        String username = bundle.getString("username");
+        Toast.makeText(getApplicationContext(), "Welcome " + username, Toast.LENGTH_LONG).show();
+
 
         btnSubmit = (Button)findViewById(R.id.submit_button);
         btnStart = (Button)findViewById(R.id.start_game_btn);
