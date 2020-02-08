@@ -3,6 +3,7 @@ package com.example.flashcardapp;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
@@ -46,6 +47,12 @@ public class NextActivity extends AppCompatActivity {
         game = new DivisionGame();
         isPlaying = false;
         message = "Round: %d/%d     Your score: %d.";
+
+        if (getRequestedOrientation() == ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        } else if (getRequestedOrientation() == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        }
 
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,6 +108,8 @@ public class NextActivity extends AppCompatActivity {
             }
         });
     }
+
+
 
     public void reset() {
         isPlaying = false;
