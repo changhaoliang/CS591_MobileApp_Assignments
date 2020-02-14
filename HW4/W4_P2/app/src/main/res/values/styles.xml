@@ -1,0 +1,41 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="Title">
+        <!-- Customize your theme here. -->
+        <item name="android:textSize">32sp</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:height">100dp</item>
+        <item name="android:textColor">#DA4F4F</item>
+    </style>
+
+    <style name="Label">
+        <!-- Customize your theme here. -->
+        <item name="android:textSize">24sp</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:width">120dp</item>
+        <item name="android:left">50dp</item>
+        <item name="android:height">80dp</item>
+        <item name="android:textColor">#777ADF</item>
+    </style>
+
+    <style name="NumStyle">
+        <!-- Customize your theme here. -->
+        <item name="android:textSize">24sp</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:width">150dp</item>
+        <item name="android:gravity">right</item>
+        <item name="android:textColor">#000000</item>
+    </style>
+
+</resources>
