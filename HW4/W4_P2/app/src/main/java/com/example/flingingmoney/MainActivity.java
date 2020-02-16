@@ -14,7 +14,7 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
     private GestureDetector gestureDetector;
     private CurrencyConverter converter;
     private TextView Euro, Dollar, Yen, Yuan, Pound;
-    private final int minDistance = 10, minVelocity = 10;
+    private final int minDistance = 10, minVelocity = 10;   //threshold for fling&scroll
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,12 +31,12 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
         Yen = (TextView)findViewById(R.id.editYen);
         Yuan = (TextView)findViewById(R.id.editYuan);
         Pound = (TextView)findViewById(R.id.editPound);
-        Dollar.setFocusable(false);
+        Dollar.setFocusable(false); //set uneditable
         Yen.setFocusable(false);
         Yuan.setFocusable(false);
         Pound.setFocusable(false);
 
-        Euro.addTextChangedListener(new TextWatcher(){
+        Euro.addTextChangedListener(new TextWatcher(){  //update currencies while input
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (Euro.getText().length()>0) {
@@ -89,12 +89,12 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
     @Override
     public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
         if (Euro.getText().length()==0) return true;
-        if (distanceY > minDistance){
+        if (distanceY > minDistance){   //upwards
             converter.addCent();
             Euro.setText(converter.getEuro());
             updateCurrencies();
         }
-        else if (distanceY < -minDistance){
+        else if (distanceY < -minDistance){ //downwards
             converter.minCent();
             Euro.setText(converter.getEuro());
             updateCurrencies();
@@ -109,12 +109,12 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
     @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
         if (Euro.getText().length()==0) return true;
-        if (velocityY < -minVelocity){
+        if (velocityY < -minVelocity){  //upwards
             converter.addDollar();
             Euro.setText(converter.getEuro());
             updateCurrencies();
         }
-        else if (velocityY > minVelocity){
+        else if (velocityY > minVelocity){     //downwards
             converter.minDollar();
             Euro.setText(converter.getEuro());
             updateCurrencies();

@@ -1,28 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/root"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.386" />
+    <View
+        android:id="@+id/static0"
+        android:layout_width="300dp"
+        android:layout_height="5dp"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="100dp"
+        android:background="@color/black" />
 
-    <LinearLayout
-        android:layout_width="409dp"
-        android:layout_height="354dp"
-        android:layout_marginTop="92dp"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@+id/textView2"
-        tools:layout_editor_absoluteX="1dp"></LinearLayout>
+    <View
+        android:id="@+id/static1"
+        android:layout_width="5dp"
+        android:layout_height="300dp"
+        android:layout_alignBottom="@id/static0"
+        android:layout_marginStart="250dp"
+        android:background="@color/black" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <View
+        android:id="@+id/part0"
+        android:layout_width="180dp"
+        android:layout_height="5dp"
+        android:layout_alignTop="@id/static1"
+        android:layout_alignEnd="@id/static1"
+        android:background="@color/black" />
+
+    <View
+        android:id="@+id/part1"
+        android:layout_width="5dp"
+        android:layout_height="50dp"
+        android:layout_alignTop="@id/part0"
+        android:layout_alignStart="@id/part0"
+        android:background="@color/black" />
+
+    <View
+        android:id="@+id/part2"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:background="@drawable/shape_ring"
+        android:layout_below="@+id/part1"
+        android:layout_marginStart="47.5dp"/>
+
+    <View
+        android:id="@+id/part3"
+        android:layout_width="5dp"
+        android:layout_height="90dp"
+        android:background="@color/black"
+        android:layout_alignTop="@id/part2"
+        android:layout_alignStart="@id/part2"
+        android:layout_marginTop="55dp"
+        android:layout_marginStart="27.5dp"/>
+
+    <View
+        android:id="@+id/part4"
+        android:layout_width="60dp"
+        android:layout_height="5dp"
+        android:layout_alignTop="@id/part3"
+        android:layout_alignStart="@id/part3"
+        android:layout_marginTop="15dp"
+        android:background="@color/black"
+        android:rotation="150"/>
+
+    <View
+        android:id="@+id/part5"
+        android:layout_width="60dp"
+        android:layout_height="5dp"
+        android:layout_alignTop="@id/part3"
+        android:layout_alignStart="@id/part3"
+        android:layout_marginTop="110dp"
+        android:background="@color/black"
+        android:rotation="45"/>
+
+    <View
+        android:id="@+id/part6"
+        android:layout_width="60dp"
+        android:layout_height="5dp"
+        android:layout_alignTop="@id/part3"
+        android:layout_alignEnd="@id/part3"
+        android:layout_marginTop="15dp"
+        android:background="@color/black"
+        android:rotation="30"/>
+
+    <View
+        android:id="@+id/part7"
+        android:layout_width="60dp"
+        android:layout_height="5dp"
+        android:layout_alignTop="@id/part3"
+        android:layout_alignEnd="@id/part3"
+        android:layout_marginTop="110dp"
+        android:background="@color/black"
+        android:rotation="135"/>
+
+
+</RelativeLayout>
