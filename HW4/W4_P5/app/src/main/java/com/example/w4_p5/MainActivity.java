@@ -3,6 +3,7 @@ package com.example.w4_p5;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.graphics.Point;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,13 +27,21 @@ public class MainActivity extends AppCompatActivity {
         wordInputLayoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
         wordInputLayoutParams.addRule(RelativeLayout.BELOW, R.id.static0);
         myLayout.addView(wordInput, wordInputLayoutParams);
-
+        GridLayout keyBoard = buildKeyboard();
+        RelativeLayout.LayoutParams keyBoardLayoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        keyBoardLayoutParams.topMargin = 250;
+        keyBoardLayoutParams.addRule(RelativeLayout.BELOW, R.id.static0);
+        myLayout.addView(keyBoard, keyBoardLayoutParams);
     }
 
-    public void buildKeyboard(){
+    public GridLayout buildKeyboard(){
+        Point size = new Point();
+        getWindowManager().getDefaultDisplay().getSize(size);
+        int w = size.x/kbColumns;
         GridLayout keyBoard = new GridLayout(this);
         keyBoard.setColumnCount(kbColumns);
         keyBoard.setRowCount(kbRows);
+
         letterButtons = new Button[kbRows][kbColumns];
         ButtonHandler bh = new ButtonHandler();
         for (int row=0; row<kbRows; row++){
@@ -41,10 +50,12 @@ public class MainActivity extends AppCompatActivity {
                 int letter = row==3?(64+row*7+col):(65+row*7+col);
                 letterButtons[row][col].setText((char)letter+"");
                 letterButtons[row][col].setOnClickListener(bh);
+                keyBoard.addView(letterButtons[row][col], w, w);
             }
         }
         letterButtons[3][0].setVisibility(View.INVISIBLE);
         letterButtons[3][kbColumns-1].setVisibility(View.INVISIBLE);
+        return keyBoard;
     }
     private boolean checkLetter(Button b){
         char c = b.getText().charAt(0);
