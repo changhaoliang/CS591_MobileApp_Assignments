@@ -20,7 +20,7 @@ public class CurrencyConverter {
     }
     public void minDollar(){
         currency--;
-        if (currency<0)
+        if (currency<0)    //currency cannot be negative
             currency = 0;
     }
     public void addCent(){
