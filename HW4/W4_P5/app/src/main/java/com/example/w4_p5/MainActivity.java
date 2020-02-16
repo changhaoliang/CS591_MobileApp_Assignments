@@ -18,11 +18,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main);
+
         RelativeLayout myLayout = findViewById(R.id.root);
-        setContentView(myLayout);
         WordInput wordInput = new WordInput(this, 5);
-        myLayout.addView(wordInput);
+        RelativeLayout.LayoutParams wordInputLayoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        wordInputLayoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
+        wordInputLayoutParams.addRule(RelativeLayout.BELOW, R.id.static0);
+        myLayout.addView(wordInput, wordInputLayoutParams);
+
     }
 
     public void buildKeyboard(){
