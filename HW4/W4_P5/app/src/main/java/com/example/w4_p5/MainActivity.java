@@ -24,11 +24,13 @@ public class MainActivity extends AppCompatActivity {
         for (int row=0; row<kbRows; row++){
             for (int col=0; col<kbColumns; col++){
                 letterButtons[row][col] = new Button(this);
-                letterButtons[row][col].setText((char)(65+row*7+col)+"");
+                int letter = row==3?(64+row*7+col):(65+row*7+col);
+                letterButtons[row][col].setText((char)letter+"");
                 letterButtons[row][col].setOnClickListener(bh);
             }
         }
-
+        letterButtons[3][0].setVisibility(0);
+        letterButtons[3][kbColumns-1].setVisibility(0);
     }
     private boolean checkLetter(Button b){
         char c = b.getText().charAt(0);
