@@ -46,8 +46,24 @@ public class Hangman {
         return res;
     }
 
-    public void startGame() {
-        String[] entry = chooseWord();
-        round = new Round(entry[0], entry[1]);
+    public Round getRound() {
+        return round;
+    }
+    public void startGame(String word, String hint) {
+
+        round = new Round(word, hint);
+    }
+
+    public static void main(String[] args){
+        Hangman hangman = new Hangman();
+        hangman.startGame("apple", "food");
+
+        hangman.getRound().updateScore('a');
+        hangman.getRound().updateScore('p');
+        hangman.getRound().updateScore('l');
+        hangman.getRound().updateScore('e');
+
+        System.out.println(hangman.getRound().getScore());
+        System.out.println(hangman.getRound().isWordGuessed());
     }
 }
