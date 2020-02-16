@@ -1,9 +1,12 @@
 package com.example.w4_p5;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.RelativeLayout;
@@ -11,11 +14,17 @@ import android.widget.RelativeLayout;
 public class MainActivity extends AppCompatActivity {
     private Button[][] letterButtons;
     private final int kbRows = 4, kbColumns = 7;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        // setContentView(R.layout.activity_main);
+        RelativeLayout myLayout = findViewById(R.id.root);
+        setContentView(myLayout);
+        WordInput wordInput = new WordInput(this, 5);
+        myLayout.addView(wordInput);
     }
+
     public void buildKeyboard(){
         GridLayout keyBoard = new GridLayout(this);
         keyBoard.setColumnCount(kbColumns);

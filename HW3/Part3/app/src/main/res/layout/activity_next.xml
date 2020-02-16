@@ -111,6 +111,7 @@
                 android:text="@string/message" />
 
         </LinearLayout>
+
     </LinearLayout>
 
 </RelativeLayout>
