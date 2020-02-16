@@ -29,8 +29,8 @@ public class MainActivity extends AppCompatActivity {
                 letterButtons[row][col].setOnClickListener(bh);
             }
         }
-        letterButtons[3][0].setVisibility(0);
-        letterButtons[3][kbColumns-1].setVisibility(0);
+        letterButtons[3][0].setVisibility(View.INVISIBLE);
+        letterButtons[3][kbColumns-1].setVisibility(View.INVISIBLE);
     }
     private boolean checkLetter(Button b){
         char c = b.getText().charAt(0);
