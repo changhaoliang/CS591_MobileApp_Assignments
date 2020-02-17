@@ -11,23 +11,23 @@ public class Hangman {
     public Hangman() {
         dictionary = new HashMap<>();
         dictionary.put("apple", "food");
-//        dictionary.put("pear", "food");
-//        dictionary.put("burger", "food");
-//
-//        dictionary.put("china", "country");
-//        dictionary.put("japan", "country");
-//        dictionary.put("america", "country");
-//        dictionary.put("russia", "country");
-//
-//        dictionary.put("lion", "animal");
-//        dictionary.put("snake", "animal");
-//        dictionary.put("eagle", "animal");
-//        dictionary.put("fish", "animal");
-//        dictionary.put("wolf", "animal");
-//
-//        dictionary.put("sunny", "weather");
-//        dictionary.put("rainy", "weather");
-//        dictionary.put("snowy", "weather");
+        dictionary.put("pear", "food");
+        dictionary.put("burger", "food");
+
+        dictionary.put("china", "country");
+        dictionary.put("japan", "country");
+        dictionary.put("america", "country");
+        dictionary.put("russia", "country");
+
+        dictionary.put("lion", "animal");
+        dictionary.put("snake", "animal");
+        dictionary.put("eagle", "animal");
+        dictionary.put("fish", "animal");
+        dictionary.put("wolf", "animal");
+
+        dictionary.put("sunny", "weather");
+        dictionary.put("rainy", "weather");
+        dictionary.put("snowy", "weather");
     }
 
     public String[] chooseWord() {

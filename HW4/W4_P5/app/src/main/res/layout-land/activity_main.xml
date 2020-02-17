@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="50dp">
+        android:layout_marginEnd="20dp">
         <RelativeLayout
             android:id="@+id/hangman"
             android:layout_width="wrap_content"
@@ -23,7 +23,7 @@
                 android:layout_width="300dp"
                 android:layout_height="5dp"
                 android:layout_marginStart="100dp"
-                android:layout_marginTop="350dp"
+                android:layout_marginTop="310dp"
                 android:background="@color/black" />
 
             <View
@@ -115,15 +115,36 @@
         android:id="@+id/panelLeft"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_toStartOf="@+id/panelRight">
+        android:layout_toStartOf="@+id/panelRight"
+        android:layout_alignParentStart="true">
 
         <Button
             android:id="@+id/button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="300dp"
+            android:layout_marginTop="330dp"
             android:text="@string/start_game" />
+
+        <Button
+            android:id="@+id/hintButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="280dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="50dp"
+            android:text="@string/hint" />
+
+        <TextView
+            android:id="@+id/hintString"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="280dp"
+            android:layout_toEndOf="@+id/hintButton"
+            android:text=""
+            android:textColor="#EE3B3B"
+            android:textSize="30sp" />
     </RelativeLayout>
 
 </RelativeLayout>

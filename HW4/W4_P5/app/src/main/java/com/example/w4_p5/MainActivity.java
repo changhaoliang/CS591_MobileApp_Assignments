@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.Button;
 import android.widget.GridLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -16,13 +17,15 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
     private Button[][] letterButtons;
     private final int kbRows = 4, kbColumns = 7;
-    private Button startButton;
     private WordInput wordInput;
     private Hangman hangman;
 
     private View[] bodyParts;
     private int failTime;
     private int orientation;
+
+    private Button hintButton;
+    private TextView hint;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +42,19 @@ public class MainActivity extends AppCompatActivity {
         bodyParts[6] = findViewById(R.id.part6);
         bodyParts[7] = findViewById(R.id.part7);
 
-        startButton = (Button)findViewById(R.id.button);
+        Button startButton = (Button)findViewById(R.id.button);
+        if (orientation == getResources().getConfiguration().ORIENTATION_LANDSCAPE) {
+            hintButton = (Button) findViewById(R.id.hintButton);
+            hint = (TextView) findViewById(R.id.hintString);
+            hintButton.setVisibility(View.INVISIBLE);
+            hintButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    hint.setText(hangman.getRound().getHint());
+                    hintButton.setEnabled(false);
+                }
+            });
+        }
 
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
                 init();
             }
         });
+
         startButton.getBackground().setColorFilter(new LightingColorFilter(0x00000000,
                 0X007EC0EE));
 
@@ -77,9 +93,13 @@ public class MainActivity extends AppCompatActivity {
             keyBoardLayoutParams.addRule(RelativeLayout.BELOW, R.id.hangman);
             myLayout.addView(keyBoard, keyBoardLayoutParams);
         } else if (orientation == getResources().getConfiguration().ORIENTATION_LANDSCAPE) {
+            hintButton.setEnabled(true);
+            hintButton.setVisibility(View.VISIBLE);
+            hint.setText("");
             RelativeLayout panelRight = findViewById(R.id.panelRight);
             RelativeLayout panel = findViewById(R.id.panelLeft);
             keyBoardLayoutParams.leftMargin = 140;
+            keyBoardLayoutParams.topMargin = 260;
             panelRight.addView(wordInput, wordInputLayoutParams);
             panel.addView(keyBoard, keyBoardLayoutParams);
         }
@@ -147,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
             if (hangman.getRound().isWordGuessed()) {
                 Toast.makeText(getApplicationContext(), "Total Score: " + String.valueOf(hangman.getRound().getScore()), Toast.LENGTH_LONG).show();
                 // should reset
-
+                disableAllButton();
             }
         } else {
             // draw hangman !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

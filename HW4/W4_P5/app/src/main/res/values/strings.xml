@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">W4_P5</string>
     <string name="start_game">Start Game</string>
+    <string name="hint">hint</string>
 </resources>
