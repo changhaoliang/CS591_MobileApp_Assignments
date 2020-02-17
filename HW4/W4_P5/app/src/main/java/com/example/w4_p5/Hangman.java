@@ -1,9 +1,12 @@
 package com.example.w4_p5;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.HashMap;
 import java.util.Random;
 
-public class Hangman {
+public class Hangman implements Parcelable {
     // word, hint
     private HashMap<String, String> dictionary;
     private Round round;
@@ -52,6 +55,16 @@ public class Hangman {
     public void startGame() {
         String[] res = chooseWord();
         round = new Round(res[0], res[1]);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
     }
 
 //    public static void main(String[] args){

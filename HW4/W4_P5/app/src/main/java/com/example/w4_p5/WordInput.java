@@ -1,6 +1,8 @@
 package com.example.w4_p5;
 
 import android.content.Context;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,7 +10,16 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class WordInput extends LinearLayout {
+public class WordInput extends LinearLayout implements Parcelable {
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
+    }
 
     private int length;
     private EditText[] editTexts;

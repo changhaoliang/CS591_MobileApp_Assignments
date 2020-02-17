@@ -1,5 +1,6 @@
 package com.example.w4_p5;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.graphics.LightingColorFilter;
 import android.graphics.Point;
@@ -16,21 +17,30 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private Button[][] letterButtons;
+    private boolean ifClickStart;
+    int[] keyboardStatus;
     private final int kbRows = 4, kbColumns = 7;
     private WordInput wordInput;
     private Hangman hangman;
+    private char[] guessedLetters;
 
     private View[] bodyParts;
     private int failTime;
     private int orientation;
 
     private Button hintButton;
+    private boolean hintFlag;
+    private boolean gameOver;
+
     private TextView hint;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         this.orientation = getResources().getConfiguration().orientation;
+        hintFlag = false;
+        ifClickStart = false;
+        gameOver = false;
 
         bodyParts = new View[8];
         bodyParts[0] = findViewById(R.id.part0);
@@ -52,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     hint.setText(hangman.getRound().getHint());
                     hintButton.setEnabled(false);
+                    hintFlag = true;
                 }
             });
         }
@@ -62,12 +73,16 @@ public class MainActivity extends AppCompatActivity {
                 if (wordInput != null) {
                     wordInput.clear();
                 }
-
+                ifClickStart = true;
+                gameOver = false;
+                hintFlag = false;
                 failTime = 0;
 
                 hangman = new Hangman();
                 hangman.startGame();
+                guessedLetters = new char[hangman.getRound().getWord().length()];
 
+                keyboardStatus = new int[26];
                 init();
             }
         });
@@ -75,6 +90,56 @@ public class MainActivity extends AppCompatActivity {
         startButton.getBackground().setColorFilter(new LightingColorFilter(0x00000000,
                 0X007EC0EE));
 
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putParcelable("game", hangman);
+        outState.putParcelable("wordInput", wordInput);
+        outState.putInt("failtime", failTime);
+        outState.putIntArray("buttonstyle", keyboardStatus);
+        outState.putBoolean("clickHint", hintFlag);
+        outState.putBoolean("ifstart", ifClickStart);
+        outState.putCharArray("guessedLetter", guessedLetters);
+        outState.putBoolean("gameover", gameOver);
+        super.onSaveInstanceState(outState);
+
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        hangman = savedInstanceState.getParcelable("game");
+        wordInput = savedInstanceState.getParcelable("wordInput");
+        keyboardStatus = savedInstanceState.getIntArray("buttonstyle");
+        ifClickStart = savedInstanceState.getBoolean("ifstart");
+        gameOver = savedInstanceState.getBoolean("gameover");
+        if (ifClickStart) {
+            init();
+            guessedLetters = savedInstanceState.getCharArray("guessedLetter");
+            failTime = savedInstanceState.getInt("failtime");
+            hintFlag = savedInstanceState.getBoolean("clickHint");
+            for (int i = 0; i < kbRows; i++) {
+                for (int j = 0; j < kbColumns; j++) {
+                    setKeyboardColor(letterButtons[i][j]);
+                }
+            }
+            for (int i = 0; i < guessedLetters.length; i++) {
+                wordInput.setText(guessedLetters[i], i);
+            }
+            for (int i = 0; i < failTime; i++) {
+                bodyParts[i].setVisibility(View.VISIBLE);
+            }
+            if (getResources().getConfiguration().orientation == getResources().getConfiguration().ORIENTATION_LANDSCAPE) {
+                if (hintFlag) {
+                    hintButton.setEnabled(false);
+                    hint.setText(hangman.getRound().getHint());
+                }
+            }
+            if (gameOver) {
+                disableAllButton();
+            }
+        }
     }
 
     public void init() {
@@ -107,6 +172,7 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < 8; i++) {
             bodyParts[i].setVisibility(View.INVISIBLE);
         }
+
     }
 
 
@@ -133,8 +199,9 @@ public class MainActivity extends AppCompatActivity {
                 letterButtons[row][col].setTextSize(20);
                 letterButtons[row][col].setOnClickListener(bh);
                 //letterButtons[row][col].setBackgroundColor(getResources().getColor(R.color.white));
-                letterButtons[row][col].getBackground().setColorFilter(new LightingColorFilter(0x00000000,
-                        0X00FFFFFF));
+//                letterButtons[row][col].getBackground().setColorFilter(new LightingColorFilter(0x00000000,
+//                        0X00FFFFFF));
+                setKeyboardColor(letterButtons[row][col]);
                 keyBoard.addView(letterButtons[row][col], w, w);
             }
         }
@@ -148,16 +215,19 @@ public class MainActivity extends AppCompatActivity {
         //if c is the answer return true, and set button invisible
         if (hangman.getRound().isCharGuessed(c)) {
             // set style of button
-            b.setEnabled(false);
-            b.setTextColor(getResources().getColor(R.color.white));
-            //b.setBackgroundColor(getResources().getColor(R.color.green));
-            b.getBackground().setColorFilter(new LightingColorFilter(0x00000000,
-                    0X0043CD80));
+            keyboardStatus[c-'a'] = 1;
+//            b.setEnabled(false);
+//            b.setTextColor(getResources().getColor(R.color.white));
+//            //b.setBackgroundColor(getResources().getColor(R.color.green));
+//            b.getBackground().setColorFilter(new LightingColorFilter(0x00000000,
+//                    0X0043CD80));
+            setKeyboardColor(b);
             ArrayList<Integer> position = hangman.getRound().getPosition(c);
 
             // set content of EditText
             for (int i : position) {
                 wordInput.setText(c, i);
+                guessedLetters[i] = c;
             }
 
             // update score
@@ -167,22 +237,51 @@ public class MainActivity extends AppCompatActivity {
             if (hangman.getRound().isWordGuessed()) {
                 Toast.makeText(getApplicationContext(), "Total Score: " + String.valueOf(hangman.getRound().getScore()), Toast.LENGTH_LONG).show();
                 // should reset
+                gameOver = true;
                 disableAllButton();
             }
         } else {
             // draw hangman !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            keyboardStatus[c-'a'] = -1;
             bodyParts[failTime].setVisibility(View.VISIBLE);
             failTime++;
-            b.setEnabled(false);
-            b.setTextColor(getResources().getColor(R.color.white));
-            //b.setBackgroundColor(getResources().getColor(R.color.red));
-            b.getBackground().setColorFilter(new LightingColorFilter(0x00000000,
-                    0X00EE3B3B));
+//            b.setEnabled(false);
+//            b.setTextColor(getResources().getColor(R.color.white));
+//            //b.setBackgroundColor(getResources().getColor(R.color.red));
+//            b.getBackground().setColorFilter(new LightingColorFilter(0x00000000,
+//                    0X00EE3B3B));
 
+            setKeyboardColor(b);
             if (failTime == 8) {
                 Toast.makeText(getApplicationContext(), "Game Over", Toast.LENGTH_LONG).show();
+                gameOver = true;
                 disableAllButton();
             }
+        }
+    }
+
+    private void setKeyboardColor(Button button) {
+        char c = Character.toLowerCase(button.getText().charAt(0));
+        if (c < 'a' || c > 'z') {
+            return;
+        }
+        System.out.println(keyboardStatus[c-'a']);
+        if (keyboardStatus[c-'a'] == 0) {
+            button.getBackground().setColorFilter(new LightingColorFilter(0x00000000,
+                    0X00FFFFFF));
+        }
+        else if (keyboardStatus[c-'a'] == 1) {
+            button.setEnabled(false);
+            button.setTextColor(getResources().getColor(R.color.white));
+            //b.setBackgroundColor(getResources().getColor(R.color.green));
+            button.getBackground().setColorFilter(new LightingColorFilter(0x00000000, 0X0043CD80));
+        }
+        else if (keyboardStatus[c-'a'] == -1) {
+            button.setEnabled(false);
+            button.setTextColor(getResources().getColor(R.color.white));
+            //b.setBackgroundColor(getResources().getColor(R.color.red));
+            button.getBackground().setColorFilter(new LightingColorFilter(0x00000000,
+                    0X00EE3B3B));
         }
     }
     public void disableAllButton() {
