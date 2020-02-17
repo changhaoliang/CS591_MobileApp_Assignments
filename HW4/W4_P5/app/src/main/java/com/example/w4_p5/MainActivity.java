@@ -21,16 +21,20 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        init();
+    }
+
+    public void init() {
         RelativeLayout myLayout = findViewById(R.id.root);
         WordInput wordInput = new WordInput(this, 5);
         RelativeLayout.LayoutParams wordInputLayoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         wordInputLayoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        wordInputLayoutParams.addRule(RelativeLayout.BELOW, R.id.static0);
+        wordInputLayoutParams.addRule(RelativeLayout.BELOW, R.id.hangman);
         myLayout.addView(wordInput, wordInputLayoutParams);
         GridLayout keyBoard = buildKeyboard();
         RelativeLayout.LayoutParams keyBoardLayoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        keyBoardLayoutParams.topMargin = 250;
-        keyBoardLayoutParams.addRule(RelativeLayout.BELOW, R.id.static0);
+        keyBoardLayoutParams.topMargin = 300;
+        keyBoardLayoutParams.addRule(RelativeLayout.BELOW, R.id.hangman);
         myLayout.addView(keyBoard, keyBoardLayoutParams);
     }
 
