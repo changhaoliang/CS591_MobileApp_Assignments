@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.graphics.Color;
+import android.graphics.LightingColorFilter;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -58,6 +60,9 @@ public class MainActivity extends AppCompatActivity {
                 init();
             }
         });
+        startButton.getBackground().setColorFilter(new LightingColorFilter(0x00000000,
+                0X007EC0EE));
+
     }
 
     public void init() {
@@ -96,7 +101,9 @@ public class MainActivity extends AppCompatActivity {
                 letterButtons[row][col].setText((char)letter+"");
                 letterButtons[row][col].setTextSize(20);
                 letterButtons[row][col].setOnClickListener(bh);
-                letterButtons[row][col].setBackgroundColor(getResources().getColor(R.color.white));
+                //letterButtons[row][col].setBackgroundColor(getResources().getColor(R.color.white));
+                letterButtons[row][col].getBackground().setColorFilter(new LightingColorFilter(0x00000000,
+                        0X00FFFFFF));
                 keyBoard.addView(letterButtons[row][col], w, w);
             }
         }
@@ -112,7 +119,9 @@ public class MainActivity extends AppCompatActivity {
             // set style of button
             b.setEnabled(false);
             b.setTextColor(getResources().getColor(R.color.white));
-            b.setBackgroundColor(getResources().getColor(R.color.green));
+            //b.setBackgroundColor(getResources().getColor(R.color.green));
+            b.getBackground().setColorFilter(new LightingColorFilter(0x00000000,
+                    0X0043CD80));
             ArrayList<Integer> position = hangman.getRound().getPosition(c);
 
             // set content of EditText
@@ -137,7 +146,9 @@ public class MainActivity extends AppCompatActivity {
             failTime++;
             b.setEnabled(false);
             b.setTextColor(getResources().getColor(R.color.white));
-            b.setBackgroundColor(getResources().getColor(R.color.red));
+            //b.setBackgroundColor(getResources().getColor(R.color.red));
+            b.getBackground().setColorFilter(new LightingColorFilter(0x00000000,
+                    0X00EE3B3B));
 
             if (failTime == 8) {
                 Toast.makeText(getApplicationContext(), "Game Over", Toast.LENGTH_LONG).show();
