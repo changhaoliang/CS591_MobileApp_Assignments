@@ -55,7 +55,6 @@ public class MainActivity extends AppCompatActivity {
                 hangman = new Hangman();
                 hangman.startGame();
 
-
                 init();
             }
         });
@@ -95,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
                 letterButtons[row][col] = new Button(this);
                 int letter = row==3?(64+row*7+col):(65+row*7+col);
                 letterButtons[row][col].setText((char)letter+"");
+                letterButtons[row][col].setTextSize(20);
                 letterButtons[row][col].setOnClickListener(bh);
                 letterButtons[row][col].setBackgroundColor(getResources().getColor(R.color.white));
                 keyBoard.addView(letterButtons[row][col], w, w);
@@ -111,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
         if (hangman.getRound().isCharGuessed(c)) {
             // set style of button
             b.setEnabled(false);
+            b.setTextColor(getResources().getColor(R.color.white));
             b.setBackgroundColor(getResources().getColor(R.color.green));
             ArrayList<Integer> position = hangman.getRound().getPosition(c);
 
@@ -134,6 +135,10 @@ public class MainActivity extends AppCompatActivity {
             // draw hangman !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             bodyParts[failTime].setVisibility(View.VISIBLE);
             failTime++;
+            b.setEnabled(false);
+            b.setTextColor(getResources().getColor(R.color.white));
+            b.setBackgroundColor(getResources().getColor(R.color.red));
+
             if (failTime == 8) {
                 Toast.makeText(getApplicationContext(), "Game Over", Toast.LENGTH_LONG).show();
                 disableAllButton();
