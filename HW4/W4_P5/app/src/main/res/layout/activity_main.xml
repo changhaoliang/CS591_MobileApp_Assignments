@@ -14,23 +14,23 @@
 
         <View
             android:id="@+id/static0"
-            android:layout_width="300dp"
+            android:layout_width="280dp"
             android:layout_height="5dp"
             android:layout_marginStart="100dp"
-            android:layout_marginTop="350dp"
+            android:layout_marginTop="320dp"
             android:background="@color/black" />
 
         <View
             android:id="@+id/static1"
             android:layout_width="5dp"
-            android:layout_height="300dp"
+            android:layout_height="280dp"
             android:layout_alignBottom="@id/static0"
             android:layout_marginStart="250dp"
             android:background="@color/black" />
 
         <View
             android:id="@+id/part0"
-            android:layout_width="180dp"
+            android:layout_width="160dp"
             android:layout_height="5dp"
             android:layout_alignTop="@id/static1"
             android:layout_alignEnd="@id/static1"
@@ -46,25 +46,25 @@
 
         <View
             android:id="@+id/part2"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:background="@drawable/shape_ring"
             android:layout_below="@+id/part1"
-            android:layout_marginStart="47.5dp"/>
+            android:layout_marginStart="72.5dp"/>
 
         <View
             android:id="@+id/part3"
             android:layout_width="5dp"
-            android:layout_height="90dp"
+            android:layout_height="80dp"
             android:background="@color/black"
             android:layout_alignTop="@id/part2"
             android:layout_alignStart="@id/part2"
-            android:layout_marginTop="55dp"
-            android:layout_marginStart="27.5dp"/>
+            android:layout_marginTop="50dp"
+            android:layout_marginStart="22.5dp"/>
 
         <View
             android:id="@+id/part4"
-            android:layout_width="60dp"
+            android:layout_width="50dp"
             android:layout_height="5dp"
             android:layout_alignTop="@id/part3"
             android:layout_alignStart="@id/part3"
@@ -74,17 +74,17 @@
 
         <View
             android:id="@+id/part5"
-            android:layout_width="60dp"
+            android:layout_width="50dp"
             android:layout_height="5dp"
             android:layout_alignTop="@id/part3"
             android:layout_alignStart="@id/part3"
-            android:layout_marginTop="110dp"
+            android:layout_marginTop="95dp"
             android:background="@color/black"
             android:rotation="45"/>
 
         <View
             android:id="@+id/part6"
-            android:layout_width="60dp"
+            android:layout_width="50dp"
             android:layout_height="5dp"
             android:layout_alignTop="@id/part3"
             android:layout_alignEnd="@id/part3"
@@ -94,11 +94,11 @@
 
         <View
             android:id="@+id/part7"
-            android:layout_width="60dp"
+            android:layout_width="50dp"
             android:layout_height="5dp"
             android:layout_alignTop="@id/part3"
             android:layout_alignEnd="@id/part3"
-            android:layout_marginTop="110dp"
+            android:layout_marginTop="95dp"
             android:background="@color/black"
             android:rotation="135"/>
 
