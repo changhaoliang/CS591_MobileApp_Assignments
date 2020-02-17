@@ -6,6 +6,7 @@ import android.accessibilityservice.AccessibilityService;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.GestureDetector;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.widget.AbsoluteLayout;
 import android.widget.FrameLayout;
@@ -29,6 +30,16 @@ public class MainActivity extends AppCompatActivity
 
         GD = new GestureDetector(this, this);   //Context, Listener as per Constructor Doc.
         //GD.setOnDoubleTapListener(this);   //DoubleTaps implemented a bit differently, must be bound like this.
+        param = (FrameLayout.LayoutParams) txtMessage.getLayoutParams();
+
+        DisplayMetrics displaymetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+        int width = displaymetrics.widthPixels;
+        int height = displaymetrics.heightPixels;
+        param.leftMargin=  (width-300)/2 ;
+        param.topMargin =  (height-100)/2;
+        //param.gravity = Gravity.CENTER;
+        txtMessage.setLayoutParams(param);
     }
 
     @Override
@@ -52,20 +63,26 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-        txtMessage.setText("onFling");
+
         DisplayMetrics displaymetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
         int width = displaymetrics.widthPixels;
         int height = displaymetrics.heightPixels;
+        if(velocityX > 1 || velocityX<-1 ||velocityY>1 || velocityY<-1) {
 
+            Random r = new Random();
 
-        Random r = new Random();
+            param = (FrameLayout.LayoutParams) txtMessage.getLayoutParams();
 
-        param = (FrameLayout.LayoutParams) txtMessage.getLayoutParams();
-
-        param.leftMargin=  r.nextInt(width ) ;
-        param.topMargin =  r.nextInt(height );
-        txtMessage.setLayoutParams(param);
+            param.leftMargin = r.nextInt(width - 300);
+            param.topMargin = r.nextInt(height - 100);
+            //param.gravity = Gravity.CENTER;
+            txtMessage.setLayoutParams(param);
+            txtMessage.setText("onFling s");
+        }
+        else{
+            txtMessage.setText("onFling");
+        }
 
         return true;
     }
