@@ -23,7 +23,7 @@ public class Round {
 		this.vowels = new HashSet<>(Arrays.asList('a', 'e', 'i', 'o', 'u'));
 
 		for(int i = 0; i < word.length(); i++) {
-			Character ch = word.charAt(i);
+			char ch = word.charAt(i);
 			ArrayList<Integer> position = new ArrayList<>();;
 			if(charMap.containsKey(ch)){
 				position = this.charMap.get(ch);
@@ -36,13 +36,14 @@ public class Round {
 		}
 	}
 
-	public void updateScore(Character ch) {
+	public void updateScore(char ch) {
 		if (isCharGuessed(ch)) {
 			guessedWords.add(ch);
+			int count = charMap.get(ch).size();
 			if (vowels.contains(ch)) {
-				score += 5;
+				score += 5 * count;
 			} else {
-				score += 2;
+				score += 2 * count;
 			}
 		}
 	}
@@ -56,7 +57,7 @@ public class Round {
 		return true;
 	}
 
-	public boolean isCharGuessed(Character ch) {
+	public boolean isCharGuessed(char ch) {
 		return charMap.containsKey(ch);
 	}
 
@@ -64,7 +65,7 @@ public class Round {
 		return score;
 	}
 	
-	public ArrayList<Integer> getPosition(Character ch){
+	public ArrayList<Integer> getPosition(char ch){
 		return charMap.get(ch);
 	}
 	
