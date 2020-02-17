@@ -55,6 +55,11 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
                 if (Euro.getText().length()>0) {
                     converter.setCurrency(Double.valueOf(Euro.getText().toString()));
                     updateCurrencies();
+                } else if (Euro.getText().length() == 0) {
+                    Dollar.setText("");
+                    Yen.setText("");
+                    Yuan.setText("");
+                    Pound.setText("");
                 }
             }
         });
