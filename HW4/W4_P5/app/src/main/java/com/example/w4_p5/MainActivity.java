@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         letterButtons[3][0].setVisibility(View.INVISIBLE);
         letterButtons[3][kbColumns-1].setVisibility(View.INVISIBLE);
     }
+
     private boolean checkLetter(Button b){
         char c = b.getText().charAt(0);
         //if c is the answer return true, and set button invisible
