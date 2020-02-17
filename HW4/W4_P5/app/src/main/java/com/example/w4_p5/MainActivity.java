@@ -1,20 +1,14 @@
 package com.example.w4_p5;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-
-import android.graphics.Color;
 import android.graphics.LightingColorFilter;
 import android.graphics.Point;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.Button;
 import android.widget.GridLayout;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -28,10 +22,12 @@ public class MainActivity extends AppCompatActivity {
 
     private View[] bodyParts;
     private int failTime;
+    private int orientation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        this.orientation = getResources().getConfiguration().orientation;
 
         bodyParts = new View[8];
         bodyParts[0] = findViewById(R.id.part0);
@@ -66,17 +62,27 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void init() {
-        RelativeLayout myLayout = findViewById(R.id.root);
         wordInput = new WordInput(this, hangman.getRound().getWord().length());
         RelativeLayout.LayoutParams wordInputLayoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         wordInputLayoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
         wordInputLayoutParams.addRule(RelativeLayout.BELOW, R.id.hangman);
-        myLayout.addView(wordInput, wordInputLayoutParams);
+
         GridLayout keyBoard = buildKeyboard();
         RelativeLayout.LayoutParams keyBoardLayoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         keyBoardLayoutParams.topMargin = 300;
-        keyBoardLayoutParams.addRule(RelativeLayout.BELOW, R.id.hangman);
-        myLayout.addView(keyBoard, keyBoardLayoutParams);
+
+        if (orientation == getResources().getConfiguration().ORIENTATION_PORTRAIT) {
+            RelativeLayout myLayout = findViewById(R.id.root);
+            myLayout.addView(wordInput, wordInputLayoutParams);
+            keyBoardLayoutParams.addRule(RelativeLayout.BELOW, R.id.hangman);
+            myLayout.addView(keyBoard, keyBoardLayoutParams);
+        } else if (orientation == getResources().getConfiguration().ORIENTATION_LANDSCAPE) {
+            RelativeLayout panelRight = findViewById(R.id.panelRight);
+            RelativeLayout panel = findViewById(R.id.panelLeft);
+            keyBoardLayoutParams.leftMargin = 140;
+            panelRight.addView(wordInput, wordInputLayoutParams);
+            panel.addView(keyBoard, keyBoardLayoutParams);
+        }
 
         for (int i = 0; i < 8; i++) {
             bodyParts[i].setVisibility(View.INVISIBLE);
@@ -86,8 +92,13 @@ public class MainActivity extends AppCompatActivity {
 
     public GridLayout buildKeyboard(){
         Point size = new Point();
+        int w = 0;
         getWindowManager().getDefaultDisplay().getSize(size);
-        int w = size.x/kbColumns;
+        if (orientation == getResources().getConfiguration().ORIENTATION_PORTRAIT) {
+            w = size.x / kbColumns;
+        } else if (orientation == getResources().getConfiguration().ORIENTATION_LANDSCAPE) {
+            w = (int)(size.y / kbColumns * 0.8);
+        }
         GridLayout keyBoard = new GridLayout(this);
         keyBoard.setColumnCount(kbColumns);
         keyBoard.setRowCount(kbRows);
@@ -112,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
         return keyBoard;
     }
 
-    private boolean checkLetter(Button b){
+    private void checkLetter(Button b){
         char c = Character.toLowerCase(b.getText().charAt(0));
         //if c is the answer return true, and set button invisible
         if (hangman.getRound().isCharGuessed(c)) {
@@ -138,8 +149,6 @@ public class MainActivity extends AppCompatActivity {
                 // should reset
 
             }
-
-            return true;
         } else {
             // draw hangman !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             bodyParts[failTime].setVisibility(View.VISIBLE);
@@ -154,7 +163,6 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Game Over", Toast.LENGTH_LONG).show();
                 disableAllButton();
             }
-            return false;
         }
     }
     public void disableAllButton() {
