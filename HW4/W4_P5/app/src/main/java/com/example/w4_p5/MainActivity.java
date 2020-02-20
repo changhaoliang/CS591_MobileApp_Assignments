@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.graphics.LightingColorFilter;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        System.out.println("onCreate");
         this.orientation = getResources().getConfiguration().orientation;
         hintFlag = false;
         ifClickStart = false;
@@ -94,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
+        System.out.println("onSaveInstanceState");
         outState.putParcelable("game", hangman);
         outState.putParcelable("wordInput", wordInput);
         outState.putInt("failtime", failTime);
@@ -108,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        System.out.println("onRestoreInstanceState");
         super.onRestoreInstanceState(savedInstanceState);
         hangman = savedInstanceState.getParcelable("game");
         wordInput = savedInstanceState.getParcelable("wordInput");
