@@ -21,6 +21,7 @@ public class Home extends AppCompatActivity implements GestureDetector.OnGesture
 
     }
 
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         return gestureDetector.onTouchEvent(event);
