@@ -4,12 +4,14 @@ package com.example.sse.interfragmentcommratingbar;
 import android.app.Fragment;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.renderscript.ScriptIntrinsicYuvToRGB;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -20,13 +22,14 @@ import java.util.ArrayList;
  */
 public class DrawableFragment extends Fragment {
 
-    ArrayList<Drawable> drawables;  //keeping track of our drawables
+    //ArrayList<Drawable> drawables;  //keeping track of our drawables
+    ArrayList<Picture> pictures;  //keeping track of our drawables
     private int currDrawableIndex;  //keeping track of which drawable is currently displayed.
 
  //Boiler Plate Stuff.
     private ImageView imgRateMe;
-    private Button btnLeft;
-    private Button btnRight;
+
+    private RatingBar ratingBar;
 
 //    public DrawableFragment() {
 //        // Required empty public constructor
@@ -40,9 +43,9 @@ public class DrawableFragment extends Fragment {
         //return inflater.inflate(R.layout.fragment_drawable, container, false);  //comment this out, it would return the default view, without our setup/amendments.
         View v = inflater.inflate(R.layout.fragment_drawable, container, false);   //MUST HAPPEN FIRST, otherwise components don't exist.
 
+        ratingBar = (RatingBar) v.findViewById(R.id.ratingBar);
         imgRateMe = (ImageView) v.findViewById(R.id.imgRateMe);
-        btnRight = (Button) v.findViewById(R.id.btnRight);
-        btnLeft = (Button) v.findViewById(R.id.btnLeft);
+
 
 
         currDrawableIndex = 0;  //ArrayList Index of Current Drawable.
@@ -52,52 +55,73 @@ public class DrawableFragment extends Fragment {
 
 
 //setting up navigation call backs.  (Left and Right Buttons)
-        btnLeft.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (currDrawableIndex == 0)
-                    currDrawableIndex = drawables.size() - 1;
-                else
-                    currDrawableIndex--;
-                changePicture();
-            }
-        });
 
-        btnRight.setOnClickListener(new View.OnClickListener() {
+
+        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
-            public void onClick(View v) {
-                if (currDrawableIndex == drawables.size() - 1)
-                    currDrawableIndex = 0;
-                else
-                    currDrawableIndex++;
-                changePicture();
+            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
+                if (b) {
+                    pictures.get(currDrawableIndex).setRating(v);
+                }
             }
         });
 
         return v;   //returns the view, with our must happen last, Why? A: ____________
     }
+    public void updatePicture(int index) {
+        currDrawableIndex = index;
 
+        if (currDrawableIndex <= 0) {
+            currDrawableIndex = pictures.size() - 1;
+        }
+        else if (currDrawableIndex >= pictures.size() - 1) {
+            currDrawableIndex = 0;
+        }
+        changePicture();
+    }
 //Routine to change the picture in the image view dynamically.
     public void changePicture() {
-      imgRateMe.setImageDrawable(drawables.get(currDrawableIndex));  //note, this is the preferred way of changing images, don't worry about parent viewgroup size changes.
+
+        imgRateMe.setImageDrawable(pictures.get(currDrawableIndex).getImage());  //note, this is the preferred way of changing images, don't worry about parent viewgroup size changes.
+        ratingBar.setRating(pictures.get(currDrawableIndex).getRating());
     }
 
 //Quick and Dirty way to get drawable resources, we prefix with "animal_" to filter out just the ones we want to display.
 //REF: http://stackoverflow.com/questions/31921927/how-to-get-all-drawable-resources
     public void getDrawables() {
         Field[] drawablesFields = com.example.sse.interfragmentcommratingbar.R.drawable.class.getFields();  //getting array of ALL drawables.
-        drawables = new ArrayList<>();  //we prefer an ArrayList, to store the drawables we are interested in.  Why ArrayList and not an Array here? A: _________
+        pictures = new ArrayList<Picture>();  //we prefer an ArrayList, to store the drawables we are interested in.  Why ArrayList and not an Array here? A: _________
 
         String fieldName;
+        System.out.println(drawablesFields.length);
+        System.out.println("=====");
         for (Field field : drawablesFields) {   //1. Looping over the Array of All Drawables...
             try {
+                System.out.println(field.toString());
                 fieldName = field.getName();    //2. Identifying the Drawables Name, eg, "animal_bewildered_monkey"
-                Log.i("LOG_TAG", "com.your.project.R.drawable." + fieldName);
-                if (fieldName.startsWith("animals_"))  //3. Adding drawable resources that have our prefix, specifically "animal_".
-                    drawables.add(getResources().getDrawable(field.getInt(null)));
+
+//                Log.i("LOG_TAG", "com.your.project.R.drawable." + fieldName);
+                if (fieldName.startsWith("animals_")) { //3. Adding drawable resources that have our prefix, specifically "animal_".
+                    Picture p = new Picture(getResources().getDrawable(field.getInt(null)), 0);
+                    pictures.add(p);
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
+
+        for (Picture p : pictures) {
+            System.out.println(p.toString());
+        }
     }
 }
+
+
+
+
+
+
+
+
+
+

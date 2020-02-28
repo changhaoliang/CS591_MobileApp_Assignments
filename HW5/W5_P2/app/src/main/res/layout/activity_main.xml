@@ -10,11 +10,28 @@
     tools:context="com.example.sse.interfragmentcommratingbar.MainActivity">
 
     <fragment
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:id="@+id/drawable_fragment"
         android:name="com.example.sse.interfragmentcommratingbar.DrawableFragment"
-        android:id="@+id/fragment"
-        tools:layout="@layout/fragment_drawable"
+        android:layout_width="wrap_content"
+        android:layout_height="603dp"
         android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true" />
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginBottom="2dp"
+        tools:layout="@layout/fragment_drawable" />
+
+    <fragment
+        android:id="@+id/navigate_fragment"
+        android:name="com.example.sse.interfragmentcommratingbar.NavigateFragment"
+        android:layout_width="391dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="13dp"
+        android:layout_marginEnd="4dp"
+        tools:layout="@layout/fragment_navigate" />
+
+
 </RelativeLayout>
