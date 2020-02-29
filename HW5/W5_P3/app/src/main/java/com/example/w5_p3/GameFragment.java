@@ -1,9 +1,7 @@
 package com.example.w5_p3;
 
-import android.content.Context;
 import android.graphics.LightingColorFilter;
 import android.graphics.Point;
-import android.net.Uri;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.Fragment;
@@ -12,13 +10,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
 
 
 public class GameFragment extends Fragment {
     private final int side = 4;
+    private int[] currentIndex;
+    private Button currentButton;
     private Button[][] letterButtons;
     private char[][] letters = {{'a', 'b', 'c', 'd'}, {'a', 'b', 'c', 'd'}, {'a', 'b', 'c', 'd'}, {'a', 'b', 'c', 'd'}};
 
@@ -36,6 +35,14 @@ public class GameFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_game, container, false);
+        Button clearButton = view.findViewById(R.id.buttonClear);
+        clearButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clearButtons();
+            }
+        });
+        currentIndex = new int[2];
         createLetterBoard(view);
         return view;
     }
@@ -82,13 +89,34 @@ public class GameFragment extends Fragment {
 
     private class ButtonHandler implements View.OnClickListener{
         @Override
-        public void onClick(View v){
+        public void onClick(View v) {
             for (int row=0; row<side; row++){
                 for (int col=0; col<side; col++){
                     if (v == letterButtons[row][col]){
-                        checkLetter(letterButtons[row][col]);
+                        if (currentButton != null) {
+                            currentButton.getBackground().setColorFilter(new LightingColorFilter(0x00000000,
+                                    getResources().getColor(R.color.orange)));
+                        }
+                        currentIndex[0] = row;
+                        currentIndex[1] = col;
+                        currentButton = letterButtons[row][col];
+                        currentButton.getBackground().setColorFilter(new LightingColorFilter(0x00000000,
+                                getResources().getColor(R.color.red)));
+                        currentButton.setEnabled(false);
                     }
                 }
+            }
+        }
+    }
+
+    private void clearButtons() {
+        for (int row=0; row<side; row++){
+            for (int col=0; col<side; col++){
+                letterButtons[row][col].setEnabled(true);
+                letterButtons[row][col].getBackground().setColorFilter(new LightingColorFilter(0x00000000,
+                        0X00FFFFFF));
+                currentButton = null;
+                currentIndex = new int[2];
             }
         }
     }
