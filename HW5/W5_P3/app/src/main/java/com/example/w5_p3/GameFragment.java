@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class GameFragment extends Fragment {
@@ -18,7 +20,9 @@ public class GameFragment extends Fragment {
     private int[] currentIndex;
     private Button currentButton;
     private Button[][] letterButtons;
-    private char[][] letters = {{'a', 'b', 'c', 'd'}, {'a', 'b', 'c', 'd'}, {'a', 'b', 'c', 'd'}, {'a', 'b', 'c', 'd'}};
+    private Board board;
+    private char[][] letters;
+    TextView word;
 
     public GameFragment() {
         // Required empty public constructor
@@ -35,6 +39,8 @@ public class GameFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_game, container, false);
         Button clearButton = view.findViewById(R.id.buttonClear);
+        board = new Board();
+        letters = board.shuffle();
         clearButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,16 +87,20 @@ public class GameFragment extends Fragment {
             for (int row=0; row<side; row++){
                 for (int col=0; col<side; col++){
                     if (v == letterButtons[row][col]){
-                        if (currentButton != null) {
-                            currentButton.getBackground().setColorFilter(new LightingColorFilter(0x00000000,
-                                    getResources().getColor(R.color.orange)));
+                        if (currentButton == null) {
+                            setCurrentButton(letterButtons[row][col]);
+                            currentIndex = new int[]{row, col};
+                        } else {
+                            if (!board.isAdjacent(currentIndex, new int[]{row, col})) {
+                                Toast.makeText(getActivity(), "Tap on adjacent letters!", Toast.LENGTH_LONG).show();
+                                clearButtons();
+                            } else {
+                                currentButton.getBackground().setColorFilter(new LightingColorFilter(0x00000000,
+                                        getResources().getColor(R.color.orange)));
+                                setCurrentButton(letterButtons[row][col]);
+                                currentIndex = new int[]{row, col};
+                            }
                         }
-                        currentIndex[0] = row;
-                        currentIndex[1] = col;
-                        currentButton = letterButtons[row][col];
-                        currentButton.getBackground().setColorFilter(new LightingColorFilter(0x00000000,
-                                getResources().getColor(R.color.red)));
-                        currentButton.setEnabled(false);
                     }
                 }
             }
@@ -107,6 +117,13 @@ public class GameFragment extends Fragment {
                 currentIndex = new int[2];
             }
         }
+    }
+
+    private void setCurrentButton(Button button) {
+        currentButton =button;
+        currentButton.getBackground().setColorFilter(new LightingColorFilter(0x00000000,
+                getResources().getColor(R.color.red)));
+        currentButton.setEnabled(false);
     }
 
     private void checkLetter(Button button){

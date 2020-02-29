@@ -131,14 +131,12 @@ public class Board {
     public char[][] getBoard() {
         return board;
     }
-    public static void main(String[] args) {
-        Board board = new Board();
-        board.shuffle();
-    }
 
-    public static boolean isAdjacent(int[] currentIndex, int[] nextIndex) {
-        double distance_square = Math.pow(currentIndex[0], nextIndex[0]) + Math.pow(currentIndex[1], nextIndex[1]);
-        return distance_square <= 2;
+    public boolean isAdjacent(int[] currentIndex, int[] nextIndex) {
+        double distanceSquare = Math.pow((currentIndex[0] - nextIndex[0]), 2) + Math.pow((currentIndex[1] - nextIndex[1]), 2);
+
+        System.out.println(distanceSquare);
+        return distanceSquare <= 2;
     }
 
 }
