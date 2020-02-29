@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridLayout;
+import android.widget.LinearLayout;
 
 
 public class GameFragment extends Fragment {
@@ -49,15 +50,26 @@ public class GameFragment extends Fragment {
 
         letterButtons = new Button[side][side];
         ButtonHandler bh = new ButtonHandler();
+
+
         for (int row=0; row<side; row++){
             for (int col=0; col<side; col++){
                 letterButtons[row][col] = new Button(getActivity());
                 letterButtons[row][col].setText(String.valueOf(letters[row][col]));
-                //letterButtons[row][col].setTextSize(20);
+                letterButtons[row][col].setTextSize(25);
                 letterButtons[row][col].setOnClickListener(bh);
                 letterButtons[row][col].getBackground().setColorFilter(new LightingColorFilter(0x00000000,
                         0X00FFFFFF));
-                gridLayout.addView(letterButtons[row][col], w, w);
+
+                LinearLayout.LayoutParams ll = new LinearLayout.LayoutParams(w-40, w-40);
+                GridLayout.LayoutParams gl = new GridLayout.LayoutParams(ll);
+                gl.leftMargin = 20;
+                gl.rightMargin = 20;
+                gl.topMargin = 20;
+                gl.bottomMargin = 20;
+                letterButtons[row][col].setLayoutParams(gl);
+
+                gridLayout.addView(letterButtons[row][col]);
             }
         }
     }
@@ -86,6 +98,6 @@ public class GameFragment extends Fragment {
     }
 
     private void setColor(Button button){
-        
+
     }
 }
