@@ -11,11 +11,23 @@
   <component name="ChangeListManager">
     <list default="true" id="ff5c8bc9-6576-480f-8697-ea2f9f907e48" name="Default Changelist" comment="">
 <<<<<<< HEAD
+<<<<<<< HEAD
       <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/w5_p3/PathCheck.java" afterDir="false" />
+=======
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/font/amaranth.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/values/font_certs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/values/preloaded_fonts.xml" afterDir="false" />
+=======
+<<<<<<< HEAD
+      <change beforePath="$PROJECT_DIR$/../W5_P2/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/../W5_P2/.idea/caches/build_file_checksums.ser" afterDir="false" />
+=======
+<<<<<<< HEAD
+>>>>>>> 71d52178d53ff1b434e829d8a7690e25a3f8265e
 =======
       <change afterPath="$PROJECT_DIR$/../W5_P1_1/.idea/vcs.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_legacy_legacy_support_v4_1_0_0_aar.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__androidx_media_media_1_0_0_aar.xml" afterDir="false" />
+>>>>>>> 5233d39a1f786a0fdb83a7706db6a6064f6906cf
       <change beforePath="$PROJECT_DIR$/../../HW4/W4_P5/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../HW4/W4_P5/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../HW4/W4_P5/app/src/main/res/layout-land/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../HW4/W4_P5/app/src/main/res/layout-land/activity_main.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../W5_P1_1/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/../W5_P1_1/.idea/caches/build_file_checksums.ser" afterDir="false" />
@@ -29,13 +41,31 @@
       <change beforePath="$PROJECT_DIR$/../W5_P2/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/../W5_P2/.idea/caches/build_file_checksums.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../W5_P2/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../W5_P2/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../W5_P2/app/src/main/res/layout/fragment_drawable.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../W5_P2/app/src/main/res/layout/fragment_drawable.xml" afterDir="false" />
+<<<<<<< HEAD
 >>>>>>> 1835b143d4559b32cb92f04d1d0b351c1242474c
+=======
+<<<<<<< HEAD
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/w5_p3/GameFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/w5_p3/GameFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_bottom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_bottom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_game.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_game.xml" afterDir="false" />
+=======
+>>>>>>> 1835b143d4559b32cb92f04d1d0b351c1242474c
+>>>>>>> 64c7ede6580026e8f48717ba97e80a1d3f35b764
+>>>>>>> 71d52178d53ff1b434e829d8a7690e25a3f8265e
       <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
 <<<<<<< HEAD
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/app/src/test/java/com/example/w5_p3/ExampleUnitTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/test/java/com/example/w5_p3/ExampleUnitTest.java" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/w5_p3/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/w5_p3/MainActivity.java" afterDir="false" />
+=======
+<<<<<<< HEAD
+>>>>>>> 71d52178d53ff1b434e829d8a7690e25a3f8265e
 =======
       <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/w5_p3/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/w5_p3/MainActivity.java" afterDir="false" />
@@ -43,6 +73,8 @@
       <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
 >>>>>>> 1835b143d4559b32cb92f04d1d0b351c1242474c
       <change beforePath="$PROJECT_DIR$/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/local.properties" afterDir="false" />
+>>>>>>> 64c7ede6580026e8f48717ba97e80a1d3f35b764
+>>>>>>> 5233d39a1f786a0fdb83a7706db6a6064f6906cf
     </list>
     <ignored path="$PROJECT_DIR$/build/classes/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -53,6 +85,54 @@
   </component>
   <component name="DefaultGradleProjectSettings">
     <option name="isMigrated" value="true" />
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 64c7ede6580026e8f48717ba97e80a1d3f35b764
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="Pixel_3_XL_API_22" />
+  <component name="FileEditorManager">
+    <leaf>
+<<<<<<< HEAD
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/w5_p3/MainActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="220">
+              <caret line="14" selection-start-line="14" selection-end-line="14" />
+=======
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/w5_p3/MainActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="120">
+              <caret line="10" column="13" lean-forward="true" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+>>>>>>> 64c7ede6580026e8f48717ba97e80a1d3f35b764
+            </state>
+          </provider>
+        </entry>
+      </file>
+<<<<<<< HEAD
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/w5_p3/Board.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="220">
+              <caret line="118" column="18" selection-start-line="118" selection-start-column="18" selection-end-line="118" selection-end-column="18" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#201#212#0" expanded="true" />
+                <element signature="e#505#516#0" expanded="true" />
+                <element signature="e#676#687#0" expanded="true" />
+                <element signature="e#1100#1101#0" expanded="true" />
+                <element signature="e#1141#1142#0" expanded="true" />
+                <element signature="e#1966#1967#0" expanded="true" />
+                <element signature="e#1999#2000#0" expanded="true" />
+                <element signature="e#2048#2049#0" expanded="true" />
+                <element signature="e#2086#2087#0" expanded="true" />
+                <element signature="e#4355#4356#0" expanded="true" />
+                <element signature="e#4383#4384#0" expanded="true" />
+=======
+    </leaf>
+  </component>
+=======
   </component>
 <<<<<<< HEAD
   <component name="ExecutionTargetManager" SELECTED_TARGET="3.2_HVGA_slider_ADP1_API_23" />
@@ -82,8 +162,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_game.xml">
           <provider editor-type-id="text-editor">
-            <state relative-caret-position="-108">
-              <caret line="6" column="4" selection-start-line="6" selection-start-column="4" selection-end-line="6" selection-end-column="4" />
+            <state relative-caret-position="295">
+              <caret line="48" lean-forward="true" selection-start-line="48" selection-end-line="48" />
             </state>
           </provider>
           <provider selected="true" editor-type-id="android-designer2" />
@@ -98,20 +178,32 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/w5_p3/GameFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="394">
-              <caret line="88" column="8" selection-start-line="88" selection-start-column="8" selection-end-line="88" selection-end-column="8" />
+            <state relative-caret-position="25">
+              <caret line="62" selection-start-line="62" selection-end-line="62" />
               <folding>
                 <element signature="imports" expanded="true" />
+>>>>>>> 64c7ede6580026e8f48717ba97e80a1d3f35b764
               </folding>
             </state>
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+=======
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_bottom.xml">
           <provider editor-type-id="text-editor">
-            <state relative-caret-position="164">
-              <caret line="38" selection-start-line="38" selection-end-line="38" />
+            <state relative-caret-position="104">
+              <caret line="42" selection-start-line="42" selection-end-line="42" />
             </state>
           </provider>
           <provider selected="true" editor-type-id="android-designer2" />
@@ -148,6 +240,8 @@
 =======
 >>>>>>> 1835b143d4559b32cb92f04d1d0b351c1242474c
   </component>
+>>>>>>> 1835b143d4559b32cb92f04d1d0b351c1242474c
+>>>>>>> 64c7ede6580026e8f48717ba97e80a1d3f35b764
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
   </component>
@@ -162,10 +256,23 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/w5_p3/PathCheck.java" />
 =======
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/w5_p3/MainActivity.java" />
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/w5_p3/Board.java" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="width" value="960" />
+    <option name="height" value="810" />
+=======
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/w5_p3/GameFragment.java" />
+>>>>>>> 5233d39a1f786a0fdb83a7706db6a6064f6906cf
         <option value="$PROJECT_DIR$/app/src/main/java/com/example/w5_p3/BottomFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_game.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/example/w5_p3/GameFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_game.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_bottom.xml" />
 >>>>>>> 1835b143d4559b32cb92f04d1d0b351c1242474c
       </list>
@@ -182,7 +289,11 @@
     <option name="y" value="23" />
     <option name="width" value="1440" />
     <option name="height" value="829" />
+<<<<<<< HEAD
 >>>>>>> 1835b143d4559b32cb92f04d1d0b351c1242474c
+=======
+>>>>>>> 64c7ede6580026e8f48717ba97e80a1d3f35b764
+>>>>>>> 71d52178d53ff1b434e829d8a7690e25a3f8265e
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -190,6 +301,14 @@
     </navigator>
     <panes>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
+      <pane id="ProjectPane" />
+=======
+<<<<<<< HEAD
+>>>>>>> 71d52178d53ff1b434e829d8a7690e25a3f8265e
       <pane id="Scope" />
       <pane id="PackagesPane" />
       <pane id="ProjectPane" />
@@ -198,6 +317,10 @@
       <pane id="PackagesPane" />
       <pane id="Scope" />
 >>>>>>> 1835b143d4559b32cb92f04d1d0b351c1242474c
+<<<<<<< HEAD
+=======
+>>>>>>> 64c7ede6580026e8f48717ba97e80a1d3f35b764
+>>>>>>> 71d52178d53ff1b434e829d8a7690e25a3f8265e
       <pane id="AndroidView">
         <subPane>
           <expand>
@@ -237,12 +360,17 @@
               <item name="W5_P3" type="1abcf292:AndroidViewProjectNode" />
               <item name="app" type="feadf853:AndroidModuleNode" />
               <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+<<<<<<< HEAD
               <item name="com" type="cbb59c9e:AndroidPsiDirectoryNode" />
+=======
+              <item name="w5_p3" type="cbb59c9e:AndroidPsiDirectoryNode" />
+>>>>>>> 71d52178d53ff1b434e829d8a7690e25a3f8265e
             </path>
             <path>
               <item name="W5_P3" type="1abcf292:AndroidViewProjectNode" />
               <item name="app" type="feadf853:AndroidModuleNode" />
               <item name="java" type="edd41e36:AndroidSourceTypeNode" />
+<<<<<<< HEAD
               <item name="com" type="cbb59c9e:AndroidPsiDirectoryNode" />
               <item name="example" type="462c0819:PsiDirectoryNode" />
             </path>
@@ -283,6 +411,9 @@
               <item name="example" type="462c0819:PsiDirectoryNode" />
               <item name="w5_p3" type="462c0819:PsiDirectoryNode" />
               <item name="ExampleUnitTest" type="1a9f42e2:ClassTreeNode" />
+=======
+              <item name="w5_p3" type="cbb59c9e:AndroidPsiDirectoryNode" />
+>>>>>>> 71d52178d53ff1b434e829d8a7690e25a3f8265e
             </path>
             <path>
               <item name="W5_P3" type="1abcf292:AndroidViewProjectNode" />
@@ -306,6 +437,12 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
   </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/src/main/java/com/example/w5_p3" />
+      <recent name="$PROJECT_DIR$/app/src/main/res/raw" />
+    </key>
+  </component>
   <component name="RunDashboard">
     <option name="ruleStates">
       <list>
@@ -318,6 +455,7 @@
       </list>
     </option>
   </component>
+<<<<<<< HEAD
 <<<<<<< HEAD
   <component name="RunManager" selected="Application.PathCheck">
     <configuration name="ExampleUnitTest.checkPath" type="AndroidJUnit" factoryName="Android JUnit" temporary="true" nameIsGenerated="true">
@@ -340,6 +478,12 @@
 =======
   <component name="RunManager" selected="Android App.W5_P3-app">
 >>>>>>> 1835b143d4559b32cb92f04d1d0b351c1242474c
+=======
+  <component name="RunManager" selected="Application.Board">
+=======
+  <component name="RunManager" selected="Android App.W5_P3-app">
+>>>>>>> 64c7ede6580026e8f48717ba97e80a1d3f35b764
+>>>>>>> 71d52178d53ff1b434e829d8a7690e25a3f8265e
     <configuration default="true" type="AndroidJUnit" factoryName="Android JUnit">
       <option name="TEST_OBJECT" value="class" />
       <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
@@ -453,6 +597,7 @@
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
       </method>
     </configuration>
+<<<<<<< HEAD
     <configuration name="PathCheck" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.example.w5_p3.PathCheck" />
       <module name="app" />
@@ -468,6 +613,10 @@
     </configuration>
     <configuration name="Test" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.example.w5_p3.Test" />
+=======
+    <configuration name="Board" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.example.w5_p3.Board" />
+>>>>>>> 71d52178d53ff1b434e829d8a7690e25a3f8265e
       <module name="app" />
       <extension name="coverage">
         <pattern>
@@ -481,9 +630,13 @@
     </configuration>
     <recent_temporary>
       <list>
+<<<<<<< HEAD
         <item itemvalue="Application.PathCheck" />
         <item itemvalue="Application.Test" />
         <item itemvalue="Android JUnit.ExampleUnitTest.checkPath" />
+=======
+        <item itemvalue="Application.Board" />
+>>>>>>> 71d52178d53ff1b434e829d8a7690e25a3f8265e
       </list>
     </recent_temporary>
   </component>
@@ -513,7 +666,18 @@
   </component>
   <component name="ToolWindowManager">
 <<<<<<< HEAD
+<<<<<<< HEAD
     <frame x="15" y="23" width="1440" height="826" extended-state="0" />
+=======
+    <frame x="0" y="0" width="1920" height="1080" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
+      <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.17182498" />
+=======
+<<<<<<< HEAD
+    <frame x="0" y="23" width="1440" height="806" extended-state="6" />
+>>>>>>> 71d52178d53ff1b434e829d8a7690e25a3f8265e
 =======
     <frame x="20" y="23" width="1440" height="829" extended-state="0" />
 >>>>>>> 1835b143d4559b32cb92f04d1d0b351c1242474c
@@ -521,6 +685,7 @@
     <layout>
       <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
       <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.33404863" />
+>>>>>>> 64c7ede6580026e8f48717ba97e80a1d3f35b764
       <window_info id="Structure" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info id="Build Variants" order="4" side_tool="true" />
@@ -528,6 +693,7 @@
       <window_info id="Designer" order="6" />
       <window_info id="Resources Explorer" order="7" />
       <window_info id="Capture Tool" order="8" />
+<<<<<<< HEAD
 <<<<<<< HEAD
       <window_info anchor="bottom" id="Run" weight="0.37959182" />
       <window_info anchor="bottom" id="Debug" weight="0.41904762" />
@@ -538,6 +704,25 @@
       <window_info anchor="bottom" id="Terminal" order="3" visible="true" weight="0.32970026" />
       <window_info anchor="bottom" id="Event Log" order="4" side_tool="true" />
       <window_info anchor="bottom" id="Build" order="5" weight="0.3292517" />
+=======
+      <window_info active="true" anchor="bottom" id="Run" visible="true" weight="0.079702444" />
+      <window_info anchor="bottom" id="Debug" />
+      <window_info anchor="bottom" id="Version Control" order="0" />
+      <window_info anchor="bottom" id="Logcat" order="1" />
+      <window_info anchor="bottom" id="TODO" order="2" />
+      <window_info anchor="bottom" id="Terminal" order="3" weight="0.32943678" />
+      <window_info anchor="bottom" id="Event Log" order="4" side_tool="true" />
+      <window_info anchor="bottom" id="Build" order="5" weight="0.33049947" />
+      <window_info anchor="bottom" id="Android Profiler" order="6" show_stripe_button="false" />
+=======
+<<<<<<< HEAD
+      <window_info anchor="bottom" id="Version Control" order="0" />
+      <window_info anchor="bottom" id="Logcat" order="1" />
+      <window_info anchor="bottom" id="TODO" order="2" />
+      <window_info anchor="bottom" id="Terminal" order="3" />
+      <window_info anchor="bottom" id="Event Log" order="4" side_tool="true" />
+      <window_info anchor="bottom" id="Build" order="5" visible="true" weight="0.32913166" />
+>>>>>>> 71d52178d53ff1b434e829d8a7690e25a3f8265e
       <window_info anchor="bottom" id="Android Profiler" order="6" show_stripe_button="false" />
 =======
       <window_info anchor="bottom" id="Run" />
@@ -551,6 +736,10 @@
       <window_info anchor="bottom" id="Android Profiler" order="6" />
       <window_info anchor="right" id="Preview" />
 >>>>>>> 1835b143d4559b32cb92f04d1d0b351c1242474c
+<<<<<<< HEAD
+=======
+>>>>>>> 64c7ede6580026e8f48717ba97e80a1d3f35b764
+>>>>>>> 71d52178d53ff1b434e829d8a7690e25a3f8265e
       <window_info anchor="right" id="Device File Explorer" order="0" side_tool="true" />
       <window_info anchor="right" id="Capture Analysis" order="1" />
       <window_info anchor="right" id="Gradle" order="2" />
@@ -558,6 +747,42 @@
       <window_info anchor="right" id="Palette&#9;" order="4" />
     </layout>
   </component>
+<<<<<<< HEAD
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/w5_p3/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="14" selection-start-line="14" selection-end-line="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/w5_p3/Board.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="118" column="18" selection-start-line="118" selection-start-column="18" selection-end-line="118" selection-end-column="18" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#201#212#0" expanded="true" />
+            <element signature="e#505#516#0" expanded="true" />
+            <element signature="e#676#687#0" expanded="true" />
+            <element signature="e#1100#1101#0" expanded="true" />
+            <element signature="e#1141#1142#0" expanded="true" />
+            <element signature="e#1966#1967#0" expanded="true" />
+            <element signature="e#1999#2000#0" expanded="true" />
+            <element signature="e#2048#2049#0" expanded="true" />
+            <element signature="e#2086#2087#0" expanded="true" />
+            <element signature="e#4355#4356#0" expanded="true" />
+            <element signature="e#4383#4384#0" expanded="true" />
+=======
+<<<<<<< HEAD
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/w5_p3/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="10" column="13" lean-forward="true" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
+        </state>
+      </provider>
+=======
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
@@ -570,7 +795,7 @@
 =======
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/example/w5_p3/GameFragment.java</url>
-          <line>49</line>
+          <line>50</line>
           <properties />
           <option name="timeStamp" value="2" />
 >>>>>>> 1835b143d4559b32cb92f04d1d0b351c1242474c
@@ -602,12 +827,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/w5_p3/GameFragment.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/w5_p3/BottomFragment.java">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
+        <state relative-caret-position="255">
+          <caret line="26" column="5" selection-start-line="26" selection-start-column="5" selection-end-line="26" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/w5_p3/GameFragment.java">
+=======
         <state relative-caret-position="394">
           <caret line="88" column="8" selection-start-line="88" selection-start-column="8" selection-end-line="88" selection-end-column="8" />
           <folding>
             <element signature="imports" expanded="true" />
+<<<<<<< HEAD
 >>>>>>> 1835b143d4559b32cb92f04d1d0b351c1242474c
           </folding>
         </state>
@@ -620,10 +854,14 @@
           <caret line="11" column="36" lean-forward="true" selection-start-line="11" selection-start-column="36" selection-end-line="11" selection-end-column="36" />
           <folding>
             <element signature="e#309#310#0" expanded="true" />
+=======
+>>>>>>> 64c7ede6580026e8f48717ba97e80a1d3f35b764
+>>>>>>> 71d52178d53ff1b434e829d8a7690e25a3f8265e
           </folding>
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/androidx.core/core/1.0.1/ae10d2e1965b944830c2c2aaf154765ceb32e0bc/core-1.0.1-sources.jar!/androidx/core/util/Pair.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="17">
@@ -652,10 +890,17 @@
         </state>
       </provider>
 =======
+<<<<<<< HEAD
+>>>>>>> 71d52178d53ff1b434e829d8a7690e25a3f8265e
+=======
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/example/w5_p3/BottomFragment.java">
+>>>>>>> 5233d39a1f786a0fdb83a7706db6a6064f6906cf
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="26" column="5" selection-start-line="26" selection-start-column="5" selection-end-line="26" selection-end-column="5" />
+        <state relative-caret-position="25">
+          <caret line="62" selection-start-line="62" selection-end-line="62" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -665,20 +910,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_game.xml">
       <provider editor-type-id="text-editor">
-        <state relative-caret-position="-108">
-          <caret line="6" column="4" selection-start-line="6" selection-start-column="4" selection-end-line="6" selection-end-column="4" />
+        <state relative-caret-position="295">
+          <caret line="48" lean-forward="true" selection-start-line="48" selection-end-line="48" />
         </state>
       </provider>
       <provider selected="true" editor-type-id="android-designer2" />
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_bottom.xml">
       <provider editor-type-id="text-editor">
-        <state relative-caret-position="164">
-          <caret line="38" selection-start-line="38" selection-end-line="38" />
+        <state relative-caret-position="104">
+          <caret line="42" selection-start-line="42" selection-end-line="42" />
         </state>
       </provider>
       <provider selected="true" editor-type-id="android-designer2" />
 >>>>>>> 1835b143d4559b32cb92f04d1d0b351c1242474c
     </entry>
+>>>>>>> 64c7ede6580026e8f48717ba97e80a1d3f35b764
   </component>
 </project>
