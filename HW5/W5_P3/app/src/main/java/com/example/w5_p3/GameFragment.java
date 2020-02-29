@@ -50,6 +50,7 @@ public class GameFragment extends Fragment {
         InputStream input= readDictionary();
         board.setInput(input);
         letters = board.shuffle();
+        //letters = new char[][]{{'l', 'i', 'm', 'e'}, {'p', 'i', 'p', 'e'}, {'l', 'i', 'm', 'e'}, {'l', 'i', 'm', 'e'}};
         clearButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,7 +71,7 @@ public class GameFragment extends Fragment {
                     clearButtons();
                 } else {
                     int score = board.updateScore(word);
-                    if (board.searchWord(word)) {
+                    if (score > 0) {
                         Toast.makeText(getActivity(), "That's correct! +" + score, Toast.LENGTH_LONG).show();
                     } else {
                         Toast.makeText(getActivity(), "That's incorrect! " + score, Toast.LENGTH_LONG).show();
@@ -168,6 +169,8 @@ public class GameFragment extends Fragment {
         }
         word = "";
         wordText.setText("");
+        InputStream input= readDictionary();
+        board.setInput(input);
     }
 
     private void setCurrentButton(Button button) {

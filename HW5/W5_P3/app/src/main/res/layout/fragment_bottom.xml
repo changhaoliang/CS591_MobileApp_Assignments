@@ -18,7 +18,7 @@
         android:textSize="25dp" />
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/textScore2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center|center_horizontal|center_vertical"
