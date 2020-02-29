@@ -1,29 +1,34 @@
 package com.example.w5_p3;
 
+import android.app.Activity;
+import android.util.Log;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
-public class Board {
+public class Board extends Activity {
     private char[][] board;
     private int row_num;
     private int col_num;
+    private InputStream input;
 
     private Set<Character> vowels = new HashSet<Character>(Arrays.asList('a', 'e', 'i', 'o', 'u'));
     private Set<Character> consonants = new HashSet<Character>(Arrays.asList('b','c','d','f','g','h','j','k','l','m','n','p','q','r','s','t','v','w','x','y','z'));
     private Set<Character> doubledConsonants = new HashSet<Character>(Arrays.asList('s', 'z', 'y', 'p', 'x', 'q'));
     private Set<String> usedWords;
-    private int totalSocre;
 
     public Board() {
         this.board = new char[4][4];
         this.usedWords = new HashSet<String>();
-        this.totalSocre = 0;
     }
     public Board(char[][] board, int row_num, int col_num) {
         this.board = board;
@@ -46,6 +51,9 @@ public class Board {
     }
 
     public int updateScore(String word) {
+        if (!searchWord(word)) {
+            return -10;
+        }
         int score = 0;
         boolean ifSpecial = false;
         for (int i = 0; i < word.length(); i++) {
@@ -61,26 +69,24 @@ public class Board {
         if (ifSpecial) {
             score *= 2;
         }
-        totalSocre += score;
         return score;
-    }
-    public int getTotalSocre() {
-        return totalSocre;
     }
 
     public void addScoredWord(String newWord) {
         usedWords.add(newWord);
     }
 
+    public void setInput(InputStream input) {
+        this.input = input;
+    }
+
     public boolean searchWord(String word) {
         try {
-            String pathname = "./app/src/main/java/com/example/w5_p3/words.txt";
-            File filename = new File(pathname);
-            InputStreamReader reader = new InputStreamReader(new FileInputStream(filename));
-            BufferedReader br = new BufferedReader(reader);
-            String line = br.readLine();
-            while ((line = br.readLine()) != null) {
-                if (line.toLowerCase().equals(word)) {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(input));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                if (line.toLowerCase().equals(word.toLowerCase())) {
+                    usedWords.add(word);
                     return true;
                 }
             }
@@ -88,13 +94,12 @@ public class Board {
         catch (Exception e) {
             e.printStackTrace();
         }
-
         return false;
     }
 
     public char[][] shuffle(){
-        char[] vowel= new char[] {'a','e','i','o','u'};
-        char[] consonant = new char[] {'b','c','d','f','g','h','j','k','l','m','n','p','q','r','s','t','v','w','x','y','z'};
+        char[] vowel= new char[] {'a','a','a','e','e','e','i','i','o','o','u'};
+        char[] consonant = new char[] {'b','c','d','f','g','h','j','k','l','m','n','p','p','q','r','s','s','s','t','t','v','w','x','y','z'};
 
         int num_row = 4;
         int num_col = 4;
@@ -102,7 +107,7 @@ public class Board {
         int consonant_num = consonant.length;
         char[][] suffle_letters= new char[num_row][num_col];
         //-1- generate vowel char index
-        int num_vowel = 6;
+        int num_vowel = 4;
         HashSet<Integer> vowel_index_set = new HashSet<>();
         Random random = new Random();
 
@@ -126,6 +131,10 @@ public class Board {
 
         this.board = suffle_letters;
         return suffle_letters;
+    }
+
+    public boolean wordRepeated(String word) {
+        return usedWords.contains(word);
     }
 
     public char[][] getBoard() {

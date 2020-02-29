@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class MainActivity extends AppCompatActivity implements GameFragment.GameFragmentListener {
+public class MainActivity extends AppCompatActivity implements GameFragment.GameFragmentListener, BottomFragment.BottomFragmentListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -14,7 +14,14 @@ public class MainActivity extends AppCompatActivity implements GameFragment.Game
     }
 
     @Override
-    public void sendMessage(String msg, String msg2) {
+    public void updateScore(int score) {
+        BottomFragment bottomFragment = (BottomFragment) getFragmentManager().findFragmentById(R.id.fragmentBottom);
+        bottomFragment.updateScore(score);
+    }
 
+    @Override
+    public void newGame() {
+        GameFragment gameFragment = (GameFragment) getFragmentManager().findFragmentById(R.id.fragmentGame);
+        gameFragment.newGame();
     }
 }
