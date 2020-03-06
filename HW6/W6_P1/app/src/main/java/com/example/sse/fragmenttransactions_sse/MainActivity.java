@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
         f1 = (Frag_One) fm.findFragmentByTag("tag1");   //what should we do if f1 doesn't exist anymore?  How do we check and how do we fix?
         FragmentTransaction ft = fm.beginTransaction();  //Create a reference to a fragment transaction.
         if (!f1.isAdded()) {
-            ft.add(R.id.FragLayout, f1, "tag1");
+            ft.add(R.id.FragLayout, f1);
         }
         if (f1.isDetached()) {
             ft.attach(f1);
@@ -128,10 +128,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void showFrag3() {
         FragmentTransaction ft = fm.beginTransaction();  //Create a reference to a fragment transaction.
-        if (!f1.isDetached()) {
-            ft.detach(f1);   //what would happen if f1, f2, or f3 were null?  how would we check and fix this?
+        if (f1.isAdded()) {
+            ft.detach(f1);
         }
-        if (!f2.isDetached()) {
+        if (f2.isAdded()) {
             ft.detach(f2);
         }
         if (!f3.isAdded()) {
