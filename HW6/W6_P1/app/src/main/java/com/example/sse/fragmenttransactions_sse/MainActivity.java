@@ -66,8 +66,6 @@ public class MainActivity extends AppCompatActivity {
         //5c. Now we can "plop" fragment(s) into our container.
         FragmentTransaction ft = fm.beginTransaction();  //Create a reference to a fragment transaction.
         ft.add(R.id.FragLayout, f1, "tag1");  //now we have added our fragement to our Activity programmatically.  The other fragments exist, but have not been added yet.
-//        ft.add(R.id.FragLayout, f2, "tag2");
-//        ft.add(R.id.FragLayout, f3, "tag3");
         ft.addToBackStack("myFrag1");  //why do we do this?
         ft.commit();  //don't forget to commit your changes.  It is a transaction after all.
 
@@ -115,10 +113,13 @@ public class MainActivity extends AppCompatActivity {
             f2 = new Frag_Two();
 
         FragmentTransaction ft = fm.beginTransaction();  //Create a reference to a fragment transaction and start the transaction.
-        ft.replace(R.id.FragLayout, f2);
+        if (!f2.isAdded()) {
+            ft.replace(R.id.FragLayout, f2);
+        }
         if (f2.isDetached()) {
             ft.attach(f2);
         }
+        ft.hide(f1);
         ft.show(f2);
         ft.addToBackStack("myFrag2");  //Q: What is the back stack and why do we do this? _______________
         ft.commit();
@@ -126,12 +127,11 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void showFrag3() {
-
         FragmentTransaction ft = fm.beginTransaction();  //Create a reference to a fragment transaction.
-        if (f1.isAdded()) {
+        if (!f1.isDetached()) {
             ft.detach(f1);   //what would happen if f1, f2, or f3 were null?  how would we check and fix this?
         }
-        if (f2.isAdded()) {
+        if (!f2.isDetached()) {
             ft.detach(f2);
         }
         if (!f3.isAdded()) {
