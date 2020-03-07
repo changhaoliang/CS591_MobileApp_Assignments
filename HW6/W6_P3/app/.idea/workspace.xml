@@ -7,27 +7,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d7c6bd90-1ee8-4a3e-8cfc-13754ba064de" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../../../HW5.zip" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../HW5/Homework 5.docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../../HW5/W5_P3/app/src/main/java/com/example/w5_p3/PathCheck.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/.idea/codeStyles/Project.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/sse/customlistview_sse/Episode.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../HW4/W4_P5/app/src/main/java/com/example/w4_p5/Hangman.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../HW4/W4_P5/app/src/main/java/com/example/w4_p5/Hangman.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../HW5/W5_P3/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/../../../HW5/W5_P3/.idea/caches/build_file_checksums.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../HW5/W5_P3/.idea/caches/gradle_models.ser" beforeDir="false" afterPath="$PROJECT_DIR$/../../../HW5/W5_P3/.idea/caches/gradle_models.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../HW5/W5_P3/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../HW5/W5_P3/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../HW5/W5_P3/app/src/test/java/com/example/w5_p3/ExampleUnitTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../HW5/W5_P3/app/src/test/java/com/example/w5_p3/ExampleUnitTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../HW5/W5_P3/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../../../HW5/W5_P3/local.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../W6_P1/app/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../W6_P1/app/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../W6_P2/app/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../W6_P2/app/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/caches/build_file_checksums.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/caches/gradle_models.ser" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/caches/gradle_models.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/sse/customlistview_sse/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/sse/customlistview_sse/MainActivity.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -57,9 +36,13 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/example/sse/customlistview_sse/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
-              <caret line="52" column="71" selection-start-line="52" selection-start-column="63" selection-end-line="52" selection-end-column="71" />
+            <state relative-caret-position="170">
+              <caret line="39" column="86" selection-start-line="39" selection-start-column="86" selection-end-line="39" selection-end-column="86" />
               <folding>
+                <element signature="e#2124#2317#0" expanded="true" />
+                <element signature="e#2316#2317#0" expanded="true" />
+                <element signature="e#4431#4625#0" expanded="true" />
+                <element signature="e#4624#4625#0" expanded="true" />
                 <element signature="e#13283#13477#0" expanded="true" />
                 <element signature="e#13476#13477#0" expanded="true" />
                 <element signature="e#13653#13911#0" expanded="true" />
@@ -302,7 +285,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/example/sse/customlistview_sse/MainActivity.java</url>
-          <line>78</line>
+          <line>90</line>
           <properties />
           <option name="timeStamp" value="1" />
         </line-breakpoint>
@@ -371,9 +354,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/example/sse/customlistview_sse/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="52" column="71" selection-start-line="52" selection-start-column="63" selection-end-line="52" selection-end-column="71" />
+        <state relative-caret-position="170">
+          <caret line="39" column="86" selection-start-line="39" selection-start-column="86" selection-end-line="39" selection-end-column="86" />
           <folding>
+            <element signature="e#2124#2317#0" expanded="true" />
+            <element signature="e#2316#2317#0" expanded="true" />
+            <element signature="e#4431#4625#0" expanded="true" />
+            <element signature="e#4624#4625#0" expanded="true" />
             <element signature="e#13283#13477#0" expanded="true" />
             <element signature="e#13476#13477#0" expanded="true" />
             <element signature="e#13653#13911#0" expanded="true" />
