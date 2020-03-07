@@ -1,6 +1,7 @@
 package com.example.sse.customlistview_sse;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 //        return super.onCreateOptionsMenu(menu);   //get rid of default behavior.
@@ -51,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.my_test_menu, menu);
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -71,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
              Toast.makeText(getBaseContext(), "Hangup it's a telemarketer.", Toast.LENGTH_LONG).show();
             return true;
         }
+
 
             return super.onOptionsItemSelected(item);  //if none of the above are true, do the default and return a boolean.
     }
@@ -117,7 +122,7 @@ class MyCustomAdapter extends BaseAdapter {
 //    ArrayList<String> episodes;
 //    ArrayList<String> episodeDescriptions;
 
-    Button btnRandom;
+
     Context context;   //Creating a reference to our context object, so we only have to get it once.  Context enables access to application specific resources.
                        // Eg, spawning & receiving intents, locating the various managers.
 
@@ -175,7 +180,8 @@ class MyCustomAdapter extends BaseAdapter {
         View row;  //this will refer to the row to be inflated or displayed if it's already been displayed. (listview_row.xml)
 //        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 //        row = inflater.inflate(R.layout.listview_row, parent, false);  //
-
+        Button btnRandom;
+        RatingBar rbEpisode;
 // Let's optimize a bit by checking to see if we need to inflate, or if it's already been inflated...
         if (convertView == null){  //indicates this is the first time we are creating this row.
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);  //Inflater's are awesome, they convert xml to Java Objects!
@@ -204,11 +210,23 @@ class MyCustomAdapter extends BaseAdapter {
             }
         });
 
+        rbEpisode = (RatingBar) row.findViewById(R.id.rbEpisode);
+        rbEpisode.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
+                if(b){
+
+                }
+            }
+        });
+
+
 //STEP 5c: That's it, the row has been inflated and filled with data, return it.
         return row;  //once the row is fully constructed, return it.  Hey whatif we had buttons, can we target onClick Events within the rows, yep!
 //return convertView;
 
     }
+    
 
 
 
