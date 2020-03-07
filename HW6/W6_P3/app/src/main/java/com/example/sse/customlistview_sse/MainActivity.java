@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -58,21 +59,42 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.mnu_zero) {
-            Toast.makeText(getBaseContext(), "Menu Zero.", Toast.LENGTH_LONG).show();
+            Toast.makeText(getBaseContext(), "Kahn!!!", Toast.LENGTH_LONG).show();
             return true;
         }
 
         if (id == R.id.mnu_one) {
-            Toast.makeText(getBaseContext(), "Ring ring, Hi Mom.", Toast.LENGTH_LONG).show();
+            fourStarsOrMore();
+            return true;
+        }
+
+        if (id == R.id.mnu_two) {
+            sortByTitle();
             return true;
         }
 
         if (id == R.id.mnu_three) {
-             Toast.makeText(getBaseContext(), "Hangup it's a telemarketer.", Toast.LENGTH_LONG).show();
+            sortByRating();
             return true;
         }
 
             return super.onOptionsItemSelected(item);  //if none of the above are true, do the default and return a boolean.
+    }
+
+    private void fourStarsOrMore(){
+        ListAdapter highStars = new MyCustomAdapter(this.getBaseContext());
+        for (int i=0; i<lvAdapter.getCount(); i++){
+            //highStars
+        }
+        //lvEpisodes.setAdapter();
+    }
+
+    private void sortByTitle(){
+
+    }
+
+    private void sortByRating(){
+
     }
 }
 
@@ -113,11 +135,10 @@ class MyCustomAdapter extends BaseAdapter {
      String  episodeDescriptions[];  //the "better" way is to encapsulate the list items into an object, then create an arraylist of objects.
 //     int episodeImages[];         //this approach is fine for now.
      ArrayList<Integer> episodeImages;  //Well, we can use one arrayList too...  Just mixing it up, Arrays or Templated ArrayLists, you choose.
-
+     RatingBar episodeRating;
 //    ArrayList<String> episodes;
 //    ArrayList<String> episodeDescriptions;
 
-    Button btnRandom;
     Context context;   //Creating a reference to our context object, so we only have to get it once.  Context enables access to application specific resources.
                        // Eg, spawning & receiving intents, locating the various managers.
 
@@ -190,6 +211,8 @@ class MyCustomAdapter extends BaseAdapter {
         ImageView imgEpisode = (ImageView) row.findViewById(R.id.imgEpisode);  //Q: Notice we prefixed findViewByID with row, why?  A: Row, is the container.
         TextView tvEpisodeTitle = (TextView) row.findViewById(R.id.tvEpisodeTitle);
         TextView tvEpisodeDescription = (TextView) row.findViewById(R.id.tvEpisodeDescription);
+        Button btnRandom;
+        episodeRating = (RatingBar) row.findViewById(R.id.rbEpisode);
 
         tvEpisodeTitle.setText(episodes[position]);
         tvEpisodeDescription.setText(episodeDescriptions[position]);
@@ -209,6 +232,7 @@ class MyCustomAdapter extends BaseAdapter {
 //return convertView;
 
     }
+
 
 
 
