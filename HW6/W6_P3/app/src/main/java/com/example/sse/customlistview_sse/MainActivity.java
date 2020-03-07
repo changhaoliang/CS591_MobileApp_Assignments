@@ -2,9 +2,11 @@ package com.example.sse.customlistview_sse;
 
 import android.content.Context;
 import android.content.Intent;
+
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.media.Rating;
+
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -40,11 +42,11 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-//Step-By-Step, Setting up the ListView
+    //Step-By-Step, Setting up the ListView
 
-    private
     ListView lvEpisodes;     //Reference to the listview GUI component
     ListAdapter lvAdapter;   //Reference to the Adapter used to populate the listview.
+
     HashMap<String,Episode> epsiodes_map;
     ArrayList<Episode> episodes;
     boolean showSelected;
@@ -132,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
         episodeImages.add(R.drawable.st_the_naked_time__sulu_sword);
         episodeImages.add(R.drawable.st_the_trouble_with_tribbles__kirk_tribbles);
 
-        for(int i = 0; i < titles.length; i++) {
+        for (int i = 0; i < titles.length; i++) {
             Episode episode = new Episode(titles[i], descriptions[i], episodeImages.get(i), 3);
             episodes.add(episode);
         }
@@ -323,7 +325,7 @@ class MyCustomAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {  //convertView is Row (it may be null), parent is the layout that has the row Views.
 
 //STEP 5a: Inflate the listview row based on the xml.
-        View row;  //this will refer to the row to be inflated or displayed if it's already been displayed. (listview_row.xml)
+        final View row;  //this will refer to the row to be inflated or displayed if it's already been displayed. (listview_row.xml)
 //        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 //        row = inflater.inflate(R.layout.listview_row, parent, false);  //
 
@@ -335,7 +337,8 @@ class MyCustomAdapter extends BaseAdapter {
             row = convertView;
         }
 
-//STEP 5b: Now that we have a valid row instance, we need to get references to the views within that row and fill with the appropriate text and images.
+
+//STEP 5b: Now that we have a valid row startActivity(intent);                                                                                    instance, we need to get references to the views within that row and fill with the appropriate text and images.
         ImageView imgEpisode = (ImageView) row.findViewById(R.id.imgEpisode);  //Q: Notice we prefixed findViewByID with row, why?  A: Row, is the container.
         TextView tvEpisodeTitle = (TextView) row.findViewById(R.id.tvEpisodeTitle);
         TextView tvEpisodeDescription = (TextView) row.findViewById(R.id.tvEpisodeDescription);
@@ -353,6 +356,18 @@ class MyCustomAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
 //                Toast.makeText(context, randomMsg, Toast.LENGTH_LONG).show();
+            }
+        });
+
+        row.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String title = episodes.get(position).getTitle();
+                Intent intent = new Intent(context, WebActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("message", title);
+
+                context.startActivity(intent);
             }
         });
 
