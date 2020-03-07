@@ -39,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
     ListAdapter lvAdapter;   //Reference to the Adapter used to populate the listview.
     ArrayList<Episode> episodes;
     boolean showSelected;
+    boolean byTitle;
+    boolean byRating;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,10 +49,11 @@ public class MainActivity extends AppCompatActivity {
 
         lvEpisodes = (ListView) findViewById(R.id.lvEpisodes);
         showSelected = false;
+        byTitle = true;
+        byRating = true;
         episodes = getEpisodes();
         lvAdapter = new MyCustomAdapter(this.getBaseContext(), episodes);  //instead of passing the boring default string adapter, let's pass our own, see class MyCustomAdapter below!
         lvEpisodes.setAdapter(lvAdapter);
-
     }
 
     public ArrayList<Episode> getEpisodes() {
@@ -113,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);  //if none of the above are true, do the default and return a boolean.
     }
 
-    private void fourStarsOrMore(){
+    public void fourStarsOrMore(){
         if (!showSelected){
             ArrayList<Episode> highStars = new ArrayList<Episode>();
             for (int i=0; i<episodes.size(); i++){
@@ -127,13 +130,34 @@ public class MainActivity extends AppCompatActivity {
         showSelected = !showSelected;
     }
 
-    private void sortByTitle(){
-
+    public void sortByTitle() {
+        Collections.sort(episodes, new Comparator<Episode>() {
+            @Override
+            public int compare(Episode t1, Episode t2) {
+                if (byTitle)
+                    return t1.getTitle().compareTo(t2.getTitle());
+                else
+                    return -t1.getTitle().compareTo(t2.getTitle());
+            }
+        });
+        lvEpisodes.setAdapter(lvAdapter);
+        byTitle = !byTitle;
     }
 
-    private void sortByRating(){
-
+    public void sortByRating() {
+        Collections.sort(episodes, new Comparator<Episode>() {
+            @Override
+            public int compare(Episode t1, Episode t2) {
+                if (byRating)
+                    return (int) (t2.getRating() - t1.getRating());
+                else
+                    return (int) (t1.getRating() - t2.getRating());
+            }
+        });
+        lvEpisodes.setAdapter(lvAdapter);
+        byRating = !byRating;
     }
+
 }
 
 
@@ -257,6 +281,8 @@ class MyCustomAdapter extends BaseAdapter {
         tvEpisodeDescription.setText(episodes.get(position).getDescription());
         imgEpisode.setImageResource(episodes.get(position).getImage());
         btnRandom = (Button) row.findViewById(R.id.btnRandom);
+        rbEpisode.setRating(episodes.get(position).getRating());
+
         final String randomMsg = ((Integer) position).toString() + ": " + episodes.get(position).getDescription();
         btnRandom.setOnClickListener(new View.OnClickListener() {
             @Override
