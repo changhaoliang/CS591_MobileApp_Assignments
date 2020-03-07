@@ -4,29 +4,23 @@
 
     <item
         android:id="@+id/mnu_zero"
-        android:icon="@drawable/ic_local_florist_black_24dp"
         android:title="Kahn!!!"
-        app:showAsAction="ifRoom"></item>
+        app:showAsAction="never"></item>
 
 
     <item
         android:id="@+id/mnu_one"
-        android:icon="@drawable/ic_card_giftcard_black_24dp"
-        android:title="Four Stars or More"
-        app:showAsAction="ifRoom"></item>
+        android:title="Filter Four Stars or More"
+        app:showAsAction="never"></item>
 
 
     <item
         android:id="@+id/mnu_two"
-        android:icon="@drawable/ic_assignment_turned_in_black_24dp"
         android:title="Sort by Title"
-        app:showAsAction="ifRoom"></item>
+        app:showAsAction="never"></item>
 
     <item
         android:id="@+id/mnu_three"
-        android:icon="@drawable/ic_brightness_3_black_24dp"
-        android:title="Sort By Rating"
-        app:showAsAction="ifRoom"></item>
-
-
+        android:title="Sort by Rating"
+        app:showAsAction="never"></item>
 </menu>
