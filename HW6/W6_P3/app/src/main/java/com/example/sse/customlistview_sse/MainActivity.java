@@ -1,6 +1,7 @@
 package com.example.sse.customlistview_sse;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -26,7 +27,7 @@ import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
 
-//Step-By-Step, Setting up the ListView
+    //Step-By-Step, Setting up the ListView
 
     private
     ListView lvEpisodes;     //Reference to the listview GUI component
@@ -41,7 +42,19 @@ public class MainActivity extends AppCompatActivity {
         lvAdapter = new MyCustomAdapter(this.getBaseContext());  //instead of passing the boring default string adapter, let's pass our own, see class MyCustomAdapter below!
         lvEpisodes.setAdapter(lvAdapter);
 
+        lvEpisodes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                //String title = adapterView.getItemAtPosition(i);
+                String title = "Google";
+                Intent intent = new Intent(MainActivity.this, WebActivity.class);
+                intent.putExtra("message", title);
+                startActivity(intent);
+            }
+        });
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
