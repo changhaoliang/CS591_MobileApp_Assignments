@@ -15,5 +15,7 @@
         android:id="@+id/lvEpisodes"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:fastScrollAlwaysVisible="false" />
+        android:fastScrollAlwaysVisible="false" >
+
+    </ListView>
 </RelativeLayout>

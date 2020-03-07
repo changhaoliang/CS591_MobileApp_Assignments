@@ -1,6 +1,7 @@
 package com.example.sse.customlistview_sse;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.media.Rating;
@@ -10,10 +11,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Surface;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
-import android.widget.AdapterView;
+import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -22,7 +25,10 @@ import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
+
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.security.spec.ECPoint;
 import java.util.ArrayList;
@@ -50,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         lvEpisodes = (ListView) findViewById(R.id.lvEpisodes);
         showSelected = false;
         byTitle = true;
@@ -94,9 +99,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy() {
+    protected void onPause() {
         saveSharedPreferenceInfo();
-        super.onDestroy();
+        super.onPause();
     }
 
     public HashMap<String,Episode>  getEpisodesMap() {
@@ -152,7 +157,9 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.mnu_zero) {
-            Toast.makeText(getBaseContext(), "Kahn!!!", Toast.LENGTH_LONG).show();
+//            Toast.makeText(getBaseContext(), "Menu Zero.", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(getApplicationContext(), VideoActivity.class);
+            startActivity(intent);
             return true;
         }
 
@@ -173,7 +180,6 @@ public class MainActivity extends AppCompatActivity {
 
 
         return super.onOptionsItemSelected(item);  //if none of the above are true, do the default and return a boolean.
-
     }
 
     public void fourStarsOrMore(){
@@ -263,7 +269,6 @@ class MyCustomAdapter extends BaseAdapter {
 //    ArrayList<String> episodes;
 //    ArrayList<String> episodeDescriptions;
 
-
     Context context;   //Creating a reference to our context object, so we only have to get it once.  Context enables access to application specific resources.
     // Eg, spawning & receiving intents, locating the various managers.
 
@@ -277,7 +282,6 @@ class MyCustomAdapter extends BaseAdapter {
 
 //        episodes = aContext.getResources().getStringArray(R.array.episodes);  //retrieving list of episodes predefined in strings-array "episodes" in strings.xml
 //        episodeDescriptions = aContext.getResources().getStringArray(R.array.episode_descriptions);
-
 //This is how you would do it if you were using an ArrayList, leaving code here for reference, though we could use it instead of the above.
 //        episodes = (ArrayList<String>) Arrays.asList(aContext.getResources().getStringArray(R.array.episodes));  //retrieving list of episodes predefined in strings-array "episodes" in strings.xml
 //        episodeDescriptions = (ArrayList<String>) Arrays.asList(aContext.getResources().getStringArray(R.array.episode_descriptions));  //Also casting to a friendly ArrayList.
@@ -348,7 +352,7 @@ class MyCustomAdapter extends BaseAdapter {
         btnRandom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, randomMsg, Toast.LENGTH_LONG).show();
+//                Toast.makeText(context, randomMsg, Toast.LENGTH_LONG).show();
             }
         });
 
@@ -369,6 +373,7 @@ class MyCustomAdapter extends BaseAdapter {
 //return convertView;
 
     }
+
     ///Helper method to get the drawables...///
     ///this might prove useful later...///
 

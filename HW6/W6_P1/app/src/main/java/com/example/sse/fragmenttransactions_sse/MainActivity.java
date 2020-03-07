@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction ft = fm.beginTransaction();  //Create a reference to a fragment transaction.
 
         if (!f1.isAdded()) {
-            ft.add(R.id.FragLayout, f1, "tag1");
+            ft.add(R.id.FragLayout, f1);
         }
         if (f1.isDetached()) {
             ft.attach(f1);
