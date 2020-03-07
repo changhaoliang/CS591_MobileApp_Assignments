@@ -12,27 +12,26 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d00a4f57-9b94-4378-9d3b-ab6717b753d0" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../../W6_P3/app/.idea/codeStyles/Project.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../W6_P3/app/.idea/gradle.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../W6_P3/app/.idea/libraries/Gradle__com_android_support_animated_vector_drawable_24_2_1_aar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../W6_P3/app/.idea/libraries/Gradle__com_android_support_appcompat_v7_24_2_1_aar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../W6_P3/app/.idea/libraries/Gradle__com_android_support_support_annotations_24_2_1_jar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../W6_P3/app/.idea/libraries/Gradle__com_android_support_support_compat_24_2_1_aar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../W6_P3/app/.idea/libraries/Gradle__com_android_support_support_core_ui_24_2_1_aar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../W6_P3/app/.idea/libraries/Gradle__com_android_support_support_core_utils_24_2_1_aar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../W6_P3/app/.idea/libraries/Gradle__com_android_support_support_fragment_24_2_1_aar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../W6_P3/app/.idea/libraries/Gradle__com_android_support_support_media_compat_24_2_1_aar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../W6_P3/app/.idea/libraries/Gradle__com_android_support_support_v4_24_2_1_aar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../W6_P3/app/.idea/libraries/Gradle__com_android_support_support_vector_drawable_24_2_1_aar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../W6_P3/app/.idea/libraries/Gradle__junit_junit_4_12_jar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../W6_P3/app/.idea/libraries/Gradle__org_hamcrest_hamcrest_core_1_3_jar.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../W6_P3/app/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../W6_P3/app/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../W6_P3/app/.idea/runConfigurations.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../W6_P3/app/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../W6_P3/app/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/sse/fragmenttransactions_sse/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/sse/fragmenttransactions_sse/MainActivity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../HW5.zip" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../HW5/Homework 5.docx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../../HW5/W5_P3/app/src/main/java/com/example/w5_p3/PathCheck.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../W6_P3/app/src/.idea/codeStyles/Project.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../W6_P3/app/src/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../W6_P3/app/src/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../W6_P3/app/src/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../W6_P3/app/src/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../W6_P3/app/src/main/java/com/example/sse/customlistview_sse/Episode.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../HW4/W4_P5/app/src/main/java/com/example/w4_p5/Hangman.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../HW4/W4_P5/app/src/main/java/com/example/w4_p5/Hangman.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../HW5/W5_P3/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/../../../HW5/W5_P3/.idea/caches/build_file_checksums.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../HW5/W5_P3/.idea/caches/gradle_models.ser" beforeDir="false" afterPath="$PROJECT_DIR$/../../../HW5/W5_P3/.idea/caches/gradle_models.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../HW5/W5_P3/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../../HW5/W5_P3/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../HW5/W5_P3/app/src/test/java/com/example/w5_p3/ExampleUnitTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../HW5/W5_P3/app/src/test/java/com/example/w5_p3/ExampleUnitTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../HW5/W5_P3/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../../../HW5/W5_P3/local.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../W6_P2/app/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../W6_P2/app/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../W6_P3/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/../../W6_P3/.idea/caches/build_file_checksums.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../W6_P3/.idea/caches/gradle_models.ser" beforeDir="false" afterPath="$PROJECT_DIR$/../../W6_P3/.idea/caches/gradle_models.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../W6_P3/app/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/../../W6_P3/app/.idea/caches/build_file_checksums.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../W6_P3/app/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../W6_P3/app/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../W6_P3/app/src/main/java/com/example/sse/customlistview_sse/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../W6_P3/app/src/main/java/com/example/sse/customlistview_sse/MainActivity.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -63,10 +62,10 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/example/sse/fragmenttransactions_sse/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-123">
+            <state relative-caret-position="-175">
               <caret line="146" column="19" selection-start-line="146" selection-start-column="19" selection-end-line="146" selection-end-column="19" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -75,11 +74,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/example/sse/fragmenttransactions_sse/Frag_One.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="608">
-              <caret line="74" column="18" selection-start-line="74" selection-start-column="14" selection-end-line="74" selection-end-column="18" />
+            <state relative-caret-position="145">
+              <caret line="56" column="13" selection-start-line="56" selection-start-column="12" selection-end-line="56" selection-end-column="13" />
             </state>
           </provider>
         </entry>
@@ -139,6 +138,7 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/src/main/java/com/example/sse/fragmenttransactions_sse/MainActivity.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/example/sse/fragmenttransactions_sse/Frag_One.java" />
       </list>
     </option>
   </component>
@@ -154,10 +154,10 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
-      <pane id="ProjectPane" />
       <pane id="AndroidView" />
+      <pane id="ProjectPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -165,7 +165,7 @@
     <property name="android.project.structure.last.selected" value="SDK Location" />
     <property name="android.project.structure.proportion" value="0.15" />
     <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../W6_P2/app" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
   </component>
   <component name="RunDashboard">
@@ -234,7 +234,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="631" y="8" width="879" height="966" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
       <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.2362972" />
@@ -252,8 +251,8 @@
       <window_info anchor="bottom" id="Terminal" order="4" weight="0.32802936" />
       <window_info anchor="bottom" id="Event Log" order="5" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="6" weight="0.32425743" />
-      <window_info anchor="bottom" id="Build" order="7" weight="0.32560974" />
-      <window_info anchor="bottom" id="Android Profiler" order="8" />
+      <window_info anchor="bottom" id="Build" order="7" visible="true" weight="0.32446134" />
+      <window_info anchor="bottom" id="Android Profiler" order="8" show_stripe_button="false" />
       <window_info anchor="right" id="Device File Explorer" order="0" side_tool="true" />
       <window_info anchor="right" id="Capture Analysis" order="1" />
       <window_info anchor="right" id="Gradle" order="2" />
@@ -316,20 +315,20 @@
       <provider selected="true" editor-type-id="android-designer2" />
       <provider editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/com/example/sse/fragmenttransactions_sse/Frag_One.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="608">
-          <caret line="74" column="18" selection-start-line="74" selection-start-column="14" selection-end-line="74" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/example/sse/fragmenttransactions_sse/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-123">
+        <state relative-caret-position="-175">
           <caret line="146" column="19" selection-start-line="146" selection-start-column="19" selection-end-line="146" selection-end-column="19" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/example/sse/fragmenttransactions_sse/Frag_One.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="145">
+          <caret line="56" column="13" selection-start-line="56" selection-start-column="12" selection-end-line="56" selection-end-column="13" />
         </state>
       </provider>
     </entry>

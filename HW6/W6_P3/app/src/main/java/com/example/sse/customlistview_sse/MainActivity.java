@@ -23,8 +23,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.lang.reflect.Field;
+import java.security.spec.ECPoint;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,16 +38,89 @@ public class MainActivity extends AppCompatActivity {
     private
     ListView lvEpisodes;     //Reference to the listview GUI component
     ListAdapter lvAdapter;   //Reference to the Adapter used to populate the listview.
-
+    HashMap<String,Episode> epsiodes_map;
+    ArrayList<Episode> episodes;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        lvEpisodes = (ListView)findViewById(R.id.lvEpisodes);
-        lvAdapter = new MyCustomAdapter(this.getBaseContext());  //instead of passing the boring default string adapter, let's pass our own, see class MyCustomAdapter below!
+        lvEpisodes = (ListView) findViewById(R.id.lvEpisodes);
+
+        episodes = getEpisodes();
+        epsiodes_map = getEpisodesMap();
+        retrieveSharedPreferenceInfo();
+        lvAdapter = new MyCustomAdapter(this.getBaseContext(), episodes);  //instead of passing the boring default string adapter, let's pass our own, see class MyCustomAdapter below!
         lvEpisodes.setAdapter(lvAdapter);
 
+    }
+    public void saveSharedPreferenceInfo() {
+        SharedPreferences info = getSharedPreferences("ActivityInfo", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = info.edit();
+
+        //String[] titles = getApplication().getResources().getStringArray(R.array.episodes);
+        System.out.println("-------Saving ---------");
+        for(int i = 0; i < episodes.size();i++){
+            editor.putFloat(episodes.get(i).getTitle(), episodes.get(i).getRating());
+            String msg = episodes.get(i).getTitle()+", Rating"+ Float.toString(episodes.get(i).getRating());
+            Log.e("save",msg);
+            //System.out.printf("%s, Rating  %d \n",episodes.get(i).getTitle(),  episodes.get(i).getRating());
+        }
+
+        editor.apply();
+    }
+
+    public void retrieveSharedPreferenceInfo() {
+        SharedPreferences info = getSharedPreferences("ActivityInfo", Context.MODE_PRIVATE);
+        String[] titles = getApplication().getResources().getStringArray(R.array.episodes);
+        System.out.println("---------Retrieve ---------");
+        for(int i = 0; i < episodes.size(); i++) {
+            Float fRating = info.getFloat(titles[i], 0);
+            epsiodes_map.get(titles[i]).setRating(fRating);
+            String msg = titles[i]+", Rating"+ Float.toString(epsiodes_map.get(titles[i]).getRating());
+            Log.e("Retrieve",msg);
+            //System.out.printf("%s, Rating  %d \n",titles[i], epsiodes_map.get(titles[i]).getRating());
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        saveSharedPreferenceInfo();
+        super.onDestroy();
+    }
+
+    public HashMap<String,Episode>  getEpisodesMap() {
+        HashMap<String,Episode> epsiodes_map = new HashMap<>();
+        String[] titles = getApplication().getResources().getStringArray(R.array.episodes);
+
+        for(int i = 0; i < episodes.size(); i++) {
+
+            epsiodes_map.put(episodes.get(i).getTitle(),episodes.get(i));
+        }
+
+        return epsiodes_map;
+    }
+
+    public ArrayList<Episode> getEpisodes() {
+        ArrayList<Episode> episodes = new ArrayList<>();
+
+        String[] titles = getApplication().getResources().getStringArray(R.array.episodes);
+        String[] descriptions = getApplication().getResources().getStringArray(R.array.episode_descriptions);
+        ArrayList<Integer> episodeImages = new ArrayList<>();   //Could also use helper function "getDrawables(..)" below to auto-extract drawable resources, but keeping things as simple as possible.
+        episodeImages.add(R.drawable.st_spocks_brain);
+        episodeImages.add(R.drawable.st_arena__kirk_gorn);
+        episodeImages.add(R.drawable.st_this_side_of_paradise__spock_in_love);
+        episodeImages.add(R.drawable.st_mirror_mirror__evil_spock_and_good_kirk);
+        episodeImages.add(R.drawable.st_platos_stepchildren__kirk_spock);
+        episodeImages.add(R.drawable.st_the_naked_time__sulu_sword);
+        episodeImages.add(R.drawable.st_the_trouble_with_tribbles__kirk_tribbles);
+
+        for(int i = 0; i < titles.length; i++) {
+            Episode episode = new Episode(titles[i], descriptions[i], episodeImages.get(i), 3);
+            episodes.add(episode);
+        }
+
+        return episodes;
     }
 
 
@@ -62,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.mnu_zero) {
-            Toast.makeText(getBaseContext(), "Menu Zero.", Toast.LENGTH_LONG).show();
+            Toast.makeText(getBaseContext(), "Sort by title.", Toast.LENGTH_LONG).show();
             return true;
         }
 
@@ -72,12 +150,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (id == R.id.mnu_three) {
-             Toast.makeText(getBaseContext(), "Hangup it's a telemarketer.", Toast.LENGTH_LONG).show();
+            Toast.makeText(getBaseContext(), "Hangup it's a telemarketer.", Toast.LENGTH_LONG).show();
             return true;
         }
 
 
-            return super.onOptionsItemSelected(item);  //if none of the above are true, do the default and return a boolean.
+        return super.onOptionsItemSelected(item);  //if none of the above are true, do the default and return a boolean.
+
     }
 }
 
@@ -114,56 +193,59 @@ public class MainActivity extends AppCompatActivity {
 class MyCustomAdapter extends BaseAdapter {
 
     private
-     String episodes[];             //Keeping it simple.  Using Parallel arrays is the introductory way to store the List data.
-     String  episodeDescriptions[];  //the "better" way is to encapsulate the list items into an object, then create an arraylist of objects.
-//     int episodeImages[];         //this approach is fine for now.
-     ArrayList<Integer> episodeImages;  //Well, we can use one arrayList too...  Just mixing it up, Arrays or Templated ArrayLists, you choose.
+//    String episodes[];             //Keeping it simple.  Using Parallel arrays is the introductory way to store the List data.
+//    String episodeDescriptions[];  //the "better" way is to encapsulate the list items into an object, then create an arraylist of objects.
+//    //     int episodeImages[];         //this approach is fine for now.
+//    ArrayList<Integer> episodeImages;  //Well, we can use one arrayList too...  Just mixing it up, Arrays or Templated ArrayLists, you choose.
+
+    ArrayList<Episode> episodes;
 
 //    ArrayList<String> episodes;
 //    ArrayList<String> episodeDescriptions;
 
 
     Context context;   //Creating a reference to our context object, so we only have to get it once.  Context enables access to application specific resources.
-                       // Eg, spawning & receiving intents, locating the various managers.
+    // Eg, spawning & receiving intents, locating the various managers.
 
-//STEP 2: Override the Constructor, be sure to:
+    //STEP 2: Override the Constructor, be sure to:
     // grab the context, we will need it later, the callback gets it as a parm.
     // load the strings and images into object references.
-    public MyCustomAdapter(Context aContext) {
+    public MyCustomAdapter(Context aContext, ArrayList<Episode> episodes) {
 //initializing our data in the constructor.
         context = aContext;  //saving the context we'll need it again.
+        this.episodes = episodes;
 
-        episodes =aContext.getResources().getStringArray(R.array.episodes);  //retrieving list of episodes predefined in strings-array "episodes" in strings.xml
-        episodeDescriptions = aContext.getResources().getStringArray(R.array.episode_descriptions);
+//        episodes = aContext.getResources().getStringArray(R.array.episodes);  //retrieving list of episodes predefined in strings-array "episodes" in strings.xml
+//        episodeDescriptions = aContext.getResources().getStringArray(R.array.episode_descriptions);
 
 //This is how you would do it if you were using an ArrayList, leaving code here for reference, though we could use it instead of the above.
 //        episodes = (ArrayList<String>) Arrays.asList(aContext.getResources().getStringArray(R.array.episodes));  //retrieving list of episodes predefined in strings-array "episodes" in strings.xml
 //        episodeDescriptions = (ArrayList<String>) Arrays.asList(aContext.getResources().getStringArray(R.array.episode_descriptions));  //Also casting to a friendly ArrayList.
 
 
-        episodeImages = new ArrayList<Integer>();   //Could also use helper function "getDrawables(..)" below to auto-extract drawable resources, but keeping things as simple as possible.
-        episodeImages.add(R.drawable.st_spocks_brain);
-        episodeImages.add(R.drawable.st_arena__kirk_gorn);
-        episodeImages.add(R.drawable.st_this_side_of_paradise__spock_in_love);
-        episodeImages.add(R.drawable.st_mirror_mirror__evil_spock_and_good_kirk);
-        episodeImages.add(R.drawable.st_platos_stepchildren__kirk_spock);
-        episodeImages.add(R.drawable.st_the_naked_time__sulu_sword);
-        episodeImages.add(R.drawable.st_the_trouble_with_tribbles__kirk_tribbles);
+//        episodeImages = new ArrayList<Integer>();   //Could also use helper function "getDrawables(..)" below to auto-extract drawable resources, but keeping things as simple as possible.
+//        episodeImages.add(R.drawable.st_spocks_brain);
+//        episodeImages.add(R.drawable.st_arena__kirk_gorn);
+//        episodeImages.add(R.drawable.st_this_side_of_paradise__spock_in_love);
+//        episodeImages.add(R.drawable.st_mirror_mirror__evil_spock_and_good_kirk);
+//        episodeImages.add(R.drawable.st_platos_stepchildren__kirk_spock);
+//        episodeImages.add(R.drawable.st_the_naked_time__sulu_sword);
+//        episodeImages.add(R.drawable.st_the_trouble_with_tribbles__kirk_tribbles);
     }
 
-//STEP 3: Override and implement getCount(..), ListView uses this to determine how many rows to render.
+    //STEP 3: Override and implement getCount(..), ListView uses this to determine how many rows to render.
     @Override
     public int getCount() {
 //        return episodes.size(); //all of the arrays are same length, so return length of any... ick!  But ok for now. :)
-        return episodes.length;   //all of the arrays are same length, so return length of any... ick!  But ok for now. :)
-                                  //Q: How else could we have done this (better)? ________________
+        return episodes.size();   //all of the arrays are same length, so return length of any... ick!  But ok for now. :)
+        //Q: How else could we have done this (better)? ________________
     }
 
-//STEP 4: Override getItem/getItemId, we aren't using these, but we must override anyway.
+    //STEP 4: Override getItem/getItemId, we aren't using these, but we must override anyway.
     @Override
     public Object getItem(int position) {
 //        return episodes.get(position);  //In Case you want to use an ArrayList
-        return episodes[position];        //really should be returning entire set of row data, but it's up to us, and we aren't using this call.
+        return episodes.get(position);        //really should be returning entire set of row data, but it's up to us, and we aren't using this call.
     }
 
     @Override
@@ -171,7 +253,7 @@ class MyCustomAdapter extends BaseAdapter {
         return position;  //Another call we aren't using, but have to do something since we had to implement (base is abstract).
     }
 
-//THIS IS WHERE THE ACTION HAPPENS.  getView(..) is how each row gets rendered.
+    //THIS IS WHERE THE ACTION HAPPENS.  getView(..) is how each row gets rendered.
 //STEP 5: Easy as A-B-C
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {  //convertView is Row (it may be null), parent is the layout that has the row Views.
@@ -180,15 +262,13 @@ class MyCustomAdapter extends BaseAdapter {
         View row;  //this will refer to the row to be inflated or displayed if it's already been displayed. (listview_row.xml)
 //        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 //        row = inflater.inflate(R.layout.listview_row, parent, false);  //
-        Button btnRandom;
+
         RatingBar rbEpisode;
 // Let's optimize a bit by checking to see if we need to inflate, or if it's already been inflated...
-        if (convertView == null){  //indicates this is the first time we are creating this row.
+        if (convertView == null) {  //indicates this is the first time we are creating this row.
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);  //Inflater's are awesome, they convert xml to Java Objects!
             row = inflater.inflate(R.layout.listview_row, parent, false);
-        }
-        else
-        {
+        } else {
             row = convertView;
         }
 
@@ -197,12 +277,13 @@ class MyCustomAdapter extends BaseAdapter {
         TextView tvEpisodeTitle = (TextView) row.findViewById(R.id.tvEpisodeTitle);
         TextView tvEpisodeDescription = (TextView) row.findViewById(R.id.tvEpisodeDescription);
 
-        tvEpisodeTitle.setText(episodes[position]);
-        tvEpisodeDescription.setText(episodeDescriptions[position]);
-        imgEpisode.setImageResource(episodeImages.get(position).intValue());
+        tvEpisodeTitle.setText(episodes.get(position).getTitle());
+        tvEpisodeDescription.setText(episodes.get(position).getDescription());
+        imgEpisode.setImageResource(episodes.get(position).getImage());
 
+        Button btnRandom;
         btnRandom = (Button) row.findViewById(R.id.btnRandom);
-        final String randomMsg = ((Integer)position).toString() +": "+ episodeDescriptions[position];
+        final String randomMsg = ((Integer) position).toString() + ": " + episodes.get(position).getDescription();
         btnRandom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -211,11 +292,12 @@ class MyCustomAdapter extends BaseAdapter {
         });
 
         rbEpisode = (RatingBar) row.findViewById(R.id.rbEpisode);
+        final Episode curEpisode = episodes.get(position);
         rbEpisode.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
                 if(b){
-
+                    curEpisode.setRating(v);
                 }
             }
         });
@@ -227,7 +309,6 @@ class MyCustomAdapter extends BaseAdapter {
 
     }
     
-
 
 
     ///Helper method to get the drawables...///
