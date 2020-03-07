@@ -33,6 +33,21 @@ public class Hangman implements Parcelable {
         dictionary.put("snowy", "weather");
     }
 
+    protected Hangman(Parcel in) {
+    }
+
+    public static final Creator<Hangman> CREATOR = new Creator<Hangman>() {
+        @Override
+        public Hangman createFromParcel(Parcel in) {
+            return new Hangman(in);
+        }
+
+        @Override
+        public Hangman[] newArray(int size) {
+            return new Hangman[size];
+        }
+    };
+
     public String[] chooseWord() {
         String[] res = new String[2];
 
@@ -64,7 +79,6 @@ public class Hangman implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-
     }
 
 //    public static void main(String[] args){
