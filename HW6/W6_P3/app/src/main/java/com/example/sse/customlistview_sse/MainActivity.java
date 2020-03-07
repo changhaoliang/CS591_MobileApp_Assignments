@@ -3,6 +3,7 @@ package com.example.sse.customlistview_sse;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
+import android.media.Rating;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -40,6 +41,9 @@ public class MainActivity extends AppCompatActivity {
     ListAdapter lvAdapter;   //Reference to the Adapter used to populate the listview.
     HashMap<String,Episode> epsiodes_map;
     ArrayList<Episode> episodes;
+    boolean showSelected;
+    boolean byTitle;
+    boolean byRating;
 
 
     @Override
@@ -48,7 +52,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         lvEpisodes = (ListView) findViewById(R.id.lvEpisodes);
-
+        showSelected = false;
+        byTitle = true;
+        byRating = true;
         episodes = getEpisodes();
         epsiodes_map = getEpisodesMap();
         retrieveSharedPreferenceInfo();
@@ -57,15 +63,7 @@ public class MainActivity extends AppCompatActivity {
         lvEpisodes.setAdapter(lvAdapter);
     }
 
-    public void sortByTitle() {
-        Collections.sort(episodes, new Comparator<Episode>() {
-            @Override
-            public int compare(Episode t1, Episode t2) {
-                return t1.getTitle().compareTo(t2.getTitle());
-            }
-        });
-        lvEpisodes.setAdapter(lvAdapter);
-    }
+
     public void saveSharedPreferenceInfo() {
         SharedPreferences info = getSharedPreferences("ActivityInfo", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = info.edit();
@@ -113,15 +111,6 @@ public class MainActivity extends AppCompatActivity {
         return epsiodes_map;
     }
 
-    public void sortByRating() {
-        Collections.sort(episodes, new Comparator<Episode>() {
-            @Override
-            public int compare(Episode t1, Episode t2) {
-                return (int) (t1.getRating() - t2.getRating());
-            }
-        });
-        lvEpisodes.setAdapter(lvAdapter);
-    }
 
 
     public ArrayList<Episode> getEpisodes() {
@@ -163,19 +152,22 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.mnu_zero) {
-            Toast.makeText(getBaseContext(), "Sort by title.", Toast.LENGTH_LONG).show();
-            sortByTitle();
+            Toast.makeText(getBaseContext(), "Kahn!!!", Toast.LENGTH_LONG).show();
             return true;
         }
 
         if (id == R.id.mnu_one) {
-            Toast.makeText(getBaseContext(), "Sort by rating", Toast.LENGTH_LONG).show();
-            sortByRating();
+            fourStarsOrMore();
+            return true;
+        }
+
+        if (id == R.id.mnu_two) {
+            sortByTitle();
             return true;
         }
 
         if (id == R.id.mnu_three) {
-            Toast.makeText(getBaseContext(), "Hangup it's a telemarketer.", Toast.LENGTH_LONG).show();
+            sortByRating();
             return true;
         }
 
@@ -183,6 +175,49 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);  //if none of the above are true, do the default and return a boolean.
 
     }
+
+    public void fourStarsOrMore(){
+        if (!showSelected){
+            ArrayList<Episode> highStars = new ArrayList<Episode>();
+            for (int i=0; i<episodes.size(); i++){
+                if (episodes.get(i).getRating() >= 4)
+                    highStars.add(episodes.get(i));
+            }
+            lvEpisodes.setAdapter(new MyCustomAdapter(this.getBaseContext(), highStars));
+        }
+        else
+            lvEpisodes.setAdapter(lvAdapter);
+        showSelected = !showSelected;
+    }
+
+    public void sortByTitle() {
+        Collections.sort(episodes, new Comparator<Episode>() {
+            @Override
+            public int compare(Episode t1, Episode t2) {
+                if (byTitle)
+                    return t1.getTitle().compareTo(t2.getTitle());
+                else
+                    return -t1.getTitle().compareTo(t2.getTitle());
+            }
+        });
+        lvEpisodes.setAdapter(lvAdapter);
+        byTitle = !byTitle;
+    }
+
+    public void sortByRating() {
+        Collections.sort(episodes, new Comparator<Episode>() {
+            @Override
+            public int compare(Episode t1, Episode t2) {
+                if (byRating)
+                    return (int) (t2.getRating() - t1.getRating());
+                else
+                    return (int) (t1.getRating() - t2.getRating());
+            }
+        });
+        lvEpisodes.setAdapter(lvAdapter);
+        byRating = !byRating;
+    }
+
 }
 
 
@@ -281,14 +316,13 @@ class MyCustomAdapter extends BaseAdapter {
     //THIS IS WHERE THE ACTION HAPPENS.  getView(..) is how each row gets rendered.
 //STEP 5: Easy as A-B-C
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {  //convertView is Row (it may be null), parent is the layout that has the row Views.
+    public View getView(final int position, View convertView, ViewGroup parent) {  //convertView is Row (it may be null), parent is the layout that has the row Views.
 
 //STEP 5a: Inflate the listview row based on the xml.
         View row;  //this will refer to the row to be inflated or displayed if it's already been displayed. (listview_row.xml)
 //        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 //        row = inflater.inflate(R.layout.listview_row, parent, false);  //
 
-        RatingBar rbEpisode;
 // Let's optimize a bit by checking to see if we need to inflate, or if it's already been inflated...
         if (convertView == null) {  //indicates this is the first time we are creating this row.
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);  //Inflater's are awesome, they convert xml to Java Objects!
@@ -301,13 +335,15 @@ class MyCustomAdapter extends BaseAdapter {
         ImageView imgEpisode = (ImageView) row.findViewById(R.id.imgEpisode);  //Q: Notice we prefixed findViewByID with row, why?  A: Row, is the container.
         TextView tvEpisodeTitle = (TextView) row.findViewById(R.id.tvEpisodeTitle);
         TextView tvEpisodeDescription = (TextView) row.findViewById(R.id.tvEpisodeDescription);
+        final RatingBar rbEpisode = (RatingBar) row.findViewById(R.id.rbEpisode);
+        Button btnRandom;
 
         tvEpisodeTitle.setText(episodes.get(position).getTitle());
         tvEpisodeDescription.setText(episodes.get(position).getDescription());
         imgEpisode.setImageResource(episodes.get(position).getImage());
-
-        Button btnRandom;
         btnRandom = (Button) row.findViewById(R.id.btnRandom);
+        rbEpisode.setRating(episodes.get(position).getRating());
+
         final String randomMsg = ((Integer) position).toString() + ": " + episodes.get(position).getDescription();
         btnRandom.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -316,12 +352,12 @@ class MyCustomAdapter extends BaseAdapter {
             }
         });
 
-        rbEpisode = (RatingBar) row.findViewById(R.id.rbEpisode);
+
         final Episode curEpisode = episodes.get(position);
         rbEpisode.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
-                if(b){
+                if (b) {
                     curEpisode.setRating(v);
                 }
             }
@@ -333,9 +369,6 @@ class MyCustomAdapter extends BaseAdapter {
 //return convertView;
 
     }
-    
-
-
     ///Helper method to get the drawables...///
     ///this might prove useful later...///
 

@@ -7,7 +7,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d7c6bd90-1ee8-4a3e-8cfc-13754ba064de" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../../W6_P1/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/../../W6_P1/.idea/caches/build_file_checksums.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../W6_P1/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../W6_P1/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../W6_P1/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../W6_P1/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../W6_P1/app/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../W6_P1/app/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../W6_P2/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../W6_P2/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../W6_P2/app/src/main/java/com/example/myapplication/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../W6_P2/app/src/main/java/com/example/myapplication/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/caches/build_file_checksums.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/sse/customlistview_sse/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/sse/customlistview_sse/MainActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/res/drawable/st_mirror_mirror__evil_spock_and_good_kirk.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/drawable/st_mirror_mirror__evil_spock_and_good_kirk.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/res/menu/my_test_menu.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/res/menu/my_test_menu.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -36,17 +47,17 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/com/example/sse/customlistview_sse/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="39" column="86" selection-start-line="39" selection-start-column="86" selection-end-line="39" selection-end-column="86" />
+            <state relative-caret-position="-90">
+              <caret line="362" column="13" selection-start-line="362" selection-start-column="13" selection-end-line="362" selection-end-column="13" />
               <folding>
-                <element signature="e#2124#2317#0" expanded="true" />
-                <element signature="e#2316#2317#0" expanded="true" />
-                <element signature="e#4431#4625#0" expanded="true" />
-                <element signature="e#4624#4625#0" expanded="true" />
-                <element signature="e#13283#13477#0" expanded="true" />
-                <element signature="e#13476#13477#0" expanded="true" />
-                <element signature="e#13653#13911#0" expanded="true" />
-                <element signature="e#13910#13911#0" expanded="true" />
+                <element signature="e#7099#7108#0" expanded="true" />
+                <element signature="e#7554#7869#0" expanded="true" />
+                <element signature="e#7868#7869#0" expanded="true" />
+                <element signature="e#8017#8334#0" expanded="true" />
+                <element signature="e#8333#8334#0" expanded="true" />
+                <element signature="e#15354#15548#0" expanded="true" />
+                <element signature="e#15547#15548#0" expanded="true" />
+                <element signature="e#14937#15197#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -255,7 +266,7 @@
     <editor active="true" />
     <layout>
       <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
-      <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.1628866" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.1628866" />
       <window_info id="Structure" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info id="Build Variants" order="4" side_tool="true" />
@@ -263,7 +274,7 @@
       <window_info id="Designer" order="6" />
       <window_info id="Resources Explorer" order="7" />
       <window_info id="Capture Tool" order="8" />
-      <window_info active="true" anchor="bottom" id="Run" order="0" visible="true" weight="0.3292683" />
+      <window_info anchor="bottom" id="Run" order="0" visible="true" weight="0.3292683" />
       <window_info anchor="bottom" id="Logcat" order="1" />
       <window_info anchor="bottom" id="TODO" order="2" />
       <window_info anchor="bottom" id="Debug" order="3" />
@@ -285,7 +296,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/example/sse/customlistview_sse/MainActivity.java</url>
-          <line>90</line>
+          <line>93</line>
           <properties />
           <option name="timeStamp" value="1" />
         </line-breakpoint>
@@ -354,17 +365,17 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/com/example/sse/customlistview_sse/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="39" column="86" selection-start-line="39" selection-start-column="86" selection-end-line="39" selection-end-column="86" />
+        <state relative-caret-position="-90">
+          <caret line="362" column="13" selection-start-line="362" selection-start-column="13" selection-end-line="362" selection-end-column="13" />
           <folding>
-            <element signature="e#2124#2317#0" expanded="true" />
-            <element signature="e#2316#2317#0" expanded="true" />
-            <element signature="e#4431#4625#0" expanded="true" />
-            <element signature="e#4624#4625#0" expanded="true" />
-            <element signature="e#13283#13477#0" expanded="true" />
-            <element signature="e#13476#13477#0" expanded="true" />
-            <element signature="e#13653#13911#0" expanded="true" />
-            <element signature="e#13910#13911#0" expanded="true" />
+            <element signature="e#7099#7108#0" expanded="true" />
+            <element signature="e#7554#7869#0" expanded="true" />
+            <element signature="e#7868#7869#0" expanded="true" />
+            <element signature="e#8017#8334#0" expanded="true" />
+            <element signature="e#8333#8334#0" expanded="true" />
+            <element signature="e#15354#15548#0" expanded="true" />
+            <element signature="e#15547#15548#0" expanded="true" />
+            <element signature="e#14937#15197#0" expanded="true" />
           </folding>
         </state>
       </provider>
