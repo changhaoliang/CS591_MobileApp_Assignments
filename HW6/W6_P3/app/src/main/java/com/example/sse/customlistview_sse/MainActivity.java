@@ -44,9 +44,9 @@ public class MainActivity extends AppCompatActivity {
 
     private
     ListView lvEpisodes;     //Reference to the listview GUI component
-    ListAdapter lvAdapter;   //Reference to the Adapter used to populate the listview.
+    ListAdapter lvAdapter, slAdapter;   //Reference to the Adapter used to populate the listview.
     HashMap<String,Episode> epsiodes_map;
-    ArrayList<Episode> episodes;
+    ArrayList<Episode> episodes, highStars;
     boolean showSelected;
     boolean byTitle;
     boolean byRating;
@@ -184,12 +184,13 @@ public class MainActivity extends AppCompatActivity {
 
     public void fourStarsOrMore(){
         if (!showSelected){
-            ArrayList<Episode> highStars = new ArrayList<Episode>();
+            highStars = new ArrayList<Episode>();
             for (int i=0; i<episodes.size(); i++){
                 if (episodes.get(i).getRating() >= 4)
                     highStars.add(episodes.get(i));
             }
-            lvEpisodes.setAdapter(new MyCustomAdapter(this.getBaseContext(), highStars));
+            slAdapter = new MyCustomAdapter(this.getBaseContext(), highStars);
+            lvEpisodes.setAdapter(slAdapter);
         }
         else
             lvEpisodes.setAdapter(lvAdapter);
@@ -197,30 +198,60 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void sortByTitle() {
-        Collections.sort(episodes, new Comparator<Episode>() {
-            @Override
-            public int compare(Episode t1, Episode t2) {
-                if (byTitle)
-                    return t1.getTitle().compareTo(t2.getTitle());
-                else
-                    return -t1.getTitle().compareTo(t2.getTitle());
-            }
-        });
-        lvEpisodes.setAdapter(lvAdapter);
+        if (showSelected){
+            Collections.sort(highStars, new Comparator<Episode>() {
+                @Override
+                public int compare(Episode t1, Episode t2) {
+                    if (byTitle)
+                        return t1.getTitle().compareTo(t2.getTitle());
+                    else
+                        return -t1.getTitle().compareTo(t2.getTitle());
+                }
+            });
+            lvEpisodes.setAdapter(slAdapter);
+        }
+        else{
+            Collections.sort(episodes, new Comparator<Episode>() {
+                @Override
+                public int compare(Episode t1, Episode t2) {
+                    if (byTitle)
+                        return t1.getTitle().compareTo(t2.getTitle());
+                    else
+                        return -t1.getTitle().compareTo(t2.getTitle());
+                }
+            });
+            lvEpisodes.setAdapter(lvAdapter);
+        }
+        byRating = true;
         byTitle = !byTitle;
     }
 
     public void sortByRating() {
-        Collections.sort(episodes, new Comparator<Episode>() {
-            @Override
-            public int compare(Episode t1, Episode t2) {
-                if (byRating)
-                    return (int) (t2.getRating() - t1.getRating());
-                else
-                    return (int) (t1.getRating() - t2.getRating());
-            }
-        });
-        lvEpisodes.setAdapter(lvAdapter);
+        if (showSelected){
+            Collections.sort(highStars, new Comparator<Episode>() {
+                @Override
+                public int compare(Episode t1, Episode t2) {
+                    if (byRating)
+                        return (int) ((t2.getRating() - t1.getRating())*2);
+                    else
+                        return (int) ((t1.getRating() - t2.getRating())*2);
+                }
+            });
+            lvEpisodes.setAdapter(slAdapter);
+        }
+        else{
+            Collections.sort(episodes, new Comparator<Episode>() {
+                @Override
+                public int compare(Episode t1, Episode t2) {
+                    if (byRating)
+                        return (int) ((t2.getRating() - t1.getRating())*2);
+                    else
+                        return (int) ((t1.getRating() - t2.getRating())*2);
+                }
+            });
+            lvEpisodes.setAdapter(lvAdapter);
+        }
+        byTitle = true;
         byRating = !byRating;
     }
 
