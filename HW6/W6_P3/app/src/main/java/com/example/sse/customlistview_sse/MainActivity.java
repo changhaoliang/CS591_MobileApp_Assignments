@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private
     ListView lvEpisodes;     //Reference to the listview GUI component
     ListAdapter lvAdapter;   //Reference to the Adapter used to populate the listview.
+    ArrayList<Episode> episodes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,11 +44,31 @@ public class MainActivity extends AppCompatActivity {
 
         lvEpisodes = (ListView) findViewById(R.id.lvEpisodes);
 
-        ArrayList<Episode> episodes = getEpisodes();
+        episodes = getEpisodes();
         lvAdapter = new MyCustomAdapter(this.getBaseContext(), episodes);  //instead of passing the boring default string adapter, let's pass our own, see class MyCustomAdapter below!
         lvEpisodes.setAdapter(lvAdapter);
-
     }
+
+    public void sortByTitle() {
+        Collections.sort(episodes, new Comparator<Episode>() {
+            @Override
+            public int compare(Episode t1, Episode t2) {
+                return t1.getTitle().compareTo(t2.getTitle());
+            }
+        });
+        lvEpisodes.setAdapter(lvAdapter);
+    }
+
+    public void sortByRating() {
+        Collections.sort(episodes, new Comparator<Episode>() {
+            @Override
+            public int compare(Episode t1, Episode t2) {
+                return (int) (t1.getRating() - t2.getRating());
+            }
+        });
+        lvEpisodes.setAdapter(lvAdapter);
+    }
+
 
     public ArrayList<Episode> getEpisodes() {
         ArrayList<Episode> episodes = new ArrayList<>();
@@ -88,11 +109,13 @@ public class MainActivity extends AppCompatActivity {
 
         if (id == R.id.mnu_zero) {
             Toast.makeText(getBaseContext(), "Sort by title.", Toast.LENGTH_LONG).show();
+            sortByTitle();
             return true;
         }
 
         if (id == R.id.mnu_one) {
-            Toast.makeText(getBaseContext(), "Ring ring, Hi Mom.", Toast.LENGTH_LONG).show();
+            Toast.makeText(getBaseContext(), "Sort by rating", Toast.LENGTH_LONG).show();
+            sortByRating();
             return true;
         }
 
