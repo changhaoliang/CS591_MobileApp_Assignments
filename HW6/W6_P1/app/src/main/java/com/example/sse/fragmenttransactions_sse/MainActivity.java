@@ -62,11 +62,11 @@ public class MainActivity extends AppCompatActivity {
         f3 = new Frag_Three();
 
         /*
-        * 5b. Grab a reference to the Activity's Fragment Manager, Every Activity has one!
-        * fm = getSupportFragmentManager();
-        * Q: When would you use this instead??
-        * A: In higher API such as API 28, getFragmentManager() is deprecated, android.support.v4.app.Fragment will replace android.app.Fragment
-        */
+         * 5b. Grab a reference to the Activity's Fragment Manager, Every Activity has one!
+         * fm = getSupportFragmentManager();
+         * Q: When would you use this instead??
+         * A: In higher API such as API 28, getFragmentManager() is deprecated, android.support.v4.app.Fragment will replace android.app.Fragment
+         */
         fm = getFragmentManager();  //that was easy.
 
         // 5c. Now we can "plop" fragment(s) into our container.
@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction ft = fm.beginTransaction();  //Create a reference to a fragment transaction.
 
         if (!f1.isAdded()) {
-            ft.add(R.id.FragLayout, f1, "tag1");
+            ft.add(R.id.FragLayout, f1);
         }
         if (f1.isDetached()) {
             ft.attach(f1);
@@ -179,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-        Press back button to get previous fragment
+     Press back button to get previous fragment
      */
     @Override
     public void onBackPressed() {
