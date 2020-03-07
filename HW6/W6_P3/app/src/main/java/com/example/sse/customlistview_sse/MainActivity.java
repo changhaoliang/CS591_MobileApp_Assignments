@@ -101,11 +101,11 @@ public class MainActivity extends AppCompatActivity {
 
     public HashMap<String,Episode>  getEpisodesMap() {
         HashMap<String,Episode> epsiodes_map = new HashMap<>();
-        String[] titles = getApplication().getResources().getStringArray(R.array.episodes);
+        //String[] titles = getApplication().getResources().getStringArray(R.array.episodes);
 
         for(int i = 0; i < episodes.size(); i++) {
 
-            epsiodes_map.put(episodes.get(i).getTitle(),episodes.get(i));
+            epsiodes_map.put(episodes.get(i).getTitle(), episodes.get(i));
         }
 
         return epsiodes_map;
