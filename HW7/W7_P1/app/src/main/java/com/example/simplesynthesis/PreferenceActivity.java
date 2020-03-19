@@ -46,6 +46,9 @@ public class PreferenceActivity extends AppCompatActivity {
                 phoneNumber = phoneContactNumber.getText().toString();
                 textNumber = textContactNumber.getText().toString();
 
+                phoneName = phoneContactName.getText().toString();
+                textName = textContactName.getText().toString();
+
                 savedSharedPreferenceInfo();
 
                 Intent intent = new Intent(PreferenceActivity.this, MainActivity.class);
@@ -60,8 +63,10 @@ public class PreferenceActivity extends AppCompatActivity {
 
         editor.putString("phone", phoneNumber);
         editor.putString("text", textNumber);
+
         editor.putString("phonename", phoneName);
         editor.putString("textname", textName);
+
         editor.apply();
         System.out.println("---------------Saved---------------");
     }
@@ -74,9 +79,10 @@ public class PreferenceActivity extends AppCompatActivity {
         textName = info.getString("textname", "");
 
         phoneContactName.setText(phoneName);
-        textContactName.setText(textName);
         phoneContactNumber.setText(phoneNumber);
+
         textContactNumber.setText(textNumber);
+        textContactName.setText(textName);
 
     }
 
