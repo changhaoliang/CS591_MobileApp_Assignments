@@ -70,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
         editor.apply();
     }
 
+
     public void retrieveSharedPreferenceInfo() {
         SharedPreferences info = getSharedPreferences("ActivityInfo", Context.MODE_PRIVATE);
         String[] titles = getApplication().getResources().getStringArray(R.array.episodes);
@@ -83,11 +84,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
     @Override
     protected void onPause() {
         saveSharedPreferenceInfo();
         super.onPause();
     }
+
 
     public HashMap<String,Episode>  getEpisodesMap() {
         HashMap<String,Episode> epsiodes_map = new HashMap<>();
@@ -100,7 +103,6 @@ public class MainActivity extends AppCompatActivity {
 
         return epsiodes_map;
     }
-
 
 
     public ArrayList<Episode> getEpisodes() {
