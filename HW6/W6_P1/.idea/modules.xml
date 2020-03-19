@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/CS591_MobileApp_Assignments-HW6-W6_P1.iml" filepath="$PROJECT_DIR$/CS591_MobileApp_Assignments-HW6-W6_P1.iml" group="W6_P1" />
       <module fileurl="file://$PROJECT_DIR$/HW6-W6_P1.iml" filepath="$PROJECT_DIR$/HW6-W6_P1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/HW6-W6_P1-app.iml" filepath="$PROJECT_DIR$/app/HW6-W6_P1-app.iml" group="W6_P1/app" />
       <module fileurl="file://$PROJECT_DIR$/W6_P1.iml" filepath="$PROJECT_DIR$/W6_P1.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/W6_P1-app.iml" filepath="$PROJECT_DIR$/app/W6_P1-app.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
