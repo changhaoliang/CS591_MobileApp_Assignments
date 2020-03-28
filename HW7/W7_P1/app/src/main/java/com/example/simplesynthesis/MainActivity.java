@@ -8,6 +8,11 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorListener;
+import android.hardware.SensorManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.telephony.SmsManager;
@@ -47,10 +52,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 retrieveSharedPreferenceInfo();
-                SmsManager smsManager = SmsManager.getDefault();
-                smsManager.sendTextMessage(textNumber, null, "**THIS IS ONLY A TEST**", null, null);
-                Intent text = new Intent(Intent.ACTION_SENDTO);
-                startActivity(text);
+                try {
+                    SmsManager smsManager = SmsManager.getDefault();
+                    smsManager.sendTextMessage(textNumber, null, "**THIS IS ONLY A TEST**", null, null);
+                    Intent text = new Intent(Intent.ACTION_SENDTO);
+                    text.setData(Uri.parse("smsto:" + textNumber));
+                    startActivity(text);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -64,6 +74,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
+
     public void retrieveSharedPreferenceInfo() {
         SharedPreferences info = getSharedPreferences("PreferenceInfo", Context.MODE_PRIVATE);
         phoneNumber = info.getString("phone", "");
@@ -92,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         mShakeUtils.onResume();
     }
+
     @Override
     protected void onPause() {
         super.onPause();
