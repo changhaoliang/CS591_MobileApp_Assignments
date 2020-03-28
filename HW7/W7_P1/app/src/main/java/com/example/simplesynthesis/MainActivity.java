@@ -8,6 +8,11 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorListener;
+import android.hardware.SensorManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.telephony.SmsManager;
@@ -16,7 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SensorEventListener {
     private ImageButton phoneBtn;
     private ImageButton textBtn;
     private String phoneNumber;
@@ -51,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+
     public void retrieveSharedPreferenceInfo() {
         SharedPreferences info = getSharedPreferences("PreferenceInfo", Context.MODE_PRIVATE);
         phoneNumber = info.getString("phone", "");
@@ -72,5 +79,15 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
     }
 }
