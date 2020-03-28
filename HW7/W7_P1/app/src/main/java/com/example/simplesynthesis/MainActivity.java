@@ -21,11 +21,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 
-public class MainActivity extends AppCompatActivity implements SensorEventListener {
+public class MainActivity extends AppCompatActivity {
     private ImageButton phoneBtn;
     private ImageButton textBtn;
     private String phoneNumber;
     private String textNumber;
+    private ShakeUtils mShakeUtils;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,16 +46,33 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 startActivity(phoneCall);
             }
         });
+
+
         textBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 retrieveSharedPreferenceInfo();
-                SmsManager smsManager = SmsManager.getDefault();
-                smsManager.sendTextMessage(textNumber, null, "**THIS IS ONLY A TEST**", null, null);
-                Intent text = new Intent(Intent.ACTION_SENDTO);
-                startActivity(text);
+                try {
+                    SmsManager smsManager = SmsManager.getDefault();
+                    smsManager.sendTextMessage(textNumber, null, "**THIS IS ONLY A TEST**", null, null);
+                    Intent text = new Intent(Intent.ACTION_SENDTO);
+                    text.setData(Uri.parse("smsto:" + textNumber));
+                    startActivity(text);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
+
+        mShakeUtils = new ShakeUtils( this );
+        mShakeUtils.setOnShakeListener(new ShakeUtils.OnShakeListener() {
+            @Override
+            public void onShake() {
+                phoneBtn.callOnClick();
+                textBtn.callOnClick();
+            }
+        });
+
     }
 
 
@@ -82,12 +100,14 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     }
 
     @Override
-    public void onSensorChanged(SensorEvent event) {
-        
+    protected void onResume() {
+        super.onResume();
+        mShakeUtils.onResume();
     }
 
     @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
+    protected void onPause() {
+        super.onPause();
+        mShakeUtils.onPause( );
     }
 }

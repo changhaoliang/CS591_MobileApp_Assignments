@@ -83,13 +83,14 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         Log.e(test, "onDestroy");
-        saveSharedPreferenceInfo();
+        //saveSharedPreferenceInfo();
         super.onDestroy();
     }
 
     @Override
     protected void onPause() {
         Log.e(test, "onPause");
+        saveSharedPreferenceInfo();
         super.onPause();
     }
 
