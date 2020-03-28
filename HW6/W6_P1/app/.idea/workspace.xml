@@ -12,18 +12,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d00a4f57-9b94-4378-9d3b-ab6717b753d0" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/caches/build_file_checksums.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../W6_P2/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../W6_P2/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../W6_P2/app/src/main/java/com/example/myapplication/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../W6_P2/app/src/main/java/com/example/myapplication/MainActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../W6_P3/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/../../W6_P3/.idea/caches/build_file_checksums.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../W6_P3/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../W6_P3/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../W6_P3/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../W6_P3/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../W6_P3/app/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../W6_P3/app/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../W6_P3/app/src/main/java/com/example/sse/customlistview_sse/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../W6_P3/app/src/main/java/com/example/sse/customlistview_sse/MainActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../W6_P3/app/src/main/res/drawable/st_mirror_mirror__evil_spock_and_good_kirk.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/../../W6_P3/app/src/main/res/drawable/st_mirror_mirror__evil_spock_and_good_kirk.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../W6_P3/app/src/main/res/menu/my_test_menu.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../../W6_P3/app/src/main/res/menu/my_test_menu.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
