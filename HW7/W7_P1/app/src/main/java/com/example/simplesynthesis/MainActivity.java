@@ -2,20 +2,23 @@ package com.example.simplesynthesis;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageButton;
 
 public class MainActivity extends AppCompatActivity {
     private ImageButton phoneBtn;
+    private ImageButton textBtn;
     private String phoneNumber;
     private String textNumber;
     private ShakeUtils mShakeUtils;
@@ -24,8 +27,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.SEND_SMS} , 1);
 
-        phoneBtn = (ImageButton)findViewById(R.id.phone_imgbtn);
+        phoneBtn = (ImageButton) findViewById(R.id.phone_imgbtn);
+        textBtn = (ImageButton) findViewById(R.id.text_imgbtn);
 
         phoneBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -37,14 +42,27 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        mShakeUtils = new ShakeUtils( this );
 
+        textBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                retrieveSharedPreferenceInfo();
+                SmsManager smsManager = SmsManager.getDefault();
+                smsManager.sendTextMessage(textNumber, null, "**THIS IS ONLY A TEST**", null, null);
+                Intent text = new Intent(Intent.ACTION_SENDTO);
+                startActivity(text);
+            }
+        });
+
+        mShakeUtils = new ShakeUtils( this );
         mShakeUtils.setOnShakeListener(new ShakeUtils.OnShakeListener() {
             @Override
             public void onShake() {
                 phoneBtn.callOnClick();
+                textBtn.callOnClick();
             }
         });
+
     }
     public void retrieveSharedPreferenceInfo() {
         SharedPreferences info = getSharedPreferences("PreferenceInfo", Context.MODE_PRIVATE);

@@ -55,6 +55,15 @@ public class PreferenceActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        clearButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                phoneContactName.setText("");
+                phoneContactNumber.setText("");
+                textContactName.setText("");
+                textContactNumber.setText("");
+            }
+        });
     }
 
     public void savedSharedPreferenceInfo() {
