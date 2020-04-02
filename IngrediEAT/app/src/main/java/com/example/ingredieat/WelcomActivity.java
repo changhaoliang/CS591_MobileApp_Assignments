@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.LinearLayout;
 
 import static com.example.ingredieat.Setting.PREF_NAME;
 
@@ -33,7 +32,7 @@ public class WelcomActivity extends AppCompatActivity {
     };
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        View v = View.inflate(getApplicationContext(), R.layout.welcome_page, null);
+        View v = View.inflate(getApplicationContext(), R.layout.activity_welcome, null);
         setContentView(v);
 
         if (getSupportActionBar() != null){
