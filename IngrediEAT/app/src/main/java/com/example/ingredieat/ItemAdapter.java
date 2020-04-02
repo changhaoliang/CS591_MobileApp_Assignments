@@ -42,11 +42,34 @@ public class ItemAdapter extends ArrayAdapter<Item> {
         return position;
     }
 
+    public void setBorder(Item item, View view, boolean click) {
+        final CardView cardView = (CardView)view.findViewById(R.id.card_view);
+        final LinearLayout linearLayout = (LinearLayout)view.findViewById(R.id.card_linear_layout);
+
+        if (click) {
+            if (!item.getSeclected()) {
+                cardView.setBackgroundColor(getContext().getResources().getColor(R.color.card_border));
+                item.setSelected(true);
+                linearLayout.setBackgroundColor(Color.WHITE);
+            } else {
+                cardView.setBackgroundColor(Color.WHITE);
+                item.setSelected(false);
+            }
+        } else {
+            if (item.getSeclected()) {
+                cardView.setBackgroundColor(getContext().getResources().getColor(R.color.card_border));
+                linearLayout.setBackgroundColor(Color.WHITE);
+            } else {
+                cardView.setBackgroundColor(Color.WHITE);
+            }
+        }
+    }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         final Item item = getItem(position);
-        View view;
+        final View view;
         if (convertView == null) {
             view = inflater.inflate(layoutId, parent, false);
         }
@@ -61,6 +84,7 @@ public class ItemAdapter extends ArrayAdapter<Item> {
         imageButton.setImageDrawable(item.getPicture());
         nameText.setText(item.getName());
 
+        setBorder(item, view, false);
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,14 +94,7 @@ public class ItemAdapter extends ArrayAdapter<Item> {
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!item.getSeclected()) {
-                    cardView.setBackgroundColor(getContext().getResources().getColor(R.color.card_border) );
-                    item.setSelected(true);
-                    linearLayout.setBackgroundColor(Color.WHITE);
-                } else {
-                    cardView.setBackgroundColor(Color.WHITE);
-                    item.setSelected(false);
-                }
+                setBorder(item, view, true);
             }
         });
 
