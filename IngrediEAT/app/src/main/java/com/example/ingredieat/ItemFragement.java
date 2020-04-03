@@ -34,6 +34,7 @@ public class ItemFragement extends Fragment implements ItemAdapter.MyLongClickLi
     private HashMap<Category, ArrayList<Item>> ingredients;
     private ItemFragmentListner itemFragmentListner;
 
+
     public interface ItemFragmentListner {
         public void setMenu(boolean flag);
     }
@@ -52,6 +53,9 @@ public class ItemFragement extends Fragment implements ItemAdapter.MyLongClickLi
         other_btn = (Button)myView.findViewById(R.id.other_btn);
         linearLayout = (LinearLayout)myView.findViewById(R.id.fragment_container);
         listView = (ListView)myView.findViewById(R.id.list_view);
+        Setting.count = 0;
+        Setting.longClickFlag = false;
+        Setting.shortClickFlag = false;
 
         ingredients = new HashMap<>();
         ingredients.put(Category.MEAT, new ArrayList<Item>());
@@ -85,7 +89,13 @@ public class ItemFragement extends Fragment implements ItemAdapter.MyLongClickLi
 
         addItem("Pork Belly", getResources().getDrawable(R.drawable.pork, null), Category.MEAT);
         addItem("Beef", getResources().getDrawable(R.drawable.beef, null), Category.MEAT);
-        addItem("Beef", getResources().getDrawable(R.drawable.beef, null), Category.VEGETABLE);
+        addItem("Beef1", getResources().getDrawable(R.drawable.beef, null), Category.VEGETABLE);
+        addItem("Beef2", getResources().getDrawable(R.drawable.beef, null), Category.MEAT);
+        addItem("Beef3", getResources().getDrawable(R.drawable.beef, null), Category.MEAT);
+        addItem("Beef4", getResources().getDrawable(R.drawable.beef, null), Category.VEGETABLE);
+        addItem("Beef5", getResources().getDrawable(R.drawable.beef, null), Category.MEAT);
+        addItem("Beef6", getResources().getDrawable(R.drawable.beef, null), Category.OTHER);
+
         updateList();
 
         return myView;
@@ -134,5 +144,18 @@ public class ItemFragement extends Fragment implements ItemAdapter.MyLongClickLi
                 item.setSelected(false);
             }
         }
+    }
+
+    public void deleleIngredients() {
+        for (Category c : ingredients.keySet()) {
+            for (int i = ingredients.get(c).size() - 1; i > 0; i--) {
+                if (ingredients.get(c).get(i).getSeclected()) {
+                    ingredients.get(c).remove(i);
+                }
+            }
+        }
+        currentItems = ingredients.get(Category.MEAT);
+        updateList();
+        System.out.println(ingredients.get(Category.MEAT).size());
     }
 }

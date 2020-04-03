@@ -8,6 +8,9 @@ public class Setting {
     static String googleId;
     static String email;
     static boolean ifSignIn;
+    static int count;
+    static boolean longClickFlag;
+    static boolean shortClickFlag;
 
     public final static class Strings {
         final static String account_email = "account email";

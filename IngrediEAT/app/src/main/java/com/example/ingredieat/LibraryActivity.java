@@ -50,15 +50,16 @@ public class LibraryActivity extends AppCompatActivity implements ItemFragement.
                         fragmentTransaction.addToBackStack(null);
                         break;
                     case R.string.cancel:
-                        revoverMenu();
+                        recoverMenu();
                         fragmentTransaction.show(itemFragement);
                         menuView.getMenu().getItem(2).setChecked(true);
                         itemFragement.cleanAllClick();
                         break;
                     case R.string.delete:
-                        revoverMenu();
+                        recoverMenu();
                         fragmentTransaction.show(itemFragement);
                         menuView.getMenu().getItem(2).setChecked(true);
+                        itemFragement.deleleIngredients();
                         break;
                 }
                 System.out.println(getSupportFragmentManager().getBackStackEntryCount());
@@ -89,7 +90,7 @@ public class LibraryActivity extends AppCompatActivity implements ItemFragement.
         }
     }
 
-    public void revoverMenu() {
+    public void recoverMenu() {
         menuView.getMenu().removeItem(R.string.cancel);
         menuView.getMenu().removeItem(R.string.delete);
 
@@ -104,8 +105,10 @@ public class LibraryActivity extends AppCompatActivity implements ItemFragement.
         menuView.getMenu().getItem(2).setIcon(R.drawable.cooker);
         menuView.getMenu().getItem(3).setIcon(R.drawable.heart);
         menuView.getMenu().getItem(4).setIcon(R.drawable.user);
-        ((ItemAdapter) itemFragement.getListAdapter()).longClickFlag = false;
-
-
+        Setting.longClickFlag = false;
+        Setting.shortClickFlag = false;
+        Setting.count = 0;
     }
+
+
 }
