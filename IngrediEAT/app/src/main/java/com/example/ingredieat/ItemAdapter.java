@@ -64,6 +64,7 @@ public class ItemAdapter extends ArrayAdapter<Item> {
         final CardView cardView = (CardView)view.findViewById(R.id.card_view);
         final LinearLayout linearLayout = (LinearLayout)view.findViewById(R.id.card_linear_layout);
         cardView.setBackgroundColor(Color.WHITE);
+        linearLayout.setBackgroundColor(Color.TRANSPARENT);
         item.setSelected(false);
     }
 
@@ -72,6 +73,8 @@ public class ItemAdapter extends ArrayAdapter<Item> {
         final LinearLayout linearLayout = (LinearLayout)view.findViewById(R.id.card_linear_layout);
         cardView.setBackgroundColor(getContext().getResources().getColor(R.color.card_border));
         item.setSelected(true);
+
+        System.out.println("===================");
     }
 
     @Override
@@ -109,8 +112,7 @@ public class ItemAdapter extends ArrayAdapter<Item> {
                     } else {
                         setClickBorder(item, view);
                     }
-                }
-                else {
+                } else {
                     if (item.getSeclected()) {
                         cleanBorder(item, view);
                     } else {
