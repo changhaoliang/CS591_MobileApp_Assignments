@@ -2,17 +2,20 @@ package com.example.ingredieat;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.LinearLayout;
 
+import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class LibraryActivity extends AppCompatActivity {
-    private LinearLayout linearLayout;
+public class LibraryActivity extends AppCompatActivity implements ItemFragement.ItemFragmentListner{
     private BottomNavigationView menuView;
     private ItemFragement itemFragement;
     private FragmentManager fragmentManager;
@@ -22,10 +25,11 @@ public class LibraryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_library);
 
-        linearLayout = (LinearLayout) findViewById(R.id.fragment_container);
         menuView = (BottomNavigationView)findViewById(R.id.bottom_menu);
 
+
         itemFragement = new ItemFragement();
+
         fragmentManager = getSupportFragmentManager();
 
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -37,7 +41,7 @@ public class LibraryActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 int id = item.getItemId();
-                if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
+                if (fragmentManager.getBackStackEntryCount() > 1) {
                     getSupportFragmentManager().popBackStack();
                 }
 
@@ -53,14 +57,26 @@ public class LibraryActivity extends AppCompatActivity {
                         fragmentTransaction.addToBackStack(null);
                         break;
                 }
+                System.out.println(getSupportFragmentManager().getBackStackEntryCount());
                 fragmentTransaction.commit();
 
                 return true;
             }
         });
         menuView.getMenu().getItem(2).setChecked(true);
-
     }
 
+    @Override
+    public void setMenu(boolean flag) {
+        if (flag == true) {
+            menuView.getMenu().getItem(0).setVisible(false);
+            menuView.getMenu().getItem(1).setVisible(false);
+            menuView.getMenu().getItem(3).setVisible(false);
+            menuView.getMenu().getItem(4).setVisible(false);
 
+            menuView.getMenu().getItem(2).setIcon(R.drawable.delete);
+            menuView.getMenu().getItem(2).setTitle(R.string.delete);
+
+        }
+    }
 }

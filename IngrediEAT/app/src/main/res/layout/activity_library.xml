@@ -16,15 +16,24 @@
 
     </LinearLayout>
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_menu"
+    <LinearLayout
+        android:id="@+id/fragment_menu"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="#FFFFFF"
-        android:backgroundTint="#008B5151"
-        app:menu="@menu/bottom_menu" >
+        android:orientation="vertical">
 
-    </com.google.android.material.bottomnavigation.BottomNavigationView>
+                <com.google.android.material.bottomnavigation.BottomNavigationView
+                    android:id="@+id/bottom_menu"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="#FFFFFF"
+                    android:backgroundTint="#008B5151"
+                    app:menu="@menu/bottom_menu"/>
+
+
+
+    </LinearLayout>
 
 </LinearLayout>

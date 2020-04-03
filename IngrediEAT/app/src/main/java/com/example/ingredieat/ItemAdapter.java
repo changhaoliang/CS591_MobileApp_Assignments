@@ -9,20 +9,28 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.List;
 
-public class ItemAdapter extends ArrayAdapter<Item> {
+public class ItemAdapter extends ArrayAdapter<Item> implements View.OnLongClickListener {
     private int layoutId;
     private List<Item> items;
-    public ItemAdapter(Context context, int layoutId, List<Item> list){
+    private MyLongClickListner myLongClickListner;
+
+    public interface MyLongClickListner {
+        public void longClickListner(View v);
+    }
+    public ItemAdapter(Context context, int layoutId, List<Item> list, MyLongClickListner listner){
         super(context,layoutId,list);
         this.layoutId = layoutId;
         this.items = list;
+        this.myLongClickListner = listner;
     }
 
     @Override
@@ -98,9 +106,13 @@ public class ItemAdapter extends ArrayAdapter<Item> {
             }
         });
 
-
+        cardView.setOnLongClickListener(this);
         return view;
     }
 
-
+    @Override
+    public boolean onLongClick(View v) {
+        myLongClickListner.longClickListner(v);
+        return true;
+    }
 }

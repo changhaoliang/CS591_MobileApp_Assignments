@@ -8,4 +8,5 @@
     <string name="user">user</string>
     <string name="cook">cook</string>
     <string name="favourite">favourite</string>
+    <string name="delete">delete</string>
 </resources>

@@ -1,14 +1,17 @@
 package com.example.ingredieat;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
@@ -17,7 +20,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ItemFragement extends Fragment {
+public class ItemFragement extends Fragment implements ItemAdapter.MyLongClickListner {
     private LinearLayout linearLayout;
     private Context context;
     private ListView listView;
@@ -27,6 +30,11 @@ public class ItemFragement extends Fragment {
     private Button other_btn;
     private ArrayList<Item> currentItems;
     private HashMap<Category, ArrayList<Item>> ingredients;
+    private ItemFragmentListner itemFragmentListner;
+
+    public interface ItemFragmentListner {
+        public void setMenu(boolean flag);
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -75,12 +83,16 @@ public class ItemFragement extends Fragment {
 
         addItem("Pork Belly", getResources().getDrawable(R.drawable.pork, null), Category.MEAT);
         addItem("Beef", getResources().getDrawable(R.drawable.beef, null), Category.MEAT);
-        System.out.println(currentItems.size());
-
         addItem("Beef", getResources().getDrawable(R.drawable.beef, null), Category.VEGETABLE);
         updateList();
 
         return myView;
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        itemFragmentListner = (ItemFragmentListner) context;
     }
 
     public void addItem(String name, Drawable picture, Category category) {
@@ -90,8 +102,12 @@ public class ItemFragement extends Fragment {
     }
 
     public void updateList() {
-        listAdapter = new ItemAdapter(getContext(), R.layout.item, currentItems);
+        listAdapter = new ItemAdapter(getContext(), R.layout.item, currentItems, this);
         listView.setAdapter(listAdapter);
     }
 
+    @Override
+    public void longClickListner(View v) {
+        itemFragmentListner.setMenu(true);
+    }
 }
