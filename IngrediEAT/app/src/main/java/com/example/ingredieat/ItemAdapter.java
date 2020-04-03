@@ -18,11 +18,11 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.List;
 
-public class ItemAdapter extends ArrayAdapter<Item> implements View.OnLongClickListener {
+public class ItemAdapter extends ArrayAdapter<Item> {
     private int layoutId;
     private List<Item> items;
+    public boolean longClickFlag;
     private MyLongClickListner myLongClickListner;
-
     public interface MyLongClickListner {
         public void longClickListner(View v);
     }
@@ -31,6 +31,7 @@ public class ItemAdapter extends ArrayAdapter<Item> implements View.OnLongClickL
         this.layoutId = layoutId;
         this.items = list;
         this.myLongClickListner = listner;
+        this.longClickFlag = false;
     }
 
     @Override
@@ -50,27 +51,27 @@ public class ItemAdapter extends ArrayAdapter<Item> implements View.OnLongClickL
         return position;
     }
 
-    public void setBorder(Item item, View view, boolean click) {
+    public void setClickBorder(Item item, View view) {
         final CardView cardView = (CardView)view.findViewById(R.id.card_view);
         final LinearLayout linearLayout = (LinearLayout)view.findViewById(R.id.card_linear_layout);
 
-        if (click) {
-            if (!item.getSeclected()) {
-                cardView.setBackgroundColor(getContext().getResources().getColor(R.color.card_border));
-                item.setSelected(true);
-                linearLayout.setBackgroundColor(Color.WHITE);
-            } else {
-                cardView.setBackgroundColor(Color.WHITE);
-                item.setSelected(false);
-            }
-        } else {
-            if (item.getSeclected()) {
-                cardView.setBackgroundColor(getContext().getResources().getColor(R.color.card_border));
-                linearLayout.setBackgroundColor(Color.WHITE);
-            } else {
-                cardView.setBackgroundColor(Color.WHITE);
-            }
-        }
+        cardView.setBackgroundColor(getContext().getResources().getColor(R.color.card_border));
+        item.setSelected(true);
+        linearLayout.setBackgroundColor(Color.WHITE);
+    }
+
+    public void cleanBorder(Item item, View view) {
+        final CardView cardView = (CardView)view.findViewById(R.id.card_view);
+        final LinearLayout linearLayout = (LinearLayout)view.findViewById(R.id.card_linear_layout);
+        cardView.setBackgroundColor(Color.WHITE);
+        item.setSelected(false);
+    }
+
+    public void setLongClickColor(Item item, View view) {
+        final CardView cardView = (CardView)view.findViewById(R.id.card_view);
+        final LinearLayout linearLayout = (LinearLayout)view.findViewById(R.id.card_linear_layout);
+        cardView.setBackgroundColor(getContext().getResources().getColor(R.color.card_border));
+        item.setSelected(true);
     }
 
     @Override
@@ -92,27 +93,45 @@ public class ItemAdapter extends ArrayAdapter<Item> implements View.OnLongClickL
         imageButton.setImageDrawable(item.getPicture());
         nameText.setText(item.getName());
 
-        setBorder(item, view, false);
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 System.out.println("2314124121");
             }
         });
+
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setBorder(item, view, true);
+                if (!longClickFlag) {
+                    if (item.getSeclected()) {
+                        cleanBorder(item, view);
+                    } else {
+                        setClickBorder(item, view);
+                    }
+                }
+                else {
+                    if (item.getSeclected()) {
+                        cleanBorder(item, view);
+                    } else {
+                        setLongClickColor(item, view);
+                    }
+                }
             }
         });
 
-        cardView.setOnLongClickListener(this);
+        cardView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                myLongClickListner.longClickListner(v);
+                longClickFlag = true;
+                setLongClickColor(item, view);
+                return true;
+            }
+        });
+
         return view;
     }
 
-    @Override
-    public boolean onLongClick(View v) {
-        myLongClickListner.longClickListner(v);
-        return true;
-    }
+
 }

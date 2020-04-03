@@ -2,17 +2,11 @@ package com.example.ingredieat;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.LinearLayout;
 
-import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class LibraryActivity extends AppCompatActivity implements ItemFragement.ItemFragmentListner{
@@ -45,7 +39,6 @@ public class LibraryActivity extends AppCompatActivity implements ItemFragement.
                     getSupportFragmentManager().popBackStack();
                 }
 
-
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.hide(itemFragement);
                 switch (item.getItemId()) {
@@ -55,6 +48,17 @@ public class LibraryActivity extends AppCompatActivity implements ItemFragement.
                     case R.id.user:
                         fragmentTransaction.replace(R.id.fragment_container, new UserFragment());
                         fragmentTransaction.addToBackStack(null);
+                        break;
+                    case R.string.cancel:
+                        revoverMenu();
+                        fragmentTransaction.show(itemFragement);
+                        menuView.getMenu().getItem(2).setChecked(true);
+                        itemFragement.cleanAllClick();
+                        break;
+                    case R.string.delete:
+                        revoverMenu();
+                        fragmentTransaction.show(itemFragement);
+                        menuView.getMenu().getItem(2).setChecked(true);
                         break;
                 }
                 System.out.println(getSupportFragmentManager().getBackStackEntryCount());
@@ -69,14 +73,39 @@ public class LibraryActivity extends AppCompatActivity implements ItemFragement.
     @Override
     public void setMenu(boolean flag) {
         if (flag == true) {
-            menuView.getMenu().getItem(0).setVisible(false);
-            menuView.getMenu().getItem(1).setVisible(false);
-            menuView.getMenu().getItem(3).setVisible(false);
-            menuView.getMenu().getItem(4).setVisible(false);
+            menuView.getMenu().removeItem(R.id.user);
+            menuView.getMenu().removeItem(R.id.cook);
+            menuView.getMenu().removeItem(R.id.favourite);
+            menuView.getMenu().removeItem(R.id.search);
+            menuView.getMenu().removeItem(R.id.add);
 
-            menuView.getMenu().getItem(2).setIcon(R.drawable.delete);
-            menuView.getMenu().getItem(2).setTitle(R.string.delete);
+            menuView.getMenu().add(1, R.string.delete, 1, R.string.delete);
+            menuView.getMenu().add(1, R.string.cancel, 1, R.string.cancel);
 
+            System.out.println(menuView.getMenu().getItem(0).getItemId());
+
+            menuView.getMenu().getItem(0).setIcon(R.drawable.delete);
+            menuView.getMenu().getItem(1).setIcon(R.drawable.cancel);
         }
+    }
+
+    public void revoverMenu() {
+        menuView.getMenu().removeItem(R.string.cancel);
+        menuView.getMenu().removeItem(R.string.delete);
+
+        menuView.getMenu().add(1, R.id.add, 1, R.string.add);
+        menuView.getMenu().add(1, R.id.search, 1, R.string.search);
+        menuView.getMenu().add(1, R.id.cook, 1, R.string.cook);
+        menuView.getMenu().add(1, R.id.favourite, 1, R.string.favourite);
+        menuView.getMenu().add(1, R.id.user, 1, R.string.user);
+
+        menuView.getMenu().getItem(0).setIcon(R.drawable.add);
+        menuView.getMenu().getItem(1).setIcon(R.drawable.search);
+        menuView.getMenu().getItem(2).setIcon(R.drawable.cooker);
+        menuView.getMenu().getItem(3).setIcon(R.drawable.heart);
+        menuView.getMenu().getItem(4).setIcon(R.drawable.user);
+        ((ItemAdapter) itemFragement.getListAdapter()).longClickFlag = false;
+
+
     }
 }

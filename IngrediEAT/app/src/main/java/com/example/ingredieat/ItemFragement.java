@@ -2,10 +2,12 @@ package com.example.ingredieat;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -109,5 +111,28 @@ public class ItemFragement extends Fragment implements ItemAdapter.MyLongClickLi
     @Override
     public void longClickListner(View v) {
         itemFragmentListner.setMenu(true);
+    }
+
+    public HashMap<Category, ArrayList<Item>> getIngredients() {
+        return ingredients;
+    }
+
+    public ListAdapter getListAdapter() {
+        return listAdapter;
+    }
+
+    public void cleanAllClick() {
+        int size = listView.getChildCount();
+        for(int i = 0; i < size; i++) {
+            View view = listView.getChildAt(i);
+            final CardView cardView = (CardView)view.findViewById(R.id.card_view);
+            final LinearLayout linearLayout = (LinearLayout)view.findViewById(R.id.card_linear_layout);
+            cardView.setBackgroundColor(Color.WHITE);
+        }
+        for (Category c : ingredients.keySet()) {
+            for (Item item : ingredients.get(c)) {
+                item.setSelected(false);
+            }
+        }
     }
 }
