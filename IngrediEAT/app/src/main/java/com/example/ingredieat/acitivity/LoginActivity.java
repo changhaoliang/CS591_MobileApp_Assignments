@@ -1,15 +1,14 @@
-package com.example.ingredieat;
+package com.example.ingredieat.acitivity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
-import com.example.ingredieat.backend.Library;
+import com.example.ingredieat.R;
+import com.example.ingredieat.setting.Setting;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -18,20 +17,19 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 
-import java.util.Set;
-
 public class LoginActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 0;
     private GoogleSignInOptions gso;
     private GoogleSignInClient mGoogleSignInClient;
     private GoogleSignInAccount account;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         SignInButton signInButton = findViewById(R.id.sign_in_button);
         signInButton.setSize(SignInButton.SIZE_STANDARD);
-        ;
+
 
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
@@ -45,6 +43,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RC_SIGN_IN) {
@@ -71,6 +70,7 @@ public class LoginActivity extends AppCompatActivity {
             System.out.println("Successfully Log in");
             finish();
         } catch (ApiException e) {
+            e.printStackTrace();
             System.out.println("Log in Failed");
         }
     }

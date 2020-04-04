@@ -1,4 +1,4 @@
-package com.example.ingredieat;
+package com.example.ingredieat.acitivity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,7 +8,10 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 
-import static com.example.ingredieat.Setting.PREF_NAME;
+import com.example.ingredieat.R;
+import com.example.ingredieat.setting.Setting;
+
+import static com.example.ingredieat.setting.Setting.PREF_NAME;
 
 import java.util.Timer;
 import java.util.TimerTask;

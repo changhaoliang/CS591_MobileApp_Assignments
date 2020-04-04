@@ -1,4 +1,4 @@
-package com.example.ingredieat;
+package com.example.ingredieat.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -12,12 +12,12 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
-import androidx.fragment.app.Fragment;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.example.ingredieat.entity.Item;
+import com.example.ingredieat.R;
+import com.example.ingredieat.setting.Setting;
 
 import java.util.List;
-import java.util.Set;
 
 public class ItemAdapter extends ArrayAdapter<Item> {
     private int layoutId;

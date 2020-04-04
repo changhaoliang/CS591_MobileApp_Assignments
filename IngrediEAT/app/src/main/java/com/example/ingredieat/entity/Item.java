@@ -1,6 +1,7 @@
-package com.example.ingredieat;
+package com.example.ingredieat.entity;
 
 import android.graphics.drawable.Drawable;
+
 
 public class Item {
     private String name;

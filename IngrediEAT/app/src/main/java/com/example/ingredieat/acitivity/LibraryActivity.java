@@ -1,4 +1,4 @@
-package com.example.ingredieat;
+package com.example.ingredieat.acitivity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -7,9 +7,13 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.example.ingredieat.fragment.ItemFragement;
+import com.example.ingredieat.R;
+import com.example.ingredieat.fragment.UserFragment;
+import com.example.ingredieat.setting.Setting;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class LibraryActivity extends AppCompatActivity implements ItemFragement.ItemFragmentListner{
+public class LibraryActivity extends AppCompatActivity implements ItemFragement.ItemFragmentListner {
     private BottomNavigationView menuView;
     private ItemFragement itemFragement;
     private FragmentManager fragmentManager;
