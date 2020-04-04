@@ -2,11 +2,15 @@ package com.example.ingredieat;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.ingredieat.backend.Library;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -14,6 +18,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
+
+import java.util.Set;
 
 public class LoginActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 0;
@@ -33,21 +39,14 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-                //startActivityForResult(signInIntent, RC_SIGN_IN);
-                if (!isFinishing()) {
-                    startActivity(signInIntent);
-                }
+                startActivityForResult(signInIntent, RC_SIGN_IN);
             }
         });
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
-        // Result returned from launching the Intent from GoogleSignInClient.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
-            // The Task returned from this call is always completed, no need to attach
-            // a listener.
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             handleSignInResult(task);
         }
@@ -57,12 +56,22 @@ public class LoginActivity extends AppCompatActivity {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
 
-            // Signed in successfully, show authenticated UI.
-            System.out.println("111");
+            SharedPreferences settings = getSharedPreferences(Setting.PREF_NAME, MODE_PRIVATE);
+            SharedPreferences.Editor editor = settings.edit();
+            editor.putString(Setting.Strings.account_email, account.getEmail());
+            editor.putString(Setting.Strings.account_family_name, account.getFamilyName());
+            editor.putString(Setting.Strings.account_given_name, account.getGivenName());
+            editor.putString(Setting.Strings.account_id, account.getId());
+            editor.putBoolean(Setting.Strings.if_signin_succ, true);
+            editor.apply();
+
+            Intent intent = new Intent(getApplicationContext(), LibraryActivity.class);
+            startActivity(intent);
+            System.out.println("Successfully Log in");
+            finish();
         } catch (ApiException e) {
-            // The ApiException status code indicates the detailed failure reason.
-            // Please refer to the GoogleSignInStatusCodes class reference for more information.
-            System.out.println("000");
+            e.printStackTrace();
+            System.out.println("Log in Failed");
         }
     }
 

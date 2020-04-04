@@ -9,12 +9,12 @@
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/sign_in_button"
-        android:layout_width="match_parent"
+        android:layout_width="224dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="150dp"
-        android:layout_marginBottom="250dp" />
+        android:layout_centerVertical="true"
+        android:alpha="0.8"
+        app:buttonSize="wide" />
 
     <ImageView
         android:id="@+id/imageView"

@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+
 import static com.example.ingredieat.Setting.PREF_NAME;
 
 import java.util.Timer;
@@ -31,10 +32,22 @@ public class WelcomActivity extends AppCompatActivity {
     };
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        View v = View.inflate(getApplicationContext(), R.layout.welcome_page, null);
+        View v = View.inflate(getApplicationContext(), R.layout.activity_welcome, null);
         setContentView(v);
+
+        if (getSupportActionBar() != null){
+            getSupportActionBar().hide();
+        }
         new Timer().schedule(timerTask, 2000);
-        startIntent = new Intent(this, LoginActivity.class);
+        retrieveSharedPreferenceInfo();
+        System.out.println(Setting.ifSignIn);
+
+        if (!Setting.ifSignIn) {
+            startIntent = new Intent(this, LoginActivity.class);
+        }
+        else {
+            startIntent = new Intent(this, LibraryActivity.class);
+        }
         componentReady = true;
 
     }
@@ -42,6 +55,10 @@ public class WelcomActivity extends AppCompatActivity {
     // get user account information
     public void retrieveSharedPreferenceInfo() {
         SharedPreferences settings = getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
-
+        Setting.email = settings.getString(Setting.Strings.account_email, null);
+        Setting.familyName = settings.getString(Setting.Strings.account_family_name, null);
+        Setting.givenName = settings.getString(Setting.Strings.account_given_name, null);
+        Setting.googleId = settings.getString(Setting.Strings.account_id, null);
+        Setting.ifSignIn = settings.getBoolean(Setting.Strings.if_signin_succ, false);
     }
 }
