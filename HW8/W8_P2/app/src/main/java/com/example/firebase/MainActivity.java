@@ -15,6 +15,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -59,9 +60,12 @@ public class MainActivity extends AppCompatActivity {
                 textView.setText(result.get(count));
             }
         });
+
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                ArrayList<String> arrayList1= (ArrayList<String>) dataSnapshot.getValue();
+                System.out.println(arrayList1.toString());
                 result = (ArrayList<String>) dataSnapshot.getValue();
             }
 
