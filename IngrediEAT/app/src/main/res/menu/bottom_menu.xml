@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/fridge"
+        android:icon="@drawable/fridge"
+        android:title="@string/fridge" />
 
     <item
-        android:id="@+id/add"
-        android:icon="@drawable/add"
-        android:title="@string/add" />
-    <item
-        android:id="@+id/search"
-        android:icon="@drawable/search"
-        android:title="@string/search" />
+        android:id="@+id/cart"
+        android:icon="@drawable/cart"
+        android:title="@string/cart" />
+
     <item
         android:id="@+id/cook"
         android:icon="@drawable/cooker"
         android:title="@string/cook" />
-
 
     <item
         android:id="@+id/favourite"

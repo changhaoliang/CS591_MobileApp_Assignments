@@ -10,4 +10,6 @@
     <string name="favourite">favourite</string>
     <string name="delete">delete</string>
     <string name="cancel">cancel</string>
+    <string name="fridge">fridge</string>
+    <string name="cart">cart</string>
 </resources>
