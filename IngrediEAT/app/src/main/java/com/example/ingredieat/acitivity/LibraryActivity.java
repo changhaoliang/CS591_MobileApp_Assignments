@@ -113,6 +113,4 @@ public class LibraryActivity extends AppCompatActivity implements ItemFragement.
         Setting.shortClickFlag = false;
         Setting.count = 0;
     }
-
-
 }

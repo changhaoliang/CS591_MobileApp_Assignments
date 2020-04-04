@@ -23,14 +23,14 @@
         android:layout_weight="1"
         android:orientation="vertical">
 
-                <com.google.android.material.bottomnavigation.BottomNavigationView
-                    android:id="@+id/bottom_menu"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:background="#FFFFFF"
-                    android:backgroundTint="#008B5151"
-                    app:menu="@menu/bottom_menu"/>
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_menu"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="#FFFFFF"
+            android:backgroundTint="#008B5151"
+            app:menu="@menu/bottom_menu"/>
 
 
 
