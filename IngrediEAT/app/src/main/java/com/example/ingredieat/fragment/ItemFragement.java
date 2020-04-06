@@ -26,9 +26,8 @@ import com.example.ingredieat.setting.Setting;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-//public class ItemFragement extends Fragment implements ItemAdapter.MyLongClickListner {
-public class ItemFragement extends Fragment {
-        private LinearLayout linearLayout;
+public class ItemFragement extends Fragment implements ItemAdapter.MyClickListner {
+    private LinearLayout linearLayout;
     private Context context;
     private ListView listView;
     private ListAdapter listAdapter;
@@ -41,7 +40,7 @@ public class ItemFragement extends Fragment {
 
 
     public interface ItemFragmentListner {
-        public void setMenu(boolean flag);
+        public void setFragment(boolean flag);
     }
 
     @Override
@@ -53,9 +52,6 @@ public class ItemFragement extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View myView = inflater.inflate(R.layout.fragment_item, container, false);
-//        meat_btn = (Button)myView.findViewById(R.id.meat_btn);
-//        vege_btn = (Button)myView.findViewById(R.id.vege_btn);
-//        other_btn = (Button)myView.findViewById(R.id.other_btn);
         linearLayout = (LinearLayout)myView.findViewById(R.id.fragment_container);
         listView = (ListView)myView.findViewById(R.id.list_view);
         Setting.count = 0;
@@ -104,14 +100,15 @@ public class ItemFragement extends Fragment {
     }
 
     public void updateList() {
-        listAdapter = new ItemAdapter(getContext(), R.layout.item, currentItems);
+        listAdapter = new ItemAdapter(getContext(), R.layout.item, currentItems, this);
         listView.setAdapter(listAdapter);
     }
 
+    @Override
+    public void clickListner(View v) {
+        itemFragmentListner.setFragment(true);
+    }
 
-//    public void longClickListner(View v) {
-//        itemFragmentListner.setMenu(true);
-//    }
 
     public HashMap<Category, ArrayList<Item>> getIngredients() {
         return ingredients;

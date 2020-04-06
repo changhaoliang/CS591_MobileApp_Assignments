@@ -7,6 +7,8 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.example.ingredieat.fragment.CartFragment;
+import com.example.ingredieat.fragment.IngredientsFragment;
 import com.example.ingredieat.fragment.ItemFragement;
 import com.example.ingredieat.R;
 import com.example.ingredieat.fragment.UserFragment;
@@ -53,6 +55,10 @@ public class LibraryActivity extends AppCompatActivity implements ItemFragement.
                         fragmentTransaction.replace(R.id.fragment_container, new UserFragment());
                         fragmentTransaction.addToBackStack(null);
                         break;
+                    case R.id.cart:
+                        fragmentTransaction.replace(R.id.fragment_container, new CartFragment());
+                        fragmentTransaction.addToBackStack(null);
+                        break;
                     case R.string.cancel:
                         recoverMenu();
                         fragmentTransaction.show(itemFragement);
@@ -75,21 +81,26 @@ public class LibraryActivity extends AppCompatActivity implements ItemFragement.
     }
 
     @Override
-    public void setMenu(boolean flag) {
+    public void setFragment(boolean flag) {
         if (flag) {
-            menuView.getMenu().removeItem(R.id.user);
-            menuView.getMenu().removeItem(R.id.cook);
-            menuView.getMenu().removeItem(R.id.favourite);
-            menuView.getMenu().removeItem(R.id.cart);
-            menuView.getMenu().removeItem(R.id.fridge);
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.fragment_container, new IngredientsFragment());
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
 
-            menuView.getMenu().add(1, R.string.delete, 1, R.string.delete);
-            menuView.getMenu().add(1, R.string.cancel, 1, R.string.cancel);
-
-            System.out.println(menuView.getMenu().getItem(0).getItemId());
-
-            menuView.getMenu().getItem(0).setIcon(R.drawable.delete);
-            menuView.getMenu().getItem(1).setIcon(R.drawable.cancel);
+//            menuView.getMenu().removeItem(R.id.user);
+//            menuView.getMenu().removeItem(R.id.cook);
+//            menuView.getMenu().removeItem(R.id.favourite);
+//            menuView.getMenu().removeItem(R.id.cart);
+//            menuView.getMenu().removeItem(R.id.fridge);
+//
+//            menuView.getMenu().add(1, R.string.delete, 1, R.string.delete);
+//            menuView.getMenu().add(1, R.string.cancel, 1, R.string.cancel);
+//
+//            System.out.println(menuView.getMenu().getItem(0).getItemId());
+//
+//            menuView.getMenu().getItem(0).setIcon(R.drawable.delete);
+//            menuView.getMenu().getItem(1).setIcon(R.drawable.cancel);
         }
     }
 

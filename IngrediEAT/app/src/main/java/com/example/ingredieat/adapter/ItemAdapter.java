@@ -24,16 +24,17 @@ public class ItemAdapter extends ArrayAdapter<Item> {
     private int layoutId;
     private List<Item> items;
 
-    private MyLongClickListner myLongClickListner;
+    private MyClickListner myClickListner;
 
-    public interface MyLongClickListner {
-        public void longClickListner(View v);
+    public interface MyClickListner {
+        public void clickListner(View v);
     }
-    public ItemAdapter(Context context, int layoutId, List<Item> list){
+
+    public ItemAdapter(Context context, int layoutId, List<Item> list, MyClickListner listner){
         super(context,layoutId,list);
         this.layoutId = layoutId;
         this.items = list;
-//        this.myLongClickListner = listner;
+        this.myClickListner = listner;
     }
 
     @Override
@@ -122,9 +123,16 @@ public class ItemAdapter extends ArrayAdapter<Item> {
             }
         });
 
-//        cardView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
+
+        cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String categoryName = item.getName();
+
+                String[] ingredients = new String[]{"butter", "egg", "milk", "american cheese", "cheddar", "sour cream", "yogurt", "cream cheese"};
+                myClickListner.clickListner(v);
+
+
 //                if (!Setting.longClickFlag && Setting.count == 0) {
 //                    Setting.shortClickFlag = true;
 //                }
@@ -145,8 +153,8 @@ public class ItemAdapter extends ArrayAdapter<Item> {
 //                        System.out.println("345");
 //                    }
 //                }
-//            }
-//        });
+            }
+        });
 
 //        cardView.setOnLongClickListener(new View.OnLongClickListener() {
 //            @Override
