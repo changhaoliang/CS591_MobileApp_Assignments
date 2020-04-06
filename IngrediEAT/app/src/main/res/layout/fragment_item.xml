@@ -17,32 +17,32 @@
 
             android:orientation="horizontal">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/meat_btn"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="#D84315"
-                android:text="meat"
-                android:textColor="#FFFFFF" />
+<!--            <com.google.android.material.button.MaterialButton-->
+<!--                android:id="@+id/meat_btn"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="1"-->
+<!--                android:background="#D84315"-->
+<!--                android:text="meat"-->
+<!--                android:textColor="#FFFFFF" />-->
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/vege_btn"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="#D84315"
-                android:text="vegetable"
-                android:textColor="#FFFFFF" />
+<!--            <com.google.android.material.button.MaterialButton-->
+<!--                android:id="@+id/vege_btn"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="1"-->
+<!--                android:background="#D84315"-->
+<!--                android:text="vegetable"-->
+<!--                android:textColor="#FFFFFF" />-->
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/other_btn"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="#D84315"
-                android:text="other"
-                android:textColor="#FFFFFF" />
+<!--            <com.google.android.material.button.MaterialButton-->
+<!--                android:id="@+id/other_btn"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="1"-->
+<!--                android:background="#D84315"-->
+<!--                android:text="other"-->
+<!--                android:textColor="#FFFFFF" />-->
 
         </LinearLayout>
 

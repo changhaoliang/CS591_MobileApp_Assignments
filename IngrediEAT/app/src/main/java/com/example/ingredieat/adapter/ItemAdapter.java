@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -28,11 +29,11 @@ public class ItemAdapter extends ArrayAdapter<Item> {
     public interface MyLongClickListner {
         public void longClickListner(View v);
     }
-    public ItemAdapter(Context context, int layoutId, List<Item> list, MyLongClickListner listner){
+    public ItemAdapter(Context context, int layoutId, List<Item> list){
         super(context,layoutId,list);
         this.layoutId = layoutId;
         this.items = list;
-        this.myLongClickListner = listner;
+//        this.myLongClickListner = listner;
     }
 
     @Override
@@ -52,36 +53,36 @@ public class ItemAdapter extends ArrayAdapter<Item> {
         return position;
     }
 
-    public void setClickBorder(Item item, View view) {
-        final CardView cardView = (CardView)view.findViewById(R.id.card_view);
-        final LinearLayout linearLayout = (LinearLayout)view.findViewById(R.id.card_linear_layout);
-
-        cardView.setBackgroundColor(getContext().getResources().getColor(R.color.card_border));
-        item.setSelected(true);
-        linearLayout.setBackgroundColor(Color.WHITE);
-    }
-
-    public void cleanBorder(Item item, View view) {
-        final CardView cardView = (CardView)view.findViewById(R.id.card_view);
-        final LinearLayout linearLayout = (LinearLayout)view.findViewById(R.id.card_linear_layout);
-        cardView.setBackgroundColor(Color.WHITE);
-        linearLayout.setBackgroundColor(Color.TRANSPARENT);
-        item.setSelected(false);
-
-        Setting.count -= 2;
-        if (Setting.shortClickFlag && Setting.count == 0) {
-            Setting.shortClickFlag = false;
-            Setting.longClickFlag = false;
-        }
-    }
-
-    public void setLongClickColor(Item item, View view) {
-        final CardView cardView = (CardView)view.findViewById(R.id.card_view);
-        final LinearLayout linearLayout = (LinearLayout)view.findViewById(R.id.card_linear_layout);
-        cardView.setBackgroundColor(getContext().getResources().getColor(R.color.card_border));
-        item.setSelected(true);
-        System.out.println(item.getName());
-    }
+//    public void setClickBorder(Item item, View view) {
+//        final CardView cardView = (CardView)view.findViewById(R.id.card_view);
+//        final LinearLayout linearLayout = (LinearLayout)view.findViewById(R.id.card_linear_layout);
+//
+//        cardView.setBackgroundColor(getContext().getResources().getColor(R.color.card_border));
+//        item.setSelected(true);
+//        linearLayout.setBackgroundColor(Color.WHITE);
+//    }
+//
+//    public void cleanBorder(Item item, View view) {
+//        final CardView cardView = (CardView)view.findViewById(R.id.card_view);
+//        final LinearLayout linearLayout = (LinearLayout)view.findViewById(R.id.card_linear_layout);
+//        cardView.setBackgroundColor(Color.WHITE);
+//        linearLayout.setBackgroundColor(Color.TRANSPARENT);
+//        item.setSelected(false);
+//
+//        Setting.count -= 2;
+//        if (Setting.shortClickFlag && Setting.count == 0) {
+//            Setting.shortClickFlag = false;
+//            Setting.longClickFlag = false;
+//        }
+//    }
+//
+//    public void setLongClickColor(Item item, View view) {
+//        final CardView cardView = (CardView)view.findViewById(R.id.card_view);
+//        final LinearLayout linearLayout = (LinearLayout)view.findViewById(R.id.card_linear_layout);
+//        cardView.setBackgroundColor(getContext().getResources().getColor(R.color.card_border));
+//        item.setSelected(true);
+//        System.out.println(item.getName());
+//    }
 
     @Override
     public View getView(int position, final View convertView, ViewGroup parent){
@@ -96,20 +97,20 @@ public class ItemAdapter extends ArrayAdapter<Item> {
             view = convertView;
         }
         final CardView cardView = (CardView)view.findViewById(R.id.card_view);
-        final ImageButton imageButton = (ImageButton)view.findViewById(R.id.imageButton);
+        final ImageView imageButton = (ImageView)view.findViewById(R.id.imageButton);
         final TextView nameText = (TextView)view.findViewById(R.id.name_txt);
-
-        if (Setting.shortClickFlag && item.getSeclected()) {
-            setClickBorder(item, view);
-        }
-        if (Setting.longClickFlag && item.getSeclected()) {
-            setLongClickColor(item, view);
-        }
-        else {
-            cardView.setBackgroundColor(Color.WHITE);
-            final LinearLayout linearLayout = (LinearLayout)view.findViewById(R.id.card_linear_layout);
-            linearLayout.setBackgroundColor(Color.TRANSPARENT);
-        }
+//
+//        if (Setting.shortClickFlag && item.getSeclected()) {
+//            setClickBorder(item, view);
+//        }
+//        if (Setting.longClickFlag && item.getSeclected()) {
+//            setLongClickColor(item, view);
+//        }
+//        else {
+//            cardView.setBackgroundColor(Color.WHITE);
+//            final LinearLayout linearLayout = (LinearLayout)view.findViewById(R.id.card_linear_layout);
+//            linearLayout.setBackgroundColor(Color.TRANSPARENT);
+//        }
 
         imageButton.setImageDrawable(item.getPicture());
         nameText.setText(item.getName());
@@ -121,54 +122,54 @@ public class ItemAdapter extends ArrayAdapter<Item> {
             }
         });
 
-        cardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!Setting.longClickFlag && Setting.count == 0) {
-                    Setting.shortClickFlag = true;
-                }
+//        cardView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (!Setting.longClickFlag && Setting.count == 0) {
+//                    Setting.shortClickFlag = true;
+//                }
+//
+//                Setting.count++;
+//                // 单击状态
+//                if (Setting.shortClickFlag) {
+//                    if (item.getSeclected()) {
+//                        cleanBorder(item, view);
+//                    } else {
+//                        setClickBorder(item, view);
+//                    }
+//                } else { //长按状态
+//                    if (item.getSeclected()) {
+//                        cleanBorder(item, view);
+//                    } else {
+//                        setLongClickColor(item, view);
+//                        System.out.println("345");
+//                    }
+//                }
+//            }
+//        });
 
-                Setting.count++;
-                // 单击状态
-                if (Setting.shortClickFlag) {
-                    if (item.getSeclected()) {
-                        cleanBorder(item, view);
-                    } else {
-                        setClickBorder(item, view);
-                    }
-                } else { //长按状态
-                    if (item.getSeclected()) {
-                        cleanBorder(item, view);
-                    } else {
-                        setLongClickColor(item, view);
-                        System.out.println("345");
-                    }
-                }
-            }
-        });
-
-        cardView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                if (Setting.longClickFlag) {
-                    return false;
-                }
-
-                if (Setting.count == 0) {
-                    Setting.longClickFlag = true;
-                }
-                Setting.count++;
-
-                if (!Setting.shortClickFlag) {
-                    myLongClickListner.longClickListner(v);
-                    setLongClickColor(item, view);
-                    System.out.println("123");
-                } else {
-                    setClickBorder(item, view);
-                }
-                return true;
-            }
-        });
+//        cardView.setOnLongClickListener(new View.OnLongClickListener() {
+//            @Override
+//            public boolean onLongClick(View v) {
+//                if (Setting.longClickFlag) {
+//                    return false;
+//                }
+//
+//                if (Setting.count == 0) {
+//                    Setting.longClickFlag = true;
+//                }
+//                Setting.count++;
+//
+//                if (!Setting.shortClickFlag) {
+//                    myLongClickListner.longClickListner(v);
+//                    setLongClickColor(item, view);
+//                    System.out.println("123");
+//                } else {
+//                    setClickBorder(item, view);
+//                }
+//                return true;
+//            }
+//        });
 
         return view;
     }

@@ -6,13 +6,12 @@ import android.graphics.drawable.Drawable;
 public class Item {
     private String name;
     private Drawable picture;
-    private boolean isSelected;
+//    private boolean isSelected;
     private Category category;
 
-    public Item(String name, Drawable picture, boolean isSelected, Category category) {
+    public Item(String name, Drawable picture, Category category) {
         this.name = name;
         this.picture = picture;
-        this.isSelected = isSelected;
         this.category = category;
     }
 
@@ -20,13 +19,13 @@ public class Item {
         return name;
     }
 
-    public boolean getSeclected() {
-        return isSelected;
-    }
-
-    public void setSelected(boolean isSelected) {
-        this.isSelected = isSelected;
-    }
+//    public boolean getSeclected() {
+//        return isSelected;
+//    }
+//
+//    public void setSelected(boolean isSelected) {
+//        this.isSelected = isSelected;
+//    }
 
     public Drawable getPicture() {
         return picture;

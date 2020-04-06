@@ -26,8 +26,9 @@ import com.example.ingredieat.setting.Setting;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ItemFragement extends Fragment implements ItemAdapter.MyLongClickListner {
-    private LinearLayout linearLayout;
+//public class ItemFragement extends Fragment implements ItemAdapter.MyLongClickListner {
+public class ItemFragement extends Fragment {
+        private LinearLayout linearLayout;
     private Context context;
     private ListView listView;
     private ListAdapter listAdapter;
@@ -52,9 +53,9 @@ public class ItemFragement extends Fragment implements ItemAdapter.MyLongClickLi
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View myView = inflater.inflate(R.layout.fragment_item, container, false);
-        meat_btn = (Button)myView.findViewById(R.id.meat_btn);
-        vege_btn = (Button)myView.findViewById(R.id.vege_btn);
-        other_btn = (Button)myView.findViewById(R.id.other_btn);
+//        meat_btn = (Button)myView.findViewById(R.id.meat_btn);
+//        vege_btn = (Button)myView.findViewById(R.id.vege_btn);
+//        other_btn = (Button)myView.findViewById(R.id.other_btn);
         linearLayout = (LinearLayout)myView.findViewById(R.id.fragment_container);
         listView = (ListView)myView.findViewById(R.id.list_view);
         Setting.count = 0;
@@ -64,42 +65,27 @@ public class ItemFragement extends Fragment implements ItemAdapter.MyLongClickLi
         ingredients = new HashMap<>();
         ingredients.put(Category.MEAT, new ArrayList<Item>());
         ingredients.put(Category.VEGETABLE, new ArrayList<Item>());
-        ingredients.put(Category.OTHER, new ArrayList<Item>());
+        ingredients.put(Category.CONDIMENTS, new ArrayList<Item>());
+        ingredients.put(Category.SAUCE, new ArrayList<Item>());
+        ingredients.put(Category.SEAFOOD, new ArrayList<Item>());
+        ingredients.put(Category.BAKING, new ArrayList<Item>());
+        ingredients.put(Category.BEVERAGE, new ArrayList<Item>());
+        ingredients.put(Category.DAIRY, new ArrayList<Item>());
+        ingredients.put(Category.FISH, new ArrayList<Item>());
+        ingredients.put(Category.SEASONING, new ArrayList<Item>());
+
         currentItems = ingredients.get(Category.MEAT);
 
-        meat_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                currentItems = ingredients.get(Category.MEAT);
-                updateList();
-            }
-        });
 
-        vege_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                currentItems = ingredients.get(Category.VEGETABLE);
-                updateList();
-            }
-        });
-
-        other_btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                currentItems = ingredients.get(Category.OTHER);
-                updateList();
-            }
-        });
-
-        addItem("Pork Belly", getResources().getDrawable(R.drawable.pork, null), Category.MEAT);
-        addItem("Beef", getResources().getDrawable(R.drawable.beef, null), Category.MEAT);
-        addItem("Beef1", getResources().getDrawable(R.drawable.beef, null), Category.VEGETABLE);
-        addItem("Beef2", getResources().getDrawable(R.drawable.beef, null), Category.MEAT);
-        addItem("Beef3", getResources().getDrawable(R.drawable.beef, null), Category.MEAT);
-        addItem("Beef4", getResources().getDrawable(R.drawable.beef, null), Category.VEGETABLE);
-        addItem("Beef5", getResources().getDrawable(R.drawable.beef, null), Category.MEAT);
-        addItem("Beef6", getResources().getDrawable(R.drawable.beef, null), Category.OTHER);
-
+        addItem("Meats", getResources().getDrawable(R.drawable.meat, null), Category.MEAT);
+        addItem("Vegatables", getResources().getDrawable(R.drawable.vegetables, null), Category.VEGETABLE);
+        addItem("Baking & Grains", getResources().getDrawable(R.drawable.baking, null), Category.BAKING);
+        addItem("Dairy", getResources().getDrawable(R.drawable.dairy2, null), Category.DAIRY);
+        addItem("Fish", getResources().getDrawable(R.drawable.fish, null), Category.FISH);
+        addItem("Seafood", getResources().getDrawable(R.drawable.seafood, null), Category.SEAFOOD);
+        addItem("Condiments", getResources().getDrawable(R.drawable.seasoning, null), Category.SEASONING);
+        addItem("Sause", getResources().getDrawable(R.drawable.condiment, null), Category.CONDIMENTS);
+        addItem("Beverage", getResources().getDrawable(R.drawable.drinking, null), Category.BEVERAGE);
         updateList();
 
         return myView;
@@ -109,23 +95,23 @@ public class ItemFragement extends Fragment implements ItemAdapter.MyLongClickLi
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         itemFragmentListner = (ItemFragmentListner) context;
+
     }
 
     public void addItem(String name, Drawable picture, Category category) {
-        Item newItem = new Item(name, picture, false, category);
-        ArrayList<Item> arrayList = ingredients.get(category);
-        arrayList.add(newItem);
+        Item newItem = new Item(name, picture, category);
+        currentItems.add(newItem);
     }
 
     public void updateList() {
-        listAdapter = new ItemAdapter(getContext(), R.layout.item, currentItems, this);
+        listAdapter = new ItemAdapter(getContext(), R.layout.item, currentItems);
         listView.setAdapter(listAdapter);
     }
 
-    @Override
-    public void longClickListner(View v) {
-        itemFragmentListner.setMenu(true);
-    }
+
+//    public void longClickListner(View v) {
+//        itemFragmentListner.setMenu(true);
+//    }
 
     public HashMap<Category, ArrayList<Item>> getIngredients() {
         return ingredients;
@@ -135,31 +121,31 @@ public class ItemFragement extends Fragment implements ItemAdapter.MyLongClickLi
         return listAdapter;
     }
 
-    public void cleanAllClick() {
-        int size = listView.getChildCount();
-        for(int i = 0; i < size; i++) {
-            View view = listView.getChildAt(i);
-            final CardView cardView = (CardView)view.findViewById(R.id.card_view);
-            final LinearLayout linearLayout = (LinearLayout)view.findViewById(R.id.card_linear_layout);
-            cardView.setBackgroundColor(Color.WHITE);
-        }
-        for (Category c : ingredients.keySet()) {
-            for (Item item : ingredients.get(c)) {
-                item.setSelected(false);
-            }
-        }
-    }
+//    public void cleanAllClick() {
+//        int size = listView.getChildCount();
+//        for(int i = 0; i < size; i++) {
+//            View view = listView.getChildAt(i);
+//            final CardView cardView = (CardView)view.findViewById(R.id.card_view);
+//            final LinearLayout linearLayout = (LinearLayout)view.findViewById(R.id.card_linear_layout);
+//            cardView.setBackgroundColor(Color.WHITE);
+//        }
+//        for (Category c : ingredients.keySet()) {
+//            for (Item item : ingredients.get(c)) {
+//                item.setSelected(false);
+//            }
+//        }
+//    }
 
-    public void deleleIngredients() {
-        for (Category c : ingredients.keySet()) {
-            for (int i = ingredients.get(c).size() - 1; i > 0; i--) {
-                if (ingredients.get(c).get(i).getSeclected()) {
-                    ingredients.get(c).remove(i);
-                }
-            }
-        }
-        currentItems = ingredients.get(Category.MEAT);
-        updateList();
-        System.out.println(ingredients.get(Category.MEAT).size());
-    }
+//    public void deleleIngredients() {
+//        for (Category c : ingredients.keySet()) {
+//            for (int i = ingredients.get(c).size() - 1; i > 0; i--) {
+//                if (ingredients.get(c).get(i).getSeclected()) {
+//                    ingredients.get(c).remove(i);
+//                }
+//            }
+//        }
+//        currentItems = ingredients.get(Category.MEAT);
+//        updateList();
+//        System.out.println(ingredients.get(Category.MEAT).size());
+//    }
 }

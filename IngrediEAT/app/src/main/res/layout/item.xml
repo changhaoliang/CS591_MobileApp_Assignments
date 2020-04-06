@@ -20,26 +20,29 @@
         <LinearLayout
             android:id="@+id/card_linear_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="100dp"
             android:backgroundTint="#FFFFFF"
             android:orientation="horizontal"
             android:padding="2dp">
 
-            <ImageButton
+            <ImageView
                 android:id="@+id/imageButton"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:background="#FFFFFF"
                 android:padding="10sp"
-                app:srcCompat="@drawable/pork" />
+                android:scaleType="fitStart"
+                app:srcCompat="@drawable/meat" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/name_txt"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_weight="3"
                 android:padding="10sp"
-                android:text="Pork Belly"
+                android:text="Meats"
                 android:textSize="25dp" />
 
         </LinearLayout>

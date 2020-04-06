@@ -46,7 +46,7 @@ public class LibraryActivity extends AppCompatActivity implements ItemFragement.
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.hide(itemFragement);
                 switch (item.getItemId()) {
-                    case R.id.cook:
+                    case R.id.fridge:
                         fragmentTransaction.show(itemFragement);
                         break;
                     case R.id.user:
@@ -57,13 +57,13 @@ public class LibraryActivity extends AppCompatActivity implements ItemFragement.
                         recoverMenu();
                         fragmentTransaction.show(itemFragement);
                         menuView.getMenu().getItem(2).setChecked(true);
-                        itemFragement.cleanAllClick();
+//                        itemFragement.cleanAllClick();
                         break;
                     case R.string.delete:
                         recoverMenu();
                         fragmentTransaction.show(itemFragement);
                         menuView.getMenu().getItem(2).setChecked(true);
-                        itemFragement.deleleIngredients();
+//                        itemFragement.deleleIngredients();
                         break;
                 }
                 System.out.println(getSupportFragmentManager().getBackStackEntryCount());
@@ -72,7 +72,6 @@ public class LibraryActivity extends AppCompatActivity implements ItemFragement.
                 return true;
             }
         });
-        menuView.getMenu().getItem(2).setChecked(true);
     }
 
     @Override
