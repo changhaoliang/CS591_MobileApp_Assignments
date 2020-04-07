@@ -4,6 +4,7 @@ import android.graphics.drawable.Drawable;
 
 
 public class Item {
+    private int id;
     private String name;
     private Drawable picture;
     private boolean isSelected;
