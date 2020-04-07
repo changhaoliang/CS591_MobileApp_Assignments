@@ -34,7 +34,7 @@ public class ItemFragement extends Fragment implements ItemAdapter.MyClickListne
     private ArrayList<Item> categories;
     private HashMap<Category, ArrayList<Item>> ingredients;
     private ItemFragmentListner itemFragmentListner;
-    private HashSet<String> totalIngredients;
+    private HashMap<String, HashSet<String>> totalIngredients;
 
     public interface ItemFragmentListner {
         void setFragment(boolean flag, String category);
@@ -50,7 +50,7 @@ public class ItemFragement extends Fragment implements ItemAdapter.MyClickListne
                              Bundle savedInstanceState) {
         View myView = inflater.inflate(R.layout.fragment_item, container, false);
         listView = (ListView)myView.findViewById(R.id.list_view);
-        if (totalIngredients == null) totalIngredients = new HashSet<>();
+        if (totalIngredients == null) totalIngredients = new HashMap<>();
         ingredients = new HashMap<>();
 
         initializeList();
@@ -108,13 +108,27 @@ public class ItemFragement extends Fragment implements ItemAdapter.MyClickListne
         addItem("Fish", getResources().getDrawable(R.drawable.fish, null), Category.FISH);
         addItem("Seafood", getResources().getDrawable(R.drawable.seafood, null), Category.SEAFOOD);
         addItem("Condiments", getResources().getDrawable(R.drawable.seasoning, null), Category.SEASONING);
-        addItem("Sause", getResources().getDrawable(R.drawable.condiment, null), Category.CONDIMENTS);
+        addItem(Category.CONDIMENTS.toString(), getResources().getDrawable(R.drawable.condiment, null), Category.CONDIMENTS);
         addItem("Beverage", getResources().getDrawable(R.drawable.drinking, null), Category.BEVERAGE);
         listAdapter = new ItemAdapter(getContext(), R.layout.item, categories, this);
         listView.setAdapter(listAdapter);
     }
 
-    public void updateTotalIngredients(HashSet<String> newIngredients) {
-        totalIngredients.addAll(newIngredients);
+    public void updateTotalIngredients(String category, HashSet<String> newIngredients) {
+        if (!totalIngredients.keySet().contains(category)) {
+            totalIngredients.put(category, new HashSet<String>());
+        }
+        totalIngredients.put(category, newIngredients);
+        System.out.println(totalIngredients.get(category).size());
     }
+
+    public boolean checkSelect(String category, String ingredient) {
+        if (totalIngredients.keySet().contains(category)) {
+            if (totalIngredients.get(category).contains(ingredient)) {
+                return true;
+            }
+        }
+
+        return false;
+     }
 }

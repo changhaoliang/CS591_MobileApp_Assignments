@@ -19,11 +19,12 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-public class HomeActivity extends AppCompatActivity implements ItemFragement.ItemFragmentListner {
+public class HomeActivity extends AppCompatActivity implements ItemFragement.ItemFragmentListner, IngredientsFragment.IngredientFragmentListner {
     private BottomNavigationView menuView;
     private ItemFragement itemFragement;
     private FragmentManager fragmentManager;
     private IngredientsFragment ingredientsFragment;
+    private String category;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +78,7 @@ public class HomeActivity extends AppCompatActivity implements ItemFragement.Ite
                         fragmentTransaction.show(itemFragement);
                         menuView.getMenu().getItem(2).setChecked(true);
                         HashSet<String> newIngredients = ingredientsFragment.getSelectedIngredients();
-                        itemFragement.updateTotalIngredients(newIngredients);
+                        itemFragement.updateTotalIngredients(category, newIngredients);
                         break;
                 }
                 fragmentTransaction.commit();
@@ -90,6 +91,8 @@ public class HomeActivity extends AppCompatActivity implements ItemFragement.Ite
     @Override
     public void setFragment(boolean flag, String category) {
         if (flag) {
+            this.category = category;
+
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             this.ingredientsFragment = new IngredientsFragment();
             fragmentTransaction.replace(R.id.fragment_container, ingredientsFragment);
@@ -111,9 +114,15 @@ public class HomeActivity extends AppCompatActivity implements ItemFragement.Ite
                 ingredients.add("half and half");
                 ingredients.add("feta");
             }
-            ingredientsFragment.setIngredients(ingredients);
 
-            setTitle(category);
+            if (category.equals("Meats")) {
+                ingredients.add("pork");
+                ingredients.add("beef");
+                ingredients.add("chicken");
+            }
+
+            ingredientsFragment.setIngredients(ingredients);
+            ingredientsFragment.setView(category);
 
             menuView.getMenu().removeItem(R.id.user);
             menuView.getMenu().removeItem(R.id.cook);
@@ -144,8 +153,10 @@ public class HomeActivity extends AppCompatActivity implements ItemFragement.Ite
         menuView.getMenu().getItem(2).setIcon(R.drawable.cooker);
         menuView.getMenu().getItem(3).setIcon(R.drawable.heart);
         menuView.getMenu().getItem(4).setIcon(R.drawable.user);
-        Setting.longClickFlag = false;
-        Setting.shortClickFlag = false;
-        Setting.count = 0;
+    }
+
+    @Override
+    public boolean getSelected(String category, String ingredient) {
+        return itemFragement.checkSelect(category, ingredient);
     }
 }
