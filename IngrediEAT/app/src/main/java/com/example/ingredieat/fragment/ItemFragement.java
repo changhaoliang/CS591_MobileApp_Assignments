@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,22 +26,18 @@ import com.example.ingredieat.setting.Setting;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 
 public class ItemFragement extends Fragment implements ItemAdapter.MyClickListner {
-    private LinearLayout linearLayout;
-    private Context context;
     private ListView listView;
     private ListAdapter listAdapter;
-    private Button meat_btn;
-    private Button vege_btn;
-    private Button other_btn;
-    private ArrayList<Item> currentItems;
+    private ArrayList<Item> categories;
     private HashMap<Category, ArrayList<Item>> ingredients;
     private ItemFragmentListner itemFragmentListner;
-
+    private HashSet<String> totalIngredients;
 
     public interface ItemFragmentListner {
-        public void setFragment(boolean flag);
+        void setFragment(boolean flag, String category);
     }
 
     @Override
@@ -52,13 +49,44 @@ public class ItemFragement extends Fragment implements ItemAdapter.MyClickListne
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View myView = inflater.inflate(R.layout.fragment_item, container, false);
-        linearLayout = (LinearLayout)myView.findViewById(R.id.fragment_container);
         listView = (ListView)myView.findViewById(R.id.list_view);
-        Setting.count = 0;
-        Setting.longClickFlag = false;
-        Setting.shortClickFlag = false;
-
+        if (totalIngredients == null) totalIngredients = new HashSet<>();
         ingredients = new HashMap<>();
+
+        initializeList();
+        return myView;
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        itemFragmentListner = (ItemFragmentListner) context;
+    }
+
+    public void addItem(String name, Drawable picture, Category category) {
+        Item newItem = new Item(name, picture, category);
+        categories.add(newItem);
+    }
+
+    public void updateList() {
+        listAdapter = new ItemAdapter(getContext(), R.layout.item, categories, this);
+        listView.setAdapter(listAdapter);
+    }
+
+    @Override
+    public void clickListner(View v, String category) {
+        itemFragmentListner.setFragment(true, category);
+    }
+
+    public HashMap<Category, ArrayList<Item>> getIngredients() {
+        return ingredients;
+    }
+
+    public ListAdapter getListAdapter() {
+        return listAdapter;
+    }
+
+    public void initializeList() {
         ingredients.put(Category.MEAT, new ArrayList<Item>());
         ingredients.put(Category.VEGETABLE, new ArrayList<Item>());
         ingredients.put(Category.CONDIMENTS, new ArrayList<Item>());
@@ -70,7 +98,7 @@ public class ItemFragement extends Fragment implements ItemAdapter.MyClickListne
         ingredients.put(Category.FISH, new ArrayList<Item>());
         ingredients.put(Category.SEASONING, new ArrayList<Item>());
 
-        currentItems = ingredients.get(Category.MEAT);
+        categories = ingredients.get(Category.MEAT);
 
 
         addItem("Meats", getResources().getDrawable(R.drawable.meat, null), Category.MEAT);
@@ -82,67 +110,11 @@ public class ItemFragement extends Fragment implements ItemAdapter.MyClickListne
         addItem("Condiments", getResources().getDrawable(R.drawable.seasoning, null), Category.SEASONING);
         addItem("Sause", getResources().getDrawable(R.drawable.condiment, null), Category.CONDIMENTS);
         addItem("Beverage", getResources().getDrawable(R.drawable.drinking, null), Category.BEVERAGE);
-        updateList();
-
-        return myView;
-    }
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        itemFragmentListner = (ItemFragmentListner) context;
-
-    }
-
-    public void addItem(String name, Drawable picture, Category category) {
-        Item newItem = new Item(name, picture, category);
-        currentItems.add(newItem);
-    }
-
-    public void updateList() {
-        listAdapter = new ItemAdapter(getContext(), R.layout.item, currentItems, this);
+        listAdapter = new ItemAdapter(getContext(), R.layout.item, categories, this);
         listView.setAdapter(listAdapter);
     }
 
-    @Override
-    public void clickListner(View v) {
-        itemFragmentListner.setFragment(true);
+    public void updateTotalIngredients(HashSet<String> newIngredients) {
+        totalIngredients.addAll(newIngredients);
     }
-
-
-    public HashMap<Category, ArrayList<Item>> getIngredients() {
-        return ingredients;
-    }
-
-    public ListAdapter getListAdapter() {
-        return listAdapter;
-    }
-
-//    public void cleanAllClick() {
-//        int size = listView.getChildCount();
-//        for(int i = 0; i < size; i++) {
-//            View view = listView.getChildAt(i);
-//            final CardView cardView = (CardView)view.findViewById(R.id.card_view);
-//            final LinearLayout linearLayout = (LinearLayout)view.findViewById(R.id.card_linear_layout);
-//            cardView.setBackgroundColor(Color.WHITE);
-//        }
-//        for (Category c : ingredients.keySet()) {
-//            for (Item item : ingredients.get(c)) {
-//                item.setSelected(false);
-//            }
-//        }
-//    }
-
-//    public void deleleIngredients() {
-//        for (Category c : ingredients.keySet()) {
-//            for (int i = ingredients.get(c).size() - 1; i > 0; i--) {
-//                if (ingredients.get(c).get(i).getSeclected()) {
-//                    ingredients.get(c).remove(i);
-//                }
-//            }
-//        }
-//        currentItems = ingredients.get(Category.MEAT);
-//        updateList();
-//        System.out.println(ingredients.get(Category.MEAT).size());
-//    }
 }

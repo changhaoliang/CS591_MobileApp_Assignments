@@ -14,9 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".acitivity.LibraryActivity"
+            android:name=".acitivity.HomeActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/NoActionBar" />
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".acitivity.LoginActivity"
             android:screenOrientation="portrait"

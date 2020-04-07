@@ -27,7 +27,7 @@ public class ItemAdapter extends ArrayAdapter<Item> {
     private MyClickListner myClickListner;
 
     public interface MyClickListner {
-        public void clickListner(View v);
+        public void clickListner(View v, String category);
     }
 
     public ItemAdapter(Context context, int layoutId, List<Item> list, MyClickListner listner){
@@ -128,9 +128,9 @@ public class ItemAdapter extends ArrayAdapter<Item> {
             @Override
             public void onClick(View v) {
                 String categoryName = item.getName();
-
-                String[] ingredients = new String[]{"butter", "egg", "milk", "american cheese", "cheddar", "sour cream", "yogurt", "cream cheese"};
-                myClickListner.clickListner(v);
+//
+//                String[] ingredients = new String[]{"butter", "egg", "milk", "american cheese", "cheddar", "sour cream", "yogurt", "cream cheese"};
+                myClickListner.clickListner(v, categoryName);
 
 
 //                if (!Setting.longClickFlag && Setting.count == 0) {

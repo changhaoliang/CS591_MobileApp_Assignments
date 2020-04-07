@@ -2,6 +2,7 @@ package com.example.ingredieat.acitivity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
@@ -15,10 +16,14 @@ import com.example.ingredieat.fragment.UserFragment;
 import com.example.ingredieat.setting.Setting;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class LibraryActivity extends AppCompatActivity implements ItemFragement.ItemFragmentListner {
+import java.util.ArrayList;
+import java.util.HashSet;
+
+public class HomeActivity extends AppCompatActivity implements ItemFragement.ItemFragmentListner {
     private BottomNavigationView menuView;
     private ItemFragement itemFragement;
     private FragmentManager fragmentManager;
+    private IngredientsFragment ingredientsFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,11 +41,10 @@ public class LibraryActivity extends AppCompatActivity implements ItemFragement.
         fragmentTransaction.add(R.id.fragment_container, itemFragement, "item fragment");
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
-
+        setTitle("Pantry");
         menuView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                int id = item.getItemId();
                 if (fragmentManager.getBackStackEntryCount() > 1) {
                     getSupportFragmentManager().popBackStack();
                 }
@@ -50,14 +54,17 @@ public class LibraryActivity extends AppCompatActivity implements ItemFragement.
                 switch (item.getItemId()) {
                     case R.id.fridge:
                         fragmentTransaction.show(itemFragement);
+                        setTitle("Pantry");
                         break;
                     case R.id.user:
                         fragmentTransaction.replace(R.id.fragment_container, new UserFragment());
                         fragmentTransaction.addToBackStack(null);
+                        setTitle("User Account");
                         break;
                     case R.id.cart:
                         fragmentTransaction.replace(R.id.fragment_container, new CartFragment());
                         fragmentTransaction.addToBackStack(null);
+                        setTitle("My Ingredients");
                         break;
                     case R.string.cancel:
                         recoverMenu();
@@ -65,14 +72,14 @@ public class LibraryActivity extends AppCompatActivity implements ItemFragement.
                         menuView.getMenu().getItem(2).setChecked(true);
 //                        itemFragement.cleanAllClick();
                         break;
-                    case R.string.delete:
+                    case R.string.add:
                         recoverMenu();
                         fragmentTransaction.show(itemFragement);
                         menuView.getMenu().getItem(2).setChecked(true);
-//                        itemFragement.deleleIngredients();
+                        HashSet<String> newIngredients = ingredientsFragment.getSelectedIngredients();
+                        itemFragement.updateTotalIngredients(newIngredients);
                         break;
                 }
-                System.out.println(getSupportFragmentManager().getBackStackEntryCount());
                 fragmentTransaction.commit();
 
                 return true;
@@ -81,32 +88,50 @@ public class LibraryActivity extends AppCompatActivity implements ItemFragement.
     }
 
     @Override
-    public void setFragment(boolean flag) {
+    public void setFragment(boolean flag, String category) {
         if (flag) {
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.fragment_container, new IngredientsFragment());
+            this.ingredientsFragment = new IngredientsFragment();
+            fragmentTransaction.replace(R.id.fragment_container, ingredientsFragment);
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
 
-//            menuView.getMenu().removeItem(R.id.user);
-//            menuView.getMenu().removeItem(R.id.cook);
-//            menuView.getMenu().removeItem(R.id.favourite);
-//            menuView.getMenu().removeItem(R.id.cart);
-//            menuView.getMenu().removeItem(R.id.fridge);
-//
-//            menuView.getMenu().add(1, R.string.delete, 1, R.string.delete);
-//            menuView.getMenu().add(1, R.string.cancel, 1, R.string.cancel);
-//
-//            System.out.println(menuView.getMenu().getItem(0).getItemId());
-//
-//            menuView.getMenu().getItem(0).setIcon(R.drawable.delete);
-//            menuView.getMenu().getItem(1).setIcon(R.drawable.cancel);
+
+            // 此处替换成从后端存好的数据根据类别获取对应的ingredients
+            ArrayList<String> ingredients = new ArrayList<>();
+            if (category.equals("Dairy")) {
+                ingredients.add("milk");
+                ingredients.add("butter");
+                ingredients.add("egg");
+                ingredients.add("cheddar");
+                ingredients.add("sour cream");
+                ingredients.add("cream cheese");
+                ingredients.add("yogurt");
+                ingredients.add("american cheese");
+                ingredients.add("half and half");
+                ingredients.add("feta");
+            }
+            ingredientsFragment.setIngredients(ingredients);
+
+            setTitle(category);
+
+            menuView.getMenu().removeItem(R.id.user);
+            menuView.getMenu().removeItem(R.id.cook);
+            menuView.getMenu().removeItem(R.id.favourite);
+            menuView.getMenu().removeItem(R.id.cart);
+            menuView.getMenu().removeItem(R.id.fridge);
+
+            menuView.getMenu().add(1, R.string.add, 1, R.string.add);
+            menuView.getMenu().add(1, R.string.cancel, 1, R.string.cancel);
+
+            menuView.getMenu().getItem(0).setIcon(R.drawable.ok);
+            menuView.getMenu().getItem(1).setIcon(R.drawable.cancel);
         }
     }
 
     public void recoverMenu() {
         menuView.getMenu().removeItem(R.string.cancel);
-        menuView.getMenu().removeItem(R.string.delete);
+        menuView.getMenu().removeItem(R.string.add);
 
         menuView.getMenu().add(1, R.id.fridge, 1, R.string.fridge);
         menuView.getMenu().add(1, R.id.cart, 1, R.string.cart);
