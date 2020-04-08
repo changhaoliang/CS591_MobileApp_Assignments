@@ -6,6 +6,10 @@ public class Ingredient {
     private String name;
     private String category;
 
+    public Ingredient() {
+
+    }
+
     public Ingredient(int id, String name, String category) {
         this.id = id;
         this.name = name;
