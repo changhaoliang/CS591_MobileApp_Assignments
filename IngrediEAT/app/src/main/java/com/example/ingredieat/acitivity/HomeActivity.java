@@ -243,16 +243,9 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
             getSupportFragmentManager().popBackStack();
         }
         fragmentTransaction.replace(R.id.fragment_container, categoryItemFragment);
-        System.out.println(getSupportFragmentManager().getBackStackEntryCount());
         fragmentTransaction.commit();
-
 
         HashSet<String> newIngredients = ingredientsFragment.getSelectedIngredients();
         categoryItemFragment.updateTotalIngredients(category, newIngredients);
-
-        System.out.println("=================");
-
-
-
     }
 }
