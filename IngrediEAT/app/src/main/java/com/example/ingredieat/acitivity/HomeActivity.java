@@ -211,7 +211,7 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
     }
 
     @Override
-    public void updateSelected() {
-
+    public void updateSelected(HashMap<String, HashSet<String>> totalIngredients) {
+        categoryItemFragment.setTotalIngredients(totalIngredients);
     }
 }

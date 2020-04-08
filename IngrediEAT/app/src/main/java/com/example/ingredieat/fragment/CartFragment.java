@@ -30,16 +30,18 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 
 
 public class CartFragment extends Fragment {
     private ListView listView;
-    private ListAdapter listAdapter;
     private HashMap<String, HashSet<String>> totalIngredients;
     private ArrayList<String> names;
     private Button editButton;
     private LinearLayout bottomLayout;
     private CartFragmentListner cartFragmentListner;
+
+    private HashMap<String, HashSet<Chip>> totalChips;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,7 +49,7 @@ public class CartFragment extends Fragment {
     }
 
     public interface CartFragmentListner {
-        void updateSelected();
+        void updateSelected(HashMap<String, HashSet<String>> totalIngredients);
     }
 
     public void setTotalIngredients(HashMap<String, HashSet<String>> ingredients) {
@@ -58,10 +60,25 @@ public class CartFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View myView = inflater.inflate(R.layout.fragment_cart, container, false);
+        totalChips = new HashMap<>();
 
         if (totalIngredients != null && totalIngredients.size() > 0) {
+            System.out.println("fnafksfj aa;dwa ");
             this.names = new ArrayList<>(totalIngredients.keySet());
+            for (String s : totalIngredients.keySet()) {
+                totalChips.put(s, new HashSet<Chip>()) ;
+                for (String i : totalIngredients.get(s)) {
+                    Chip c = new Chip(getContext());
+                    ChipDrawable chipDrawable = ChipDrawable.createFromAttributes(getContext(), null, 0, R.style.Widget_MaterialComponents_Chip_Choice);
+                    c.setChipDrawable(chipDrawable);
+                    c.setLayoutParams((new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)));
+                    c.setText(i);
+                    c.setChecked(true);
+                    totalChips.get(s).add(c);
+                }
+            }
         }
+
         listView = (ListView) myView.findViewById(R.id.item_ls);
         listView.setAdapter(new MyAdapter(getContext()));
 
@@ -73,11 +90,23 @@ public class CartFragment extends Fragment {
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                for (String key : totalIngredients.keySet()) {
-                    for (String item : totalIngredients.get(key)) {
+                for (String i : totalChips.keySet()) {
+                    Iterator<Chip> iter = totalChips.get(i).iterator();
+                    while(iter.hasNext()){
+                        Chip c = iter.next();
+                        if (!c.isChecked()) {
+                            if(c.getParent() != null) {
+                                ((ChipGroup)c.getParent()).removeView(c);
+                            }
+                            iter.remove();
+                            totalIngredients.get(i).remove(c.getText());
+                            listView.setAdapter(new MyAdapter(getContext()));
+                        }
 
                     }
+
                 }
+                cartFragmentListner.updateSelected(totalIngredients);
             }
         });
         return myView;
@@ -110,7 +139,7 @@ public class CartFragment extends Fragment {
             ViewHolder holder;
             View row;
             if (convertView == null) {
-                LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);  //Inflater's are awesome, they convert xml to Java Objects!
+                LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                 row = inflater.inflate(R.layout.cart_item, parent, false);
             } else {
                 row = convertView;
@@ -121,24 +150,28 @@ public class CartFragment extends Fragment {
             holder.icon = (ImageView) row.findViewById(R.id.icon_img);
 
             holder.title.setText(names.get(position));
-            if (totalIngredients.get(names.get(position)) != null && totalIngredients.get(names.get(position)).size() > 0) {
-                for (String i : totalIngredients.get(names.get(position))) {
-                    final Chip chip = new Chip(getContext());
-                    ChipDrawable chipDrawable = ChipDrawable.createFromAttributes(getContext(), null, 0, R.style.Widget_MaterialComponents_Chip_Choice);
-                    chip.setChipDrawable(chipDrawable);
-                    chip.setLayoutParams((new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)));
-                    chip.setText(i);
-                    chip.setChecked(true);
-                    holder.chipGroup.addView(chip);
 
-                    chip.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            if (holder.chipGroup.getChildCount() > 0) {
+                holder.chipGroup.removeAllViews();
+            }
+
+            String key = names.get(position);
+            if (totalIngredients.get(key) != null && totalIngredients.get(key).size() > 0) {
+                HashSet<Chip> chips = totalChips.get(key);
+                System.out.println(chips.size());
+                for (Chip c : chips) {
+                    if(c.getParent() != null) {
+                        ((ChipGroup)c.getParent()).removeView(c);
+                    }
+                    holder.chipGroup.addView(c);
+                    c.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                         @Override
                         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                             bottomLayout.setVisibility(View.VISIBLE);
                         }
                     });
-
                 }
+
             }
             setIcon(names.get(position), holder.icon);
 
