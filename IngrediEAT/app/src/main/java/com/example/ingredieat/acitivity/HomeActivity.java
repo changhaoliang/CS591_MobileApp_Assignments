@@ -27,19 +27,26 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Stack;
 
 public class HomeActivity extends BaseActivity implements CategoryItemFragment.itemFragmentListener, IngredientsFragment.IngredientFragmentListener {
     private BottomNavigationView menuView;
-    private CategoryItemFragment categoryItemFragment;
+
     private static final long mBackPressThreshold = 3500;
     private FragmentManager fragmentManager;
-    private IngredientsFragment ingredientsFragment;
+
     private List<Ingredient> allIngredients;
     private Category category;
     private long mLastBackPress;
+
+    private CategoryItemFragment categoryItemFragment;
+    private IngredientsFragment ingredientsFragment;
+    private UserFragment userFragment;
+    private CartFragment cartFragment;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +56,8 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
         menuView = findViewById(R.id.bottom_menu);
 
         categoryItemFragment = new CategoryItemFragment();
+        userFragment = new UserFragment();
+        cartFragment = new CartFragment();
 
         fragmentManager = getSupportFragmentManager();
         // Get the data of all ingredients from the server side by sending a GET request.
@@ -73,12 +82,16 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
                         fragmentTransaction.show(categoryItemFragment);
                         break;
                     case R.id.user:
-                        fragmentTransaction.replace(R.id.fragment_container, new UserFragment());
+                        fragmentTransaction.replace(R.id.fragment_container, userFragment);
                         fragmentTransaction.addToBackStack(null);
                         break;
                     case R.id.cart:
-                        fragmentTransaction.replace(R.id.fragment_container, new CartFragment());
+                        fragmentTransaction.replace(R.id.fragment_container, cartFragment);
                         fragmentTransaction.addToBackStack(null);
+                        HashMap<String, HashSet<String>> ingredients = categoryItemFragment.getTotalIngredients();
+                        System.out.println(ingredients.size());
+                        System.out.println("=================");
+                        cartFragment.setTotalIngredients(ingredients);
                         break;
                 }
                 fragmentTransaction.commit();
@@ -197,6 +210,5 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
         HashSet<String> newIngredients = ingredientsFragment.getSelectedIngredients();
         categoryItemFragment.updateTotalIngredients(category, newIngredients);
     }
-
 
 }

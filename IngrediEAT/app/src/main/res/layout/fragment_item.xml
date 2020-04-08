@@ -7,55 +7,59 @@
              tools:context=".fragment.CategoryItemFragment">
 
     <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-
-            android:orientation="vertical">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1.3"
+
+            android:background="@color/colorPrimary"
+            android:orientation="vertical">
+
+            <Space
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="0.3" />
 
-                android:orientation="horizontal">
+            <TextView
+                android:id="@+id/title_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1"
+                android:text="Category"
+                android:textColor="@color/white"
+                android:textSize="30sp" />
 
-            <!--            <com.google.android.material.button.MaterialButton-->
-            <!--                android:id="@+id/meat_btn"-->
-            <!--                android:layout_width="0dp"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:layout_weight="1"-->
-            <!--                android:background="#D84315"-->
-            <!--                android:text="meat"-->
-            <!--                android:textColor="#FFFFFF" />-->
-
-            <!--            <com.google.android.material.button.MaterialButton-->
-            <!--                android:id="@+id/vege_btn"-->
-            <!--                android:layout_width="0dp"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:layout_weight="1"-->
-            <!--                android:background="#D84315"-->
-            <!--                android:text="vegetable"-->
-            <!--                android:textColor="#FFFFFF" />-->
-
-            <!--            <com.google.android.material.button.MaterialButton-->
-            <!--                android:id="@+id/other_btn"-->
-            <!--                android:layout_width="0dp"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:layout_weight="1"-->
-            <!--                android:background="#D84315"-->
-            <!--                android:text="other"-->
-            <!--                android:textColor="#FFFFFF" />-->
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.3" />
 
         </LinearLayout>
 
-        <ListView
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+
+            android:layout_weight="12.3"
+            android:orientation="vertical">
+
+            <ListView
                 android:id="@+id/list_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:clickable="true">
+                android:divider="#ffffff"
+                android:dividerHeight="0dp">
 
-        </ListView>
+            </ListView>
+        </LinearLayout>
+
     </LinearLayout>
 
 </FrameLayout>
