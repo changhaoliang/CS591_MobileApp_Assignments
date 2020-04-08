@@ -57,10 +57,10 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
         // Get the data of all ingredients from the server side by sending a GET request.
         getAllIngredients();
 
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.fragment_container, categoryItemFragment, "item fragment");
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
+
+//        fragmentTransaction.add(R.id.fragment_container, categoryItemFragment, "item fragment");
+//        fragmentTransaction.addToBackStack(null);
+//        fragmentTransaction.commit();
         setTitle("Pantry");
         menuView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -128,6 +128,10 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
                         // Log.d(TAG, data);
                         // Here we use Fastjson to parse json string
                         allIngredients = JSON.parseArray(data, Ingredient.class);
+                        fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.add(R.id.fragment_container, categoryItemFragment, "item fragment");
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
                     }
                 }
             }
@@ -142,24 +146,14 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
             if (fragmentManager.getBackStackEntryCount() > 1) {
                 getSupportFragmentManager().popBackStack();
             }
-            fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction = fragmentManager.beginTransaction();
             this.ingredientsFragment = new IngredientsFragment();
             fragmentTransaction.replace(R.id.fragment_container, ingredientsFragment);
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
 
-//<<<<<<< HEAD
-//            ArrayList<Ingredient> ingredients = new ArrayList<>();
-//            if (category.equals(Category.MILK_EGGS_OTHER_DAIRY)) {
-//                ingredients.add(new Ingredient(123, "milk", Category.MILK_EGGS_OTHER_DAIRY.getCategoryValue()));
-//                ingredients.add(new Ingredient(12343214, "butter", Category.MILK_EGGS_OTHER_DAIRY.getCategoryValue()));
-//                ingredients.add(new Ingredient(343, "egg", Category.MILK_EGGS_OTHER_DAIRY.getCategoryValue()));
-//            }
-//            ingredientsFragment.setIngredients(ingredients);
-//
-//=======
 
-            // 此处替换成从后端存好的数据根据类别获取对应的inngredients
+            // 此处替换成从后端存好的数据根据类别获取对应的ingredients
             List<Ingredient> categoryIngredients = new ArrayList<>();
             for(Ingredient ingredient: allIngredients) {
                 if(ingredient.getCategory().equals(category.getCategoryValue())) {
@@ -168,12 +162,7 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
             }
 
             ingredientsFragment.setIngredients(categoryIngredients);
-//>>>>>>> 246f2d692bd1f39442f4e9f5626fa79be0b0a55b
             ingredientsFragment.setView(category);
-
-
-            // 此处替换成从后端存好的数据根据类别获取对应的ingredients
-//            ArrayList<Ingredient> ingredients = new ArrayList<>();
 
 //            ingredientsFragment.setIngredients(ingredients);
 //            ingredientsFragment.setView(category);

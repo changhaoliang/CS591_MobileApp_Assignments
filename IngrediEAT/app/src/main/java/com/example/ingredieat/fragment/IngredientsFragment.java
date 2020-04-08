@@ -56,7 +56,7 @@ public class IngredientsFragment extends Fragment {
 
         if (ingredients.size() != 0) {
             for (Ingredient ingredient : ingredients) {
-                System.out.println(ingredient.getName());
+                //System.out.println(ingredient.getName());
                 final Chip chip = new Chip(getContext());
                 ChipDrawable chipDrawable = ChipDrawable.createFromAttributes(getContext(), null, 0, R.style.Widget_MaterialComponents_Chip_Choice);
                 chip.setChipDrawable(chipDrawable);
