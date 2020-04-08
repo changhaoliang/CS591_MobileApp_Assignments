@@ -63,7 +63,6 @@ public class CartFragment extends Fragment {
         totalChips = new HashMap<>();
 
         if (totalIngredients != null && totalIngredients.size() > 0) {
-            System.out.println("fnafksfj aa;dwa ");
             this.names = new ArrayList<>(totalIngredients.keySet());
             for (String s : totalIngredients.keySet()) {
                 totalChips.put(s, new HashSet<Chip>()) ;
@@ -102,9 +101,7 @@ public class CartFragment extends Fragment {
                             totalIngredients.get(i).remove(c.getText());
                             listView.setAdapter(new MyAdapter(getContext()));
                         }
-
                     }
-
                 }
                 cartFragmentListner.updateSelected(totalIngredients);
             }
@@ -158,7 +155,6 @@ public class CartFragment extends Fragment {
             String key = names.get(position);
             if (totalIngredients.get(key) != null && totalIngredients.get(key).size() > 0) {
                 HashSet<Chip> chips = totalChips.get(key);
-                System.out.println(chips.size());
                 for (Chip c : chips) {
                     if(c.getParent() != null) {
                         ((ChipGroup)c.getParent()).removeView(c);
@@ -171,7 +167,6 @@ public class CartFragment extends Fragment {
                         }
                     });
                 }
-
             }
             setIcon(names.get(position), holder.icon);
 

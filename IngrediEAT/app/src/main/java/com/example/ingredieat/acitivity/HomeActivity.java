@@ -59,8 +59,8 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
         cartFragment = new CartFragment();
 
         fragmentManager = getSupportFragmentManager();
-        // Get the data of all ingredients from the server side by sending a GET request.
-        getAllIngredients();
+
+        getAllIngredients(); // Get the data of all ingredients from the server side by sending a GET request.
 
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.fragment_container, categoryItemFragment, "item fragment");
@@ -125,7 +125,6 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
                 }
             }
         });
-
     }
 
     @Override
@@ -153,28 +152,6 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
             ingredientsFragment.setView(category);
 
         }
-    }
-
-    public void recoverMenu() {
-        menuView.getMenu().removeItem(R.string.cancel);
-        menuView.getMenu().removeItem(R.string.add);
-        System.out.println("recover");
-        System.out.println(menuView.getMenu().size());
-        System.out.println("i4147");
-
-        menuView.getMenu().add(1, R.id.fridge, 1, R.string.fridge);
-        menuView.getMenu().add(1, R.id.cart, 1, R.string.cart);
-        menuView.getMenu().add(1, R.id.cook, 1, R.string.cook);
-        menuView.getMenu().add(1, R.id.favourite, 1, R.string.favourite);
-        menuView.getMenu().add(1, R.id.user, 1, R.string.user);
-
-        menuView.getMenu().getItem(0).setIcon(R.drawable.fridge);
-        menuView.getMenu().getItem(1).setIcon(R.drawable.cart);
-        menuView.getMenu().getItem(2).setIcon(R.drawable.cooker);
-        menuView.getMenu().getItem(3).setIcon(R.drawable.heart);
-        menuView.getMenu().getItem(4).setIcon(R.drawable.user);
-
-        menuView.getMenu().getItem(0).setChecked(true);
     }
 
     @Override
