@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_frag"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragment.ItemFragement">
@@ -17,35 +18,32 @@
 
             android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/meat_btn"
-                style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="#D84315"
-                android:text="meat"
-                android:textColor="#FFFFFF" />
+            <!--            <com.google.android.material.button.MaterialButton-->
+            <!--                android:id="@+id/meat_btn"-->
+            <!--                android:layout_width="0dp"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_weight="1"-->
+            <!--                android:background="#D84315"-->
+            <!--                android:text="meat"-->
+            <!--                android:textColor="#FFFFFF" />-->
 
-            <Button
-                android:id="@+id/vege_btn"
-                style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+            <!--            <com.google.android.material.button.MaterialButton-->
+            <!--                android:id="@+id/vege_btn"-->
+            <!--                android:layout_width="0dp"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_weight="1"-->
+            <!--                android:background="#D84315"-->
+            <!--                android:text="vegetable"-->
+            <!--                android:textColor="#FFFFFF" />-->
 
-                android:layout_weight="1"
-                android:background="#D84315"
-                android:text="vegetable"
-                android:textColor="#FFFFFF" />
-
-            <Button
-                android:id="@+id/other_btn"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="#D84315"
-                android:text="other"
-                android:textColor="#FFFFFF" />
+            <!--            <com.google.android.material.button.MaterialButton-->
+            <!--                android:id="@+id/other_btn"-->
+            <!--                android:layout_width="0dp"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_weight="1"-->
+            <!--                android:background="#D84315"-->
+            <!--                android:text="other"-->
+            <!--                android:textColor="#FFFFFF" />-->
 
         </LinearLayout>
 

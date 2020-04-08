@@ -1,5 +1,8 @@
 package com.example.ingredieat.setting;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Setting {
     public static String PREF_NAME = "Preference";
 
@@ -11,6 +14,7 @@ public class Setting {
     public static int count;
     public static boolean longClickFlag;
     public static boolean shortClickFlag;
+
 
     public final static class Strings {
         public final static String account_email = "account email";

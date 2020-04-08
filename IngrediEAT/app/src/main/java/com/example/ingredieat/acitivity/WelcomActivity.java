@@ -49,7 +49,7 @@ public class WelcomActivity extends AppCompatActivity {
             startIntent = new Intent(this, LoginActivity.class);
         }
         else {
-            startIntent = new Intent(this, LibraryActivity.class);
+            startIntent = new Intent(this, HomeActivity.class);
         }
         componentReady = true;
 

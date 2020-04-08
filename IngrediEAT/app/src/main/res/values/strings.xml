@@ -3,13 +3,13 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="add">add</string>
-    <string name="search">search</string>
-    <string name="user">user</string>
-    <string name="cook">cook</string>
-    <string name="favourite">favourite</string>
+    <string name="add">Add</string>
+    <string name="search">Search</string>
+    <string name="user">User</string>
+    <string name="cook">Cook</string>
+    <string name="favourite">Favourite</string>
     <string name="delete">delete</string>
     <string name="cancel">cancel</string>
-    <string name="fridge">fridge</string>
-    <string name="cart">cart</string>
+    <string name="fridge">Pantry</string>
+    <string name="cart">Cart</string>
 </resources>

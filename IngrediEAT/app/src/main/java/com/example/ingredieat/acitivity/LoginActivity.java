@@ -65,7 +65,7 @@ public class LoginActivity extends AppCompatActivity {
             editor.putBoolean(Setting.Strings.if_signin_succ, true);
             editor.apply();
 
-            Intent intent = new Intent(getApplicationContext(), LibraryActivity.class);
+            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
             startActivity(intent);
             System.out.println("Successfully Log in");
             finish();
