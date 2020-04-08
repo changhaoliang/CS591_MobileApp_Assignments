@@ -22,9 +22,10 @@ import com.google.android.material.chip.ChipGroup;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 public class IngredientsFragment extends Fragment {
-    private ArrayList<Ingredient> ingredients;
+    private List<Ingredient> ingredients;
     private ChipGroup chipsGroup;
     private HashSet<String> selectedIngredients;
     private Category category;
@@ -78,7 +79,7 @@ public class IngredientsFragment extends Fragment {
         return myView;
     }
 
-    public void setIngredients(ArrayList<Ingredient> ingredients) {
+    public void setIngredients(List<Ingredient> ingredients) {
         this.ingredients = ingredients;
     }
 

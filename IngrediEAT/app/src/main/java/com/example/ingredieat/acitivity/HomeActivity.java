@@ -5,9 +5,17 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
+
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.example.ingredieat.base.Category;
 import com.example.ingredieat.entity.Ingredient;
 import com.example.ingredieat.fragment.CartFragment;
@@ -17,8 +25,12 @@ import com.example.ingredieat.R;
 import com.example.ingredieat.fragment.UserFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 public class HomeActivity extends BaseActivity implements CategoryItemFragment.itemFragmentListener, IngredientsFragment.IngredientFragmentListener {
     private BottomNavigationView menuView;
@@ -26,6 +38,7 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
     private static final long mBackPressThreshold = 3500;
     private FragmentManager fragmentManager;
     private IngredientsFragment ingredientsFragment;
+    private List<Ingredient> allIngredients;
     private Category category;
     private long mLastBackPress;
     private FragmentTransaction fragmentTransaction;
@@ -40,6 +53,9 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
         categoryItemFragment = new CategoryItemFragment();
 
         fragmentManager = getSupportFragmentManager();
+
+        // Get the data of all ingredients from the server side by sending a GET request.
+        getAllIngredients();
 
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.add(R.id.fragment_container, categoryItemFragment, "item fragment");
@@ -90,8 +106,36 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
         });
     }
 
+    /**
+     * This method is used to get the data of all ingredients from the server side by sending a GET request.
+     *
+     * @return an ArrayList storing all the ingredient objects;
+     */
+    private void getAllIngredients() {
+        String requestUrl = "/home/ingredients";
+        getRequest(requestUrl, new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                Log.d(TAG, "onFailure -- >" + e.toString());
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                if(response.isSuccessful()) {
+                    ResponseBody body = response.body();
+                    if(body != null) {
+                        String data = body.string();
+                        // Here we use Fastjson to parse json string
+                        allIngredients = JSON.parseArray(data, Ingredient.class);
+                    }
+                }
+            }
+        });
+
+    }
+
     @Override
-    public void setFragment(boolean flag, Category category) {
+    public void setFragment(boolean flag, final Category category) {
         if (flag) {
             this.category = category;
             if (fragmentManager.getBackStackEntryCount() > 1) {
@@ -103,14 +147,27 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
 
-            ArrayList<Ingredient> ingredients = new ArrayList<>();
-            if (category.equals(Category.MILK_EGGS_OTHER_DAIRY)) {
-                ingredients.add(new Ingredient(123, "milk", Category.MILK_EGGS_OTHER_DAIRY.getCategoryValue()));
-                ingredients.add(new Ingredient(12343214, "butter", Category.MILK_EGGS_OTHER_DAIRY.getCategoryValue()));
-                ingredients.add(new Ingredient(343, "egg", Category.MILK_EGGS_OTHER_DAIRY.getCategoryValue()));
-            }
-            ingredientsFragment.setIngredients(ingredients);
+//<<<<<<< HEAD
+//            ArrayList<Ingredient> ingredients = new ArrayList<>();
+//            if (category.equals(Category.MILK_EGGS_OTHER_DAIRY)) {
+//                ingredients.add(new Ingredient(123, "milk", Category.MILK_EGGS_OTHER_DAIRY.getCategoryValue()));
+//                ingredients.add(new Ingredient(12343214, "butter", Category.MILK_EGGS_OTHER_DAIRY.getCategoryValue()));
+//                ingredients.add(new Ingredient(343, "egg", Category.MILK_EGGS_OTHER_DAIRY.getCategoryValue()));
+//            }
+//            ingredientsFragment.setIngredients(ingredients);
+//
+//=======
 
+            // 此处替换成从后端存好的数据根据类别获取对应的ingredients
+            List<Ingredient> categoryIngredients = new ArrayList<>();
+            for(Ingredient ingredient: allIngredients) {
+                if(ingredient.getCategory().equals(category.getCategoryValue())) {
+                    categoryIngredients.add(ingredient);
+                }
+            }
+
+            ingredientsFragment.setIngredients(categoryIngredients);
+//>>>>>>> 246f2d692bd1f39442f4e9f5626fa79be0b0a55b
             ingredientsFragment.setView(category);
 
 
