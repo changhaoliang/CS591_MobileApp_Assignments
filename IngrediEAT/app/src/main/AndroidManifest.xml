@@ -17,7 +17,7 @@
         <activity
                 android:name=".acitivity.HomeActivity"
                 android:screenOrientation="portrait"
-                android:theme="@style/AppTheme"/>
+                android:theme="@style/NoActionBar"/>
         <activity
                 android:name=".acitivity.LoginActivity"
                 android:screenOrientation="portrait"

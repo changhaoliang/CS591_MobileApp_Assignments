@@ -34,7 +34,6 @@ public class CategoryItemFragment extends Fragment implements CategoryItemAdapte
 
     public interface itemFragmentListener {
         void setFragment(boolean flag, Category category);
-
     }
 
     @Override
@@ -124,6 +123,7 @@ public class CategoryItemFragment extends Fragment implements CategoryItemAdapte
         return false;
     }
 
-
-
+    public HashMap<String, HashSet<String>> getTotalIngredients() {
+        return totalIngredients;
+    }
 }
