@@ -26,10 +26,10 @@ public class BottomFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_bottom, container, false);  //separate me from return statement.
-        txtFunnyMessage = (TextView)view.findViewById(R.id.txtFunnyMessage);      //need a chance to do this other stuff before returning the inflated view.
+        txtFunnyMessage = (TextView) view.findViewById(R.id.txtFunnyMessage);      //need a chance to do this other stuff before returning the inflated view.
         return view;
 
- //       return super.onCreateView(inflater, container, savedInstanceState);
+        //       return super.onCreateView(inflater, container, savedInstanceState);
     }
 
 //    @Override
@@ -47,7 +47,7 @@ public class BottomFragment extends Fragment {
 
     //Receiving Team
     //It is best practice that this should be accessed via the main activity, not other fragments.
-    public void setFunnyMessage(String msg){
+    public void setFunnyMessage(String msg) {
         txtFunnyMessage.setText(msg);
     }
 

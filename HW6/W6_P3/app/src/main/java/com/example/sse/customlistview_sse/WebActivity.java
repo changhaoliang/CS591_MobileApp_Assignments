@@ -10,6 +10,7 @@ public class WebActivity extends AppCompatActivity {
     private WebView webView;
     private String message;
     private String[] titles;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,7 +33,7 @@ public class WebActivity extends AppCompatActivity {
             webView.loadUrl("https://en.wikipedia.org/wiki/Spock%27s_Brain");
         else if (message.equals("Arena"))
             webView.loadUrl("https://en.wikipedia.org/wiki/Arena");
-        else if (message.equals( "This Side of Paradise"))
+        else if (message.equals("This Side of Paradise"))
             webView.loadUrl("https://en.wikipedia.org/wiki/This_Side_of_Paradise");
         else if (message.equals("Mirror, Mirror"))
             webView.loadUrl("https://en.wikipedia.org/wiki/Mirror_Mirror_(film)");
@@ -45,20 +46,19 @@ public class WebActivity extends AppCompatActivity {
     }
 
 
-    public class myWebClient extends WebViewClient
-        {
-            @Override
-            public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                // TODO Auto-generated method stub
-                super.onPageStarted(view, url, favicon);
-            }
-
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                // TODO Auto-generated method stub
-                view.loadUrl(url);
-                return true;
-            }
+    public class myWebClient extends WebViewClient {
+        @Override
+        public void onPageStarted(WebView view, String url, Bitmap favicon) {
+            // TODO Auto-generated method stub
+            super.onPageStarted(view, url, favicon);
         }
+
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            // TODO Auto-generated method stub
+            view.loadUrl(url);
+            return true;
+        }
+    }
 
 }

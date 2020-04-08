@@ -28,7 +28,7 @@ public class ControlFragment extends Fragment {
         // Required empty public constructor
     }
 
-//*** MESSAGE PASSING MECHANISM ***//
+    //*** MESSAGE PASSING MECHANISM ***//
 //Need to create an interface to ensure message passing works between fragments.
 //This interface, as with all interfaces serves as a contract.  Implementer of this interface, must implement all of its methods.
 //Important Fact: Since the MainActivity will implement this, we are guaranteed to find a sendMessage
@@ -38,7 +38,7 @@ public class ControlFragment extends Fragment {
     }
 
     ControlFragmentListener CFL;  //Future reference to an object that implements ControlFragmentListener, Can be anything, as long as it implements all interface methods.
-                                  //Question: Who holds the reference?  Answer: ____________
+    //Question: Who holds the reference?  Answer: ____________
 //*** MESSAGE PASSING MECHANISM ***//
 
 
@@ -51,7 +51,7 @@ public class ControlFragment extends Fragment {
 //    }
 
 
-//NOTE:
+    //NOTE:
 //This old onAttach, still works, but is deprecated,
 //better to use the newer one above, which passes a context object, which can also be typecast into an Activity Object.
     @Override
@@ -61,9 +61,7 @@ public class ControlFragment extends Fragment {
     }
 
 
-
-
-//onCreateView, called to have the fragment instantiate it's GUI.
+    //onCreateView, called to have the fragment instantiate it's GUI.
 //this is when it is "safe" to generate references to UI components,
 //they are guaranteed to exist.  DO NOT interact with UI components
 //during onCreate of a fragment, they "may not" be ready.
@@ -88,7 +86,7 @@ public class ControlFragment extends Fragment {
         btnSendMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-  //              getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);  //FIX ME!!  //Hide the soft keyboard when we click the button.  Ref: https://stackoverflow.com/questions/18977187/how-to-hide-soft-keyboard-when-activity-starts
+                //              getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);  //FIX ME!!  //Hide the soft keyboard when we click the button.  Ref: https://stackoverflow.com/questions/18977187/how-to-hide-soft-keyboard-when-activity-starts
                 CFL.sendMessage(edtSendMessage.getText().toString());  //CFL is a handle to our MainActivity, we are sending it our message text.
             }
         });

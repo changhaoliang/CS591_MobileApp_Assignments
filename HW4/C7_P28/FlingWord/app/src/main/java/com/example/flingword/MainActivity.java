@@ -15,11 +15,12 @@ import android.widget.TextView;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity
-        implements GestureDetector.OnGestureListener{
+        implements GestureDetector.OnGestureListener {
 
     private TextView txtMessage;
     private GestureDetector GD;
     private FrameLayout.LayoutParams param;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,8 +37,8 @@ public class MainActivity extends AppCompatActivity
         getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
         int width = displaymetrics.widthPixels;
         int height = displaymetrics.heightPixels;
-        param.leftMargin=  (width-300)/2 ;
-        param.topMargin =  (height-100)/2;
+        param.leftMargin = (width - 300) / 2;
+        param.topMargin = (height - 100) / 2;
         //param.gravity = Gravity.CENTER;
         txtMessage.setLayoutParams(param);
     }
@@ -68,7 +69,7 @@ public class MainActivity extends AppCompatActivity
         getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
         int width = displaymetrics.widthPixels;
         int height = displaymetrics.heightPixels;
-        if(velocityX > 1 || velocityX<-1 ||velocityY>1 || velocityY<-1) {
+        if (velocityX > 1 || velocityX < -1 || velocityY > 1 || velocityY < -1) {
 
             Random r = new Random();
 
@@ -79,13 +80,13 @@ public class MainActivity extends AppCompatActivity
             //param.gravity = Gravity.CENTER;
             txtMessage.setLayoutParams(param);
             txtMessage.setText("onFling s");
-        }
-        else{
+        } else {
             txtMessage.setText("onFling");
         }
 
         return true;
     }
+
     @Override
     public boolean onSingleTapUp(MotionEvent e) {
         txtMessage.setText("onSingleTapUp");
@@ -99,6 +100,7 @@ public class MainActivity extends AppCompatActivity
         txtMessage.setText("onScroll");
         return true;
     }
+
     @Override
     public void onLongPress(MotionEvent e) {
         txtMessage.setText("onLongPress");

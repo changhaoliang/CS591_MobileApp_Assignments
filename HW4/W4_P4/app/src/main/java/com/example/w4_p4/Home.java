@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 
-public class Home extends AppCompatActivity implements GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener{
+public class Home extends AppCompatActivity implements GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener {
     private GestureDetector gestureDetector;
     private int minDistance = 200;
     private int minVelocity = 10;

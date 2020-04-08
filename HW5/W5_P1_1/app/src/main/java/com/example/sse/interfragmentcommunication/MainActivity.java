@@ -7,7 +7,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 //public class MainActivity extends AppCompatActivity {
-    public class MainActivity extends Activity implements ControlFragment.ControlFragmentListener {
+public class MainActivity extends Activity implements ControlFragment.ControlFragmentListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -15,13 +15,12 @@ import android.view.MenuItem;
         setContentView(R.layout.activity_main);
     }
 
-//Honoring our promise to implement sendMessage from "implements ControlFragment.ControlFragmentListener" above.
+    //Honoring our promise to implement sendMessage from "implements ControlFragment.ControlFragmentListener" above.
     @Override
     public void sendMessage(String msg) {
-        BottomFragment receivingFragment = (BottomFragment)getFragmentManager().findFragmentById(R.id.bottomFragment);
+        BottomFragment receivingFragment = (BottomFragment) getFragmentManager().findFragmentById(R.id.bottomFragment);
         receivingFragment.setFunnyMessage(msg);
     }
-
 
 
 }

@@ -36,7 +36,7 @@ public class DivisionGame implements Parcelable {
 
     public void updateScore(int input, DivisionProblem problem) {
         if (problem.ifWin(input)) {
-            score ++;
+            score++;
         }
     }
 

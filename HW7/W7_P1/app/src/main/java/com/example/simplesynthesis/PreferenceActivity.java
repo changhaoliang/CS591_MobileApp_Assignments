@@ -31,13 +31,13 @@ public class PreferenceActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_preference);
 
-        clearButton = (Button)findViewById(R.id.clear_btn);
-        saveButton = (Button)findViewById(R.id.save_btn);
+        clearButton = (Button) findViewById(R.id.clear_btn);
+        saveButton = (Button) findViewById(R.id.save_btn);
 
-        phoneContactName = (EditText)findViewById(R.id.phone_edt_name);
-        phoneContactNumber = (EditText)findViewById(R.id.phone_edt_number);
-        textContactName = (EditText)findViewById(R.id.txt_edt_name);
-        textContactNumber = (EditText)findViewById(R.id.txt_edt_number);
+        phoneContactName = (EditText) findViewById(R.id.phone_edt_name);
+        phoneContactNumber = (EditText) findViewById(R.id.phone_edt_number);
+        textContactName = (EditText) findViewById(R.id.txt_edt_name);
+        textContactNumber = (EditText) findViewById(R.id.txt_edt_number);
         retrieveSharedPreferenceInfo();
 
         saveButton.setOnClickListener(new View.OnClickListener() {

@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         final DatabaseReference myRef = firebaseDatabase.getReference("message");
         final ArrayList<String> arrayList = new ArrayList<>();
-        for(int i = 1; i <= 5; i++) {
+        for (int i = 1; i <= 5; i++) {
             arrayList.add("This is text " + i);
         }
         myRef.setValue(arrayList);
@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                ArrayList<String> arrayList1= (ArrayList<String>) dataSnapshot.getValue();
+                ArrayList<String> arrayList1 = (ArrayList<String>) dataSnapshot.getValue();
                 System.out.println(arrayList1.toString());
                 result = (ArrayList<String>) dataSnapshot.getValue();
             }

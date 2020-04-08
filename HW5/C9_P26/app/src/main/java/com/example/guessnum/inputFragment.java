@@ -28,16 +28,18 @@ public class inputFragment extends Fragment {
     private Button btnSubmit;
     private EditText txtInput;
 
-    private int int_input=0;
+    private int int_input = 0;
     private InputFragmentListner inputFragmentListner;
 
 
     public inputFragment() {
         // Required empty public constructor
     }
-    public interface InputFragmentListner{
+
+    public interface InputFragmentListner {
         public void getGuessNum(int index);
     }
+
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -71,19 +73,18 @@ public class inputFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        View v=inflater.inflate(R.layout.fragment_input, container, false);
-        btnSubmit= v.findViewById(R.id.btnSubmit);
+        View v = inflater.inflate(R.layout.fragment_input, container, false);
+        btnSubmit = v.findViewById(R.id.btnSubmit);
         txtInput = v.findViewById(R.id.txtInput);
 
-        btnSubmit.setOnClickListener(new View.OnClickListener(){
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String input = txtInput.getText().toString();
                 int inputInt = 0;
-                try{
+                try {
                     inputInt = Integer.parseInt(input);
-                }
-                catch(Exception e){
+                } catch (Exception e) {
                     Context context = getContext();
                     CharSequence text = "Please reinput a integer between 1 and 5!";
                     int duration = Toast.LENGTH_SHORT;
@@ -91,11 +92,11 @@ public class inputFragment extends Fragment {
                     Toast toast = Toast.makeText(context, text, duration);
                     toast.show();
                 }
-                if( inputInt >= 1 && inputInt <= 5){
+                if (inputInt >= 1 && inputInt <= 5) {
                     int_input = inputInt;
 
                     inputFragmentListner.getGuessNum(int_input);
-                }else{
+                } else {
                     Context context = getContext();
                     CharSequence text = "Please reinput a integer between 1 and 5!";
                     int duration = Toast.LENGTH_SHORT;
@@ -115,7 +116,7 @@ public class inputFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        inputFragmentListner = (InputFragmentListner)context;
+        inputFragmentListner = (InputFragmentListner) context;
 //        if (context instanceof OnFragmentInteractionListener) {
 //            mListener = (OnFragmentInteractionListener) context;
 //

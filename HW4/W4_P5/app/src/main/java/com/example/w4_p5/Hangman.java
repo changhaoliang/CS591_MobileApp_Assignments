@@ -67,6 +67,7 @@ public class Hangman implements Parcelable {
     public Round getRound() {
         return round;
     }
+
     public void startGame() {
         String[] res = chooseWord();
         round = new Round(res[0], res[1]);

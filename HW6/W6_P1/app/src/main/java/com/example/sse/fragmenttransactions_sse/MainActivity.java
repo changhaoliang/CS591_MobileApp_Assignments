@@ -179,11 +179,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     Press back button to get previous fragment
+     * Press back button to get previous fragment
      */
     @Override
     public void onBackPressed() {
-        if(getFragmentManager().getBackStackEntryCount() <= 0)
+        if (getFragmentManager().getBackStackEntryCount() <= 0)
             finish();
         else
             getFragmentManager().popBackStack();

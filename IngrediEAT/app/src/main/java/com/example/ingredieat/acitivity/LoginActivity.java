@@ -17,7 +17,7 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends BaseActivity {
     private static final int RC_SIGN_IN = 0;
     private GoogleSignInOptions gso;
     private GoogleSignInClient mGoogleSignInClient;
@@ -65,7 +65,7 @@ public class LoginActivity extends AppCompatActivity {
             editor.putBoolean(Setting.Strings.if_signin_succ, true);
             editor.apply();
 
-            Intent intent = new Intent(getApplicationContext(), LibraryActivity.class);
+            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
             startActivity(intent);
             System.out.println("Successfully Log in");
             finish();

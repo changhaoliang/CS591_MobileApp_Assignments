@@ -1,61 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".fragment.ItemFragement">
+             xmlns:tools="http://schemas.android.com/tools"
+             android:id="@+id/item_frag"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context=".fragment.CategoryItemFragment">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
 
-        android:orientation="vertical">
+            android:orientation="vertical">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/meat_btn"
-                style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="#D84315"
-                android:text="meat"
-                android:textColor="#FFFFFF" />
-
-            <Button
-                android:id="@+id/vege_btn"
-                style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
-                android:layout_weight="1"
-                android:background="#D84315"
-                android:text="vegetable"
-                android:textColor="#FFFFFF" />
+                android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/other_btn"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="#D84315"
-                android:text="other"
-                android:textColor="#FFFFFF" />
+            <!--            <com.google.android.material.button.MaterialButton-->
+            <!--                android:id="@+id/meat_btn"-->
+            <!--                android:layout_width="0dp"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_weight="1"-->
+            <!--                android:background="#D84315"-->
+            <!--                android:text="meat"-->
+            <!--                android:textColor="#FFFFFF" />-->
+
+            <!--            <com.google.android.material.button.MaterialButton-->
+            <!--                android:id="@+id/vege_btn"-->
+            <!--                android:layout_width="0dp"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_weight="1"-->
+            <!--                android:background="#D84315"-->
+            <!--                android:text="vegetable"-->
+            <!--                android:textColor="#FFFFFF" />-->
+
+            <!--            <com.google.android.material.button.MaterialButton-->
+            <!--                android:id="@+id/other_btn"-->
+            <!--                android:layout_width="0dp"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_weight="1"-->
+            <!--                android:background="#D84315"-->
+            <!--                android:text="other"-->
+            <!--                android:textColor="#FFFFFF" />-->
 
         </LinearLayout>
 
         <ListView
-            android:id="@+id/list_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:clickable="true">
+                android:id="@+id/list_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:clickable="true">
 
         </ListView>
     </LinearLayout>

@@ -18,7 +18,6 @@ import android.widget.LinearLayout;
 import java.io.InputStream;
 
 
-
 public class GameFragment extends Fragment {
     private final int side = 4;
     private int[] currentIndex;
@@ -48,7 +47,7 @@ public class GameFragment extends Fragment {
         wordText = view.findViewById(R.id.textWord);
         word = wordText.getText().toString();
         board = new Board();
-        InputStream input= readDictionary();
+        InputStream input = readDictionary();
         board.setInput(input);
         letters = board.shuffle();
         //letters = new char[][]{{'l', 'i', 'm', 'e'}, {'p', 'i', 'p', 'e'}, {'l', 'i', 'm', 'e'}, {'l', 'i', 'm', 'e'}};
@@ -87,7 +86,7 @@ public class GameFragment extends Fragment {
         return view;
     }
 
-    private void createLetterBoard(View view){
+    private void createLetterBoard(View view) {
         GridLayout gridLayout = (GridLayout) view.findViewById(R.id.letterBoard);
         Point size = new Point();
         getActivity().getWindowManager().getDefaultDisplay().getSize(size);
@@ -99,8 +98,8 @@ public class GameFragment extends Fragment {
         ButtonHandler bh = new ButtonHandler();
 
 
-        for (int row=0; row<side; row++){
-            for (int col=0; col<side; col++){
+        for (int row = 0; row < side; row++) {
+            for (int col = 0; col < side; col++) {
                 letterButtons[row][col] = new Button(getActivity());
                 letterButtons[row][col].setText(String.valueOf(letters[row][col]));
                 letterButtons[row][col].setTextSize(25);
@@ -108,7 +107,7 @@ public class GameFragment extends Fragment {
                 letterButtons[row][col].getBackground().setColorFilter(new LightingColorFilter(0x00000000,
                         0X00FFFFFF));
 
-                LinearLayout.LayoutParams ll = new LinearLayout.LayoutParams(w-40, w-40);
+                LinearLayout.LayoutParams ll = new LinearLayout.LayoutParams(w - 40, w - 40);
                 GridLayout.LayoutParams gl = new GridLayout.LayoutParams(ll);
                 gl.leftMargin = 20;
                 gl.rightMargin = 20;
@@ -132,12 +131,12 @@ public class GameFragment extends Fragment {
         GFL = (GameFragmentListener) activity;
     }
 
-    private class ButtonHandler implements View.OnClickListener{
+    private class ButtonHandler implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-            for (int row=0; row<side; row++){
-                for (int col=0; col<side; col++){
-                    if (v == letterButtons[row][col]){
+            for (int row = 0; row < side; row++) {
+                for (int col = 0; col < side; col++) {
+                    if (v == letterButtons[row][col]) {
                         if (currentButton == null) {
                             setCurrentButton(letterButtons[row][col]);
                             currentIndex = new int[]{row, col};
@@ -159,8 +158,8 @@ public class GameFragment extends Fragment {
     }
 
     private void clearButtons() {
-        for (int row=0; row<side; row++){
-            for (int col=0; col<side; col++){
+        for (int row = 0; row < side; row++) {
+            for (int col = 0; col < side; col++) {
                 letterButtons[row][col].setEnabled(true);
                 letterButtons[row][col].getBackground().setColorFilter(new LightingColorFilter(0x00000000,
                         0X00FFFFFF));
@@ -170,16 +169,16 @@ public class GameFragment extends Fragment {
         }
         word = "";
         wordText.setText("");
-        InputStream input= readDictionary();
+        InputStream input = readDictionary();
         board.setInput(input);
     }
 
     private void setCurrentButton(Button button) {
-        currentButton =button;
+        currentButton = button;
         currentButton.getBackground().setColorFilter(new LightingColorFilter(0x00000000,
                 getResources().getColor(R.color.red)));
         currentButton.setEnabled(false);
-        word = word+button.getText().toString();
+        word = word + button.getText().toString();
         wordText.setText(word);
     }
 
@@ -187,8 +186,8 @@ public class GameFragment extends Fragment {
         clearButtons();
         board = new Board();
         letters = board.shuffle();
-        for (int row=0; row<side; row++){
-            for (int col=0; col<side; col++){
+        for (int row = 0; row < side; row++) {
+            for (int col = 0; col < side; col++) {
                 letterButtons[row][col].setText(String.valueOf(letters[row][col]));
             }
         }

@@ -29,7 +29,7 @@ public class BottomFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_bottom, container, false);  //separate me from return statement.
         return view;
 
- //       return super.onCreateView(inflater, container, savedInstanceState);
+        //       return super.onCreateView(inflater, container, savedInstanceState);
     }
 
 //    @Override
@@ -47,7 +47,7 @@ public class BottomFragment extends Fragment {
 
     //Receiving Team
     //It is best practice that this should be accessed via the main activity, not other fragments.
-    public void setPicture(String picture){
+    public void setPicture(String picture) {
         TextView foodText = (TextView) view.findViewById(R.id.foodText);
         switch (picture) {
             case "Burger":

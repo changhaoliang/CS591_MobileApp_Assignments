@@ -1,103 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".PreferenceActivity">
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context=".PreferenceActivity">
 
     <LinearLayout
-        android:id="@+id/top"
-        android:layout_marginTop="80dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+            android:id="@+id/top"
+            android:layout_marginTop="80dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
 
-        android:gravity="center"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:layout_editor_absoluteY="85dp">
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:layout_editor_absoluteY="85dp">
 
         <TextView
-            android:id="@+id/phone_txt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="30dp"
-            android:textSize="25dp"
-            android:textColor="@android:color/holo_green_dark"
-            android:text="Emergency Phone Contact" />
+                android:id="@+id/phone_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="30dp"
+                android:textSize="25dp"
+                android:textColor="@android:color/holo_green_dark"
+                android:text="Emergency Phone Contact"/>
 
         <EditText
-            android:id="@+id/phone_edt_name"
-            android:layout_width="230dp"
-            android:layout_height="45dp"
-            android:layout_marginBottom="30dp"
-            android:gravity="center"
-            android:hint="name"
-            android:textColor="@android:color/darker_gray"
-            android:textSize="20sp" />
+                android:id="@+id/phone_edt_name"
+                android:layout_width="230dp"
+                android:layout_height="45dp"
+                android:layout_marginBottom="30dp"
+                android:gravity="center"
+                android:hint="name"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="20sp"/>
         <EditText
-            android:id="@+id/phone_edt_number"
-            android:layout_width="230dp"
-            android:layout_height="45dp"
-            android:layout_marginBottom="60dp"
-            android:textSize="20sp"
-            android:gravity="center"
-            android:textColor="@android:color/darker_gray"
+                android:id="@+id/phone_edt_number"
+                android:layout_width="230dp"
+                android:layout_height="45dp"
+                android:layout_marginBottom="60dp"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:textColor="@android:color/darker_gray"
 
-            android:hint="phone number"/>
+                android:hint="phone number"/>
 
         <TextView
-            android:id="@+id/text_txt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp"
-            android:textColor="@android:color/holo_green_dark"
+                android:id="@+id/text_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="30dp"
+                android:textColor="@android:color/holo_green_dark"
 
-            android:textSize="25dp"
-            android:text="Emergency Text Contact" />
+                android:textSize="25dp"
+                android:text="Emergency Text Contact"/>
 
         <EditText
-            android:id="@+id/txt_edt_name"
-            android:layout_width="230dp"
-            android:layout_height="45dp"
-            android:layout_marginBottom="30dp"
-            android:textSize="20sp"
-            android:textColor="@android:color/darker_gray"
-            android:hint="name"
-            android:gravity="center" />
+                android:id="@+id/txt_edt_name"
+                android:layout_width="230dp"
+                android:layout_height="45dp"
+                android:layout_marginBottom="30dp"
+                android:textSize="20sp"
+                android:textColor="@android:color/darker_gray"
+                android:hint="name"
+                android:gravity="center"/>
         <EditText
-            android:id="@+id/txt_edt_number"
-            android:layout_width="230dp"
-            android:layout_height="45dp"
-            android:layout_marginBottom="60dp"
-            android:textSize="20sp"
-            android:gravity="center"
-            android:textColor="@android:color/darker_gray"
-            android:hint="phone number"/>
+                android:id="@+id/txt_edt_number"
+                android:layout_width="230dp"
+                android:layout_height="45dp"
+                android:layout_marginBottom="60dp"
+                android:textSize="20sp"
+                android:gravity="center"
+                android:textColor="@android:color/darker_gray"
+                android:hint="phone number"/>
     </LinearLayout>
 
     <LinearLayout
-        android:layout_below="@+id/top"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        tools:layout_editor_absoluteX="1dp"
-        android:gravity="center"
-        tools:layout_editor_absoluteY="452dp">
+            android:layout_below="@+id/top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            tools:layout_editor_absoluteX="1dp"
+            android:gravity="center"
+            tools:layout_editor_absoluteY="452dp">
 
         <Button
-            android:id="@+id/clear_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="clear"
-            android:layout_marginRight="35dp"
-            />
+                android:id="@+id/clear_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="clear"
+                android:layout_marginRight="35dp"
+        />
 
         <Button
-            android:id="@+id/save_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="save" />
+                android:id="@+id/save_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="save"/>
     </LinearLayout>
 </RelativeLayout>

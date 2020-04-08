@@ -1,2 +1,2 @@
 include ':app'
-rootProject.name='traffic_light'
+rootProject.name = 'traffic_light'

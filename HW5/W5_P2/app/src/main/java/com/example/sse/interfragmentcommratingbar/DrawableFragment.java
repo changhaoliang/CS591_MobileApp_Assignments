@@ -26,7 +26,7 @@ public class DrawableFragment extends Fragment {
     ArrayList<Picture> pictures;  //keeping track of our drawables
     private int currDrawableIndex;  //keeping track of which drawable is currently displayed.
 
- //Boiler Plate Stuff.
+    //Boiler Plate Stuff.
     private ImageView imgRateMe;
 
     private RatingBar ratingBar;
@@ -45,7 +45,6 @@ public class DrawableFragment extends Fragment {
 
         ratingBar = (RatingBar) v.findViewById(R.id.ratingBar);
         imgRateMe = (ImageView) v.findViewById(R.id.imgRateMe);
-
 
 
         currDrawableIndex = 0;  //ArrayList Index of Current Drawable.
@@ -68,25 +67,26 @@ public class DrawableFragment extends Fragment {
 
         return v;   //returns the view, with our must happen last, Why? A: ____________
     }
+
     public void updatePicture(int index) {
         currDrawableIndex = index;
 
         if (currDrawableIndex <= 0) {
             currDrawableIndex = pictures.size() - 1;
-        }
-        else if (currDrawableIndex >= pictures.size() - 1) {
+        } else if (currDrawableIndex >= pictures.size() - 1) {
             currDrawableIndex = 0;
         }
         changePicture();
     }
-//Routine to change the picture in the image view dynamically.
+
+    //Routine to change the picture in the image view dynamically.
     public void changePicture() {
 
         imgRateMe.setImageDrawable(pictures.get(currDrawableIndex).getImage());  //note, this is the preferred way of changing images, don't worry about parent viewgroup size changes.
         ratingBar.setRating(pictures.get(currDrawableIndex).getRating());
     }
 
-//Quick and Dirty way to get drawable resources, we prefix with "animal_" to filter out just the ones we want to display.
+    //Quick and Dirty way to get drawable resources, we prefix with "animal_" to filter out just the ones we want to display.
 //REF: http://stackoverflow.com/questions/31921927/how-to-get-all-drawable-resources
     public void getDrawables() {
         Field[] drawablesFields = com.example.sse.interfragmentcommratingbar.R.drawable.class.getFields();  //getting array of ALL drawables.

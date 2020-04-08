@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
 
     ListView lvEpisodes;     //Reference to the listview GUI component
     ListAdapter lvAdapter, slAdapter;   //Reference to the Adapter used to populate the listview.
-    HashMap<String,Episode> epsiodes_map;
+    HashMap<String, Episode> epsiodes_map;
     ArrayList<Episode> episodes, highStars;
     boolean showSelected;
     boolean byTitle;
@@ -60,10 +60,10 @@ public class MainActivity extends AppCompatActivity {
 
         //String[] titles = getApplication().getResources().getStringArray(R.array.episodes);
         System.out.println("-------Saving ---------");
-        for(int i = 0; i < episodes.size();i++){
+        for (int i = 0; i < episodes.size(); i++) {
             editor.putFloat(episodes.get(i).getTitle(), episodes.get(i).getRating());
-            String msg = episodes.get(i).getTitle()+", Rating"+ Float.toString(episodes.get(i).getRating());
-            Log.e("save",msg);
+            String msg = episodes.get(i).getTitle() + ", Rating" + Float.toString(episodes.get(i).getRating());
+            Log.e("save", msg);
             //System.out.printf("%s, Rating  %d \n",episodes.get(i).getTitle(),  episodes.get(i).getRating());
         }
 
@@ -75,11 +75,11 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences info = getSharedPreferences("ActivityInfo", Context.MODE_PRIVATE);
         String[] titles = getApplication().getResources().getStringArray(R.array.episodes);
         System.out.println("---------Retrieve ---------");
-        for(int i = 0; i < episodes.size(); i++) {
+        for (int i = 0; i < episodes.size(); i++) {
             Float fRating = info.getFloat(titles[i], 0);
             epsiodes_map.get(titles[i]).setRating(fRating);
-            String msg = titles[i]+", Rating"+ Float.toString(epsiodes_map.get(titles[i]).getRating());
-            Log.e("Retrieve",msg);
+            String msg = titles[i] + ", Rating" + Float.toString(epsiodes_map.get(titles[i]).getRating());
+            Log.e("Retrieve", msg);
             //System.out.printf("%s, Rating  %d \n",titles[i], epsiodes_map.get(titles[i]).getRating());
         }
     }
@@ -92,11 +92,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public HashMap<String,Episode>  getEpisodesMap() {
-        HashMap<String,Episode> epsiodes_map = new HashMap<>();
+    public HashMap<String, Episode> getEpisodesMap() {
+        HashMap<String, Episode> epsiodes_map = new HashMap<>();
         //String[] titles = getApplication().getResources().getStringArray(R.array.episodes);
 
-        for(int i = 0; i < episodes.size(); i++) {
+        for (int i = 0; i < episodes.size(); i++) {
 
             epsiodes_map.put(episodes.get(i).getTitle(), episodes.get(i));
         }
@@ -169,23 +169,22 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);  //if none of the above are true, do the default and return a boolean.
     }
 
-    public void fourStarsOrMore(){
-        if (!showSelected){
+    public void fourStarsOrMore() {
+        if (!showSelected) {
             highStars = new ArrayList<Episode>();
-            for (int i=0; i<episodes.size(); i++){
+            for (int i = 0; i < episodes.size(); i++) {
                 if (episodes.get(i).getRating() >= 4)
                     highStars.add(episodes.get(i));
             }
             slAdapter = new MyCustomAdapter(this.getBaseContext(), highStars);
             lvEpisodes.setAdapter(slAdapter);
-        }
-        else
+        } else
             lvEpisodes.setAdapter(lvAdapter);
         showSelected = !showSelected;
     }
 
     public void sortByTitle() {
-        if (showSelected){
+        if (showSelected) {
             Collections.sort(highStars, new Comparator<Episode>() {
                 @Override
                 public int compare(Episode t1, Episode t2) {
@@ -196,8 +195,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
             lvEpisodes.setAdapter(slAdapter);
-        }
-        else{
+        } else {
             Collections.sort(episodes, new Comparator<Episode>() {
                 @Override
                 public int compare(Episode t1, Episode t2) {
@@ -214,26 +212,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void sortByRating() {
-        if (showSelected){
+        if (showSelected) {
             Collections.sort(highStars, new Comparator<Episode>() {
                 @Override
                 public int compare(Episode t1, Episode t2) {
                     if (byRating)
-                        return (int) ((t2.getRating() - t1.getRating())*2);
+                        return (int) ((t2.getRating() - t1.getRating()) * 2);
                     else
-                        return (int) ((t1.getRating() - t2.getRating())*2);
+                        return (int) ((t1.getRating() - t2.getRating()) * 2);
                 }
             });
             lvEpisodes.setAdapter(slAdapter);
-        }
-        else{
+        } else {
             Collections.sort(episodes, new Comparator<Episode>() {
                 @Override
                 public int compare(Episode t1, Episode t2) {
                     if (byRating)
-                        return (int) ((t2.getRating() - t1.getRating())*2);
+                        return (int) ((t2.getRating() - t1.getRating()) * 2);
                     else
-                        return (int) ((t1.getRating() - t2.getRating())*2);
+                        return (int) ((t1.getRating() - t2.getRating()) * 2);
                 }
             });
             lvEpisodes.setAdapter(lvAdapter);
@@ -282,7 +279,7 @@ class MyCustomAdapter extends BaseAdapter {
 //    //     int episodeImages[];         //this approach is fine for now.
 //    ArrayList<Integer> episodeImages;  //Well, we can use one arrayList too...  Just mixing it up, Arrays or Templated ArrayLists, you choose.
 
-    ArrayList<Episode> episodes;
+            ArrayList<Episode> episodes;
 
 //    ArrayList<String> episodes;
 //    ArrayList<String> episodeDescriptions;
