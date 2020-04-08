@@ -34,6 +34,7 @@ public class CategoryItemFragment extends Fragment implements CategoryItemAdapte
 
     public interface itemFragmentListener {
         void setFragment(boolean flag, Category category);
+
     }
 
     @Override
@@ -99,8 +100,9 @@ public class CategoryItemFragment extends Fragment implements CategoryItemAdapte
         addCategoryItem(Category.MILK_EGGS_OTHER_DAIRY, getResources().getDrawable(R.drawable.dairy2, null));
         addCategoryItem(Category.BAKING, getResources().getDrawable(R.drawable.baking, null));
         addCategoryItem(Category.BEVERAGE, getResources().getDrawable(R.drawable.drinking, null));
-        addCategoryItem(Category.OIL_VINEGAR_SALAD_DRESSING, getResources().getDrawable(R.drawable.vegetables, null));
-        addCategoryItem(Category.SPICES_AND_SEASONINGS, getResources().getDrawable(R.drawable.seasoning, null));
+        addCategoryItem(Category.SPICES_AND_SEASONINGS, getResources().getDrawable(R.drawable.spice, null));
+        addCategoryItem(Category.OIL_VINEGAR_SALAD_DRESSING, getResources().getDrawable(R.drawable.oil, null));
+
 
         listAdapter = new CategoryItemAdapter(getContext(), R.layout.item, categories, this);
         listView.setAdapter(listAdapter);
@@ -111,7 +113,7 @@ public class CategoryItemFragment extends Fragment implements CategoryItemAdapte
             totalIngredients.put(category.getCategoryValue(), new HashSet<String>());
         }
         totalIngredients.put(category.getCategoryValue(), newIngredients);
-        System.out.println(totalIngredients.get(category).size());
+        System.out.println(totalIngredients.get(category.getCategoryValue()).size() + "total");
     }
 
     public boolean checkSelect(Category category, String ingredient) {
@@ -121,4 +123,7 @@ public class CategoryItemFragment extends Fragment implements CategoryItemAdapte
 
         return false;
     }
+
+
+
 }

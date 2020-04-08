@@ -20,7 +20,7 @@
         <LinearLayout
                 android:id="@+id/card_linear_layout"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="90dp"
                 android:backgroundTint="#FFFFFF"
                 android:orientation="horizontal"
                 android:padding="2dp">
@@ -31,7 +31,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="#FFFFFF"
-                    android:padding="10sp"
+                    android:padding="14dp"
                     android:scaleType="fitStart"
                     app:srcCompat="@drawable/meat"/>
 
@@ -42,8 +42,7 @@
                     android:layout_gravity="center"
                     android:layout_weight="3"
                     android:padding="10sp"
-                    android:text="Meats"
-                    android:textSize="25dp"/>
+                    android:textSize="22dp"/>
 
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
