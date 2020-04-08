@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.ingredieat.R;
 import com.example.ingredieat.base.Category;
@@ -34,6 +35,7 @@ public class IngredientsFragment extends Fragment {
     private Category category;
     private Button add_btn;
     private SearchView searchView;
+    private TextView title;
 
     private IngredientFragmentListener ingredientFragmentListener;
 
@@ -58,8 +60,8 @@ public class IngredientsFragment extends Fragment {
         chipsGroup = (ChipGroup) myView.findViewById(R.id.chip_group);
         add_btn = (Button) myView.findViewById(R.id.button_ok);
         searchView = (SearchView) myView.findViewById(R.id.search);
-
-
+        title = (TextView) myView.findViewById(R.id.title_txt);
+        title.setText(category.getCategoryValue());
         if (ingredients.size() != 0) {
             setChips(ingredients);
         }
@@ -130,7 +132,6 @@ public class IngredientsFragment extends Fragment {
         this.category = category;
     }
 
-
     private void setChips(List<Ingredient> ingredients) {
         if (chipsGroup.getChildCount() > 0) {
             chipsGroup.removeAllViews();
@@ -148,6 +149,10 @@ public class IngredientsFragment extends Fragment {
                 chip.setChecked(true);
             }
         }
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
 }

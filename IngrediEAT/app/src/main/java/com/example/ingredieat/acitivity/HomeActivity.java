@@ -1,8 +1,6 @@
 package com.example.ingredieat.acitivity;
 
 import androidx.annotation.NonNull;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import okhttp3.Call;
@@ -31,6 +29,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Stack;
 
 public class HomeActivity extends BaseActivity implements CategoryItemFragment.itemFragmentListener, IngredientsFragment.IngredientFragmentListener {
     private BottomNavigationView menuView;
@@ -41,7 +40,6 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
     private List<Ingredient> allIngredients;
     private Category category;
     private long mLastBackPress;
-    private FragmentTransaction fragmentTransaction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +51,6 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
         categoryItemFragment = new CategoryItemFragment();
 
         fragmentManager = getSupportFragmentManager();
-
         // Get the data of all ingredients from the server side by sending a GET request.
         getAllIngredients();
 
@@ -61,7 +58,7 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
         fragmentTransaction.add(R.id.fragment_container, categoryItemFragment, "item fragment");
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
-        setTitle("Pantry");
+
         menuView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -74,17 +71,14 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
                 switch (item.getItemId()) {
                     case R.id.fridge:
                         fragmentTransaction.show(categoryItemFragment);
-                        setTitle("Pantry");
                         break;
                     case R.id.user:
                         fragmentTransaction.replace(R.id.fragment_container, new UserFragment());
                         fragmentTransaction.addToBackStack(null);
-                        setTitle("User Account");
                         break;
                     case R.id.cart:
                         fragmentTransaction.replace(R.id.fragment_container, new CartFragment());
                         fragmentTransaction.addToBackStack(null);
-                        setTitle("My Ingredients");
                         break;
                 }
                 fragmentTransaction.commit();
@@ -129,13 +123,11 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
             if (fragmentManager.getBackStackEntryCount() > 1) {
                 getSupportFragmentManager().popBackStack();
             }
-            fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             this.ingredientsFragment = new IngredientsFragment();
             fragmentTransaction.replace(R.id.fragment_container, ingredientsFragment);
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
-            setTitle(category.getCategoryValue());
-
 
             List<Ingredient> categoryIngredients = new ArrayList<>();
             for(Ingredient ingredient: allIngredients) {
@@ -145,7 +137,7 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
             }
 
             ingredientsFragment.setIngredients(categoryIngredients);
-
+            ingredientsFragment.setCategory(category);
             ingredientsFragment.setView(category);
 
         }
@@ -195,7 +187,7 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
 
     @Override
     public void updateTotalSelected() {
-        fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         if (fragmentManager.getBackStackEntryCount() > 1) {
             getSupportFragmentManager().popBackStack();
         }
@@ -205,4 +197,6 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
         HashSet<String> newIngredients = ingredientsFragment.getSelectedIngredients();
         categoryItemFragment.updateTotalIngredients(category, newIngredients);
     }
+
+
 }

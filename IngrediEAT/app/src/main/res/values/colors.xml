@@ -6,4 +6,5 @@
     <color name="card_border">#BEEE1C1C</color>
     <color name="colorSecondary">#863622</color>
     <color name="white">#FFFFFF</color>
+    <color name="shallow">#FFF6F9</color>
 </resources>
