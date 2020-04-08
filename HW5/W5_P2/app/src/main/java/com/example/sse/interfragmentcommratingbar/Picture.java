@@ -12,12 +12,15 @@ public class Picture {
         this.image = image;
         this.rating = rating;
     }
+
     public void setRating(float newRating) {
         this.rating = newRating;
     }
+
     public float getRating() {
-        return  rating;
+        return rating;
     }
+
     public Drawable getImage() {
         return image;
     }

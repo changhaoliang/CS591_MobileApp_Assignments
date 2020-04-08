@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean gameOver;
 
     private TextView hint;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         bodyParts[6] = findViewById(R.id.part6);
         bodyParts[7] = findViewById(R.id.part7);
 
-        Button startButton = (Button)findViewById(R.id.button);
+        Button startButton = (Button) findViewById(R.id.button);
         if (orientation == getResources().getConfiguration().ORIENTATION_LANDSCAPE) {
             hintButton = (Button) findViewById(R.id.hintButton);
             hint = (TextView) findViewById(R.id.hintString);
@@ -180,14 +181,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public GridLayout buildKeyboard(){
+    public GridLayout buildKeyboard() {
         Point size = new Point();
         int w = 0;
         getWindowManager().getDefaultDisplay().getSize(size);
         if (orientation == getResources().getConfiguration().ORIENTATION_PORTRAIT) {
             w = size.x / kbColumns;
         } else if (orientation == getResources().getConfiguration().ORIENTATION_LANDSCAPE) {
-            w = (int)(size.y / kbColumns * 0.8);
+            w = (int) (size.y / kbColumns * 0.8);
         }
         GridLayout keyBoard = new GridLayout(this);
         keyBoard.setColumnCount(kbColumns);
@@ -195,11 +196,11 @@ public class MainActivity extends AppCompatActivity {
 
         letterButtons = new Button[kbRows][kbColumns];
         ButtonHandler bh = new ButtonHandler();
-        for (int row=0; row<kbRows; row++){
-            for (int col=0; col<kbColumns; col++){
+        for (int row = 0; row < kbRows; row++) {
+            for (int col = 0; col < kbColumns; col++) {
                 letterButtons[row][col] = new Button(this);
-                int letter = row==3?(64+row*7+col):(65+row*7+col);
-                letterButtons[row][col].setText((char)letter+"");
+                int letter = row == 3 ? (64 + row * 7 + col) : (65 + row * 7 + col);
+                letterButtons[row][col].setText((char) letter + "");
                 letterButtons[row][col].setTextSize(20);
                 letterButtons[row][col].setOnClickListener(bh);
                 //letterButtons[row][col].setBackgroundColor(getResources().getColor(R.color.white));
@@ -210,16 +211,16 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         letterButtons[3][0].setVisibility(View.INVISIBLE);
-        letterButtons[3][kbColumns-1].setVisibility(View.INVISIBLE);
+        letterButtons[3][kbColumns - 1].setVisibility(View.INVISIBLE);
         return keyBoard;
     }
 
-    private void checkLetter(Button b){
+    private void checkLetter(Button b) {
         char c = Character.toLowerCase(b.getText().charAt(0));
         //if c is the answer return true, and set button invisible
         if (hangman.getRound().isCharGuessed(c)) {
             // set style of button
-            keyboardStatus[c-'a'] = 1;
+            keyboardStatus[c - 'a'] = 1;
 //            b.setEnabled(false);
 //            b.setTextColor(getResources().getColor(R.color.white));
 //            //b.setBackgroundColor(getResources().getColor(R.color.green));
@@ -246,7 +247,7 @@ public class MainActivity extends AppCompatActivity {
             }
         } else {
             // draw hangman !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            keyboardStatus[c-'a'] = -1;
+            keyboardStatus[c - 'a'] = -1;
             bodyParts[failTime].setVisibility(View.VISIBLE);
             failTime++;
 //            b.setEnabled(false);
@@ -269,18 +270,16 @@ public class MainActivity extends AppCompatActivity {
         if (c < 'a' || c > 'z') {
             return;
         }
-        System.out.println(keyboardStatus[c-'a']);
-        if (keyboardStatus[c-'a'] == 0) {
+        System.out.println(keyboardStatus[c - 'a']);
+        if (keyboardStatus[c - 'a'] == 0) {
             button.getBackground().setColorFilter(new LightingColorFilter(0x00000000,
                     0X00FFFFFF));
-        }
-        else if (keyboardStatus[c-'a'] == 1) {
+        } else if (keyboardStatus[c - 'a'] == 1) {
             button.setEnabled(false);
             button.setTextColor(getResources().getColor(R.color.white));
             //b.setBackgroundColor(getResources().getColor(R.color.green));
             button.getBackground().setColorFilter(new LightingColorFilter(0x00000000, 0X0043CD80));
-        }
-        else if (keyboardStatus[c-'a'] == -1) {
+        } else if (keyboardStatus[c - 'a'] == -1) {
             button.setEnabled(false);
             button.setTextColor(getResources().getColor(R.color.white));
             //b.setBackgroundColor(getResources().getColor(R.color.red));
@@ -288,6 +287,7 @@ public class MainActivity extends AppCompatActivity {
                     0X00EE3B3B));
         }
     }
+
     public void disableAllButton() {
         for (int i = 0; i < letterButtons.length; i++) {
             for (int j = 0; j < letterButtons[i].length; j++) {
@@ -295,12 +295,13 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-    private class ButtonHandler implements View.OnClickListener{
+
+    private class ButtonHandler implements View.OnClickListener {
         @Override
-        public void onClick(View v){
-            for (int row=0; row<kbRows; row++){
-                for (int col=0; col<kbColumns; col++){
-                    if (v == letterButtons[row][col]){
+        public void onClick(View v) {
+            for (int row = 0; row < kbRows; row++) {
+                for (int col = 0; col < kbColumns; col++) {
+                    if (v == letterButtons[row][col]) {
                         checkLetter(letterButtons[row][col]);
                     }
                 }

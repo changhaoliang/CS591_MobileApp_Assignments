@@ -1,7 +1,5 @@
 package com.example.ingredieat.acitivity;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,7 +14,7 @@ import static com.example.ingredieat.setting.Setting.PREF_NAME;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class WelcomActivity extends AppCompatActivity {
+public class WelcomeActivity extends BaseActivity {
     private boolean componentReady = false;
     private Intent startIntent = null;
 
@@ -29,16 +27,17 @@ public class WelcomActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
-            WelcomActivity.this.startActivity(startIntent);
-            WelcomActivity.this.finish();
+            WelcomeActivity.this.startActivity(startIntent);
+            WelcomeActivity.this.finish();
         }
     };
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         View v = View.inflate(getApplicationContext(), R.layout.activity_welcome, null);
         setContentView(v);
 
-        if (getSupportActionBar() != null){
+        if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
         new Timer().schedule(timerTask, 2000);
@@ -47,8 +46,7 @@ public class WelcomActivity extends AppCompatActivity {
 
         if (!Setting.ifSignIn) {
             startIntent = new Intent(this, LoginActivity.class);
-        }
-        else {
+        } else {
             startIntent = new Intent(this, HomeActivity.class);
         }
         componentReady = true;

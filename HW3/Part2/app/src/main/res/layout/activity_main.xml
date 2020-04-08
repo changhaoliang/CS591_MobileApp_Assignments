@@ -1,87 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                   xmlns:tools="http://schemas.android.com/tools"
+                                                   android:layout_width="match_parent"
+                                                   android:layout_height="match_parent"
+                                                   tools:context=".MainActivity">
 
     <SeekBar
-        android:id="@+id/SeekBarC"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:max="11778"
-        android:progress="1778"
-        app:layout_constraintStart_toStartOf="@id/TextC"
-        app:layout_constraintTop_toBottomOf="@id/TextC" />
+            android:id="@+id/SeekBarC"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:max="11778"
+            android:progress="1778"
+            app:layout_constraintStart_toStartOf="@id/TextC"
+            app:layout_constraintTop_toBottomOf="@id/TextC"/>
 
     <TextView
-        android:id="@+id/TextF"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:text="@string/fahrenheit"
-        android:textSize="50sp"
-        android:textStyle="bold|italic"
-        app:layout_constraintStart_toStartOf="@id/TextC"
-        app:layout_constraintTop_toBottomOf="@id/ValueC" />
+            android:id="@+id/TextF"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:text="@string/fahrenheit"
+            android:textSize="50sp"
+            android:textStyle="bold|italic"
+            app:layout_constraintStart_toStartOf="@id/TextC"
+            app:layout_constraintTop_toBottomOf="@id/ValueC"/>
 
     <TextView
-        android:id="@+id/ValueF"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="225dp"
-        android:layout_marginTop="30dp"
-        android:text="32.00"
-        android:textSize="30sp"
-        android:textStyle="bold|italic"
-        app:layout_constraintStart_toStartOf="@id/SeekBarF"
-        app:layout_constraintTop_toBottomOf="@id/SeekBarF" />
+            android:id="@+id/ValueF"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="225dp"
+            android:layout_marginTop="30dp"
+            android:text="32.00"
+            android:textSize="30sp"
+            android:textStyle="bold|italic"
+            app:layout_constraintStart_toStartOf="@id/SeekBarF"
+            app:layout_constraintTop_toBottomOf="@id/SeekBarF"/>
 
     <TextView
-        android:id="@+id/TextC"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="50dp"
-        android:text="@string/celsius"
-        android:textSize="50sp"
-        android:textStyle="bold|italic"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+            android:id="@+id/TextC"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="50dp"
+            android:text="@string/celsius"
+            android:textSize="50sp"
+            android:textStyle="bold|italic"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
     <SeekBar
-        android:id="@+id/SeekBarF"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:progress="3200"
-        android:max="21200"
-        app:layout_constraintStart_toStartOf="@id/TextF"
-        app:layout_constraintTop_toBottomOf="@id/TextF" />
+            android:id="@+id/SeekBarF"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:progress="3200"
+            android:max="21200"
+            app:layout_constraintStart_toStartOf="@id/TextF"
+            app:layout_constraintTop_toBottomOf="@id/TextF"/>
 
     <TextView
-        android:id="@+id/ValueC"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="225dp"
-        android:layout_marginTop="30dp"
-        android:text="0.00"
-        android:textSize="30sp"
-        android:textStyle="bold|italic"
-        app:layout_constraintStart_toStartOf="@id/SeekBarC"
-        app:layout_constraintTop_toBottomOf="@id/SeekBarC" />
+            android:id="@+id/ValueC"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="225dp"
+            android:layout_marginTop="30dp"
+            android:text="0.00"
+            android:textSize="30sp"
+            android:textStyle="bold|italic"
+            app:layout_constraintStart_toStartOf="@id/SeekBarC"
+            app:layout_constraintTop_toBottomOf="@id/SeekBarC"/>
 
     <TextView
-        android:id="@+id/Message"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="120dp"
-        android:layout_marginTop="60dp"
-        android:text="@string/message_cold"
-        android:textSize="40sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ValueF" />
+            android:id="@+id/Message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="120dp"
+            android:layout_marginTop="60dp"
+            android:text="@string/message_cold"
+            android:textSize="40sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ValueF"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,7 +5,7 @@ import android.os.Parcelable;
 
 import java.util.Random;
 
-public class DivisionProblem implements Parcelable{
+public class DivisionProblem implements Parcelable {
     private int divider;
     private int dividend;
     private int result;
@@ -24,6 +24,7 @@ public class DivisionProblem implements Parcelable{
         dividend = 0;
         divider = 0;
     }
+
     public void generateProblem() {
         Random random = new Random();
         int n1 = random.nextInt(100);
@@ -43,6 +44,7 @@ public class DivisionProblem implements Parcelable{
     public int getDivider() {
         return divider;
     }
+
     public int getDividend() {
         return dividend;
     }

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
@@ -48,4 +49,56 @@
             android:layout_height="wrap_content"
             android:text="Make me Work!" />
     </LinearLayout>
+=======
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal" android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/imgEpisode"
+            android:src="@drawable/livelong_prosper"
+            android:layout_weight="1"
+            android:layout_gravity="top|bottom"/>
+
+    <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:orientation="vertical">
+
+        <TextView
+                android:id="@+id/tvEpisodeTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="tvEpisodeTitle"
+                android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+        <TextView
+                android:id="@+id/tvEpisodeDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="tvEpisodeDescription"
+                android:textAppearance="?android:attr/textAppearanceSmall"/>
+
+        <RatingBar
+                android:id="@+id/rbEpisode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:numStars="5"
+                android:rating="3"
+                android:stepSize=".5"/>
+
+        <Button
+                android:id="@+id/btnRandom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Make me Work!"/>
+    </LinearLayout>
+>>>>>>> 246f2d692bd1f39442f4e9f5626fa79be0b0a55b
 </LinearLayout>

@@ -1,51 +1,48 @@
 package com.example.ingredieat.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 
-import com.example.ingredieat.entity.Item;
+import com.example.ingredieat.base.Category;
+import com.example.ingredieat.base.CategoryItem;
 import com.example.ingredieat.R;
-import com.example.ingredieat.setting.Setting;
 
 import java.util.List;
 
-public class ItemAdapter extends ArrayAdapter<Item> {
+public class CategoryItemAdapter extends ArrayAdapter<CategoryItem> {
     private int layoutId;
-    private List<Item> items;
+    private List<CategoryItem> categoryItems;
 
-    private MyClickListner myClickListner;
+    private MyClickListener myClickListener;
 
-    public interface MyClickListner {
-        public void clickListner(View v, String category);
+    public interface MyClickListener {
+        public void clickListener(View v, Category category);
     }
 
-    public ItemAdapter(Context context, int layoutId, List<Item> list, MyClickListner listner){
-        super(context,layoutId,list);
+    public CategoryItemAdapter(Context context, int layoutId, List<CategoryItem> list, MyClickListener listener) {
+        super(context, layoutId, list);
         this.layoutId = layoutId;
-        this.items = list;
-        this.myClickListner = listner;
+        this.categoryItems = list;
+        this.myClickListener = listener;
     }
 
     @Override
     public int getCount() {
-        return items.size();
+        return categoryItems.size();
     }
 
     @Nullable
     @Override
-    public Item getItem(int position) {
-        return items.get(position);
+    public CategoryItem getItem(int position) {
+        return categoryItems.get(position);
     }
 
 
@@ -54,7 +51,7 @@ public class ItemAdapter extends ArrayAdapter<Item> {
         return position;
     }
 
-//    public void setClickBorder(Item item, View view) {
+//    public void setClickBorder(CategoryItem item, View view) {
 //        final CardView cardView = (CardView)view.findViewById(R.id.card_view);
 //        final LinearLayout linearLayout = (LinearLayout)view.findViewById(R.id.card_linear_layout);
 //
@@ -63,7 +60,7 @@ public class ItemAdapter extends ArrayAdapter<Item> {
 //        linearLayout.setBackgroundColor(Color.WHITE);
 //    }
 //
-//    public void cleanBorder(Item item, View view) {
+//    public void cleanBorder(CategoryItem item, View view) {
 //        final CardView cardView = (CardView)view.findViewById(R.id.card_view);
 //        final LinearLayout linearLayout = (LinearLayout)view.findViewById(R.id.card_linear_layout);
 //        cardView.setBackgroundColor(Color.WHITE);
@@ -77,7 +74,7 @@ public class ItemAdapter extends ArrayAdapter<Item> {
 //        }
 //    }
 //
-//    public void setLongClickColor(Item item, View view) {
+//    public void setLongClickColor(CategoryItem item, View view) {
 //        final CardView cardView = (CardView)view.findViewById(R.id.card_view);
 //        final LinearLayout linearLayout = (LinearLayout)view.findViewById(R.id.card_linear_layout);
 //        cardView.setBackgroundColor(getContext().getResources().getColor(R.color.card_border));
@@ -86,26 +83,25 @@ public class ItemAdapter extends ArrayAdapter<Item> {
 //    }
 
     @Override
-    public View getView(int position, final View convertView, ViewGroup parent){
+    public View getView(int position, final View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        final Item item = getItem(position);
+        final CategoryItem categoryItem = getItem(position);
 
         final View view;
         if (convertView == null) {
             view = inflater.inflate(layoutId, parent, false);
-        }
-        else {
+        } else {
             view = convertView;
         }
-        final CardView cardView = (CardView)view.findViewById(R.id.card_view);
-        final ImageView imageButton = (ImageView)view.findViewById(R.id.imageButton);
-        final TextView nameText = (TextView)view.findViewById(R.id.name_txt);
+        final CardView cardView = (CardView) view.findViewById(R.id.card_view);
+        final ImageView imageButton = (ImageView) view.findViewById(R.id.imageButton);
+        final TextView nameText = (TextView) view.findViewById(R.id.name_txt);
 //
-//        if (Setting.shortClickFlag && item.getSeclected()) {
-//            setClickBorder(item, view);
+//        if (Setting.shortClickFlag && categoryItem.getSeclected()) {
+//            setClickBorder(categoryItem, view);
 //        }
-//        if (Setting.longClickFlag && item.getSeclected()) {
-//            setLongClickColor(item, view);
+//        if (Setting.longClickFlag && categoryItem.getSeclected()) {
+//            setLongClickColor(categoryItem, view);
 //        }
 //        else {
 //            cardView.setBackgroundColor(Color.WHITE);
@@ -113,8 +109,8 @@ public class ItemAdapter extends ArrayAdapter<Item> {
 //            linearLayout.setBackgroundColor(Color.TRANSPARENT);
 //        }
 
-        imageButton.setImageDrawable(item.getPicture());
-        nameText.setText(item.getName());
+        imageButton.setImageDrawable(categoryItem.getPicture());
+        nameText.setText(categoryItem.getCategory().getCategoryValue());
 
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,10 +123,10 @@ public class ItemAdapter extends ArrayAdapter<Item> {
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String categoryName = item.getName();
+                Category category = categoryItem.getCategory();
 //
 //                String[] ingredients = new String[]{"butter", "egg", "milk", "american cheese", "cheddar", "sour cream", "yogurt", "cream cheese"};
-                myClickListner.clickListner(v, categoryName);
+                myClickListener.clickListener(v, category);
 
 
 //                if (!Setting.longClickFlag && Setting.count == 0) {
@@ -140,16 +136,16 @@ public class ItemAdapter extends ArrayAdapter<Item> {
 //                Setting.count++;
 //                // 单击状态
 //                if (Setting.shortClickFlag) {
-//                    if (item.getSeclected()) {
-//                        cleanBorder(item, view);
+//                    if (categoryItem.getSeclected()) {
+//                        cleanBorder(categoryItem, view);
 //                    } else {
-//                        setClickBorder(item, view);
+//                        setClickBorder(categoryItem, view);
 //                    }
 //                } else { //长按状态
-//                    if (item.getSeclected()) {
-//                        cleanBorder(item, view);
+//                    if (categoryItem.getSeclected()) {
+//                        cleanBorder(categoryItem, view);
 //                    } else {
-//                        setLongClickColor(item, view);
+//                        setLongClickColor(categoryItem, view);
 //                        System.out.println("345");
 //                    }
 //                }
@@ -170,10 +166,10 @@ public class ItemAdapter extends ArrayAdapter<Item> {
 //
 //                if (!Setting.shortClickFlag) {
 //                    myLongClickListner.longClickListner(v);
-//                    setLongClickColor(item, view);
+//                    setLongClickColor(categoryItem, view);
 //                    System.out.println("123");
 //                } else {
-//                    setClickBorder(item, view);
+//                    setClickBorder(categoryItem, view);
 //                }
 //                return true;
 //            }

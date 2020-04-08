@@ -1,7 +1,6 @@
 package com.example.ingredieat.fragment;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,22 +12,25 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.example.ingredieat.R;
+import com.example.ingredieat.base.Category;
+import com.example.ingredieat.entity.Ingredient;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipDrawable;
 import com.google.android.material.chip.ChipGroup;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 public class IngredientsFragment extends Fragment {
-    private ArrayList<String> ingredients;
+    private List<Ingredient> ingredients;
     private ChipGroup chipsGroup;
     private HashSet<String> selectedIngredients;
-    private String category;
-    IngredientFragmentListner ingredientFragmentListner;
+    private Category category;
+    private IngredientFragmentListener ingredientFragmentListener;
 
-    public interface IngredientFragmentListner {
-        boolean getSelected(String category, String ingredient);
+    public interface IngredientFragmentListener {
+        boolean getSelected(Category category, String ingredient);
     }
 
     @Override
@@ -48,15 +50,15 @@ public class IngredientsFragment extends Fragment {
 
 
         if (ingredients.size() != 0) {
-            for (String ingredient : ingredients) {
+            for (Ingredient ingredient : ingredients) {
                 final Chip chip = new Chip(getContext());
                 ChipDrawable chipDrawable = ChipDrawable.createFromAttributes(getContext(), null, 0, R.style.Widget_MaterialComponents_Chip_Choice);
                 chip.setChipDrawable(chipDrawable);
                 chip.setLayoutParams((new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)));
-                chip.setText(ingredient);
+                chip.setText(ingredient.getName());
                 chipsGroup.addView(chip);
 
-                if (ingredientFragmentListner.getSelected(category, chip.getText().toString())) {
+                if (ingredientFragmentListener.getSelected(category, chip.getText().toString())) {
                     chip.setChecked(true);
                 }
             }
@@ -64,7 +66,7 @@ public class IngredientsFragment extends Fragment {
         return myView;
     }
 
-    public void setIngredients(ArrayList<String> ingredients) {
+    public void setIngredients(List<Ingredient> ingredients) {
         this.ingredients = ingredients;
     }
 
@@ -89,10 +91,10 @@ public class IngredientsFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        ingredientFragmentListner = (IngredientFragmentListner) context;
+        ingredientFragmentListener = (IngredientFragmentListener) context;
     }
 
-    public void setView(String category) {
+    public void setView(Category category) {
         this.category = category;
     }
 }

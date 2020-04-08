@@ -1,53 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
+                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                   xmlns:tools="http://schemas.android.com/tools"
+                                                   android:layout_width="match_parent"
+                                                   android:layout_height="match_parent"
+                                                   tools:context=".MainActivity">
 
     <LinearLayout
-        android:id="@+id/liner_out"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center">
-    <LinearLayout
-        android:id="@+id/liner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:paddingTop="50dp"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/button1"
-            android:layout_width="wrap_content"
+            android:id="@+id/liner_out"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="first"
-            tools:layout_editor_absoluteX="73dp"
-            tools:layout_editor_absoluteY="120dp" />
+            android:orientation="vertical"
+            android:gravity="center">
+        <LinearLayout
+                android:id="@+id/liner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:paddingTop="50dp"
+                android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="second"
-            tools:layout_editor_absoluteX="236dp"
-            tools:layout_editor_absoluteY="116dp" />
+            <Button
+                    android:id="@+id/button1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="first"
+                    tools:layout_editor_absoluteX="73dp"
+                    tools:layout_editor_absoluteY="120dp"/>
+
+            <Button
+                    android:id="@+id/button2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="second"
+                    tools:layout_editor_absoluteX="236dp"
+                    tools:layout_editor_absoluteY="116dp"/>
 
 
-    </LinearLayout>
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingTop="30dp"
-            android:text="Missing" />
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="30dp"
+                android:text="Missing"/>
     </LinearLayout>
-
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

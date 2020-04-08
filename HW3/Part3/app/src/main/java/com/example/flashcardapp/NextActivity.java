@@ -44,13 +44,13 @@ public class NextActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), "Welcome " + username, Toast.LENGTH_LONG).show();
 
 
-        btnSubmit = (Button)findViewById(R.id.submit_button);
-        btnStart = (Button)findViewById(R.id.start_game_btn);
+        btnSubmit = (Button) findViewById(R.id.submit_button);
+        btnStart = (Button) findViewById(R.id.start_game_btn);
 
-        divisorText = (TextView)findViewById(R.id.divisor_textView);
-        dividendText = (TextView)findViewById(R.id.dividend_textView);
-        answerText = (EditText)findViewById(R.id.answer_edit);
-        messageText = (TextView)findViewById(R.id.messages);
+        divisorText = (TextView) findViewById(R.id.divisor_textView);
+        dividendText = (TextView) findViewById(R.id.dividend_textView);
+        answerText = (EditText) findViewById(R.id.answer_edit);
+        messageText = (TextView) findViewById(R.id.messages);
         problems = new ArrayList<DivisionProblem>(10);
         game = new DivisionGame();
         isPlaying = false;
@@ -65,13 +65,13 @@ public class NextActivity extends AppCompatActivity {
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!isPlaying) {
+                if (!isPlaying) {
                     isPlaying = true;
                     round = 0;
                     problems = game.playGame(10);
                     messageText.setText(String.format(Locale.ENGLISH, message, round + 1, 10, game.getScore()));
                     play(problems.get(round));
-                }else{
+                } else {
                     AlertDialog alertDialog = new AlertDialog.Builder(NextActivity.this)
                             .setTitle("Warning")
                             .setMessage("Game in progress, you cannot click this button now.")
@@ -85,7 +85,7 @@ public class NextActivity extends AppCompatActivity {
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(isPlaying) {
+                if (isPlaying) {
                     String inputString = answerText.getText().toString();
                     try {
                         int input = Integer.valueOf(inputString);
@@ -112,7 +112,7 @@ public class NextActivity extends AppCompatActivity {
                                 .create();
                         alertDialog.show();
                     }
-                }else {
+                } else {
                     AlertDialog alertDialog = new AlertDialog.Builder(NextActivity.this)
                             .setTitle("Warning")
                             .setMessage("Please click the top button to generate 10 random problems!")

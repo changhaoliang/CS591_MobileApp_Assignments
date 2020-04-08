@@ -1,0 +1,13 @@
+package com.example.ingredieat;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+class IngredieatApplicationTests {
+
+    @Test
+    void contextLoads() {
+    }
+
+}

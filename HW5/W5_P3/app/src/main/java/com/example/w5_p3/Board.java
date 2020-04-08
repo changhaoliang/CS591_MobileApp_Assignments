@@ -22,7 +22,7 @@ public class Board extends Activity {
     private InputStream input;
 
     private Set<Character> vowels = new HashSet<Character>(Arrays.asList('a', 'e', 'i', 'o', 'u'));
-    private Set<Character> consonants = new HashSet<Character>(Arrays.asList('b','c','d','f','g','h','j','k','l','m','n','p','q','r','s','t','v','w','x','y','z'));
+    private Set<Character> consonants = new HashSet<Character>(Arrays.asList('b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'p', 'q', 'r', 's', 't', 'v', 'w', 'x', 'y', 'z'));
     private Set<Character> doubledConsonants = new HashSet<Character>(Arrays.asList('s', 'z', 'y', 'p', 'x', 'q'));
     private Set<String> usedWords;
 
@@ -30,12 +30,14 @@ public class Board extends Activity {
         this.board = new char[4][4];
         this.usedWords = new HashSet<String>();
     }
+
     public Board(char[][] board, int row_num, int col_num) {
         this.board = board;
         this.row_num = row_num;
         this.col_num = col_num;
         this.usedWords = new HashSet<String>();
     }
+
     public boolean checkLength(String word) {
         return word.length() >= 4;
     }
@@ -44,7 +46,7 @@ public class Board extends Activity {
         int vowelNum = 0;
         for (int i = 0; i < word.length(); i++) {
             if (vowels.contains(word.charAt(i))) {
-                vowelNum ++;
+                vowelNum++;
             }
         }
         return vowelNum >= 2;
@@ -90,35 +92,34 @@ public class Board extends Activity {
                     return true;
                 }
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return false;
     }
 
-    public char[][] shuffle(){
-        char[] vowel= new char[] {'a','a','a','e','e','e','i','i','o','o','u'};
-        char[] consonant = new char[] {'b','c','d','f','g','h','j','k','l','m','n','p','p','q','r','s','s','s','t','t','v','w','x','y','z'};
+    public char[][] shuffle() {
+        char[] vowel = new char[]{'a', 'a', 'a', 'e', 'e', 'e', 'i', 'i', 'o', 'o', 'u'};
+        char[] consonant = new char[]{'b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'p', 'p', 'q', 'r', 's', 's', 's', 't', 't', 'v', 'w', 'x', 'y', 'z'};
 
         int num_row = 4;
         int num_col = 4;
         int vowel_num = vowel.length;
         int consonant_num = consonant.length;
-        char[][] suffle_letters= new char[num_row][num_col];
+        char[][] suffle_letters = new char[num_row][num_col];
         //-1- generate vowel char index
         int num_vowel = 4;
         HashSet<Integer> vowel_index_set = new HashSet<>();
         Random random = new Random();
 
-        while(vowel_index_set.size() < num_vowel) {
+        while (vowel_index_set.size() < num_vowel) {
             vowel_index_set.add(random.nextInt(16));
         }
 
-        for(int i = 0; i < num_row; i++) {
-            for(int j = 0; j < num_col; j++) {
+        for (int i = 0; i < num_row; i++) {
+            for (int j = 0; j < num_col; j++) {
                 int temp_index;
-                if(vowel_index_set.contains(i*4+j)) {
+                if (vowel_index_set.contains(i * 4 + j)) {
                     temp_index = random.nextInt(vowel_num);
                     suffle_letters[i][j] = vowel[temp_index];
                 } else {

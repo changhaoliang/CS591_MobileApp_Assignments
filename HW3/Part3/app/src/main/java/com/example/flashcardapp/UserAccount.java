@@ -8,6 +8,7 @@ public class UserAccount {
         username = s1;
         password = s2;
     }
+
     public boolean checkValidAccount(String usernameInput, String passwordInput) {
 
         return username.equals(usernameInput) && password.equals(passwordInput);

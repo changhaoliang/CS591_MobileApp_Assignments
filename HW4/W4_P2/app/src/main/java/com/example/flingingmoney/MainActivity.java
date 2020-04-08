@@ -25,21 +25,21 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
         gestureDetector = new GestureDetector(this, this);
     }
 
-    private void buildGui(){
-        Euro = (TextView)findViewById(R.id.editEuro);
-        Dollar = (TextView)findViewById(R.id.editDollar);
-        Yen = (TextView)findViewById(R.id.editYen);
-        Yuan = (TextView)findViewById(R.id.editYuan);
-        Pound = (TextView)findViewById(R.id.editPound);
+    private void buildGui() {
+        Euro = (TextView) findViewById(R.id.editEuro);
+        Dollar = (TextView) findViewById(R.id.editDollar);
+        Yen = (TextView) findViewById(R.id.editYen);
+        Yuan = (TextView) findViewById(R.id.editYuan);
+        Pound = (TextView) findViewById(R.id.editPound);
         Dollar.setFocusable(false); //set uneditable
         Yen.setFocusable(false);
         Yuan.setFocusable(false);
         Pound.setFocusable(false);
 
-        Euro.addTextChangedListener(new TextWatcher(){  //update currencies while input
+        Euro.addTextChangedListener(new TextWatcher() {  //update currencies while input
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (Euro.getText().length()>0) {
+                if (Euro.getText().length() > 0) {
                     converter.setCurrency(Double.valueOf(Euro.getText().toString()));
                     updateCurrencies();
                 }
@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (Euro.getText().length()>0) {
+                if (Euro.getText().length() > 0) {
                     converter.setCurrency(Double.valueOf(Euro.getText().toString()));
                     updateCurrencies();
                 } else if (Euro.getText().length() == 0) {
@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
         });
     }
 
-    private void updateCurrencies(){
+    private void updateCurrencies() {
         Dollar.setText(converter.getDollar());
         Yen.setText(converter.getYen());
         Yuan.setText(converter.getYuan());
@@ -93,13 +93,12 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
 
     @Override
     public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-        if (Euro.getText().length()==0) return true;
-        if (distanceY > minDistance){   //upwards
+        if (Euro.getText().length() == 0) return true;
+        if (distanceY > minDistance) {   //upwards
             converter.addCent();
             Euro.setText(converter.getEuro());
             updateCurrencies();
-        }
-        else if (distanceY < -minDistance){ //downwards
+        } else if (distanceY < -minDistance) { //downwards
             converter.minCent();
             Euro.setText(converter.getEuro());
             updateCurrencies();
@@ -108,18 +107,17 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
     }
 
     @Override
-    public void onLongPress(MotionEvent e){
+    public void onLongPress(MotionEvent e) {
     }
 
     @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-        if (Euro.getText().length()==0) return true;
-        if (velocityY < -minVelocity){  //upwards
+        if (Euro.getText().length() == 0) return true;
+        if (velocityY < -minVelocity) {  //upwards
             converter.addDollar();
             Euro.setText(converter.getEuro());
             updateCurrencies();
-        }
-        else if (velocityY > minVelocity){     //downwards
+        } else if (velocityY > minVelocity) {     //downwards
             converter.minDollar();
             Euro.setText(converter.getEuro());
             updateCurrencies();

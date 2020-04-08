@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.SEND_SMS} , 1);
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SEND_SMS}, 1);
 
         phoneBtn = (ImageButton) findViewById(R.id.phone_imgbtn);
         textBtn = (ImageButton) findViewById(R.id.text_imgbtn);
@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        mShakeUtils = new ShakeUtils( this );
+        mShakeUtils = new ShakeUtils(this);
         mShakeUtils.setOnShakeListener(new ShakeUtils.OnShakeListener() {
             @Override
             public void onShake() {
@@ -81,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
         phoneNumber = info.getString("phone", "");
         textNumber = info.getString("text", "");
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.preference_menu, menu);
@@ -108,6 +109,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        mShakeUtils.onPause( );
+        mShakeUtils.onPause();
     }
 }

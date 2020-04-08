@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity {
 
     TempConverter tempConverter;
     TextView textC, textF, valueC, valueF, message;
@@ -21,13 +21,13 @@ public class MainActivity extends AppCompatActivity{
         setContentView(R.layout.activity_main);
         tempConverter = new TempConverter();
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        textC = (TextView)findViewById(R.id.TextC);
-        textF = (TextView)findViewById(R.id.TextF);
-        valueC = (TextView)findViewById(R.id.ValueC);
-        valueF = (TextView)findViewById(R.id.ValueF);
-        message = (TextView)findViewById(R.id.Message);
-        seekBarC = (SeekBar)findViewById(R.id.SeekBarC);
-        seekBarF = (SeekBar)findViewById(R.id.SeekBarF);
+        textC = (TextView) findViewById(R.id.TextC);
+        textF = (TextView) findViewById(R.id.TextF);
+        valueC = (TextView) findViewById(R.id.ValueC);
+        valueF = (TextView) findViewById(R.id.ValueF);
+        message = (TextView) findViewById(R.id.Message);
+        seekBarC = (SeekBar) findViewById(R.id.SeekBarC);
+        seekBarF = (SeekBar) findViewById(R.id.SeekBarF);
         seekBarC.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {

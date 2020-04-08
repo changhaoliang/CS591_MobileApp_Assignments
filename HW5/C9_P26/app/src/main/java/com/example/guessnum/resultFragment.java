@@ -14,7 +14,6 @@ import android.widget.TextView;
 import java.util.Random;
 
 
-
 public class resultFragment extends Fragment {
 
     private TextView txtResult;
@@ -23,7 +22,6 @@ public class resultFragment extends Fragment {
     public resultFragment() {
         // Required empty public constructor
     }
-
 
 
     @Override
@@ -41,11 +39,11 @@ public class resultFragment extends Fragment {
     }
 
 
-    public void checkGuessNum(int guessNum){
+    public void checkGuessNum(int guessNum) {
         Random random = new Random();
-        if(random.nextInt(5)+1 == guessNum){
+        if (random.nextInt(5) + 1 == guessNum) {
             txtResult.setText("You Win!");
-        }else{
+        } else {
             txtResult.setText("You lost!");
         }
 

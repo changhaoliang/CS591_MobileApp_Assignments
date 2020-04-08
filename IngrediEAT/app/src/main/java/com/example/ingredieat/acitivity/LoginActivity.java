@@ -18,7 +18,7 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends BaseActivity {
     private static final int RC_SIGN_IN = 0;
     private GoogleSignInOptions gso;
     private GoogleSignInClient mGoogleSignInClient;

@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         spinner = (Spinner) findViewById(R.id.spinner);
-       //textView = (TextView) findViewById(R.id.tv);
+        //textView = (TextView) findViewById(R.id.tv);
         btnTrans = (Button) findViewById(R.id.btnTrans);
 
         dataList = new ArrayList<String>();
@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-               // textView.setText(adapter.getItem(position));
+                // textView.setText(adapter.getItem(position));
                 language = adapter.getItem(position);
             }
 
@@ -64,12 +64,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btnTrans.setOnClickListener(new View.OnClickListener(){
+        btnTrans.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view){
+            public void onClick(View view) {
 
                 Intent intent = new Intent(MainActivity.this, Main2Activity.class);
-                intent.putExtra("language",language );
+                intent.putExtra("language", language);
                 startActivity(intent);
 
 

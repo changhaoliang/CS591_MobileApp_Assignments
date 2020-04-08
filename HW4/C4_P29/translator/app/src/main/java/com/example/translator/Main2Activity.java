@@ -23,7 +23,7 @@ public class Main2Activity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         String language = bundle.getString("language");
 
-        switch(language){
+        switch (language) {
             case "Chinese":
                 txtTrans.setText("你好世界");
                 break;
@@ -44,9 +44,9 @@ public class Main2Activity extends AppCompatActivity {
         }
 
 
-        btnBack.setOnClickListener(new View.OnClickListener(){
+        btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view){
+            public void onClick(View view) {
                 finish();
             }
 

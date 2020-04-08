@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
     public void saveSharedPreferenceInfo() {
         SharedPreferences info = getSharedPreferences("ActivityInfo", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = info.edit();

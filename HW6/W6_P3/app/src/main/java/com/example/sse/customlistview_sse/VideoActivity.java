@@ -24,11 +24,11 @@ public class VideoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_video);
         surfaceView = (SurfaceView) findViewById(R.id.surfaceView);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        String uriPath = "android.resource://"+getPackageName()+"/raw/spocksbrain";
-        player=new MediaPlayer();
+        String uriPath = "android.resource://" + getPackageName() + "/raw/spocksbrain";
+        player = new MediaPlayer();
         try {
             player.setDataSource(this, Uri.parse(uriPath));
-            holder=surfaceView.getHolder();
+            holder = surfaceView.getHolder();
             holder.addCallback(new SurfaceHolder.Callback() {
                 @Override
                 public void surfaceCreated(SurfaceHolder surfaceHolder) {
