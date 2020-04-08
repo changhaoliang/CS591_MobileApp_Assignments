@@ -86,18 +86,6 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
                         fragmentTransaction.addToBackStack(null);
                         setTitle("My Ingredients");
                         break;
-//                    case R.string.cancel:
-//                        System.out.println(menuView.getChildCount());
-//                        recoverMenu();
-//                        fragmentTransaction.show(categoryItemFragment);
-//                        break;
-//                    case R.string.add:
-//                        recoverMenu();
-//                        fragmentTransaction.show(categoryItemFragment);
-//                        menuView.getMenu().getItem(0).setChecked(true);
-//                        HashSet<String> newIngredients = ingredientsFragment.getSelectedIngredients();
-//                        categoryItemFragment.updateTotalIngredients(category, newIngredients);
-//                        break;
                 }
                 fragmentTransaction.commit();
 
@@ -146,19 +134,9 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
             fragmentTransaction.replace(R.id.fragment_container, ingredientsFragment);
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
+            setTitle(category.getCategoryValue());
 
-//<<<<<<< HEAD
-//            ArrayList<Ingredient> ingredients = new ArrayList<>();
-//            if (category.equals(Category.MILK_EGGS_OTHER_DAIRY)) {
-//                ingredients.add(new Ingredient(123, "milk", Category.MILK_EGGS_OTHER_DAIRY.getCategoryValue()));
-//                ingredients.add(new Ingredient(12343214, "butter", Category.MILK_EGGS_OTHER_DAIRY.getCategoryValue()));
-//                ingredients.add(new Ingredient(343, "egg", Category.MILK_EGGS_OTHER_DAIRY.getCategoryValue()));
-//            }
-//            ingredientsFragment.setIngredients(ingredients);
-//
-//=======
 
-            // 此处替换成从后端存好的数据根据类别获取对应的ingredients
             List<Ingredient> categoryIngredients = new ArrayList<>();
             for(Ingredient ingredient: allIngredients) {
                 if(ingredient.getCategory().equals(category.getCategoryValue())) {
@@ -167,28 +145,8 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
             }
 
             ingredientsFragment.setIngredients(categoryIngredients);
-//>>>>>>> 246f2d692bd1f39442f4e9f5626fa79be0b0a55b
+
             ingredientsFragment.setView(category);
-
-
-            // 此处替换成从后端存好的数据根据类别获取对应的ingredients
-//            ArrayList<Ingredient> ingredients = new ArrayList<>();
-
-//            ingredientsFragment.setIngredients(ingredients);
-//            ingredientsFragment.setView(category);
-
-//            menuView.getMenu().removeItem(R.id.user);
-//            menuView.getMenu().removeItem(R.id.cook);
-//            menuView.getMenu().removeItem(R.id.favourite);
-//            menuView.getMenu().removeItem(R.id.cart);
-//            menuView.getMenu().removeItem(R.id.fridge);
-//
-//            menuView.getMenu().add(1, R.string.add, 1, R.string.add);
-//            menuView.getMenu().add(1, R.string.cancel, 1, R.string.cancel);
-//
-//            menuView.getMenu().getItem(0).setIcon(R.drawable.ok);
-//            menuView.getMenu().getItem(1).setIcon(R.drawable.cancel);
-
 
         }
     }
@@ -213,7 +171,6 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
         menuView.getMenu().getItem(4).setIcon(R.drawable.user);
 
         menuView.getMenu().getItem(0).setChecked(true);
-
     }
 
     @Override
