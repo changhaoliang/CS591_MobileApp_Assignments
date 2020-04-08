@@ -121,6 +121,7 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
                     ResponseBody body = response.body();
                     if(body != null) {
                         String data = body.string();
+                        // Log.d(TAG, data);
                         // Here we use Fastjson to parse json string
                         allIngredients = JSON.parseArray(data, Ingredient.class);
                     }
@@ -142,7 +143,7 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
             fragmentTransaction.commit();
 
 
-            // 此处替换成从后端存好的数据根据类别获取对应的ingredients
+            // 此处替换成从后端存好的数据根据类别获取对应的inngredients
             List<Ingredient> categoryIngredients = new ArrayList<>();
             for(Ingredient ingredient: allIngredients) {
                 if(ingredient.getCategory().equals(category.getCategoryValue())) {
