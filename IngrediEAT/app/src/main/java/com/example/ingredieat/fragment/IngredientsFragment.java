@@ -9,11 +9,13 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.example.ingredieat.R;
 import com.example.ingredieat.base.Category;
 import com.example.ingredieat.entity.Ingredient;
+import com.gc.materialdesign.views.ButtonFloat;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipDrawable;
 import com.google.android.material.chip.ChipGroup;
@@ -26,10 +28,13 @@ public class IngredientsFragment extends Fragment {
     private ChipGroup chipsGroup;
     private HashSet<String> selectedIngredients;
     private Category category;
+    private Button add_btn;
+
     private IngredientFragmentListener ingredientFragmentListener;
 
     public interface IngredientFragmentListener {
         boolean getSelected(Category category, String ingredient);
+        void updateTotalSelected();
     }
 
     @Override
@@ -46,10 +51,11 @@ public class IngredientsFragment extends Fragment {
         }
         selectedIngredients = new HashSet<>();
         chipsGroup = (ChipGroup) myView.findViewById(R.id.chip_group);
-
+        add_btn = (Button) myView.findViewById(R.id.button_ok);
 
         if (ingredients.size() != 0) {
             for (Ingredient ingredient : ingredients) {
+                System.out.println(ingredient.getName());
                 final Chip chip = new Chip(getContext());
                 ChipDrawable chipDrawable = ChipDrawable.createFromAttributes(getContext(), null, 0, R.style.Widget_MaterialComponents_Chip_Choice);
                 chip.setChipDrawable(chipDrawable);
@@ -62,6 +68,13 @@ public class IngredientsFragment extends Fragment {
                 }
             }
         }
+
+        add_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ingredientFragmentListener.updateTotalSelected();
+            }
+        });
         return myView;
     }
 
@@ -83,7 +96,6 @@ public class IngredientsFragment extends Fragment {
                 selectedIngredients.add(s);
             }
         }
-
         return selectedIngredients;
     }
 
@@ -96,4 +108,5 @@ public class IngredientsFragment extends Fragment {
     public void setView(Category category) {
         this.category = category;
     }
+
 }
