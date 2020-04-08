@@ -86,7 +86,6 @@ public class IngredientsFragment extends Fragment {
             }
         });
 
-
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
