@@ -126,4 +126,8 @@ public class CategoryItemFragment extends Fragment implements CategoryItemAdapte
     public HashMap<String, HashSet<String>> getTotalIngredients() {
         return totalIngredients;
     }
+
+    public void setTotalIngredients(HashMap<String, HashSet<String>> totalIngredients) {
+        this.totalIngredients = totalIngredients;
+    }
 }

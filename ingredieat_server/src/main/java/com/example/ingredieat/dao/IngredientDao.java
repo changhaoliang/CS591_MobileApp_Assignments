@@ -9,6 +9,6 @@ import java.util.List;
 @Mapper
 public interface IngredientDao {
 
-    @Select("SELECT * FROM ingredient")
+    @Select("SELECT * FROM `ingredient` ORDER BY `name`")
     List<Ingredient> listAllIngredients();
 }

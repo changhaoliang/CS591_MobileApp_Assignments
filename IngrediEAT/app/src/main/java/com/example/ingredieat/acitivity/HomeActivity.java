@@ -13,7 +13,6 @@ import android.util.Log;
 import android.view.MenuItem;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.example.ingredieat.base.Category;
 import com.example.ingredieat.entity.Ingredient;
 import com.example.ingredieat.fragment.CartFragment;
@@ -30,6 +29,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 
 public class HomeActivity extends BaseActivity implements CategoryItemFragment.itemFragmentListener, IngredientsFragment.IngredientFragmentListener, CartFragment.CartFragmentListner {
     private BottomNavigationView menuView;
@@ -37,7 +37,7 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
     private static final long mBackPressThreshold = 3500;
     private FragmentManager fragmentManager;
 
-    private List<Ingredient> allIngredients;
+    private Map<String, List<Ingredient>> allIngredients;
     private Category category;
     private long mLastBackPress;
 
@@ -59,13 +59,9 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
         cartFragment = new CartFragment();
 
         fragmentManager = getSupportFragmentManager();
+        allIngredients = new HashMap<>();
         // Get the data of all ingredients from the server side by sending a GET request.
         getAllIngredients();
-
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.fragment_container, categoryItemFragment, "item fragment");
-        fragmentTransaction.addToBackStack(null);
-        fragmentTransaction.commit();
 
         menuView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -119,13 +115,28 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
                     ResponseBody body = response.body();
                     if(body != null) {
                         String data = body.string();
+                        // Log.d(TAG, data);
                         // Here we use Fastjson to parse json string
-                        allIngredients = JSON.parseArray(data, Ingredient.class);
+                        List<Ingredient> ingredients = JSON.parseArray(data, Ingredient.class);
+                        for(Ingredient ingredient: ingredients) {
+                            String category = ingredient.getCategory();
+                            if(allIngredients.containsKey(category)) {
+                                allIngredients.get(category).add(ingredient);
+                            }else{
+                                List<Ingredient> categoryIngredients = new ArrayList<>();
+                                categoryIngredients.add(ingredient);
+                                allIngredients.put(category, categoryIngredients);
+                            }
+                        }
+
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        fragmentTransaction.add(R.id.fragment_container, categoryItemFragment, "item fragment");
+                        fragmentTransaction.addToBackStack(null);
+                        fragmentTransaction.commit();
                     }
                 }
             }
         });
-
     }
 
     @Override
@@ -135,46 +146,18 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
             if (fragmentManager.getBackStackEntryCount() > 1) {
                 getSupportFragmentManager().popBackStack();
             }
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             this.ingredientsFragment = new IngredientsFragment();
             fragmentTransaction.replace(R.id.fragment_container, ingredientsFragment);
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
 
-            List<Ingredient> categoryIngredients = new ArrayList<>();
-            for(Ingredient ingredient: allIngredients) {
-                if(ingredient.getCategory().equals(category.getCategoryValue())) {
-                    categoryIngredients.add(ingredient);
-                }
-            }
-
+            // 此处替换成从后端存好的数据根据类别获取对应的ingredients
+            List<Ingredient> categoryIngredients = allIngredients.get(category.getCategoryValue());
             ingredientsFragment.setIngredients(categoryIngredients);
             ingredientsFragment.setCategory(category);
-            ingredientsFragment.setView(category);
-
         }
-    }
-
-    public void recoverMenu() {
-        menuView.getMenu().removeItem(R.string.cancel);
-        menuView.getMenu().removeItem(R.string.add);
-        System.out.println("recover");
-        System.out.println(menuView.getMenu().size());
-        System.out.println("i4147");
-
-        menuView.getMenu().add(1, R.id.fridge, 1, R.string.fridge);
-        menuView.getMenu().add(1, R.id.cart, 1, R.string.cart);
-        menuView.getMenu().add(1, R.id.cook, 1, R.string.cook);
-        menuView.getMenu().add(1, R.id.favourite, 1, R.string.favourite);
-        menuView.getMenu().add(1, R.id.user, 1, R.string.user);
-
-        menuView.getMenu().getItem(0).setIcon(R.drawable.fridge);
-        menuView.getMenu().getItem(1).setIcon(R.drawable.cart);
-        menuView.getMenu().getItem(2).setIcon(R.drawable.cooker);
-        menuView.getMenu().getItem(3).setIcon(R.drawable.heart);
-        menuView.getMenu().getItem(4).setIcon(R.drawable.user);
-
-        menuView.getMenu().getItem(0).setChecked(true);
     }
 
     @Override
@@ -211,7 +194,7 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
     }
 
     @Override
-    public void updateSelected() {
-
+    public void updateSelected(HashMap<String, HashSet<String>> totalIngredients) {
+        categoryItemFragment.setTotalIngredients(totalIngredients);
     }
 }

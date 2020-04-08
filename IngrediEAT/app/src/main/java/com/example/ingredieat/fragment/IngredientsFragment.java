@@ -63,6 +63,19 @@ public class IngredientsFragment extends Fragment {
         title = (TextView) myView.findViewById(R.id.title_txt);
         title.setText(category.getCategoryValue());
         if (ingredients.size() != 0) {
+            for (Ingredient ingredient : ingredients) {
+                //System.out.println(ingredient.getName());
+                final Chip chip = new Chip(getContext());
+                ChipDrawable chipDrawable = ChipDrawable.createFromAttributes(getContext(), null, 0, R.style.Widget_MaterialComponents_Chip_Choice);
+                chip.setChipDrawable(chipDrawable);
+                chip.setLayoutParams((new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)));
+                chip.setText(ingredient.getName());
+                chipsGroup.addView(chip);
+
+                if (ingredientFragmentListener.getSelected(category, chip.getText().toString())) {
+                    chip.setChecked(true);
+                }
+            }
             setChips(ingredients);
         }
 
@@ -72,7 +85,6 @@ public class IngredientsFragment extends Fragment {
                 ingredientFragmentListener.updateTotalSelected();
             }
         });
-
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -128,9 +140,9 @@ public class IngredientsFragment extends Fragment {
         ingredientFragmentListener = (IngredientFragmentListener) context;
     }
 
-    public void setView(Category category) {
-        this.category = category;
-    }
+//    public void setView(Category category) {
+//        this.category = category;
+//    }
 
     private void setChips(List<Ingredient> ingredients) {
         if (chipsGroup.getChildCount() > 0) {
