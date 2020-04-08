@@ -1,8 +1,6 @@
 package com.example.ingredieat.acitivity;
 
 import androidx.annotation.NonNull;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import okhttp3.Call;
@@ -28,20 +26,29 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 
-public class HomeActivity extends BaseActivity implements CategoryItemFragment.itemFragmentListener, IngredientsFragment.IngredientFragmentListener {
+public class HomeActivity extends BaseActivity implements CategoryItemFragment.itemFragmentListener, IngredientsFragment.IngredientFragmentListener, CartFragment.CartFragmentListner {
     private BottomNavigationView menuView;
-    private CategoryItemFragment categoryItemFragment;
+
     private static final long mBackPressThreshold = 3500;
     private FragmentManager fragmentManager;
-    private IngredientsFragment ingredientsFragment;
-    private List<Ingredient> allIngredients;
+
+    private Map<String, List<Ingredient>> allIngredients;
     private Category category;
     private long mLastBackPress;
-    private FragmentTransaction fragmentTransaction;
+
+    private CategoryItemFragment categoryItemFragment;
+    private IngredientsFragment ingredientsFragment;
+    private UserFragment userFragment;
+    private CartFragment cartFragment;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,17 +58,15 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
         menuView = findViewById(R.id.bottom_menu);
 
         categoryItemFragment = new CategoryItemFragment();
+        userFragment = new UserFragment();
+        cartFragment = new CartFragment();
 
         fragmentManager = getSupportFragmentManager();
-
+        allIngredients = new HashMap<>();
         // Get the data of all ingredients from the server side by sending a GET request.
         getAllIngredients();
 
 
-//        fragmentTransaction.add(R.id.fragment_container, categoryItemFragment, "item fragment");
-//        fragmentTransaction.addToBackStack(null);
-//        fragmentTransaction.commit();
-        setTitle("Pantry");
         menuView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -74,30 +79,19 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
                 switch (item.getItemId()) {
                     case R.id.fridge:
                         fragmentTransaction.show(categoryItemFragment);
-                        setTitle("Pantry");
                         break;
                     case R.id.user:
-                        fragmentTransaction.replace(R.id.fragment_container, new UserFragment());
+                        fragmentTransaction.replace(R.id.fragment_container, userFragment);
                         fragmentTransaction.addToBackStack(null);
-                        setTitle("User Account");
                         break;
                     case R.id.cart:
-                        fragmentTransaction.replace(R.id.fragment_container, new CartFragment());
+                        fragmentTransaction.replace(R.id.fragment_container, cartFragment);
                         fragmentTransaction.addToBackStack(null);
-                        setTitle("My Ingredients");
+                        HashMap<String, HashSet<String>> ingredients = categoryItemFragment.getTotalIngredients();
+                        System.out.println(ingredients.size());
+                        System.out.println("=================");
+                        cartFragment.setTotalIngredients(ingredients);
                         break;
-//                    case R.string.cancel:
-//                        System.out.println(menuView.getChildCount());
-//                        recoverMenu();
-//                        fragmentTransaction.show(categoryItemFragment);
-//                        break;
-//                    case R.string.add:
-//                        recoverMenu();
-//                        fragmentTransaction.show(categoryItemFragment);
-//                        menuView.getMenu().getItem(0).setChecked(true);
-//                        HashSet<String> newIngredients = ingredientsFragment.getSelectedIngredients();
-//                        categoryItemFragment.updateTotalIngredients(category, newIngredients);
-//                        break;
                 }
                 fragmentTransaction.commit();
 
@@ -127,8 +121,19 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
                         String data = body.string();
                         // Log.d(TAG, data);
                         // Here we use Fastjson to parse json string
-                        allIngredients = JSON.parseArray(data, Ingredient.class);
-                        fragmentTransaction = fragmentManager.beginTransaction();
+                        List<Ingredient> ingredients = JSON.parseArray(data, Ingredient.class);
+                        for(Ingredient ingredient: ingredients) {
+                            String category = ingredient.getCategory();
+                            if(allIngredients.containsKey(category)) {
+                                allIngredients.get(category).add(ingredient);
+                            }else{
+                                List<Ingredient> ingredients1 = new ArrayList<>();
+                                ingredients1.add(ingredient);
+                                allIngredients.put(category, ingredients1);
+                            }
+                        }
+
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                         fragmentTransaction.add(R.id.fragment_container, categoryItemFragment, "item fragment");
                         fragmentTransaction.addToBackStack(null);
                         fragmentTransaction.commit();
@@ -146,7 +151,8 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
             if (fragmentManager.getBackStackEntryCount() > 1) {
                 getSupportFragmentManager().popBackStack();
             }
-            fragmentTransaction = fragmentManager.beginTransaction();
+
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             this.ingredientsFragment = new IngredientsFragment();
             fragmentTransaction.replace(R.id.fragment_container, ingredientsFragment);
             fragmentTransaction.addToBackStack(null);
@@ -154,32 +160,9 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
 
 
             // 此处替换成从后端存好的数据根据类别获取对应的ingredients
-            List<Ingredient> categoryIngredients = new ArrayList<>();
-            for(Ingredient ingredient: allIngredients) {
-                if(ingredient.getCategory().equals(category.getCategoryValue())) {
-                    categoryIngredients.add(ingredient);
-                }
-            }
-
+            List<Ingredient> categoryIngredients = allIngredients.get(category.getCategoryValue());
             ingredientsFragment.setIngredients(categoryIngredients);
-            ingredientsFragment.setView(category);
-
-//            ingredientsFragment.setIngredients(ingredients);
-//            ingredientsFragment.setView(category);
-
-//            menuView.getMenu().removeItem(R.id.user);
-//            menuView.getMenu().removeItem(R.id.cook);
-//            menuView.getMenu().removeItem(R.id.favourite);
-//            menuView.getMenu().removeItem(R.id.cart);
-//            menuView.getMenu().removeItem(R.id.fridge);
-//
-//            menuView.getMenu().add(1, R.string.add, 1, R.string.add);
-//            menuView.getMenu().add(1, R.string.cancel, 1, R.string.cancel);
-//
-//            menuView.getMenu().getItem(0).setIcon(R.drawable.ok);
-//            menuView.getMenu().getItem(1).setIcon(R.drawable.cancel);
-
-
+            ingredientsFragment.setCategory(category);
         }
     }
 
@@ -203,7 +186,6 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
         menuView.getMenu().getItem(4).setIcon(R.drawable.user);
 
         menuView.getMenu().getItem(0).setChecked(true);
-
     }
 
     @Override
@@ -228,7 +210,7 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
 
     @Override
     public void updateTotalSelected() {
-        fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         if (fragmentManager.getBackStackEntryCount() > 1) {
             getSupportFragmentManager().popBackStack();
         }
@@ -237,5 +219,10 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
 
         HashSet<String> newIngredients = ingredientsFragment.getSelectedIngredients();
         categoryItemFragment.updateTotalIngredients(category, newIngredients);
+    }
+
+    @Override
+    public void updateSelected() {
+
     }
 }
