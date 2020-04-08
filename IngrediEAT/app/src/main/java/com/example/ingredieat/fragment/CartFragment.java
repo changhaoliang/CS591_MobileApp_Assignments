@@ -3,12 +3,15 @@ package com.example.ingredieat.fragment;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
@@ -34,10 +37,17 @@ public class CartFragment extends Fragment {
     private ListAdapter listAdapter;
     private HashMap<String, HashSet<String>> totalIngredients;
     private ArrayList<String> names;
+    private Button editButton;
+    private LinearLayout bottomLayout;
+    private CartFragmentListner cartFragmentListner;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    public interface CartFragmentListner {
+        void updateSelected();
     }
 
     public void setTotalIngredients(HashMap<String, HashSet<String>> ingredients) {
@@ -54,6 +64,22 @@ public class CartFragment extends Fragment {
         }
         listView = (ListView) myView.findViewById(R.id.item_ls);
         listView.setAdapter(new MyAdapter(getContext()));
+
+        editButton = (Button)myView.findViewById(R.id.edit_btn);
+        bottomLayout = (LinearLayout) myView.findViewById(R.id.bottom);
+        bottomLayout.setVisibility(View.INVISIBLE);
+
+
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for (String key : totalIngredients.keySet()) {
+                    for (String item : totalIngredients.get(key)) {
+
+                    }
+                }
+            }
+        });
         return myView;
     }
 
@@ -97,12 +123,21 @@ public class CartFragment extends Fragment {
             holder.title.setText(names.get(position));
             if (totalIngredients.get(names.get(position)) != null && totalIngredients.get(names.get(position)).size() > 0) {
                 for (String i : totalIngredients.get(names.get(position))) {
-                    Chip chip = new Chip(getContext());
+                    final Chip chip = new Chip(getContext());
                     ChipDrawable chipDrawable = ChipDrawable.createFromAttributes(getContext(), null, 0, R.style.Widget_MaterialComponents_Chip_Choice);
                     chip.setChipDrawable(chipDrawable);
                     chip.setLayoutParams((new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)));
                     chip.setText(i);
+                    chip.setChecked(true);
                     holder.chipGroup.addView(chip);
+
+                    chip.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                        @Override
+                        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                            bottomLayout.setVisibility(View.VISIBLE);
+                        }
+                    });
+
                 }
             }
             setIcon(names.get(position), holder.icon);
@@ -146,4 +181,9 @@ public class CartFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        cartFragmentListner = (CartFragmentListner) context;
+    }
 }

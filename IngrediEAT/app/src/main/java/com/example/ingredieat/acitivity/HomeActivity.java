@@ -30,9 +30,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Stack;
 
-public class HomeActivity extends BaseActivity implements CategoryItemFragment.itemFragmentListener, IngredientsFragment.IngredientFragmentListener {
+public class HomeActivity extends BaseActivity implements CategoryItemFragment.itemFragmentListener, IngredientsFragment.IngredientFragmentListener, CartFragment.CartFragmentListner {
     private BottomNavigationView menuView;
 
     private static final long mBackPressThreshold = 3500;
@@ -211,4 +210,8 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
         categoryItemFragment.updateTotalIngredients(category, newIngredients);
     }
 
+    @Override
+    public void updateSelected() {
+
+    }
 }
