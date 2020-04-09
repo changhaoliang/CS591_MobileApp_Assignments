@@ -89,19 +89,27 @@ public class CartFragment extends Fragment {
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                for (String i : totalChips.keySet()) {
-                    Iterator<Chip> iter = totalChips.get(i).iterator();
-                    while(iter.hasNext()){
-                        Chip c = iter.next();
+                Iterator<HashMap.Entry<String, HashSet<Chip>>> iterator = totalChips.entrySet().iterator();
+                while (iterator.hasNext()){
+                    String key = iterator.next().getKey();
+                    Iterator<Chip> chipIterator = totalChips.get(key).iterator();
+                    while(chipIterator.hasNext()){
+                        Chip c = chipIterator.next();
                         if (!c.isChecked()) {
                             if(c.getParent() != null) {
                                 ((ChipGroup)c.getParent()).removeView(c);
                             }
-                            iter.remove();
-                            totalIngredients.get(i).remove(c.getText());
-                            listView.setAdapter(new MyAdapter(getContext()));
+                            chipIterator.remove();
+                            totalIngredients.get(key).remove(c.getText());
+
                         }
                     }
+
+                    if (totalChips.get(key).size() == 0) {
+                        iterator.remove();
+                        totalIngredients.remove(key);
+                    }
+                    listView.setAdapter(new MyAdapter(getContext()));
                 }
                 cartFragmentListner.updateSelected(totalIngredients);
             }

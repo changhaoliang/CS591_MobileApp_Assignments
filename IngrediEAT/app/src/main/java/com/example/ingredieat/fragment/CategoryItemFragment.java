@@ -29,7 +29,7 @@ public class CategoryItemFragment extends Fragment implements CategoryItemAdapte
     private ArrayList<CategoryItem> categories;
     private HashMap<Category, ArrayList<Ingredient>> ingredients;
     private itemFragmentListener itemFragmentListener;
-    private HashMap<String, HashSet<String>> totalIngredients;
+    private HashMap<String, HashSet<String>> selectedTotalIngredients;
 
 
     public interface itemFragmentListener {
@@ -46,7 +46,7 @@ public class CategoryItemFragment extends Fragment implements CategoryItemAdapte
                              Bundle savedInstanceState) {
         View myView = inflater.inflate(R.layout.fragment_item, container, false);
         listView = (ListView) myView.findViewById(R.id.list_view);
-        if (totalIngredients == null) totalIngredients = new HashMap<>();
+        if (selectedTotalIngredients == null) selectedTotalIngredients = new HashMap<>();
         ingredients = new HashMap<>();
 
         initializeList();
@@ -108,26 +108,26 @@ public class CategoryItemFragment extends Fragment implements CategoryItemAdapte
     }
 
     public void updateTotalIngredients(Category category, HashSet<String> newIngredients) {
-        if (!totalIngredients.keySet().contains(category.getCategoryValue())) {
-            totalIngredients.put(category.getCategoryValue(), new HashSet<String>());
+        if (!selectedTotalIngredients.keySet().contains(category.getCategoryValue())) {
+            selectedTotalIngredients.put(category.getCategoryValue(), new HashSet<String>());
         }
-        totalIngredients.put(category.getCategoryValue(), newIngredients);
-        System.out.println(totalIngredients.get(category.getCategoryValue()).size() + "total");
+        selectedTotalIngredients.put(category.getCategoryValue(), newIngredients);
+        System.out.println(selectedTotalIngredients.get(category.getCategoryValue()).size() + "total");
     }
 
     public boolean checkSelect(Category category, String ingredient) {
-        if (totalIngredients.keySet().contains(category.getCategoryValue())) {
-            return totalIngredients.get(category.getCategoryValue()).contains(ingredient);
+        if (selectedTotalIngredients.keySet().contains(category.getCategoryValue())) {
+            return selectedTotalIngredients.get(category.getCategoryValue()).contains(ingredient);
         }
 
         return false;
     }
 
-    public HashMap<String, HashSet<String>> getTotalIngredients() {
-        return totalIngredients;
+    public HashMap<String, HashSet<String>> getSelectedTotalIngredients() {
+        return selectedTotalIngredients;
     }
 
-    public void setTotalIngredients(HashMap<String, HashSet<String>> totalIngredients) {
-        this.totalIngredients = totalIngredients;
+    public void setSelectedTotalIngredients(HashMap<String, HashSet<String>> selectedTotalIngredients) {
+        this.selectedTotalIngredients = selectedTotalIngredients;
     }
 }
