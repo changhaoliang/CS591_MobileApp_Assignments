@@ -83,9 +83,7 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
                     case R.id.cart:
                         fragmentTransaction.replace(R.id.fragment_container, cartFragment);
                         fragmentTransaction.addToBackStack(null);
-                        HashMap<String, HashSet<String>> ingredients = categoryItemFragment.getTotalIngredients();
-                        System.out.println(ingredients.size());
-                        System.out.println("=================");
+                        HashMap<String, HashSet<String>> ingredients = categoryItemFragment.getSelectedTotalIngredients();
                         cartFragment.setTotalIngredients(ingredients);
                         break;
                 }
@@ -195,6 +193,6 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
 
     @Override
     public void updateSelected(HashMap<String, HashSet<String>> totalIngredients) {
-        categoryItemFragment.setTotalIngredients(totalIngredients);
+        categoryItemFragment.setSelectedTotalIngredients(totalIngredients);
     }
 }
