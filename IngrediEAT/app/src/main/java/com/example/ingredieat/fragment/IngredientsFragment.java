@@ -106,6 +106,7 @@ public class IngredientsFragment extends Fragment {
                         }
                     }
                 }
+
                 if (searchIngredients.size() != 0) {
                     setChips(searchIngredients);
                 }
