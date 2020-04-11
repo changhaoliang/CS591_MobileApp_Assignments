@@ -35,9 +35,11 @@ public class BaseActivity extends AppCompatActivity {
         if (params != null) {
             url.append("?");
             for (String key : params.keySet()) {
-                url.append(key).append("=").append(params.get(key));
+                url.append(key).append("=").append(params.get(key)).append("&");
             }
+            url.deleteCharAt(url.length()-1);
         }
+
         Log.d(TAG, url.toString());
 
         // create the request content
@@ -48,5 +50,15 @@ public class BaseActivity extends AppCompatActivity {
 
         Call task = okHttpClient.newCall(request);
         task.enqueue(callback);
+    }
+
+    // POST request, no params
+    public void postRequest(String requestUrl, Callback callback) {
+        postRequest(requestUrl, null, callback);
+    }
+
+    // POST request, have params
+    public void postRequest(String requestUrl, final HashMap<String, String> params, Callback callback) {
+
     }
 }
