@@ -24,15 +24,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class RecipeFragment extends Fragment {
+public class RecipeFragment extends Fragment implements RecipeAdapter.MyClickListener{
     private RecyclerView recyclerView;
     private RecipeAdapter recipeAdapter;
     private List<Recipe> recipes;
 
     private RecipeFragmentListener recipeFragmentListener;
 
+    @Override
+    public void clickListener(View v, Recipe recipe) {
+        recipeFragmentListener.showDetails(recipe);
+    }
+
     public interface RecipeFragmentListener {
-        public void updateRecipes();
+        public void updateLikes();
+        public void showDetails(Recipe recipe);
     }
 
     @Override
@@ -47,14 +53,14 @@ public class RecipeFragment extends Fragment {
         recyclerView = myView.findViewById(R.id.recycler_view);
 
         //recipes = new ArrayList<Recipe>();
-        recipeAdapter = new RecipeAdapter(getContext(), recipes);
+        recipeAdapter = new RecipeAdapter(getContext(), recipes, this);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.addItemDecoration(new GridSpacingItemDecoration());
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(recipeAdapter);
 
-        System.out.println(recipes.size());
+        System.out.println("1:"+recipes.size());
 
         return myView;
     }
@@ -68,6 +74,7 @@ public class RecipeFragment extends Fragment {
 
     public void setRecipes(List<Recipe> recipes){
         this.recipes = recipes;
+        System.out.println("2:"+recipes.size());
         //recipeAdapter.notifyDataSetChanged();
     }
 

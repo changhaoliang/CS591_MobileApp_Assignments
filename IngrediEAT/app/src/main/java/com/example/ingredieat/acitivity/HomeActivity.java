@@ -20,6 +20,7 @@ import com.example.ingredieat.fragment.CartFragment;
 import com.example.ingredieat.fragment.IngredientsFragment;
 import com.example.ingredieat.fragment.CategoryItemFragment;
 import com.example.ingredieat.R;
+import com.example.ingredieat.fragment.RecipeDetailFragment;
 import com.example.ingredieat.fragment.RecipeFragment;
 import com.example.ingredieat.fragment.UserFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -35,14 +36,15 @@ import java.util.Map;
 
 public class HomeActivity extends BaseActivity implements CategoryItemFragment.itemFragmentListener,
         IngredientsFragment.IngredientFragmentListener,
-        CartFragment.CartFragmentListner, RecipeFragment.RecipeFragmentListener {
+        CartFragment.CartFragmentListner, RecipeFragment.RecipeFragmentListener,
+        RecipeDetailFragment.RecipeDetailFragmentListener{
     private BottomNavigationView menuView;
 
     private static final long mBackPressThreshold = 3500;
     private FragmentManager fragmentManager;
 
     private Map<String, List<Ingredient>> allIngredients;
-    private List<Recipe> recipes;
+    private List<Recipe> allRecipes;
     private Category category;
     private long mLastBackPress;
 
@@ -51,6 +53,7 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
     private UserFragment userFragment;
     private CartFragment cartFragment;
     private RecipeFragment recipeFragment;
+    private RecipeDetailFragment recipeDetailFragment;
 
 
     @Override
@@ -67,8 +70,11 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
 
         fragmentManager = getSupportFragmentManager();
         allIngredients = new HashMap<>();
+        allRecipes = new ArrayList<>();
         // Get the data of all ingredients from the server side by sending a GET request.
         getAllIngredients();
+        getAllRecipes();
+        recipeFragment.setRecipes(allRecipes);
 
         menuView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -96,11 +102,13 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
                     case R.id.cook:
                         fragmentTransaction.replace(R.id.fragment_container, recipeFragment);
                         fragmentTransaction.addToBackStack(null);
-                        updateRecipes();
-                        recipeFragment.setRecipes(recipes);
                         break;
                 }
                 fragmentTransaction.commit();
+
+//                if (item.getItemId() == R.id.cook){
+//                    recipeFragment.setRecipes(searchRecipes());
+//                }
 
                 return true;
             }
@@ -150,6 +158,27 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
         });
     }
 
+    private void getAllRecipes(){
+        //test
+        for(int i=0; i<10; i++) {
+            allRecipes.add(new Recipe("https://spoonacular.com/recipeImages/716429-556x370.jpg",
+                    "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs", 12000, 4.5f));
+            allRecipes.add(new Recipe("https://spoonacular.com/recipeImages/716429-556x370.jpg",
+                    "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs", 200, 3));
+            allRecipes.add(new Recipe("https://spoonacular.com/recipeImages/73420-312x231.jpg", "baking powder"));
+            allRecipes.add(new Recipe("https://spoonacular.com/recipeImages/716429-556x370.jpg",
+                    "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs"));
+            allRecipes.add(new Recipe("https://spoonacular.com/recipeImages/73420-312x231.jpg", "baking powder"));
+            allRecipes.add(new Recipe("https://spoonacular.com/recipeImages/716429-556x370.jpg",
+                    "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs"));
+            allRecipes.add(new Recipe("https://spoonacular.com/recipeImages/73420-312x231.jpg", "baking powder"));
+        }
+
+        //getRequest(){
+        // add to allRecipes;
+        // }
+    }
+
     @Override
     public void setFragment(boolean flag, final Category category) {
         if (flag) {
@@ -170,6 +199,17 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
             ingredientsFragment.setCategory(category);
         }
     }
+
+
+    @Override
+    public void showDetails(Recipe recipe) {
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        recipeDetailFragment = new RecipeDetailFragment(recipe);
+        fragmentTransaction.replace(R.id.fragment_container, recipeDetailFragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }
+
 
     @Override
     public boolean getSelected(Category category, String ingredient) {
@@ -209,21 +249,24 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
         categoryItemFragment.setSelectedTotalIngredients(totalIngredients);
     }
 
+    public List<Recipe> searchRecipes(){
+        List<Recipe> recipes = new ArrayList<>();
+        //test
+        recipes.add(new Recipe("https://spoonacular.com/recipeImages/716429-556x370.jpg",
+                "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs", 12000, 4.5f));
+        recipes.add(new Recipe("https://spoonacular.com/recipeImages/716429-556x370.jpg",
+                "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs", 200, 3));
+        recipes.add(new Recipe("https://spoonacular.com/recipeImages/73420-312x231.jpg", "baking powder"));
+        recipes.add(new Recipe("https://spoonacular.com/recipeImages/716429-556x370.jpg",
+                "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs"));
+        recipes.add(new Recipe("https://spoonacular.com/recipeImages/73420-312x231.jpg", "baking powder"));
+        recipes.add(new Recipe("https://spoonacular.com/recipeImages/716429-556x370.jpg",
+                "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs"));
+        recipes.add(new Recipe("https://spoonacular.com/recipeImages/73420-312x231.jpg", "baking powder"));
+        return recipes;
+    }
+
     @Override
-    public void updateRecipes() {
-        recipes = new ArrayList<Recipe>();
-        for(int i=0; i<10; i++) {
-            recipes.add(new Recipe("https://spoonacular.com/recipeImages/716429-556x370.jpg",
-                    "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs", 12000, 4.5f));
-            recipes.add(new Recipe("https://spoonacular.com/recipeImages/716429-556x370.jpg",
-                    "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs", 200, 3));
-            recipes.add(new Recipe("https://spoonacular.com/recipeImages/73420-312x231.jpg", "baking powder"));
-            recipes.add(new Recipe("https://spoonacular.com/recipeImages/716429-556x370.jpg",
-                    "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs"));
-            recipes.add(new Recipe("https://spoonacular.com/recipeImages/73420-312x231.jpg", "baking powder"));
-            recipes.add(new Recipe("https://spoonacular.com/recipeImages/716429-556x370.jpg",
-                    "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs"));
-            recipes.add(new Recipe("https://spoonacular.com/recipeImages/73420-312x231.jpg", "baking powder"));
-        }
+    public void updateLikes() {
     }
 }

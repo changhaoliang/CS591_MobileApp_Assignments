@@ -11,6 +11,7 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ingredieat.R;
@@ -23,10 +24,16 @@ import java.util.List;
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeHolder> {
     private List<Recipe> recipes;
     private Context context;
+    private MyClickListener myClickListener;
 
-    public RecipeAdapter(Context context, List<Recipe> list) {
+    public RecipeAdapter(Context context, List<Recipe> list, MyClickListener myClickListener) {
         this.context = context;
         this.recipes = list;
+        this.myClickListener = myClickListener;
+    }
+
+    public interface MyClickListener {
+        public void clickListener(View v, Recipe recipe);
     }
 
     @NonNull
@@ -39,7 +46,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeHold
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final RecipeHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final RecipeHolder holder, final int position) {
         final Recipe recipe = recipes.get(position);
         holder.title.setText(recipe.getTitle());
         holder.likes.setText(recipe.getLikes());
@@ -76,13 +83,13 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeHold
         holder.recipeImg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                myClickListener.clickListener(view, recipes.get(position));
             }
         });
-        holder.title.setOnClickListener(new View.OnClickListener() {
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                myClickListener.clickListener(view, recipes.get(position));
             }
         });
     }
@@ -93,9 +100,11 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeHold
     }
 
     public class RecipeHolder extends RecyclerView.ViewHolder {
-        private ImageButton recipeImg, like, liked;
+        private ImageButton like, liked;
         private TextView title, likes;
         private RatingBar rating;
+        private ImageView recipeImg;
+        private CardView cardView;
 
         public RecipeHolder(View view) {
             super(view);
@@ -105,6 +114,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeHold
             title = view.findViewById(R.id.recipe_title);
             likes = view.findViewById(R.id.like_count);
             rating = view.findViewById(R.id.rating_bar);
+            cardView = view.findViewById(R.id.recipe_card);
         }
     }
 

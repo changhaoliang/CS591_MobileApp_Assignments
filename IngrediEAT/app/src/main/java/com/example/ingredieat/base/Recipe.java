@@ -5,7 +5,7 @@ import android.graphics.drawable.Drawable;
 public class Recipe {
     private String imgUrl;
     private String title;
-    private int likes;
+    private int likes, ratings;
     private boolean liked;
     private float stars;
 
@@ -15,6 +15,7 @@ public class Recipe {
         this.likes = 0;
         this.liked = false;
         this.stars = 0;
+        this.ratings = 0;
     }
 
     public Recipe(String imgUrl, String title, int likes, float stars){
@@ -37,5 +38,8 @@ public class Recipe {
     public void unlike(){
         likes--;
         liked = false;
+    }
+    public void updataStars(float myStar){
+        stars = (stars*ratings+myStar)/(ratings++);
     }
 }
