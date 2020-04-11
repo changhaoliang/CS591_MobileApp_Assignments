@@ -1,5 +1,6 @@
 package com.example.ingredieat.fragment;
 
+import android.app.SearchManager;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -16,6 +17,7 @@ import android.widget.TextView;
 import com.example.ingredieat.R;
 import com.example.ingredieat.base.Category;
 import com.example.ingredieat.entity.Ingredient;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipDrawable;
 import com.google.android.material.chip.ChipGroup;
@@ -110,9 +112,29 @@ public class IngredientsFragment extends Fragment {
                 }
                 return false;
             }
+
+
+        });
+        searchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener()
+        {
+            @Override
+            public void onFocusChange(final View v, final boolean hasFocus)
+            {
+                BottomNavigationView menuView = getActivity().findViewById(R.id.bottom_menu);
+                if(hasFocus){
+
+                    menuView.setVisibility(View.INVISIBLE);
+                }
+                else if(!hasFocus)
+                {
+                    menuView.setVisibility(View.VISIBLE);
+                }
+            }
         });
         return myView;
     }
+
+
 
     public void setIngredients(List<Ingredient> ingredients) {
         this.ingredients = ingredients;
