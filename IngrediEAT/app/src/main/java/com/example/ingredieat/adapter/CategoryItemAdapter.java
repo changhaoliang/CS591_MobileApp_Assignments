@@ -77,7 +77,6 @@ public class CategoryItemAdapter extends ArrayAdapter<CategoryItem> {
             }
         });
 
-
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
