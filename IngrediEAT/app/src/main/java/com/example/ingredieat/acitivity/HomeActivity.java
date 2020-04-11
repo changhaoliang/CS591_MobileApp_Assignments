@@ -87,6 +87,9 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
                 fragmentTransaction.hide(categoryItemFragment);
                 switch (item.getItemId()) {
                     case R.id.fridge:
+                        if (fragmentManager.getBackStackEntryCount() > 2) {
+                            getSupportFragmentManager().popBackStack();
+                        }
                         fragmentTransaction.show(categoryItemFragment);
                         break;
                     case R.id.user:

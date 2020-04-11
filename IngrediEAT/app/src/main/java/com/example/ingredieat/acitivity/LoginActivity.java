@@ -25,6 +25,7 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         if(Setting.ifSignIn) {
             Intent startIntent = new Intent(this, HomeActivity.class);
             LoginActivity.this.startActivity(startIntent);
