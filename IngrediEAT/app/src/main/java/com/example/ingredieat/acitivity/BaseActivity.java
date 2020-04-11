@@ -2,15 +2,24 @@ package com.example.ingredieat.acitivity;
 
 import android.util.Log;
 
+import com.alibaba.fastjson.JSON;
+
+import org.jetbrains.annotations.NotNull;
+
 import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 import androidx.appcompat.app.AppCompatActivity;
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 
 public class BaseActivity extends AppCompatActivity {
@@ -23,7 +32,7 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     // GET request, have params
-    public void getRequest(final String requestUrl, final HashMap<String, String> params, Callback callback) {
+    public void getRequest(String requestUrl, HashMap<String, String> params, Callback callback) {
 
         // build a okHttpClient
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
@@ -58,7 +67,26 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     // POST request, have params
-    public void postRequest(String requestUrl, final HashMap<String, String> params, Callback callback) {
+    public void postRequest(String requestUrl, HashMap<String, String> params, Callback callback) {
 
+        // build a okHttpClient
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .connectTimeout(10000, TimeUnit.MILLISECONDS)
+                .build();
+
+        String jsonString = JSON.toJSONString(params);
+        MediaType mediaType = MediaType.parse("application/json");
+        RequestBody requestBody = RequestBody.create(jsonString, mediaType);
+
+        String url = BASE_URL + requestUrl;
+
+        // create the request content
+        Request request = new Request.Builder()
+                .post(requestBody)
+                .url(url)
+                .build();
+
+        Call task = okHttpClient.newCall(request);
+        task.enqueue(callback);
     }
 }
