@@ -38,7 +38,6 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.MyClickLis
     }
 
     public interface RecipeFragmentListener {
-        public void updateLikes();
         public void showDetails(Recipe recipe);
     }
 
@@ -61,8 +60,6 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.MyClickLis
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(recipeAdapter);
 
-        System.out.println("1:"+recipes.size());
-
         return myView;
     }
 
@@ -75,7 +72,6 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.MyClickLis
 
     public void setRecipes(List<Recipe> recipes){
         this.recipes = recipes;
-        System.out.println("2:"+recipes.size());
         //recipeAdapter.notifyDataSetChanged();
     }
 

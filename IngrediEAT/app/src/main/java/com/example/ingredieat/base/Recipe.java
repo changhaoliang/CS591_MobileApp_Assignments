@@ -2,12 +2,15 @@ package com.example.ingredieat.base;
 
 import android.graphics.drawable.Drawable;
 
+import java.util.List;
+
 public class Recipe {
     private String imgUrl;
     private String title;
-    private int likes, ratings;
-    private boolean liked;
-    private float stars;
+    private int likes, ratings;//likes - like counts; ratings - rating counts
+    private boolean liked;//flag if liked
+    private float stars;//stars - total average rating
+    private RecipeDetail details;
 
     public Recipe(String imgUrl, String title){
         this.imgUrl = imgUrl;
@@ -41,5 +44,13 @@ public class Recipe {
     }
     public void updataStars(float myStar){
         stars = (stars*ratings+myStar)/(ratings++);
+    }
+
+    public RecipeDetail getDetails(){
+        if (details == null) {
+            this.details = new RecipeDetail(this);
+            details.getDetails();
+        }
+        return details;
     }
 }
