@@ -9,7 +9,8 @@ public class Recipe {
     private String title;
     private int likes, ratings;//likes - like counts; ratings - rating counts
     private boolean liked;//flag if liked
-    private float stars;//stars - total average rating
+    private boolean rated; //user has only one chance to rate a recipe
+    private float stars, userStar;//stars - total average rating, userstars - user's rating
     private RecipeDetail details;
 
     public Recipe(String imgUrl, String title){
@@ -17,8 +18,10 @@ public class Recipe {
         this.title = title;
         this.likes = 0;
         this.liked = false;
+        this.rated = false;
         this.stars = 0;
         this.ratings = 0;
+        this.userStar = 0;
     }
 
     public Recipe(String imgUrl, String title, int likes, float stars){
@@ -32,7 +35,9 @@ public class Recipe {
     public String getTitle(){return title;}
     public String getLikes(){return likes+"";}
     public boolean getLiked(){return liked;}
+    public boolean getRated(){return rated;}
     public float getStars(){return stars;}
+    public float getUserStar(){return userStar;}
     public String getImg(){return imgUrl;}
     public void like(){
         likes++;
@@ -43,7 +48,9 @@ public class Recipe {
         liked = false;
     }
     public void updataStars(float myStar){
-        stars = (stars*ratings+myStar)/(ratings++);
+        userStar = myStar;
+        rated = true;
+        stars = (stars*ratings+myStar)/(++ratings);
     }
 
     public RecipeDetail getDetails(){

@@ -30,7 +30,7 @@ public class RecipeDetailFragment extends Fragment {
 
     private ImageButton like, liked;
     private TextView likes, ratings;
-    private RatingBar rating;
+    private RatingBar rating, myRating;
 
     //private RecipeDetailFragmentListener RDFL;
 
@@ -65,6 +65,7 @@ public class RecipeDetailFragment extends Fragment {
         likes = myView.findViewById(R.id.detail_like_count);
         ratings = myView.findViewById(R.id.detail_rating);
         rating = myView.findViewById(R.id.detail_rating_bar);
+        myRating = myView.findViewById(R.id.detail_my_rating_bar);
 
         Glide.with(this).load(recipe.getImg()).into(recipeImg);
         title.setText(recipe.getTitle());
@@ -72,12 +73,19 @@ public class RecipeDetailFragment extends Fragment {
         ratings.setText(String.valueOf(recipe.getStars()));
         rating.setRating(recipe.getStars());
 
-        rating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+        if (recipe.getRated()) {  //only one chance to rate
+            myRating.setRating(recipe.getUserStar());
+            myRating.setIsIndicator(true);
+        }
+
+        myRating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
                 if (b) {
                     recipe.updataStars(v);
                     rating.setRating(recipe.getStars());
+                    ratings.setText(String.valueOf(recipe.getStars()));
+                    myRating.setIsIndicator(true);
                 }
             }
         });
