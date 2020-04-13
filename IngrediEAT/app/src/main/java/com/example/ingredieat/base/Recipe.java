@@ -1,6 +1,5 @@
 package com.example.ingredieat.base;
 
-import android.graphics.drawable.Drawable;
 
 public class Recipe {
     private String imgUrl;

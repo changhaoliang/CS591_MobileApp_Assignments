@@ -36,6 +36,7 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if(Setting.ifSignIn) { // Check whether there exists a signed-in account.
             Intent startIntent = new Intent(this, HomeActivity.class);
             LoginActivity.this.startActivity(startIntent);
