@@ -59,7 +59,7 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_library);
+        setContentView(R.layout.activity_home);
 
         menuView = findViewById(R.id.bottom_menu);
 

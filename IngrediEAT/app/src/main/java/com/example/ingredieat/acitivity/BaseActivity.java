@@ -1,14 +1,9 @@
 package com.example.ingredieat.acitivity;
 
-import android.util.Log;
-
 import com.alibaba.fastjson.JSON;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.io.IOException;
-import java.net.HttpURLConnection;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,8 +13,6 @@ import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
 
 
 public class BaseActivity extends AppCompatActivity {
@@ -46,10 +39,10 @@ public class BaseActivity extends AppCompatActivity {
             for (String key : params.keySet()) {
                 url.append(key).append("=").append(params.get(key)).append("&");
             }
-            url.deleteCharAt(url.length()-1);
+            url.deleteCharAt(url.length() - 1);
         }
 
-        Log.d(TAG, url.toString());
+//        Log.d(TAG, url.toString());
 
         // create the request content
         Request request = new Request.Builder()
@@ -63,18 +56,23 @@ public class BaseActivity extends AppCompatActivity {
 
     // POST request, no params
     public void postRequest(String requestUrl, Callback callback) {
-        postRequest(requestUrl, null, callback);
+        postRequest(requestUrl, "", callback);
     }
 
-    // POST request, have params
-    public void postRequest(String requestUrl, HashMap<String, String> params, Callback callback) {
+    // POST request, pass a map
+    public void postRequest(String requestUrl, Map<String, String> params, Callback callback) {
+        String jsonString = JSON.toJSONString(params);
+        postRequest(requestUrl, jsonString, callback);
+    }
+
+    // POST request, pass a json String
+    public void postRequest(String requestUrl, String jsonString, Callback callback) {
 
         // build a okHttpClient
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .connectTimeout(10000, TimeUnit.MILLISECONDS)
                 .build();
 
-        String jsonString = JSON.toJSONString(params);
         MediaType mediaType = MediaType.parse("application/json");
         RequestBody requestBody = RequestBody.create(jsonString, mediaType);
 
