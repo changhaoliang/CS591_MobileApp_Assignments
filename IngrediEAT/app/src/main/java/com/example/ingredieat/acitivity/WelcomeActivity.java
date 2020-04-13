@@ -44,22 +44,22 @@ public class WelcomeActivity extends BaseActivity {
         retrieveSharedPreferenceInfo();
         System.out.println(Setting.ifSignIn);
 
-        if (!Setting.ifSignIn) {
-            startIntent = new Intent(this, LoginActivity.class);
-        } else {
-            startIntent = new Intent(this, HomeActivity.class);
-        }
+//        if (!Setting.ifSignIn) {
+//            startIntent = new Intent(this, LoginActivity.class);
+//        } else {
+//            startIntent = new Intent(this, HomeActivity.class);
+//        }
+        startIntent = new Intent(this, LoginActivity.class);
         componentReady = true;
-
     }
 
     // get user account information
     public void retrieveSharedPreferenceInfo() {
         SharedPreferences settings = getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        Setting.googleId = settings.getString(Setting.Strings.account_id, null);
         Setting.email = settings.getString(Setting.Strings.account_email, null);
         Setting.familyName = settings.getString(Setting.Strings.account_family_name, null);
         Setting.givenName = settings.getString(Setting.Strings.account_given_name, null);
-        Setting.googleId = settings.getString(Setting.Strings.account_id, null);
         Setting.ifSignIn = settings.getBoolean(Setting.Strings.if_signin_succ, false);
     }
 }

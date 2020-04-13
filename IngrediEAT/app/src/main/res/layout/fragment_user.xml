@@ -48,11 +48,15 @@
             android:layout_weight="12.3"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/textView"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/log_out"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="User Account" />
+                android:layout_marginTop="@dimen/buttonMarginSize"
+                android:layout_marginStart="@dimen/buttonMarginSize"
+                android:layout_marginEnd="@dimen/buttonMarginSize"
+                android:text="Sign Out" />
+
         </LinearLayout>
     </LinearLayout>
 
