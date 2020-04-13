@@ -1,3 +1,30 @@
+<<<<<<< HEAD
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/mnu_zero"
+        android:title="Kahn!!!"
+        app:showAsAction="never"></item>
+
+
+    <item
+        android:id="@+id/mnu_one"
+        android:title="Filter Four Stars or More"
+        app:showAsAction="never"></item>
+
+
+    <item
+        android:id="@+id/mnu_two"
+        android:title="Sort by Title"
+        app:showAsAction="never"></item>
+
+    <item
+        android:id="@+id/mnu_three"
+        android:title="Sort by Rating"
+        app:showAsAction="never"></item>
+=======
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -23,4 +50,5 @@
             android:id="@+id/mnu_three"
             android:title="Sort by Rating"
             app:showAsAction="never"></item>
+>>>>>>> 246f2d692bd1f39442f4e9f5626fa79be0b0a55b
 </menu>

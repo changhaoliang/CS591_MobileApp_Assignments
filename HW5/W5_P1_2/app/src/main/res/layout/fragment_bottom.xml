@@ -1,3 +1,26 @@
+<<<<<<< HEAD
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/squareburger"
+    android:orientation="vertical"
+    tools:context=".BottomFragment">
+
+    <TextView
+        android:id="@+id/foodText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:paddingBottom="30dp"
+        android:text="@string/Burger"
+        android:textColor="#FFFFFF"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:visibility="visible" />
+</RelativeLayout>
+=======
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="wrap_content"
@@ -19,3 +42,4 @@
             android:textStyle="bold"
             android:visibility="visible"/>
 </RelativeLayout>
+>>>>>>> 246f2d692bd1f39442f4e9f5626fa79be0b0a55b

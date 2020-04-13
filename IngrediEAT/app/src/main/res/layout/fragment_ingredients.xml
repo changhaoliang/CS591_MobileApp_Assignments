@@ -48,7 +48,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            app:queryHint="Search ingredients" >
+            app:queryHint="Search ingredients"
+            app:showDividers="end|middle|beginning">
 
             <LinearLayout
                 android:layout_width="match_parent"

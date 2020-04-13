@@ -1,3 +1,18 @@
+<<<<<<< HEAD
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.sse.interfragmentcommunication.ControlFragment" >
+
+    <ListView
+        android:id="@+id/lvMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:choiceMode="singleChoice" />
+</RelativeLayout>
+=======
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
@@ -11,3 +26,4 @@
             android:layout_centerInParent="true"
             android:choiceMode="singleChoice"/>
 </RelativeLayout>
+>>>>>>> 246f2d692bd1f39442f4e9f5626fa79be0b0a55b

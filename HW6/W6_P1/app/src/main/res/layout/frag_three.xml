@@ -1,3 +1,22 @@
+<<<<<<< HEAD
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.sse.fragmenttransactions_sse.Frag_Three"
+    android:background="@drawable/student_happy">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Large Text"
+        android:id="@+id/textView2"
+        android:layout_gravity="center_horizontal|bottom" />
+</FrameLayout>
+=======
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
@@ -15,3 +34,4 @@
             android:id="@+id/textView2"
             android:layout_gravity="center_horizontal|bottom"/>
 </FrameLayout>
+>>>>>>> 246f2d692bd1f39442f4e9f5626fa79be0b0a55b
