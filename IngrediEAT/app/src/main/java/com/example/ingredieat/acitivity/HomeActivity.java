@@ -36,8 +36,7 @@ import java.util.Map;
 
 public class HomeActivity extends BaseActivity implements CategoryItemFragment.itemFragmentListener,
         IngredientsFragment.IngredientFragmentListener,
-        CartFragment.CartFragmentListner, RecipeFragment.RecipeFragmentListener,
-        RecipeDetailFragment.RecipeDetailFragmentListener{
+        CartFragment.CartFragmentListner, RecipeFragment.RecipeFragmentListener{
     private BottomNavigationView menuView;
 
     private static final long mBackPressThreshold = 3500;
@@ -269,7 +268,4 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
         return recipes;
     }
 
-    @Override
-    public void updateLikes() {
-    }
 }
