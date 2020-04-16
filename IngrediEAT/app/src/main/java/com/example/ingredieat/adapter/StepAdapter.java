@@ -5,7 +5,7 @@ import android.widget.ArrayAdapter;
 
 import androidx.annotation.NonNull;
 
-import com.example.ingredieat.base.Step;
+import com.example.ingredieat.entity.Step;
 
 import java.util.List;
 

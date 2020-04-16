@@ -20,13 +20,12 @@ public class BaseActivity extends AppCompatActivity {
     public static final String TAG = "Boston University";
 
     // GET request, no params
-    public void getRequest(String requestUrl, Callback callback) {
+    public void getRequest(String requestUrl, Callback callback)  {
         getRequest(requestUrl, null, callback);
     }
 
     // GET request, have params
-    public void getRequest(String requestUrl, HashMap<String, String> params, Callback callback) {
-
+    public void getRequest(String requestUrl, Map<String, String> params, Callback callback)  {
         // build a okHttpClient
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .connectTimeout(10000, TimeUnit.MILLISECONDS)
@@ -41,8 +40,6 @@ public class BaseActivity extends AppCompatActivity {
             }
             url.deleteCharAt(url.length() - 1);
         }
-
-//        Log.d(TAG, url.toString());
 
         // create the request content
         Request request = new Request.Builder()

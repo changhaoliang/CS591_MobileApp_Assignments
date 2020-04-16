@@ -1,7 +1,6 @@
 package com.example.ingredieat.adapter;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ingredieat.R;
-import com.example.ingredieat.base.Recipe;
+import com.example.ingredieat.entity.Recipe;
 
 import com.bumptech.glide.Glide;
 
@@ -26,9 +25,9 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeHold
     private Context context;
     private MyClickListener myClickListener;
 
-    public RecipeAdapter(Context context, List<Recipe> list, MyClickListener myClickListener) {
+    public RecipeAdapter(Context context, List<Recipe> recipes, MyClickListener myClickListener) {
         this.context = context;
-        this.recipes = list;
+        this.recipes = recipes;
         this.myClickListener = myClickListener;
     }
 

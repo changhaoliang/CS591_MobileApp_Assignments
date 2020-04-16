@@ -1,8 +1,12 @@
-package com.example.ingredieat.base;
+package com.example.ingredieat.dto;
+
+import lombok.Data;
 
 import java.util.List;
 
-public class Step {
+@Data
+public class StepDto {
+
     private List<String> ingredients;
     private List<String> equipments;
     private String instruction;

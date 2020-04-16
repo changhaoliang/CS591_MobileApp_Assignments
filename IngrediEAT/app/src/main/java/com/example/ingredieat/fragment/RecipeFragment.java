@@ -8,7 +8,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
@@ -19,7 +18,7 @@ import android.view.ViewGroup;
 
 import com.example.ingredieat.R;
 import com.example.ingredieat.adapter.RecipeAdapter;
-import com.example.ingredieat.base.Recipe;
+import com.example.ingredieat.entity.Recipe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,12 +52,11 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.MyClickLis
         View myView = inflater.inflate(R.layout.fragment_recipe, container, false);
         recyclerView = myView.findViewById(R.id.recycler_view);
 
-        //recipes = new ArrayList<Recipe>();
-        recipeAdapter = new RecipeAdapter(getContext(), recipes, this);
         RecyclerView.LayoutManager layoutManager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.addItemDecoration(new GridSpacingItemDecoration());
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recipeAdapter = new RecipeAdapter(getContext(), recipes, this);
         recyclerView.setAdapter(recipeAdapter);
 
         System.out.println("1:"+recipes.size());
@@ -76,8 +74,13 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.MyClickLis
     public void setRecipes(List<Recipe> recipes){
         this.recipes = recipes;
         System.out.println("2:"+recipes.size());
-        //recipeAdapter.notifyDataSetChanged();
     }
+
+//    public void updateRecipes(List<Recipe> recipes) {
+//        setRecipes(recipes);
+//        RecipeAdapter recipeAdapter = new RecipeAdapter(getContext(), recipes, this);
+//        recyclerView.setAdapter(recipeAdapter);
+//    }
 
     public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
 

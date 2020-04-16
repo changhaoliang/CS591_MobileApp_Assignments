@@ -14,7 +14,7 @@ import android.view.MenuItem;
 
 import com.alibaba.fastjson.JSON;
 import com.example.ingredieat.base.Category;
-import com.example.ingredieat.base.Recipe;
+import com.example.ingredieat.entity.Recipe;
 import com.example.ingredieat.entity.Ingredient;
 import com.example.ingredieat.fragment.CartFragment;
 import com.example.ingredieat.fragment.IngredientsFragment;
@@ -73,8 +73,6 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
         allRecipes = new ArrayList<>();
         // Get the data of all ingredients from the server side by sending a GET request.
         getAllIngredients();
-        getAllRecipes();
-        recipeFragment.setRecipes(allRecipes);
 
         menuView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -92,10 +90,6 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
                         }
                         fragmentTransaction.show(categoryItemFragment);
                         break;
-                    case R.id.user:
-                        fragmentTransaction.replace(R.id.fragment_container, userFragment);
-                        fragmentTransaction.addToBackStack(null);
-                        break;
                     case R.id.cart:
                         fragmentTransaction.replace(R.id.fragment_container, cartFragment);
                         fragmentTransaction.addToBackStack(null);
@@ -103,7 +97,12 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
                         cartFragment.setTotalIngredients(ingredients);
                         break;
                     case R.id.cook:
+                        getAllRecipes();
                         fragmentTransaction.replace(R.id.fragment_container, recipeFragment);
+                        fragmentTransaction.addToBackStack(null);
+                        break;
+                    case R.id.user:
+                        fragmentTransaction.replace(R.id.fragment_container, userFragment);
                         fragmentTransaction.addToBackStack(null);
                         break;
                 }
@@ -163,23 +162,41 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
 
     private void getAllRecipes(){
         //test
-        for(int i=0; i<10; i++) {
-            allRecipes.add(new Recipe("https://spoonacular.com/recipeImages/716429-556x370.jpg",
-                    "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs", 12000, 4.5f));
-            allRecipes.add(new Recipe("https://spoonacular.com/recipeImages/716429-556x370.jpg",
-                    "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs", 200, 3));
-            allRecipes.add(new Recipe("https://spoonacular.com/recipeImages/73420-312x231.jpg", "baking powder"));
-            allRecipes.add(new Recipe("https://spoonacular.com/recipeImages/716429-556x370.jpg",
-                    "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs"));
-            allRecipes.add(new Recipe("https://spoonacular.com/recipeImages/73420-312x231.jpg", "baking powder"));
-            allRecipes.add(new Recipe("https://spoonacular.com/recipeImages/716429-556x370.jpg",
-                    "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs"));
-            allRecipes.add(new Recipe("https://spoonacular.com/recipeImages/73420-312x231.jpg", "baking powder"));
-        }
+//        for(int i=0; i<10; i++) {
+//            allRecipes.add(new Recipe("https://spoonacular.com/recipeImages/716429-556x370.jpg",
+//                    "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs", 12000, 4.5f));
+//            allRecipes.add(new Recipe("https://spoonacular.com/recipeImages/716429-556x370.jpg",
+//                    "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs", 200, 3));
+//            allRecipes.add(new Recipe("https://spoonacular.com/recipeImages/73420-312x231.jpg", "baking powder"));
+//            allRecipes.add(new Recipe("https://spoonacular.com/recipeImages/716429-556x370.jpg",
+//                    "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs"));
+//            allRecipes.add(new Recipe("https://spoonacular.com/recipeImages/73420-312x231.jpg", "baking powder"));
+//            allRecipes.add(new Recipe("https://spoonacular.com/recipeImages/716429-556x370.jpg",
+//                    "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs"));
+//            allRecipes.add(new Recipe("https://spoonacular.com/recipeImages/73420-312x231.jpg", "baking powder"));
+//        }
+//       recipeFragment.setRecipes(allRecipes);
 
-        //getRequest(){
-        // add to allRecipes;
-        // }
+        Map<String, String> params = new HashMap<>();
+        getRequest("/home/listRecipesByIngredientsNames", params, new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                Log.d(TAG, "onFailure -- >" + e.toString());
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                if(response.isSuccessful()) {
+                    ResponseBody body = response.body();
+                    if(body != null) {
+                        String data = body.string();
+                        // Here we use Fastjson to parse json string
+                        allRecipes = JSON.parseArray(data, Recipe.class);
+                        recipeFragment.setRecipes(allRecipes);
+                    }
+                }
+            }
+        });
     }
 
     @Override

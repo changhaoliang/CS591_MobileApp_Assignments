@@ -16,9 +16,7 @@ import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.example.ingredieat.R;
-import com.example.ingredieat.base.Recipe;
-
-import java.util.List;
+import com.example.ingredieat.entity.Recipe;
 
 
 public class RecipeDetailFragment extends Fragment {
@@ -69,7 +67,7 @@ public class RecipeDetailFragment extends Fragment {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
                 if (b) {
-                    recipe.updataStars(v);
+                    recipe.updateStars(v);
                     rating.setRating(recipe.getStars());
                 }
             }

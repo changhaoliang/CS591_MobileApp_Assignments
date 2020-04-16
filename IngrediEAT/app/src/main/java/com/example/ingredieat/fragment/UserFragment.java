@@ -36,7 +36,7 @@ public class UserFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
-        mGoogleSignInClient = GoogleSignIn.getClient(this.getActivity(), gso);
+        mGoogleSignInClient = GoogleSignIn.getClient(getActivity(), gso);
     }
 
     @Override
