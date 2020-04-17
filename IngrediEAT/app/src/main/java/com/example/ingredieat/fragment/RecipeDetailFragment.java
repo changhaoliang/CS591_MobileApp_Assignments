@@ -189,56 +189,60 @@ public class RecipeDetailFragment extends Fragment {
             stepTitle.setTextSize(16);
             stepTitle.setPadding(dpToPx(20,getResources()), dpToPx(10,getResources()),
                     dpToPx(20,getResources()),dpToPx(10,getResources()));
-
-            //set ingredients
-            LinearLayout ingredientsLine = new LinearLayout(getContext());
-            TextView ingredientsTitle = new TextView(getContext());
-            ingredientsTitle.setText("Ingredients: ");
-            ingredientsTitle.setTextColor(Color.BLACK);
-            ingredientsTitle.setTextSize(16);
-            TextView ingredients = new TextView(getContext());
-            String ingredientsText = "";
-            for (int j=0; j<stepIngredients.size(); j++) {
-                if (j>0)
-                    ingredientsText += ", ";
-                ingredientsText += stepIngredients.get(j);
-            }
-            ingredients.setText(ingredientsText);
-            ingredients.setTextSize(16);
-            ingredientsLine.addView(ingredientsTitle);
-            ingredientsLine.addView(ingredients);
-
-            //set ingredients
-            LinearLayout equipmentsLine = new LinearLayout(getContext());
-            TextView equipmentsTitle = new TextView(getContext());
-            equipmentsTitle.setText("Equipments: ");
-            equipmentsTitle.setTextColor(Color.BLACK);
-            equipmentsTitle.setTextSize(16);
-            TextView equipments = new TextView(getContext());
-            String equipmentsText = "";
-            for (int j=0; j<stepEquipments.size(); j++) {
-                if (j>0)
-                    equipmentsText += ", ";
-                equipmentsText += stepEquipments.get(j);
-            }
-            equipments.setText(equipmentsText);
-            equipments.setTextSize(16);
-            equipmentsLine.addView(equipmentsTitle);
-            equipmentsLine.addView(equipments);
-
-            //set instruction
-            TextView instruction = new TextView(getContext());
-            instruction.setText(stepInstruction);
-            instruction.setTextSize(16);
+            myLayout.addView(stepTitle);
 
             LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT);
             lp.setMargins(dpToPx(20,getResources()), 0,
                     dpToPx(20,getResources()),dpToPx(10,getResources()));
 
-            myLayout.addView(stepTitle);
-            myLayout.addView(ingredientsLine, lp);
-            myLayout.addView(equipmentsLine, lp);
+            //set ingredients
+            if (stepIngredients.size()>0) {
+                LinearLayout ingredientsLine = new LinearLayout(getContext());
+                TextView ingredientsTitle = new TextView(getContext());
+                ingredientsTitle.setText("Ingredients: ");
+                ingredientsTitle.setTextColor(Color.BLACK);
+                ingredientsTitle.setTextSize(16);
+                TextView ingredients = new TextView(getContext());
+                String ingredientsText = "";
+                for (int j = 0; j < stepIngredients.size(); j++) {
+                    if (j > 0)
+                        ingredientsText += ", ";
+                    ingredientsText += stepIngredients.get(j);
+                }
+                ingredients.setText(ingredientsText);
+                ingredients.setTextSize(16);
+                ingredientsLine.addView(ingredientsTitle);
+                ingredientsLine.addView(ingredients);
+                myLayout.addView(ingredientsLine, lp);
+            }
+
+            //set equipments
+            if (stepEquipments.size()>0) {
+                LinearLayout equipmentsLine = new LinearLayout(getContext());
+                TextView equipmentsTitle = new TextView(getContext());
+                equipmentsTitle.setText("Equipments: ");
+                equipmentsTitle.setTextColor(Color.BLACK);
+                equipmentsTitle.setTextSize(16);
+                TextView equipments = new TextView(getContext());
+                String equipmentsText = "";
+                for (int j = 0; j < stepEquipments.size(); j++) {
+                    if (j > 0)
+                        equipmentsText += ", ";
+                    equipmentsText += stepEquipments.get(j);
+                }
+                equipments.setText(equipmentsText);
+                equipments.setTextSize(16);
+                equipmentsLine.addView(equipmentsTitle);
+                equipmentsLine.addView(equipments);
+                myLayout.addView(equipmentsLine, lp);
+            }
+
+            //set instruction
+            TextView instruction = new TextView(getContext());
+            instruction.setText(stepInstruction);
+            instruction.setTextSize(16);
+
             myLayout.addView(instruction, lp);
             container.addView(myLayout);
         }
