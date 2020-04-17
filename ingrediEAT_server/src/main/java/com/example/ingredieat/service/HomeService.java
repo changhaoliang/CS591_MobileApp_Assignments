@@ -9,5 +9,7 @@ public interface HomeService {
 
     List<Ingredient> listAllIngredients();
 
-    List<Recipe> listRecipesByIngredientsName();
+    List<Recipe> listRecipesByIngredientsName(String googleId, String selectedIngredients);
+
+
 }

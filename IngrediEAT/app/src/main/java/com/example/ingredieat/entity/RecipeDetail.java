@@ -7,7 +7,6 @@ import java.util.HashSet;
 import java.util.List;
 
 public class RecipeDetail {
-    private List<Ingredient> usedIngredients;
     private List<Ingredient> unusedIngredients;
     private List<Ingredient> missedIngredients;
     private List<Step> steps;
@@ -43,6 +42,9 @@ public class RecipeDetail {
         //for each step, put equipment in equipment set
     }
 
+    public List<Ingredient> getUnusedIngredients() {
+        return unusedIngredients;
+    }
 
     public List<Ingredient> getMissedIngredients(){return missedIngredients;}
     public List<Step> getSteps(){return steps;}

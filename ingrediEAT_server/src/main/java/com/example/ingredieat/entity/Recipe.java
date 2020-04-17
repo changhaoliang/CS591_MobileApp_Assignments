@@ -9,18 +9,6 @@ public class Recipe {
     private String title;
     private int likes, ratings;
     private boolean liked;
-    private float stars;
+    private float stars, userStarts;
     private RecipeDetail recipeDetail;
-
-    public Recipe(String imgUrl, String title) {
-        this.imgUrl = imgUrl;
-        this.title = title;
-    }
-
-    public Recipe(String imgUrl, String title, int likes, float stars) {
-        this.imgUrl = imgUrl;
-        this.title = title;
-        this.likes = likes;
-        this.stars = stars;
-    }
 }
