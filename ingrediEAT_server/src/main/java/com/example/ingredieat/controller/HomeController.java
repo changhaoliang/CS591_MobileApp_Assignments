@@ -32,8 +32,7 @@ public class HomeController {
     @GetMapping("/listRecipesByIngredientsNames")
     public List<Recipe> listRecipesByIngredientsNames(@RequestParam("selectedIngredients") String selectedIngredients,
                                                       @RequestParam("googleId") String googleId) {
-        List<Recipe> allRecipes = new ArrayList<>();
-        RestTemplate rt = new RestTemplate();
+
 //        for(int i = 0; i < 10; i++) {
 ////            allRecipes.add(new Recipe("https://spoonacular.com/recipeImages/716429-556x370.jpg",
 ////                    "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs", 12000, 4.5f));
@@ -47,6 +46,9 @@ public class HomeController {
 ////                    "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs"));
 ////            allRecipes.add(new Recipe("https://spoonacular.com/recipeImages/73420-312x231.jpg", "baking powder"));
 ////        }
+
+        List<Recipe> allRecipes = new ArrayList<>();
+        RestTemplate rt = new RestTemplate();
         if(!selectedIngredients.isEmpty()) {
             String url = String.format("https://api.spoonacular.com/recipes/findByIngredients?ingredients=%s&apiKey=%s", selectedIngredients, ApiKeyUtils.getApiKey());
             String data = rt.getForObject(url, String.class);

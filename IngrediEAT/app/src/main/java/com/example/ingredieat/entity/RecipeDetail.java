@@ -40,10 +40,11 @@ public class RecipeDetail {
 //        testStep.setEquipments(equipments);
 //        testStep.setInstruction("Preheat the oven to 200 degrees F.");
 //        steps.add(testStep);
+//        steps.add(testStep);
         //getRequest()
     }
 
     public List<Ingredient> getIngredients(){return ingredients;}
-    public List<Ingredient> getMissed(){return missedIngredients;}
+    public List<Ingredient> getMissedIngredients(){return missedIngredients;}
     public List<Step> getSteps(){return steps;}
 }

@@ -44,6 +44,7 @@
             android:layout_height="wrap_content">
 
             <LinearLayout
+                android:id="@+id/layout_scroll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:divider="@android:drawable/divider_horizontal_textfield"
@@ -169,8 +170,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingLeft="20dp"
-                        android:paddingBottom="10dp"
                         android:paddingRight="20dp"
+                        android:paddingBottom="10dp"
                         android:textSize="16dp" />
 
                 </LinearLayout>
@@ -179,9 +180,9 @@
                     android:id="@+id/layout_steps"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
                     android:divider="@android:drawable/divider_horizontal_textfield"
-                    android:showDividers="middle"/>
+                    android:orientation="vertical"
+                    android:showDividers="middle" />
 
 
                 <LinearLayout

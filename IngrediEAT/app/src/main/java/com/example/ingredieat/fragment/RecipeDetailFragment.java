@@ -44,16 +44,13 @@ public class RecipeDetailFragment extends Fragment {
     private TextView likes, ratings;
     private RatingBar rating, myRating;
 
-    //private RecipeDetailFragmentListener RDFL;
+    private boolean showIngredients;
 
-    public RecipeDetailFragment(Recipe recipe){
+    public RecipeDetailFragment(Recipe recipe, boolean showIngredients){
         this.recipe = recipe;
         this.recipeDetail = new RecipeDetail();
+        this.showIngredients = showIngredients;
     }
-
-//    public interface RecipeDetailFragmentListener {
-//        public void updateLikes();
-//    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -64,7 +61,12 @@ public class RecipeDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View myView = inflater.inflate(R.layout.fragment_recipe_detail, container, false);
-        loadIngredients(myView);
+        if (showIngredients)
+            loadIngredients(myView);
+        else{
+            LinearLayout scroll = myView.findViewById(R.id.layout_scroll);
+            scroll.removeView(myView.findViewById(R.id.layout_ingredients));
+        }
         loadSteps(myView);
 
         ImageView recipeImg = myView.findViewById(R.id.detail_recipe_img);
@@ -134,7 +136,6 @@ public class RecipeDetailFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        //RDFL = (RecipeDetailFragmentListener) context;
     }
 
     private void loadIngredients(View myView){
@@ -151,18 +152,18 @@ public class RecipeDetailFragment extends Fragment {
             chip.setChecked(true);
             chip.setClickable(false);
         }
-        if (recipeDetail.getMissed().size()>0) {
-            hintText = "You miss " + recipeDetail.getMissed().size() + " ingredients: ";
-            for (int i = 0; i < recipeDetail.getMissed().size(); i++) {
+        if (recipeDetail.getMissedIngredients().size()>0) {
+            hintText = "You miss " + recipeDetail.getMissedIngredients().size() + " ingredients: ";
+            for (int i = 0; i < recipeDetail.getMissedIngredients().size(); i++) {
                 final Chip chip = new Chip(getContext());
                 ChipDrawable chipDrawable = ChipDrawable.createFromAttributes(getContext(),
                         null, 0, R.style.Widget_MaterialComponents_Chip_Choice);
                 chip.setChipDrawable(chipDrawable);
                 chip.setLayoutParams((new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)));
-                chip.setText(recipeDetail.getMissed().get(i).getName());
+                chip.setText(recipeDetail.getMissedIngredients().get(i).getName());
                 if (i > 0)
                     hintText += ", ";
-                hintText += recipeDetail.getMissed().get(i).getName();
+                hintText += recipeDetail.getMissedIngredients().get(i).getName();
                 chipsGroup.addView(chip);
                 chip.setChecked(false);
                 chip.setClickable(false);

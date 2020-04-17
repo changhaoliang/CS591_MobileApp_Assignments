@@ -76,7 +76,6 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
         allRecipes = new ArrayList<>();
         // Get the data of all ingredients from the server side by sending a GET request.
         getAllIngredients();
-        //recipeFragment.setRecipes(allRecipes);
 
         menuView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -179,7 +178,7 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
 //                    "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs"));
 //            allRecipes.add(new Recipe("https://spoonacular.com/recipeImages/73420-312x231.jpg", "baking powder"));
 //        }
-        //recipeFragment.setRecipes(allRecipes);
+//        recipeFragment.setRecipes(allRecipes);
 
         // Get the selected ingredients of the current user.
         Map<String, String> params = new HashMap<>();
@@ -249,7 +248,7 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
     @Override
     public void showDetails(Recipe recipe) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        recipeDetailFragment = new RecipeDetailFragment(recipe);
+        recipeDetailFragment = new RecipeDetailFragment(recipe, true);
         fragmentTransaction.replace(R.id.fragment_container, recipeDetailFragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
