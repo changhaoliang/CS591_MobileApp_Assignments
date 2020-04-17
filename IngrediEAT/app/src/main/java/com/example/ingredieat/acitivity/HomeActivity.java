@@ -76,6 +76,7 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
         allRecipes = new ArrayList<>();
         // Get the data of all ingredients from the server side by sending a GET request.
         getAllIngredients();
+        //recipeFragment.setRecipes(allRecipes);
 
         menuView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override

@@ -11,6 +11,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
+
+import com.example.ingredieat.entity.Ingredient;
+import com.example.ingredieat.entity.Step;
 import com.google.android.material.chip.Chip;
 
 import androidx.annotation.NonNull;
@@ -25,7 +28,10 @@ import com.example.ingredieat.entity.RecipeDetail;
 import com.google.android.material.chip.ChipDrawable;
 import com.google.android.material.chip.ChipGroup;
 
+import org.w3c.dom.Text;
+
 import java.util.Iterator;
+import java.util.List;
 
 import static com.example.ingredieat.setting.Setting.dpToPx;
 
@@ -59,7 +65,6 @@ public class RecipeDetailFragment extends Fragment {
                              Bundle savedInstanceState) {
         View myView = inflater.inflate(R.layout.fragment_recipe_detail, container, false);
         loadIngredients(myView);
-        loadEquipment(myView);
         loadSteps(myView);
 
         ImageView recipeImg = myView.findViewById(R.id.detail_recipe_img);
@@ -135,13 +140,13 @@ public class RecipeDetailFragment extends Fragment {
     private void loadIngredients(View myView){
         ChipGroup chipsGroup = (ChipGroup) myView.findViewById(R.id.chip_ingredients);
         String hintText;
-        for (String item : recipeDetail.getIngredients()){
+        for (Ingredient item : recipeDetail.getIngredients()){
             final Chip chip = new Chip(getContext());
             ChipDrawable chipDrawable = ChipDrawable.createFromAttributes(getContext(),
                     null, 0, R.style.Widget_MaterialComponents_Chip_Choice);
             chip.setChipDrawable(chipDrawable);
             chip.setLayoutParams((new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)));
-            chip.setText(item);
+            chip.setText(item.getName());
             chipsGroup.addView(chip);
             chip.setChecked(true);
             chip.setClickable(false);
@@ -154,10 +159,10 @@ public class RecipeDetailFragment extends Fragment {
                         null, 0, R.style.Widget_MaterialComponents_Chip_Choice);
                 chip.setChipDrawable(chipDrawable);
                 chip.setLayoutParams((new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)));
-                chip.setText(recipeDetail.getMissed().get(i));
+                chip.setText(recipeDetail.getMissed().get(i).getName());
                 if (i > 0)
                     hintText += ", ";
-                hintText += recipeDetail.getMissed().get(i);
+                hintText += recipeDetail.getMissed().get(i).getName();
                 chipsGroup.addView(chip);
                 chip.setChecked(false);
                 chip.setClickable(false);
@@ -170,36 +175,74 @@ public class RecipeDetailFragment extends Fragment {
         hint.setText(hintText);
     }
 
-    private void loadEquipment(View myView){
-        LinearLayout myLayout = myView.findViewById(R.id.layout_equipments);
-        for (Iterator itr = recipeDetail.getEquipments().iterator(); itr.hasNext();){
-            TextView newLine = new TextView(getContext());
-            newLine.setText(itr.next().toString());
-            newLine.setTextSize(16);
-            myLayout.addView(newLine);
-        }
-    }
-
     private void loadSteps(View myView){
         LinearLayout container = myView.findViewById(R.id.layout_steps);
         for (int i=0; i< recipeDetail.getSteps().size(); i++){
             LinearLayout myLayout = new LinearLayout(getContext());
             myLayout.setOrientation(LinearLayout.VERTICAL);
-            TextView step = new TextView(getContext());
-            step.setText("STEP "+ (i+1));
-            step.setTextColor(Color.BLACK);
-            step.setTextSize(16);
-            step.setPadding(dpToPx(20,getResources()), dpToPx(10,getResources()),
+
+            List<String> stepIngredients = recipeDetail.getSteps().get(i).getIngredients();
+            List<String> stepEquipments = recipeDetail.getSteps().get(i).getEquipments();
+            String stepInstruction = recipeDetail.getSteps().get(i).getInstruction();
+
+            //set title
+            TextView stepTitle = new TextView(getContext());
+            stepTitle.setText("STEP "+ (i+1));
+            stepTitle.setTextColor(Color.BLACK);
+            stepTitle.setTextSize(16);
+            stepTitle.setPadding(dpToPx(20,getResources()), dpToPx(10,getResources()),
                     dpToPx(20,getResources()),dpToPx(10,getResources()));
 
+            //set ingredients
+            LinearLayout ingredientsLine = new LinearLayout(getContext());
+            TextView ingredientsTitle = new TextView(getContext());
+            ingredientsTitle.setText("Ingredients: ");
+            ingredientsTitle.setTextColor(Color.BLACK);
+            ingredientsTitle.setTextSize(16);
+            TextView ingredients = new TextView(getContext());
+            String ingredientsText = "";
+            for (int j=0; j<stepIngredients.size(); j++) {
+                if (j>0)
+                    ingredientsText += ", ";
+                ingredientsText += stepIngredients.get(j);
+            }
+            ingredients.setText(ingredientsText);
+            ingredients.setTextSize(16);
+            ingredientsLine.addView(ingredientsTitle);
+            ingredientsLine.addView(ingredients);
+
+            //set ingredients
+            LinearLayout equipmentsLine = new LinearLayout(getContext());
+            TextView equipmentsTitle = new TextView(getContext());
+            equipmentsTitle.setText("Equipments: ");
+            equipmentsTitle.setTextColor(Color.BLACK);
+            equipmentsTitle.setTextSize(16);
+            TextView equipments = new TextView(getContext());
+            String equipmentsText = "";
+            for (int j=0; j<stepEquipments.size(); j++) {
+                if (j>0)
+                    equipmentsText += ", ";
+                equipmentsText += stepEquipments.get(j);
+            }
+            equipments.setText(equipmentsText);
+            equipments.setTextSize(16);
+            equipmentsLine.addView(equipmentsTitle);
+            equipmentsLine.addView(equipments);
+
+            //set instruction
             TextView instruction = new TextView(getContext());
-            instruction.setText(recipeDetail.getSteps().get(i));
+            instruction.setText(stepInstruction);
             instruction.setTextSize(16);
-            instruction.setPadding(dpToPx(20,getResources()), 0,
+
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT);
+            lp.setMargins(dpToPx(20,getResources()), 0,
                     dpToPx(20,getResources()),dpToPx(10,getResources()));
 
-            myLayout.addView(step);
-            myLayout.addView(instruction);
+            myLayout.addView(stepTitle);
+            myLayout.addView(ingredientsLine, lp);
+            myLayout.addView(equipmentsLine, lp);
+            myLayout.addView(instruction, lp);
             container.addView(myLayout);
         }
     }

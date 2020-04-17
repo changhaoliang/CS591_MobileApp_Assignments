@@ -1,5 +1,7 @@
 package com.example.ingredieat.entity;
 
+import android.widget.ArrayAdapter;
+
 import com.google.android.material.chip.Chip;
 
 import java.util.ArrayList;
@@ -16,34 +18,32 @@ public class RecipeDetail {
     }
 
     public void getDetails(){
-//        ingredients = new ArrayList<>();
-//        missedIngredients = new ArrayList<>();
-//        equipments = new ArrayList<>();
-//        steps = new ArrayList<>();
+        ingredients = new ArrayList<>();
+        missedIngredients = new ArrayList<>();
+        steps = new ArrayList<>();
+
+        //test layout
+//        ingredients.add(new Ingredient(0, "light brown sugar",""));
+//        ingredients.add(new Ingredient(0,"granulated sugar",""));
+//        ingredients.add(new Ingredient(0,"baking powder",""));
+//        missedIngredients.add(new Ingredient(0,"baking soda",""));
+//        missedIngredients.add(new Ingredient(0, "pecans", ""));
 //
-//        //test layout
+//        Step testStep = new Step();
+//        List<String> ingredients = new ArrayList<>();
 //        ingredients.add("light brown sugar");
 //        ingredients.add("granulated sugar");
-//        ingredients.add("baking powder");
-//        missedIngredients.add("baking soda");
-//        missedIngredients.add("pecans");
-//
+//        List<String> equipments = new ArrayList<>();
 //        equipments.add("oven");
-//        equipments.add("whisk");
 //        equipments.add("bowl");
-//
-//        steps.add("Preheat the oven to 200 degrees F.");
-//        steps.add("Whisk together the flour, pecans, granulated sugar, light brown sugar, baking powder, baking soda, and salt in a medium bowl.");
-//        steps.add("Whisk together the eggs, buttermilk, butter and vanilla extract and vanilla bean in a small bowl.");
-//        steps.add("Add the egg mixture to the dry mixture and gently mix to combine. Do not overmix.");
-//        steps.add("Let the batter sit at room temperature for at least 15 minutes and up to 30 minutes before using.");
-
+//        testStep.setIngredients(ingredients);
+//        testStep.setEquipments(equipments);
+//        testStep.setInstruction("Preheat the oven to 200 degrees F.");
+//        steps.add(testStep);
         //getRequest()
-        //for each step, put equipment in equipment set
     }
 
     public List<Ingredient> getIngredients(){return ingredients;}
-    public List<Ingredient> getMissedIngredients(){return missedIngredients;}
-    public List<Equipment> getEquipments(){return equipments;}
+    public List<Ingredient> getMissed(){return missedIngredients;}
     public List<Step> getSteps(){return steps;}
 }
