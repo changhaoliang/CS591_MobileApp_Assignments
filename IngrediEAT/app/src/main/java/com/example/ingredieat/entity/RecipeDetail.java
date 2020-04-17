@@ -10,7 +10,6 @@ public class RecipeDetail {
     private List<Ingredient> ingredients;
     private List<Ingredient> missedIngredients;
     private List<Step> steps;
-    private List<Equipment> equipments;
 
     public RecipeDetail(){
         getDetails();
