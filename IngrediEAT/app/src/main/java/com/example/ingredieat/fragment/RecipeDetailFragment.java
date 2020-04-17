@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListView;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -17,25 +17,30 @@ import androidx.fragment.app.Fragment;
 import com.bumptech.glide.Glide;
 import com.example.ingredieat.R;
 import com.example.ingredieat.entity.Recipe;
+import com.example.ingredieat.entity.RecipeDetail;
+
+import java.util.Iterator;
+import java.util.List;
 
 
 public class RecipeDetailFragment extends Fragment {
-    private ListView ingredientList, stepList;
     private Recipe recipe;
-    private ImageView recipeImg;
-    private ImageButton like, liked;
-    private TextView title, likes, ratings;
-    private RatingBar rating;
+    private RecipeDetail recipeDetail;
 
-    private RecipeDetailFragmentListener RDFL;
+    private ImageButton like, liked;
+    private TextView likes, ratings;
+    private RatingBar rating, myRating;
+
+    //private RecipeDetailFragmentListener RDFL;
 
     public RecipeDetailFragment(Recipe recipe){
         this.recipe = recipe;
+        this.recipeDetail = new RecipeDetail(recipe);
     }
 
-    public interface RecipeDetailFragmentListener {
-        public void updateLikes();
-    }
+//    public interface RecipeDetailFragmentListener {
+//        public void updateLikes();
+//    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,16 +51,20 @@ public class RecipeDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View myView = inflater.inflate(R.layout.fragment_recipe_detail, container, false);
-        ingredientList = myView.findViewById(R.id.list_ingredients);
-        stepList = myView.findViewById(R.id.list_steps);
+        loadContents(R.id.layout_ingredients, recipeDetail.getUsedIngredients(), myView);
+        //loadContents(R.id.layout_missed, recipeDetail.getMissed(), myView);
+        loadContents(R.id.layout_equipments, recipeDetail.getEquipments(), myView);
+        loadContents(R.id.layout_steps, recipeDetail.getSteps(), myView);
 
-        recipeImg = myView.findViewById(R.id.detail_recipe_img);
+        ImageView recipeImg = myView.findViewById(R.id.detail_recipe_img);
+        TextView title = myView.findViewById(R.id.detail_recipe_title);
+
         like = myView.findViewById(R.id.detail_like);
         liked = myView.findViewById(R.id.detail_liked);
-        title = myView.findViewById(R.id.detail_recipe_title);
         likes = myView.findViewById(R.id.detail_like_count);
         ratings = myView.findViewById(R.id.detail_rating);
         rating = myView.findViewById(R.id.detail_rating_bar);
+        myRating = myView.findViewById(R.id.detail_my_rating_bar);
 
         Glide.with(this).load(recipe.getImg()).into(recipeImg);
         title.setText(recipe.getTitle());
@@ -63,12 +72,19 @@ public class RecipeDetailFragment extends Fragment {
         ratings.setText(String.valueOf(recipe.getStars()));
         rating.setRating(recipe.getStars());
 
-        rating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+        if (recipe.getRated()) {  //only one chance to rate
+            myRating.setRating(recipe.getUserStar());
+            myRating.setIsIndicator(true);
+        }
+
+        myRating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
                 if (b) {
                     recipe.updateStars(v);
                     rating.setRating(recipe.getStars());
+                    ratings.setText(String.valueOf(recipe.getStars()));
+                    myRating.setIsIndicator(true);
                 }
             }
         });
@@ -107,7 +123,15 @@ public class RecipeDetailFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        RDFL = (RecipeDetailFragmentListener) context;
+        //RDFL = (RecipeDetailFragmentListener) context;
     }
 
+    private void loadContents(int layoutId, List<String> contents, View myView){
+        LinearLayout myLayout = myView.findViewById(layoutId);
+        for (Iterator itr = contents.iterator(); itr.hasNext();){
+            TextView newLine = new TextView(getContext());
+            newLine.setText(itr.next().toString());
+            myLayout.addView(newLine);
+        }
+    }
 }

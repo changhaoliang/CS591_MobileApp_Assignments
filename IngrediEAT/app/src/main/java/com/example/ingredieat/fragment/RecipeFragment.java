@@ -20,7 +20,6 @@ import com.example.ingredieat.R;
 import com.example.ingredieat.adapter.RecipeAdapter;
 import com.example.ingredieat.entity.Recipe;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -37,7 +36,6 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.MyClickLis
     }
 
     public interface RecipeFragmentListener {
-        public void updateLikes();
         public void showDetails(Recipe recipe);
     }
 
@@ -58,8 +56,6 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.MyClickLis
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recipeAdapter = new RecipeAdapter(getContext(), recipes, this);
         recyclerView.setAdapter(recipeAdapter);
-
-        System.out.println("1:"+recipes.size());
 
         return myView;
     }

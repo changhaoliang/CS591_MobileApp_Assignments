@@ -46,7 +46,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:divider="@android:drawable/divider_horizontal_textfield"
+                android:orientation="vertical"
+                android:showDividers="middle">
 
                 <ImageView
                     android:id="@+id/detail_recipe_img"
@@ -63,33 +65,33 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingLeft="20dp"
-                        android:paddingRight="20dp"
                         android:paddingTop="10dp"
+                        android:paddingRight="20dp"
                         android:textColor="#000000"
                         android:textSize="20dp" />
 
                     <androidx.appcompat.widget.AppCompatRatingBar
                         android:id="@+id/detail_rating_bar"
+                        style="@android:style/Widget.Material.RatingBar.Indicator"
                         android:layout_width="200dp"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/detail_recipe_title"
                         android:layout_alignParentLeft="true"
-                        android:paddingLeft="20dp"
-                        android:paddingBottom="5dp"
+                        android:isIndicator="true"
                         android:numStars="5"
-                        style="@android:style/Widget.Material.RatingBar.Indicator"
-                        android:isIndicator="true"/>
+                        android:paddingLeft="20dp"
+                        android:paddingBottom="5dp" />
 
                     <TextView
                         android:id="@+id/detail_rating"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="233"
                         android:layout_below="@id/detail_recipe_title"
-                        android:layout_toRightOf="@+id/detail_rating_bar"
                         android:layout_marginTop="8dp"
-                        android:paddingBottom="5dp"
+                        android:layout_toRightOf="@+id/detail_rating_bar"
                         android:paddingLeft="5dp"
+                        android:paddingBottom="5dp"
+                        android:text="233"
                         android:textSize="16dp" />
 
                     <ImageButton
@@ -97,8 +99,8 @@
                         android:layout_width="25dp"
                         android:layout_height="25dp"
                         android:layout_below="@id/detail_recipe_title"
-                        android:layout_marginRight="5dp"
                         android:layout_marginTop="10dp"
+                        android:layout_marginRight="5dp"
                         android:layout_toLeftOf="@+id/detail_like_count"
                         android:background="@drawable/heart"
                         android:scaleType="centerCrop" />
@@ -121,28 +123,70 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@id/detail_recipe_title"
                         android:layout_alignParentRight="true"
-                        android:paddingBottom="5dp"
                         android:layout_marginTop="8dp"
                         android:paddingRight="20dp"
+                        android:paddingBottom="5dp"
                         android:textSize="16dp" />
 
                 </RelativeLayout>
 
-                <ListView
-                    android:id="@+id/list_ingredients"
+                <LinearLayout
+                    android:id="@+id/layout_ingredients"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
+                    <TextView
+                        android:id="@+id/title_Ingredients"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="INGREDIENTS"
+                        android:paddingLeft="20dp"
+                        android:paddingTop="10dp"
+                        android:paddingRight="20dp"
+                        android:textColor="#000000"
+                        android:textSize="16dp" />
 
-                </ListView>
+                </LinearLayout>
 
-                <ListView
-                    android:id="@+id/list_steps"
+                <LinearLayout
+                    android:id="@+id/layout_equipments"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
+                    <TextView
+                        android:id="@+id/title_equipments"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="EQUIPMENTS"
+                        android:paddingLeft="20dp"
+                        android:paddingTop="10dp"
+                        android:paddingRight="20dp"
+                        android:textColor="#000000"
+                        android:textSize="16dp" />
 
-                </ListView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_steps"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/title_stpes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="STEPS"
+                        android:paddingLeft="20dp"
+                        android:paddingTop="10dp"
+                        android:paddingRight="20dp"
+                        android:textColor="#000000"
+                        android:textSize="16dp"  />
+
+                </LinearLayout>
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -152,12 +196,12 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
                         android:text="Rate this recipe: "
-                        android:textSize="20dp"
-                        android:layout_gravity="center_horizontal" />
+                        android:textSize="20dp" />
 
                     <RatingBar
-                        android:id="@+id/ratingBar"
+                        android:id="@+id/detail_my_rating_bar"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal" />

@@ -1,6 +1,5 @@
 package com.example.ingredieat.acitivity;
 
-import androidx.appcompat.app.AppCompatActivity;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -10,12 +9,12 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.example.ingredieat.R;
 import com.example.ingredieat.entity.User;
 import com.example.ingredieat.setting.Setting;
+import com.example.ingredieat.utils.HttpUtils;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -84,7 +83,7 @@ public class LoginActivity extends BaseActivity {
             User user = new User(Setting.googleId, Setting.email, Setting.givenName, Setting.familyName);
             String jsonString = JSON.toJSONString(user);
 
-            postRequest("/login/findOrAddUser", jsonString, new Callback() {
+            HttpUtils.postRequest("/login/findOrAddUser", jsonString, new Callback() {
                 @Override
                 public void onFailure(@NotNull Call call, @NotNull IOException e) {
                     Log.d(TAG, "onFailure -- >" + e.toString());

@@ -8,6 +8,7 @@ import okhttp3.Callback;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -23,12 +24,15 @@ import com.example.ingredieat.R;
 import com.example.ingredieat.fragment.RecipeDetailFragment;
 import com.example.ingredieat.fragment.RecipeFragment;
 import com.example.ingredieat.fragment.UserFragment;
+import com.example.ingredieat.setting.Setting;
+import com.example.ingredieat.utils.HttpUtils;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -36,8 +40,7 @@ import java.util.Map;
 
 public class HomeActivity extends BaseActivity implements CategoryItemFragment.itemFragmentListener,
         IngredientsFragment.IngredientFragmentListener,
-        CartFragment.CartFragmentListner, RecipeFragment.RecipeFragmentListener,
-        RecipeDetailFragment.RecipeDetailFragmentListener{
+        CartFragment.CartFragmentListner, RecipeFragment.RecipeFragmentListener{
     private BottomNavigationView menuView;
 
     private static final long mBackPressThreshold = 3500;
@@ -124,7 +127,7 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
      */
     private void getAllIngredients() {
         String requestUrl = "/home/ingredients";
-        getRequest(requestUrl, new Callback() {
+        HttpUtils.getRequest(requestUrl, new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 Log.d(TAG, "onFailure -- >" + e.toString());
@@ -175,10 +178,31 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
 //                    "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs"));
 //            allRecipes.add(new Recipe("https://spoonacular.com/recipeImages/73420-312x231.jpg", "baking powder"));
 //        }
-//       recipeFragment.setRecipes(allRecipes);
+        //recipeFragment.setRecipes(allRecipes);
 
+        // Get the selected ingredients of the current user.
         Map<String, String> params = new HashMap<>();
-        getRequest("/home/listRecipesByIngredientsNames", params, new Callback() {
+        StringBuilder stringBuilder = new StringBuilder();
+        List<String> selectedIngredientsNames = new ArrayList<>();
+        Map<String, HashSet<String>> selectedTotalIngredients = categoryItemFragment.getSelectedTotalIngredients();
+
+        for(String category: selectedTotalIngredients.keySet()) {
+            selectedIngredientsNames.addAll(selectedTotalIngredients.get(category));
+        }
+
+        if(!selectedIngredientsNames.isEmpty()) {
+            Collections.sort(selectedIngredientsNames);
+            for(String ingredientsNames: selectedIngredientsNames) {
+                stringBuilder.append(ingredientsNames).append(",");
+            }
+            stringBuilder.deleteCharAt(stringBuilder.length() - 1);
+        }
+
+        // Set up the parameters
+        params.put("selectedIngredients", stringBuilder.toString());
+        params.put("googleId", Setting.googleId);
+
+        HttpUtils.getRequest("/home/listRecipesByIngredientsNames", params, new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 Log.d(TAG, "onFailure -- >" + e.toString());
@@ -286,7 +310,4 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
         return recipes;
     }
 
-    @Override
-    public void updateLikes() {
-    }
 }
