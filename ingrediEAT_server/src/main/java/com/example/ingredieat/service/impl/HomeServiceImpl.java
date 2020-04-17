@@ -2,14 +2,11 @@ package com.example.ingredieat.service.impl;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.example.ingredieat.dao.IngredientDao;
-import com.example.ingredieat.dao.RecipeDao;
-import com.example.ingredieat.dao.UserRecipeDao;
-import com.example.ingredieat.entity.Ingredient;
-import com.example.ingredieat.entity.Recipe;
-import com.example.ingredieat.entity.UserRecipe;
+import com.example.ingredieat.dao.*;
+import com.example.ingredieat.entity.*;
 import com.example.ingredieat.service.HomeService;
 import com.example.ingredieat.utils.ApiKeyUtils;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -30,6 +27,19 @@ public class HomeServiceImpl implements HomeService {
     @Autowired
     UserRecipeDao userRecipeDao;
 
+    @Autowired
+    StepDao stepDao;
+
+    @Autowired
+    EquipmentDao equipmentDao;
+
+    @Autowired
+    StepIngredientDao stepIngredientDao;
+
+    @Autowired
+    StepEquipmentDao stepEquipmentDao;
+
+
 
     @Override
     public List<Ingredient> listAllIngredients() {
@@ -39,6 +49,7 @@ public class HomeServiceImpl implements HomeService {
     @Override
     public List<Recipe> listRecipesByIngredientsName(String googleId, String selectedIngredients) {
         List<Recipe> allRecipes = new ArrayList<>();
+
         RestTemplate rt = new RestTemplate();
         if(!selectedIngredients.isEmpty()) {
             String url = String.format("https://api.spoonacular.com/recipes/findByIngredients?ingredients=%s&apiKey=%s", selectedIngredients, ApiKeyUtils.getApiKey());
@@ -48,7 +59,82 @@ public class HomeServiceImpl implements HomeService {
                 for(int i = 0; i < recipesInfo.size(); i++) {
                     JSONObject recipeInfo = recipesInfo.getJSONObject(i);
                     int id = recipeInfo.getInteger("id");
+                    Recipe recipe = findRecipeByGoogleIdAndRecipeId(googleId, id);
+                    if(recipe == null) {
+                        // Create a new recipe object;
+                        recipe = new Recipe();
+                        // Set up the basic information;
+                        recipe.setId(id);
+                        recipe.setImgUrl(recipeInfo.getString("image"));
+                        recipe.setTitle(recipeInfo.getString("title"));
+                        recipe.setLikes(0);
+                        recipe.setRatings(0);
+                        recipe.setStars(0);
+                        // Set up the information related to the user
+                        recipe.setLiked(false);
+                        recipe.setRated(false);
+                        recipe.setUserStars(0);
+                        // Create a new recipeDetail object;
+                        RecipeDetail recipeDetail = new RecipeDetail();
+                        // Get the data of steps of the recipe
+                        url = String.format("https://api.spoonacular.com/recipes/%d/analyzedInstructions?apiKey=%s", id, ApiKeyUtils.getApiKey());
+                        data = rt.getForObject(url, String.class);
+                        if(data != null) {
+                            JSONArray info = JSONArray.parseArray(data);
+                            if(!info.isEmpty()) {
+                                JSONArray stepsInfo = info.getJSONObject(0).getJSONArray("steps");
+                                List<Step> steps = new ArrayList<>();
+                                for (int j = 0; j < stepsInfo.size(); j++) {
+                                    Step step = new Step();
+                                    JSONObject stepInfo = stepsInfo.getJSONObject(j);
+                                    // Get the equipments of the current step
+                                    JSONArray equipmentsInfo = stepInfo.getJSONArray("equipment");
+                                    List<Equipment> equipments = new ArrayList<>();
+                                    for (int t = 0; t < equipmentsInfo.size(); t++) {
+                                        JSONObject equipmentInfo = equipmentsInfo.getJSONObject(t);
+                                        Equipment equipment = new Equipment(equipmentInfo.getInteger("id"), equipmentInfo.getString("name"));
+                                        equipments.add(equipment);
+                                    }
+                                    step.setEquipments(equipments);
 
+                                    // Get the ingredients of the current step
+                                    JSONArray ingredientsInfo = stepInfo.getJSONArray("ingredients");
+                                    List<Ingredient> ingredients = new ArrayList<>();
+                                    for (int t = 0; t < ingredientsInfo.size(); t++) {
+                                        JSONObject ingredientInfo = ingredientsInfo.getJSONObject(t);
+                                        Ingredient ingredient = new Ingredient(ingredientInfo.getInteger("id"), ingredientInfo.getString("name"));
+                                        ingredients.add(ingredient);
+                                    }
+                                    step.setIngredients(ingredients);
+                                    steps.add(step);
+                                    recipeDetail.setSteps(steps);
+                                }
+                            }
+                        }
+                        recipe.setRecipeDetail(recipeDetail);
+                    }
+
+                    // Get the dynamic usedIngredients data.
+                    List<Ingredient> usedIngredients = new ArrayList<>();
+                    JSONArray usedIngredientsInfo = recipeInfo.getJSONArray("usedIngredients");
+                    for(int j = 0; j < usedIngredientsInfo.size(); j++) {
+                        JSONObject usedIngredientInfo = usedIngredientsInfo.getJSONObject(j);
+                        Ingredient ingredient = new Ingredient(usedIngredientInfo.getInteger("id"), usedIngredientInfo.getString("name"), usedIngredientInfo.getString("aisle"));
+                        usedIngredients.add(ingredient);
+                    }
+                    recipe.getRecipeDetail().setUsedIngredients(usedIngredients);
+
+                    // Get the dynamic missedIngredients data.
+                   List<Ingredient> missedIngredients = new ArrayList<>();
+                   JSONArray missedIngredientsInfo = recipeInfo.getJSONArray("missedIngredients");
+                    for(int j = 0; j < missedIngredientsInfo.size(); j++) {
+                        JSONObject missedIngredientInfo = missedIngredientsInfo.getJSONObject(j);
+                        Ingredient ingredient = new Ingredient(missedIngredientInfo.getInteger("id"), missedIngredientInfo.getString("name"), missedIngredientInfo.getString("aisle"));
+                        missedIngredients.add(ingredient);
+                    }
+                    recipe.getRecipeDetail().setMissedIngredients(missedIngredients);
+
+                    allRecipes.add(recipe);
                 }
             }
         }
@@ -56,19 +142,38 @@ public class HomeServiceImpl implements HomeService {
     }
 
     /**
-     * This method is used to find a complete Recipe object by the given google Id and recipe Id.
-     * @param id
-     * @return
+     * This method is used to find a Recipe object by the given google Id and recipe Id.
      */
     public Recipe findRecipeByGoogleIdAndRecipeId(String googleId, int recipeId) {
         Recipe recipe = recipeDao.getRecipeById(recipeId);
         if(recipe != null) {
             UserRecipe userRecipe = userRecipeDao.findUserRecipe(googleId, recipeId);
-            recipe.setLiked(userRecipe.isLiked());
-            recipe.setLiked(userRecipe.isRated());
-            recipe.set
-        }
+            if(userRecipe != null) {
+                recipe.setLiked(userRecipe.isLiked());
+                recipe.setLiked(userRecipe.isRated());
+                recipe.setUserStars(userRecipe.getUserStars());
+            }
+            List<Step> steps = stepDao.listStepsByRecipeId(recipeId);
+            if(steps != null) {
+                for(Step step: steps) {
+                    // Find the ingredients of the current step;
+                    List<Ingredient> ingredients = new ArrayList<>();
+                    List<Integer> ingredientsIds = stepIngredientDao.listIngredientsIdsByStepId(step.getId());
+                    for(int id: ingredientsIds) {
+                        ingredients.add(ingredientDao.getIngredientById(id));
+                    }
+                    step.setIngredients(ingredients);
 
+                    // Find the equipments of the current step;
+                    List<Equipment> equipments = new ArrayList<>();
+                    List<Integer> equipmentsIds = stepEquipmentDao.listEquipmentsIdsByStepId(step.getId());
+                    for(int id: equipmentsIds) {
+                        equipments.add(equipmentDao.getEquipmentById(id));
+                    }
+                    step.setEquipments(equipments);
+                }
+            }
+        }
         return recipe;
     }
 }

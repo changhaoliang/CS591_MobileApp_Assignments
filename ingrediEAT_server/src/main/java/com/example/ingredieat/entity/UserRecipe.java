@@ -8,5 +8,5 @@ public class UserRecipe {
     private int recipeId;
     private boolean liked;
     private boolean rated;
-    private float userStar;
+    private float userStars;
 }

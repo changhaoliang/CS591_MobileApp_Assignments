@@ -8,7 +8,7 @@ public class Recipe {
     private String imgUrl;
     private String title;
     private int likes, ratings;
-    private boolean liked;
-    private float stars, userStarts;
+    private boolean liked, rated;
+    private float stars, userStars;
     private RecipeDetail recipeDetail;
 }

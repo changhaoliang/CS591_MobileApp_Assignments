@@ -3,8 +3,6 @@ package com.example.ingredieat.setting;
 import android.content.res.Resources;
 import android.util.TypedValue;
 
-import java.util.HashMap;
-import java.util.Map;
 
 public class Setting {
     public static String PREF_NAME = "Preference";

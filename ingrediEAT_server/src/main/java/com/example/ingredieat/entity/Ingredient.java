@@ -8,4 +8,15 @@ public class Ingredient {
     private int id;
     private String name;
     private String category;
+
+    public Ingredient(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public Ingredient(int id, String name, String category) {
+        this.id = id;
+        this.name = name;
+        this.category = category;
+    }
 }

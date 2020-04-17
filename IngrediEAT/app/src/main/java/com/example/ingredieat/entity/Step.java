@@ -3,6 +3,7 @@ package com.example.ingredieat.entity;
 import java.util.List;
 
 public class Step {
+    int id;
     private List<String> ingredients;
     private List<String> equipments;
     private String instruction;

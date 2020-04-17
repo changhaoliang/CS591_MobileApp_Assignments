@@ -11,4 +11,7 @@ public interface IngredientDao {
     @Select("SELECT * FROM `ingredient` ORDER BY `name` WHERE `flag` = 1")
     List<Ingredient> listAllIngredients();
 
+    @Select("SELECT * FROM `ingredient` WHERE `id` = #{id}")
+    Ingredient getIngredientById(int id);
+
 }
