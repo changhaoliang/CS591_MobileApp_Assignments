@@ -135,72 +135,72 @@ public class RecipeDetailFragment extends Fragment {
     private void loadIngredients(View myView){
         ChipGroup chipsGroup = (ChipGroup) myView.findViewById(R.id.chip_ingredients);
         String hintText;
-        for (String item : recipeDetail.getIngredients()){
-            final Chip chip = new Chip(getContext());
-            ChipDrawable chipDrawable = ChipDrawable.createFromAttributes(getContext(),
-                    null, 0, R.style.Widget_MaterialComponents_Chip_Choice);
-            chip.setChipDrawable(chipDrawable);
-            chip.setLayoutParams((new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)));
-            chip.setText(item);
-            chipsGroup.addView(chip);
-            chip.setChecked(true);
-            chip.setClickable(false);
-        }
-        if (recipeDetail.getMissed().size()>0) {
-            hintText = "You miss " + recipeDetail.getMissed().size() + " ingredients: ";
-            for (int i = 0; i < recipeDetail.getMissed().size(); i++) {
-                final Chip chip = new Chip(getContext());
-                ChipDrawable chipDrawable = ChipDrawable.createFromAttributes(getContext(),
-                        null, 0, R.style.Widget_MaterialComponents_Chip_Choice);
-                chip.setChipDrawable(chipDrawable);
-                chip.setLayoutParams((new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)));
-                chip.setText(recipeDetail.getMissed().get(i));
-                if (i > 0)
-                    hintText += ", ";
-                hintText += recipeDetail.getMissed().get(i);
-                chipsGroup.addView(chip);
-                chip.setChecked(false);
-                chip.setClickable(false);
-            }
-        }
-        else
-            hintText = "You have all "+recipeDetail.getIngredients().size()+" ingredients!";
+//        for (String item : recipeDetail.getIngredients()){
+//            final Chip chip = new Chip(getContext());
+//            ChipDrawable chipDrawable = ChipDrawable.createFromAttributes(getContext(),
+//                    null, 0, R.style.Widget_MaterialComponents_Chip_Choice);
+//            chip.setChipDrawable(chipDrawable);
+//            chip.setLayoutParams((new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)));
+//            chip.setText(item);
+//            chipsGroup.addView(chip);
+//            chip.setChecked(true);
+//            chip.setClickable(false);
+//        }
+//        if (recipeDetail.getMissed().size()>0) {
+//            hintText = "You miss " + recipeDetail.getMissed().size() + " ingredients: ";
+//            for (int i = 0; i < recipeDetail.getMissed().size(); i++) {
+//                final Chip chip = new Chip(getContext());
+//                ChipDrawable chipDrawable = ChipDrawable.createFromAttributes(getContext(),
+//                        null, 0, R.style.Widget_MaterialComponents_Chip_Choice);
+//                chip.setChipDrawable(chipDrawable);
+//                chip.setLayoutParams((new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)));
+//                chip.setText(recipeDetail.getMissed().get(i));
+//                if (i > 0)
+//                    hintText += ", ";
+//                hintText += recipeDetail.getMissed().get(i);
+//                chipsGroup.addView(chip);
+//                chip.setChecked(false);
+//                chip.setClickable(false);
+//            }
+//        }
+//        else
+//            hintText = "You have all "+recipeDetail.getIngredients().size()+" ingredients!";
 
-        TextView hint = myView.findViewById(R.id.hint_ingredients);
-        hint.setText(hintText);
+//        TextView hint = myView.findViewById(R.id.hint_ingredients);
+//        hint.setText(hintText);
     }
 
     private void loadEquipment(View myView){
         LinearLayout myLayout = myView.findViewById(R.id.layout_equipments);
-        for (Iterator itr = recipeDetail.getEquipments().iterator(); itr.hasNext();){
-            TextView newLine = new TextView(getContext());
-            newLine.setText(itr.next().toString());
-            newLine.setTextSize(16);
-            myLayout.addView(newLine);
-        }
+//        for (Iterator itr = recipeDetail.getEquipments().iterator(); itr.hasNext();){
+//            TextView newLine = new TextView(getContext());
+//            newLine.setText(itr.next().toString());
+//            newLine.setTextSize(16);
+//            myLayout.addView(newLine);
+//        }
     }
 
     private void loadSteps(View myView){
         LinearLayout container = myView.findViewById(R.id.layout_steps);
-        for (int i=0; i< recipeDetail.getSteps().size(); i++){
-            LinearLayout myLayout = new LinearLayout(getContext());
-            myLayout.setOrientation(LinearLayout.VERTICAL);
-            TextView step = new TextView(getContext());
-            step.setText("STEP "+ (i+1));
-            step.setTextColor(Color.BLACK);
-            step.setTextSize(16);
-            step.setPadding(dpToPx(20,getResources()), dpToPx(10,getResources()),
-                    dpToPx(20,getResources()),dpToPx(10,getResources()));
-
-            TextView instruction = new TextView(getContext());
-            instruction.setText(recipeDetail.getSteps().get(i));
-            instruction.setTextSize(16);
-            instruction.setPadding(dpToPx(20,getResources()), 0,
-                    dpToPx(20,getResources()),dpToPx(10,getResources()));
-
-            myLayout.addView(step);
-            myLayout.addView(instruction);
-            container.addView(myLayout);
-        }
+//        for (int i=0; i< recipeDetail.getSteps().size(); i++){
+//            LinearLayout myLayout = new LinearLayout(getContext());
+//            myLayout.setOrientation(LinearLayout.VERTICAL);
+//            TextView step = new TextView(getContext());
+//            step.setText("STEP "+ (i+1));
+//            step.setTextColor(Color.BLACK);
+//            step.setTextSize(16);
+//            step.setPadding(dpToPx(20,getResources()), dpToPx(10,getResources()),
+//                    dpToPx(20,getResources()),dpToPx(10,getResources()));
+//
+//            TextView instruction = new TextView(getContext());
+//            instruction.setText(recipeDetail.getSteps().get(i));
+//            instruction.setTextSize(16);
+//            instruction.setPadding(dpToPx(20,getResources()), 0,
+//                    dpToPx(20,getResources()),dpToPx(10,getResources()));
+//
+//            myLayout.addView(step);
+//            myLayout.addView(instruction);
+//            container.addView(myLayout);
+//        }
     }
 }
