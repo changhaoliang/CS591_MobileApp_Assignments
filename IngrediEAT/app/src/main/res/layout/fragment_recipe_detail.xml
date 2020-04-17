@@ -140,17 +140,42 @@
                         android:id="@+id/title_Ingredients"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="INGREDIENTS"
                         android:paddingLeft="20dp"
                         android:paddingTop="10dp"
                         android:paddingRight="20dp"
+                        android:text="INGREDIENTS"
                         android:textColor="#000000"
+                        android:textSize="16dp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <com.google.android.material.chip.ChipGroup
+                            android:id="@+id/chip_ingredients"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginRight="20dp"
+                            android:layout_marginBottom="10dp">
+
+                        </com.google.android.material.chip.ChipGroup>
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/hint_ingredients"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="20dp"
+                        android:paddingBottom="10dp"
+                        android:paddingRight="20dp"
                         android:textSize="16dp" />
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/layout_equipments"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
@@ -159,12 +184,24 @@
                         android:id="@+id/title_equipments"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="EQUIPMENTS"
                         android:paddingLeft="20dp"
                         android:paddingTop="10dp"
                         android:paddingRight="20dp"
+                        android:text="EQUIPMENTS"
                         android:textColor="#000000"
                         android:textSize="16dp" />
+
+                    <LinearLayout
+                        android:id="@+id/layout_equipments"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginBottom="10dp"
+                        android:orientation="vertical">
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
@@ -172,20 +209,9 @@
                     android:id="@+id/layout_steps"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/title_stpes"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="STEPS"
-                        android:paddingLeft="20dp"
-                        android:paddingTop="10dp"
-                        android:paddingRight="20dp"
-                        android:textColor="#000000"
-                        android:textSize="16dp"  />
-
-                </LinearLayout>
+                    android:orientation="vertical"
+                    android:divider="@android:drawable/divider_horizontal_textfield"
+                    android:showDividers="middle"/>
 
 
                 <LinearLayout
@@ -198,6 +224,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:text="Rate this recipe: "
+                        android:textColor="#000000"
                         android:textSize="20dp" />
 
                     <RatingBar

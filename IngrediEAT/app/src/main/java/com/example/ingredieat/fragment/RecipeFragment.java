@@ -24,6 +24,8 @@ import com.example.ingredieat.base.Recipe;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.ingredieat.setting.Setting.dpToPx;
+
 
 public class RecipeFragment extends Fragment implements RecipeAdapter.MyClickListener{
     private RecyclerView recyclerView;
@@ -81,7 +83,7 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.MyClickLis
         private final int columns = 2;
 
         public GridSpacingItemDecoration() {
-            this.spacing = dpToPx(10);  //10dp
+            this.spacing = dpToPx(10, getResources());  //10dp
         }
 
         @Override
@@ -103,10 +105,5 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.MyClickLis
                 outRect.top = spacing;
             outRect.bottom = spacing;
         }
-    }
-
-    private int dpToPx(int dp) {
-        Resources r = getResources();
-        return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics()));
     }
 }
