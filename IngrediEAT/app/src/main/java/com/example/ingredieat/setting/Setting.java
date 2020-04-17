@@ -1,5 +1,8 @@
 package com.example.ingredieat.setting;
 
+import android.content.res.Resources;
+import android.util.TypedValue;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,5 +27,9 @@ public class Setting {
         public final static String account_given_name = "account given name";
         public final static String account_family_name = "account family name";
         public final static String if_signin_succ = "if_signin_succ";
+    }
+
+    public static int dpToPx(int dp, Resources r) {
+        return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics()));
     }
 }

@@ -39,7 +39,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeHold
     @Override
     public RecipeHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.recipe_card, parent, false);
+                .inflate(R.layout.recipe, parent, false);
 
         return new RecipeHolder(view);
     }
@@ -113,7 +113,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeHold
             title = view.findViewById(R.id.recipe_title);
             likes = view.findViewById(R.id.like_count);
             rating = view.findViewById(R.id.rating_bar);
-            cardView = view.findViewById(R.id.recipe_card);
+            cardView = view.findViewById(R.id.recipe);
         }
     }
 
