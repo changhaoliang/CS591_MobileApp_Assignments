@@ -1,6 +1,7 @@
 package com.example.ingredieat.acitivity;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import okhttp3.Call;
@@ -87,55 +88,53 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        if (fragmentManager.getBackStackEntryCount() > 1) {
-            getSupportFragmentManager().popBackStack();
-        }
-
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.hide(categoryItemFragment);
-
-
         System.out.println(fragmentManager.getBackStackEntryCount());
-
+        if (fragmentManager.getBackStackEntryCount() > 1) {
+            getSupportFragmentManager().popBackStackImmediate();
+        }
+        System.out.println(fragmentManager.getBackStackEntryCount());
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+//        fragmentTransaction.hide(categoryItemFragment);
         switch (item.getItemId()) {
             case R.id.fridge:
                 if (Setting.currentMenu != R.id.fridge) {
                     Setting.currentMenu = R.id.fridge;
                     System.out.println("1212142");
-                    if (fragmentManager.getBackStackEntryCount() > 2) {
-                        getSupportFragmentManager().popBackStack();
-                    }
+//                    if (fragmentManager.getBackStackEntryCount() > 2) {
+//                        getSupportFragmentManager().popBackStack();
+//                    }
                     System.out.println("pantry");
-                    fragmentTransaction.show(categoryItemFragment);
-                }
-
-                break;
+                    fragmentTransaction.replace(R.id.fragment_container, categoryItemFragment);
+                    break;
+                } else
+                    return true;
             case R.id.cart:
                 if (Setting.currentMenu != R.id.cart) {
                     Setting.currentMenu = R.id.cart;
+                    System.out.println("cart");
                     fragmentTransaction.replace(R.id.fragment_container, cartFragment);
                     HashMap<String, HashSet<String>> ingredients = categoryItemFragment.getSelectedTotalIngredients();
                     cartFragment.setTotalIngredients(ingredients);
-                }
-                break;
+                    break;
+                } else
+                    return true;
             case R.id.cook:
                 if (Setting.currentMenu != R.id.cook) {
                     Setting.currentMenu = R.id.cook;
                     getAllRecipes();
                     fragmentTransaction.replace(R.id.fragment_container, recipeFragment);
-                }
-                break;
-
-
+                    break;
+                } else
+                    return true;
             case R.id.user:
                 if (Setting.currentMenu != R.id.user) {
                     Setting.currentMenu = R.id.user;
                     fragmentTransaction.replace(R.id.fragment_container, userFragment);
-                }
-
-                break;
+                    break;
+                } else
+                    return true;
         }
-        fragmentTransaction.addToBackStack(null);
+//        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
 
 //                if (item.getItemId() == R.id.cook){
@@ -269,7 +268,7 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
     @Override
     public void onBackPressed() {
         if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
-            menuView.setSelectedItemId(R.id.fridge);
+//            menuView.setSelectedItemId(R.id.fridge);
             getSupportFragmentManager().popBackStack();
 
 
