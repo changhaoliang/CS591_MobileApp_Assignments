@@ -17,7 +17,7 @@ public class Setting {
     public static int count;
     public static boolean longClickFlag;
     public static boolean shortClickFlag;
-
+    public static int currentMenu = -1;
 
     public final static class Strings {
         public final static String account_id = "account_id";
