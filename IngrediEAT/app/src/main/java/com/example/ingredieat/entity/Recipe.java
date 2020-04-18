@@ -8,7 +8,7 @@ public class Recipe {
     private boolean liked;//flag if liked
     private boolean rated; //user has only one chance to rate a recipe
     private float stars, userStars;//stars - total average rating score, userStars - user's rating score
-    private RecipeDetail details;
+    private RecipeDetail recipeDetail;
 
     public Recipe() {
 
@@ -65,8 +65,8 @@ public class Recipe {
         this.userStars = userStars;
     }
 
-    public void setDetails(RecipeDetail details) {
-        this.details = details;
+    public void setRecipeDetail(RecipeDetail recipeDetail) {
+        this.recipeDetail = recipeDetail;
     }
 
     public String getTitle(){return title;}
@@ -90,11 +90,11 @@ public class Recipe {
         stars = (stars*ratings+myStar)/(++ratings);
     }
 
-    public RecipeDetail getDetails(){
-        if (details == null) {
-            this.details = new RecipeDetail();
-            details.getDetails();
+    public RecipeDetail getRecipeDetail(){
+        if (recipeDetail == null) {
+            this.recipeDetail = new RecipeDetail();
+            recipeDetail.getDetails();
         }
-        return details;
+        return recipeDetail;
     }
 }

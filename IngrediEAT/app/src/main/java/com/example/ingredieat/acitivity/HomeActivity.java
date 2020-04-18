@@ -8,8 +8,11 @@ import okhttp3.Callback;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
+import android.annotation.SuppressLint;
 import android.nfc.Tag;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.MenuItem;
 
@@ -152,34 +155,15 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
                                 allIngredients.put(category, categoryIngredients);
                             }
                         }
-
-                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                        fragmentTransaction.add(R.id.fragment_container, categoryItemFragment, "item fragment");
-                        fragmentTransaction.addToBackStack(null);
-                        fragmentTransaction.commit();
                     }
+                    Message msg = Message.obtain();
+                    handler1.sendMessage(msg);
                 }
             }
         });
     }
 
     private void getAllRecipes(){
-        //test
-//        for(int i=0; i<10; i++) {
-//            allRecipes.add(new Recipe("https://spoonacular.com/recipeImages/716429-556x370.jpg",
-//                    "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs", 12000, 4.5f));
-//            allRecipes.add(new Recipe("https://spoonacular.com/recipeImages/716429-556x370.jpg",
-//                    "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs", 200, 3));
-//            allRecipes.add(new Recipe("https://spoonacular.com/recipeImages/73420-312x231.jpg", "baking powder"));
-//            allRecipes.add(new Recipe("https://spoonacular.com/recipeImages/716429-556x370.jpg",
-//                    "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs"));
-//            allRecipes.add(new Recipe("https://spoonacular.com/recipeImages/73420-312x231.jpg", "baking powder"));
-//            allRecipes.add(new Recipe("https://spoonacular.com/recipeImages/716429-556x370.jpg",
-//                    "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs"));
-//            allRecipes.add(new Recipe("https://spoonacular.com/recipeImages/73420-312x231.jpg", "baking powder"));
-//        }
-//        recipeFragment.setRecipes(allRecipes);
-
         // Get the selected ingredients of the current user.
         Map<String, String> params = new HashMap<>();
         StringBuilder stringBuilder = new StringBuilder();
@@ -193,16 +177,16 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
         if(!selectedIngredientsNames.isEmpty()) {
             Collections.sort(selectedIngredientsNames);
             for(String ingredientsNames: selectedIngredientsNames) {
-                stringBuilder.append(ingredientsNames).append(",");
+                stringBuilder.append(ingredientsNames).append(",+");
             }
-            stringBuilder.deleteCharAt(stringBuilder.length() - 1);
+            stringBuilder.delete(stringBuilder.length()-2, stringBuilder.length());
         }
-
         // Set up the parameters
-        params.put("selectedIngredients", stringBuilder.toString());
         params.put("googleId", Setting.googleId);
+        params.put("selectedIngredients", stringBuilder.toString());
 
-        HttpUtils.getRequest("/home/listRecipesByIngredientsNames", params, new Callback() {
+
+        HttpUtils.postRequest("/home/listRecipesByIngredientsNames", params, new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
                 Log.d(TAG, "onFailure -- >" + e.toString());
@@ -216,7 +200,8 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
                         String data = body.string();
                         // Here we use Fastjson to parse json string
                         allRecipes = JSON.parseArray(data, Recipe.class);
-                        recipeFragment.setRecipes(allRecipes);
+                        Message msg = Message.obtain();
+                        handler2.sendMessage(msg);
                     }
                 }
             }
@@ -237,7 +222,6 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
 
-            // 此处替换成从后端存好的数据根据类别获取对应的ingredients
             List<Ingredient> categoryIngredients = allIngredients.get(category.getCategoryValue());
             ingredientsFragment.setIngredients(categoryIngredients);
             ingredientsFragment.setCategory(category);
@@ -293,21 +277,24 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
         categoryItemFragment.setSelectedTotalIngredients(totalIngredients);
     }
 
-    public List<Recipe> searchRecipes(){
-        List<Recipe> recipes = new ArrayList<>();
-        //test
-        recipes.add(new Recipe("https://spoonacular.com/recipeImages/716429-556x370.jpg",
-                "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs", 12000, 4.5f));
-        recipes.add(new Recipe("https://spoonacular.com/recipeImages/716429-556x370.jpg",
-                "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs", 200, 3));
-        recipes.add(new Recipe("https://spoonacular.com/recipeImages/73420-312x231.jpg", "baking powder"));
-        recipes.add(new Recipe("https://spoonacular.com/recipeImages/716429-556x370.jpg",
-                "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs"));
-        recipes.add(new Recipe("https://spoonacular.com/recipeImages/73420-312x231.jpg", "baking powder"));
-        recipes.add(new Recipe("https://spoonacular.com/recipeImages/716429-556x370.jpg",
-                "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs"));
-        recipes.add(new Recipe("https://spoonacular.com/recipeImages/73420-312x231.jpg", "baking powder"));
-        return recipes;
-    }
+    @SuppressLint("HandlerLeak")
+    private Handler handler1 = new Handler() {
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.add(R.id.fragment_container, categoryItemFragment, "item fragment");
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+        }
+    };
 
+
+    @SuppressLint("HandlerLeak")
+    private Handler handler2 = new Handler() {
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            super.handleMessage(msg);
+            recipeFragment.setRecipes(allRecipes);
+        }
+    };
 }

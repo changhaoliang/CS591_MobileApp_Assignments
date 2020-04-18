@@ -8,7 +8,7 @@ import java.util.List;
 @Mapper
 public interface IngredientDao {
 
-    @Select("SELECT * FROM `ingredient` ORDER BY `name` WHERE `flag` = 1")
+    @Select("SELECT * FROM `ingredient`  WHERE `flag` = 1 ORDER BY `name`")
     List<Ingredient> listAllIngredients();
 
     @Select("SELECT * FROM `ingredient` WHERE `id` = #{id}")

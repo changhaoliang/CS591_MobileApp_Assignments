@@ -3,13 +3,21 @@ package com.example.ingredieat.entity;
 import java.util.List;
 
 public class Step {
-    int id;
+    private int id;
     private List<String> ingredients;
     private List<String> equipments;
     private String instruction;
 
     public Step() {
 
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public List<String> getIngredients() {

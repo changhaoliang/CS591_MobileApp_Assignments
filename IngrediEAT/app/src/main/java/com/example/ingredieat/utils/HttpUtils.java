@@ -22,7 +22,7 @@ public class HttpUtils {
 
     // GET request, have params
     public static void getRequest(String requestUrl, Map<String, String> params, Callback callback)  {
-        // build a okHttpClient
+        // create a okHttpClient
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .connectTimeout(10000, TimeUnit.MILLISECONDS)
                 .build();
@@ -55,18 +55,19 @@ public class HttpUtils {
     // POST request, pass a map
     public static void postRequest(String requestUrl, Map<String, String> params, Callback callback) {
         String jsonString = JSON.toJSONString(params);
+        System.out.println(jsonString);
         postRequest(requestUrl, jsonString, callback);
     }
 
     // POST request, pass a json String
     public static void postRequest(String requestUrl, String jsonString, Callback callback) {
 
-        // build a okHttpClient
+        // create a okHttpClient
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                .connectTimeout(10000, TimeUnit.MILLISECONDS)
+//                .connectTimeout(10000, TimeUnit.MILLISECONDS)
                 .build();
 
-        MediaType mediaType = MediaType.parse("application/json");
+        MediaType mediaType = MediaType.get("application/json; charset=utf-8");
         RequestBody requestBody = RequestBody.create(jsonString, mediaType);
 
         String url = BASE_URL + requestUrl;

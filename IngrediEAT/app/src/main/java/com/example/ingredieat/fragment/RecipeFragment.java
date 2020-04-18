@@ -20,6 +20,7 @@ import com.example.ingredieat.R;
 import com.example.ingredieat.adapter.RecipeAdapter;
 import com.example.ingredieat.entity.Recipe;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.ingredieat.setting.Setting.dpToPx;
@@ -38,7 +39,7 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.MyClickLis
     }
 
     public interface RecipeFragmentListener {
-        public void showDetails(Recipe recipe);
+        void showDetails(Recipe recipe);
     }
 
     @Override
@@ -56,6 +57,7 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.MyClickLis
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.addItemDecoration(new GridSpacingItemDecoration());
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recipes = new ArrayList<>();
         recipeAdapter = new RecipeAdapter(getContext(), recipes, this);
         recyclerView.setAdapter(recipeAdapter);
 
@@ -71,14 +73,10 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.MyClickLis
 
     public void setRecipes(List<Recipe> recipes){
         this.recipes = recipes;
+        recipeAdapter.setRecipes(recipes);
+        recipeAdapter.notifyDataSetChanged();
         System.out.println("2:"+recipes.size());
     }
-
-//    public void updateRecipes(List<Recipe> recipes) {
-//        setRecipes(recipes);
-//        RecipeAdapter recipeAdapter = new RecipeAdapter(getContext(), recipes, this);
-//        recyclerView.setAdapter(recipeAdapter);
-//    }
 
     public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
 

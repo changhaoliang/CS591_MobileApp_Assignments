@@ -47,7 +47,7 @@ public class HomeServiceImpl implements HomeService {
     }
 
     @Override
-    public List<Recipe> listRecipesByIngredientsName(String googleId, String selectedIngredients) {
+    public List<Recipe> listRecipesByIngredientsNames(String googleId, String selectedIngredients) {
         List<Recipe> allRecipes = new ArrayList<>();
 
         RestTemplate rt = new RestTemplate();
@@ -59,6 +59,7 @@ public class HomeServiceImpl implements HomeService {
                 for(int i = 0; i < recipesInfo.size(); i++) {
                     JSONObject recipeInfo = recipesInfo.getJSONObject(i);
                     int id = recipeInfo.getInteger("id");
+                    // Check whether the data of the recipe has existed in the database
                     Recipe recipe = findRecipeByGoogleIdAndRecipeId(googleId, id);
                     if(recipe == null) {
                         // Create a new recipe object;
@@ -79,11 +80,11 @@ public class HomeServiceImpl implements HomeService {
                         // Get the data of steps of the recipe
                         url = String.format("https://api.spoonacular.com/recipes/%d/analyzedInstructions?apiKey=%s", id, ApiKeyUtils.getApiKey());
                         data = rt.getForObject(url, String.class);
+                        List<Step> steps = new ArrayList<>();
                         if(data != null) {
                             JSONArray info = JSONArray.parseArray(data);
                             if(!info.isEmpty()) {
                                 JSONArray stepsInfo = info.getJSONObject(0).getJSONArray("steps");
-                                List<Step> steps = new ArrayList<>();
                                 for (int j = 0; j < stepsInfo.size(); j++) {
                                     Step step = new Step();
                                     JSONObject stepInfo = stepsInfo.getJSONObject(j);
@@ -106,11 +107,15 @@ public class HomeServiceImpl implements HomeService {
                                         ingredients.add(ingredient);
                                     }
                                     step.setIngredients(ingredients);
+
+                                    // Get the instruction of the current step
+                                    String instruction = (String) stepInfo.getOrDefault("step", "");
+                                    step.setInstruction(instruction);
                                     steps.add(step);
-                                    recipeDetail.setSteps(steps);
                                 }
                             }
                         }
+                        recipeDetail.setSteps(steps);
                         recipe.setRecipeDetail(recipeDetail);
                     }
 

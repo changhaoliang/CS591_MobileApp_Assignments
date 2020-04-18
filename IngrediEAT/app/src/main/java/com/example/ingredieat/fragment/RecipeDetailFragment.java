@@ -44,7 +44,7 @@ public class RecipeDetailFragment extends Fragment {
 
     public RecipeDetailFragment(Recipe recipe, boolean showIngredients){
         this.recipe = recipe;
-        this.recipeDetail = new RecipeDetail();
+        recipeDetail = recipe.getRecipeDetail();
         this.showIngredients = showIngredients;
     }
 
