@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.example.ingredieat.entity.Equipment;
 import com.example.ingredieat.entity.Ingredient;
 import com.google.android.material.chip.Chip;
 
@@ -178,8 +179,8 @@ public class RecipeDetailFragment extends Fragment {
             LinearLayout myLayout = new LinearLayout(getContext());
             myLayout.setOrientation(LinearLayout.VERTICAL);
 
-            List<String> stepIngredients = recipeDetail.getSteps().get(i).getIngredients();
-            List<String> stepEquipments = recipeDetail.getSteps().get(i).getEquipments();
+            List<Ingredient> stepIngredients = recipeDetail.getSteps().get(i).getIngredients();
+            List<Equipment> stepEquipments = recipeDetail.getSteps().get(i).getEquipments();
             String stepInstruction = recipeDetail.getSteps().get(i).getInstruction();
 
             //set title
@@ -208,7 +209,7 @@ public class RecipeDetailFragment extends Fragment {
                 for (int j = 0; j < stepIngredients.size(); j++) {
                     if (j > 0)
                         ingredientsText += ", ";
-                    ingredientsText += stepIngredients.get(j);
+                    ingredientsText += stepIngredients.get(j).getName();
                 }
                 ingredients.setText(ingredientsText);
                 ingredients.setTextSize(16);
@@ -229,7 +230,7 @@ public class RecipeDetailFragment extends Fragment {
                 for (int j = 0; j < stepEquipments.size(); j++) {
                     if (j > 0)
                         equipmentsText += ", ";
-                    equipmentsText += stepEquipments.get(j);
+                    equipmentsText += stepEquipments.get(j).getName();
                 }
                 equipments.setText(equipmentsText);
                 equipments.setTextSize(16);

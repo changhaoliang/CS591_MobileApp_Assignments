@@ -15,6 +15,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.alibaba.fastjson.JSON;
 import com.example.ingredieat.base.Category;
@@ -29,6 +30,8 @@ import com.example.ingredieat.fragment.RecipeFragment;
 import com.example.ingredieat.fragment.UserFragment;
 import com.example.ingredieat.setting.Setting;
 import com.example.ingredieat.utils.HttpUtils;
+import com.google.android.material.bottomnavigation.BottomNavigationItemView;
+import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.jetbrains.annotations.NotNull;
@@ -42,7 +45,7 @@ import java.util.List;
 import java.util.Map;
 
 public class HomeActivity extends BaseActivity implements CategoryItemFragment.itemFragmentListener,
-        IngredientsFragment.IngredientFragmentListener,
+        IngredientsFragment.IngredientFragmentListener, BottomNavigationView.OnNavigationItemSelectedListener,
         CartFragment.CartFragmentListner, RecipeFragment.RecipeFragmentListener{
     private BottomNavigationView menuView;
 
@@ -79,48 +82,67 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
         allRecipes = new ArrayList<>();
         // Get the data of all ingredients from the server side by sending a GET request.
         getAllIngredients();
+        menuView.setOnNavigationItemSelectedListener(this);
+    }
 
-        menuView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                if (fragmentManager.getBackStackEntryCount() > 1) {
-                    getSupportFragmentManager().popBackStack();
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        if (fragmentManager.getBackStackEntryCount() > 1) {
+            getSupportFragmentManager().popBackStack();
+        }
+
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.hide(categoryItemFragment);
+
+
+        System.out.println(fragmentManager.getBackStackEntryCount());
+
+        switch (item.getItemId()) {
+            case R.id.fridge:
+                if (Setting.currentMenu != R.id.fridge) {
+                    Setting.currentMenu = R.id.fridge;
+                    System.out.println("1212142");
+                    if (fragmentManager.getBackStackEntryCount() > 2) {
+                        getSupportFragmentManager().popBackStack();
+                    }
+                    System.out.println("pantry");
+                    fragmentTransaction.show(categoryItemFragment);
                 }
 
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.hide(categoryItemFragment);
-                switch (item.getItemId()) {
-                    case R.id.fridge:
-                        if (fragmentManager.getBackStackEntryCount() > 2) {
-                            getSupportFragmentManager().popBackStack();
-                        }
-                        fragmentTransaction.show(categoryItemFragment);
-                        break;
-                    case R.id.cart:
-                        fragmentTransaction.replace(R.id.fragment_container, cartFragment);
-                        fragmentTransaction.addToBackStack(null);
-                        HashMap<String, HashSet<String>> ingredients = categoryItemFragment.getSelectedTotalIngredients();
-                        cartFragment.setTotalIngredients(ingredients);
-                        break;
-                    case R.id.cook:
-                        getAllRecipes();
-                        fragmentTransaction.replace(R.id.fragment_container, recipeFragment);
-                        fragmentTransaction.addToBackStack(null);
-                        break;
-                    case R.id.user:
-                        fragmentTransaction.replace(R.id.fragment_container, userFragment);
-                        fragmentTransaction.addToBackStack(null);
-                        break;
+                break;
+            case R.id.cart:
+                if (Setting.currentMenu != R.id.cart) {
+                    Setting.currentMenu = R.id.cart;
+                    fragmentTransaction.replace(R.id.fragment_container, cartFragment);
+                    HashMap<String, HashSet<String>> ingredients = categoryItemFragment.getSelectedTotalIngredients();
+                    cartFragment.setTotalIngredients(ingredients);
                 }
-                fragmentTransaction.commit();
+                break;
+            case R.id.cook:
+                if (Setting.currentMenu != R.id.cook) {
+                    Setting.currentMenu = R.id.cook;
+                    getAllRecipes();
+                    fragmentTransaction.replace(R.id.fragment_container, recipeFragment);
+                }
+                break;
+
+
+            case R.id.user:
+                if (Setting.currentMenu != R.id.user) {
+                    Setting.currentMenu = R.id.user;
+                    fragmentTransaction.replace(R.id.fragment_container, userFragment);
+                }
+
+                break;
+        }
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
 
 //                if (item.getItemId() == R.id.cook){
 //                    recipeFragment.setRecipes(searchRecipes());
 //                }
 
-                return true;
-            }
-        });
+        return true;
     }
 
     /**
@@ -247,7 +269,9 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
     @Override
     public void onBackPressed() {
         if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
+            menuView.setSelectedItemId(R.id.fridge);
             getSupportFragmentManager().popBackStack();
+
 
         } else {
             long currentTime = System.currentTimeMillis();

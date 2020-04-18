@@ -70,20 +70,29 @@ public class Recipe {
     }
 
     public String getTitle(){return title;}
+
     public String getLikes(){return likes+"";}
+
     public boolean getLiked(){return liked;}
+
     public boolean getRated(){return rated;}
+
     public float getStars(){return stars;}
+
     public float getUserStars(){return userStars;}
+
     public String getImg(){return imgUrl;}
+
     public void like(){
         likes++;
         liked = true;
     }
+
     public void unlike(){
         likes--;
         liked = false;
     }
+
     public void updateStars(float myStar){
         userStars = myStar;
         rated = true;
@@ -93,7 +102,6 @@ public class Recipe {
     public RecipeDetail getRecipeDetail(){
         if (recipeDetail == null) {
             this.recipeDetail = new RecipeDetail();
-            recipeDetail.getDetails();
         }
         return recipeDetail;
     }

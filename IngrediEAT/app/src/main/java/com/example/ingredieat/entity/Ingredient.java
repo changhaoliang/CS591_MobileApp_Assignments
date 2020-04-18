@@ -16,7 +16,6 @@ public class Ingredient {
         this.category = category;
     }
 
-
     public int getId() {
         return id;
     }
