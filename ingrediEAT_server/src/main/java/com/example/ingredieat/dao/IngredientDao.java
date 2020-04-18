@@ -14,4 +14,6 @@ public interface IngredientDao {
     @Select("SELECT * FROM `ingredient` WHERE `id` = #{id}")
     Ingredient getIngredientById(int id);
 
+    @Insert("INSERT INTO `ingredient`(`id`, `name`, `flag`) values(#{id}, #{name}, 0)")
+    void insertRecipeStepIngredient(Ingredient ingredient);
 }

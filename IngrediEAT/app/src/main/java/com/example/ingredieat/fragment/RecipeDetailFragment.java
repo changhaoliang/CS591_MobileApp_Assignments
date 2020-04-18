@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.example.ingredieat.entity.Equipment;
 import com.example.ingredieat.entity.Ingredient;
+import com.example.ingredieat.entity.Step;
 import com.google.android.material.chip.Chip;
 
 import androidx.annotation.NonNull;
@@ -28,6 +29,7 @@ import com.example.ingredieat.entity.RecipeDetail;
 import com.google.android.material.chip.ChipDrawable;
 import com.google.android.material.chip.ChipGroup;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.ingredieat.setting.Setting.dpToPx;

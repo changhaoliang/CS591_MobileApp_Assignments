@@ -1,6 +1,7 @@
 package com.example.ingredieat.acitivity;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import okhttp3.Call;
@@ -15,6 +16,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.alibaba.fastjson.JSON;
 import com.example.ingredieat.base.Category;
@@ -29,6 +31,8 @@ import com.example.ingredieat.fragment.RecipeFragment;
 import com.example.ingredieat.fragment.UserFragment;
 import com.example.ingredieat.setting.Setting;
 import com.example.ingredieat.utils.HttpUtils;
+import com.google.android.material.bottomnavigation.BottomNavigationItemView;
+import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.jetbrains.annotations.NotNull;
@@ -42,7 +46,7 @@ import java.util.List;
 import java.util.Map;
 
 public class HomeActivity extends BaseActivity implements CategoryItemFragment.itemFragmentListener,
-        IngredientsFragment.IngredientFragmentListener,
+        IngredientsFragment.IngredientFragmentListener, BottomNavigationView.OnNavigationItemSelectedListener,
         CartFragment.CartFragmentListner, RecipeFragment.RecipeFragmentListener{
     private BottomNavigationView menuView;
 
@@ -78,54 +82,70 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
         allIngredients = new HashMap<>();
         // Get the data of all ingredients from the server side by sending a GET request.
         getAllIngredients();
+        menuView.setOnNavigationItemSelectedListener(this);
+    }
 
-        menuView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                if (fragmentManager.getBackStackEntryCount() > 1) {
-                    getSupportFragmentManager().popBackStack();
-                }
-
-                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.hide(categoryItemFragment);
-                switch (item.getItemId()) {
-                    case R.id.fridge:
-                        if (fragmentManager.getBackStackEntryCount() > 2) {
-                            getSupportFragmentManager().popBackStack();
-                        }
-                        fragmentTransaction.show(categoryItemFragment);
-                        break;
-                    case R.id.cart:
-                        fragmentTransaction.replace(R.id.fragment_container, cartFragment);
-                        fragmentTransaction.addToBackStack(null);
-                        HashMap<String, HashSet<String>> ingredients = categoryItemFragment.getSelectedTotalIngredients();
-                        cartFragment.setTotalIngredients(ingredients);
-                        break;
-                    case R.id.cook:
-                        getAllRecipes();
-                        fragmentTransaction.replace(R.id.fragment_container, recipeFragment);
-                        fragmentTransaction.addToBackStack(null);
-                        break;
-                    case R.id.user:
-                        fragmentTransaction.replace(R.id.fragment_container, userFragment);
-                        fragmentTransaction.addToBackStack(null);
-                        break;
-                }
-                fragmentTransaction.commit();
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        System.out.println(fragmentManager.getBackStackEntryCount());
+        if (fragmentManager.getBackStackEntryCount() > 1) {
+            getSupportFragmentManager().popBackStackImmediate();
+        }
+        System.out.println(fragmentManager.getBackStackEntryCount());
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+//        fragmentTransaction.hide(categoryItemFragment);
+        switch (item.getItemId()) {
+            case R.id.fridge:
+                if (Setting.currentMenu != R.id.fridge) {
+                    Setting.currentMenu = R.id.fridge;
+                    System.out.println("1212142");
+//                    if (fragmentManager.getBackStackEntryCount() > 2) {
+//                        getSupportFragmentManager().popBackStack();
+//                    }
+                    System.out.println("pantry");
+                    fragmentTransaction.replace(R.id.fragment_container, categoryItemFragment);
+                    break;
+                } else
+                    return true;
+            case R.id.cart:
+                if (Setting.currentMenu != R.id.cart) {
+                    Setting.currentMenu = R.id.cart;
+                    System.out.println("cart");
+                    fragmentTransaction.replace(R.id.fragment_container, cartFragment);
+                    HashMap<String, HashSet<String>> ingredients = categoryItemFragment.getSelectedTotalIngredients();
+                    cartFragment.setTotalIngredients(ingredients);
+                    break;
+                } else
+                    return true;
+            case R.id.cook:
+                if (Setting.currentMenu != R.id.cook) {
+                    Setting.currentMenu = R.id.cook;
+                    getAllRecipes();
+                    fragmentTransaction.replace(R.id.fragment_container, recipeFragment);
+                    break;
+                } else
+                    return true;
+            case R.id.user:
+                if (Setting.currentMenu != R.id.user) {
+                    Setting.currentMenu = R.id.user;
+                    fragmentTransaction.replace(R.id.fragment_container, userFragment);
+                    break;
+                } else
+                    return true;
+        }
+//        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
 
 //                if (item.getItemId() == R.id.cook){
 //                    recipeFragment.setRecipes(searchRecipes());
 //                }
 
-                return true;
-            }
-        });
+        return true;
     }
 
     /**
-     * This method is used to get the data of all ingredients from the server side by sending a GET request.
-     *
-     * @return an ArrayList storing all the ingredient objects;
+     * This method is used to get the data of all ingredients from the server side
+     * by sending a GET request.
      */
     private void getAllIngredients() {
         String requestUrl = "/home/ingredients";
@@ -162,6 +182,10 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
         });
     }
 
+    /**
+     * This method is used to get the data of recommended recipes from the server side
+     * by passing the selected ingredients.
+     */
     private void getAllRecipes(){
         // Get the selected ingredients of the current user.
         Map<String, String> params = new HashMap<>();
@@ -180,7 +204,7 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
             }
             stringBuilder.delete(stringBuilder.length()-2, stringBuilder.length());
         }
-        // Set up the parameters
+        // Set up the parameters.
         params.put("googleId", Setting.googleId);
         params.put("selectedIngredients", stringBuilder.toString());
 
@@ -197,7 +221,7 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
                     ResponseBody body = response.body();
                     if(body != null) {
                         String data = body.string();
-                        // Here we use Fastjson to parse json string
+                        // Here we use Fastjson to parse json string.
                         allRecipes = JSON.parseArray(data, Recipe.class);
                         Message msg = Message.obtain();
                         handler2.sendMessage(msg);
@@ -246,7 +270,9 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
     @Override
     public void onBackPressed() {
         if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
+//            menuView.setSelectedItemId(R.id.fridge);
             getSupportFragmentManager().popBackStack();
+
 
         } else {
             long currentTime = System.currentTimeMillis();

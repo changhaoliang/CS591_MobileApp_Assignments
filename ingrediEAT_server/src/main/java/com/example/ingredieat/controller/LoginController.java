@@ -16,8 +16,8 @@ public class LoginController {
     LoginService loginService;
 
     @PostMapping("/findOrAddUser")
-    public void findOrAddUser(@RequestBody User user) {
+    public void getOrInsertUser(@RequestBody User user) {
 
-       loginService.findOrAddUser(user);
+       loginService.getOrInsertUser(user);
     }
 }

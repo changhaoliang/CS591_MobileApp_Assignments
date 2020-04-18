@@ -6,7 +6,6 @@ import com.example.ingredieat.dao.*;
 import com.example.ingredieat.entity.*;
 import com.example.ingredieat.service.HomeService;
 import com.example.ingredieat.utils.ApiKeyUtils;
-import org.apache.ibatis.annotations.Select;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -76,7 +75,7 @@ public class HomeServiceImpl implements HomeService {
                         recipe.setLiked(false);
                         recipe.setRated(false);
                         recipe.setUserStars(0);
-                        userRecipeDao.insertNewUserRecipeRecord(googleId, recipe);
+                        userRecipeDao.insertUserRecipe(googleId, recipe);
                         // Create a new recipeDetail object;
                         RecipeDetail recipeDetail = new RecipeDetail();
                         // Get the data of steps of the recipe
@@ -89,8 +88,8 @@ public class HomeServiceImpl implements HomeService {
                                 JSONArray stepsInfo = info.getJSONObject(0).getJSONArray("steps");
                                 for (int j = 0; j < stepsInfo.size(); j++) {
                                     Step step = new Step();
-                                    step.setId(id);
-
+                                    step.setRecipeId(id);
+                                    stepDao.insertStep(step);
                                     JSONObject stepInfo = stepsInfo.getJSONObject(j);
                                     // Get the equipments of the current step
                                     JSONArray equipmentsInfo = stepInfo.getJSONArray("equipment");
@@ -98,6 +97,8 @@ public class HomeServiceImpl implements HomeService {
                                     for (int t = 0; t < equipmentsInfo.size(); t++) {
                                         JSONObject equipmentInfo = equipmentsInfo.getJSONObject(t);
                                         Equipment equipment = new Equipment(equipmentInfo.getInteger("id"), equipmentInfo.getString("name"));
+                                        getOrInsertEquipment(equipment);
+                                        stepEquipmentDao.insertStepEquipment(step.getId(), equipment.getId());
                                         equipments.add(equipment);
                                     }
                                     step.setEquipments(equipments);
@@ -108,6 +109,8 @@ public class HomeServiceImpl implements HomeService {
                                     for (int t = 0; t < ingredientsInfo.size(); t++) {
                                         JSONObject ingredientInfo = ingredientsInfo.getJSONObject(t);
                                         Ingredient ingredient = new Ingredient(ingredientInfo.getInteger("id"), ingredientInfo.getString("name"));
+                                        getOrInsertIngredient(ingredient);
+                                        stepIngredientDao.insertStepIngredient(step.getId(), ingredient.getId());
                                         ingredients.add(ingredient);
                                     }
                                     step.setIngredients(ingredients);
@@ -115,6 +118,7 @@ public class HomeServiceImpl implements HomeService {
                                     // Get the instruction of the current step
                                     String instruction = (String) stepInfo.getOrDefault("step", "");
                                     step.setInstruction(instruction);
+                                    stepDao.updateStepInstruction(step.getId(), instruction);
                                     steps.add(step);
                                 }
                             }
@@ -162,6 +166,7 @@ public class HomeServiceImpl implements HomeService {
                 recipe.setLiked(userRecipe.isRated());
                 recipe.setUserStars(userRecipe.getUserStars());
             }
+            RecipeDetail recipeDetail = new RecipeDetail();
             List<Step> steps = stepDao.listStepsByRecipeId(recipeId);
             if(steps != null) {
                 for(Step step: steps) {
@@ -181,8 +186,26 @@ public class HomeServiceImpl implements HomeService {
                     }
                     step.setEquipments(equipments);
                 }
+            }else{
+                steps = new ArrayList<>();
             }
+            recipeDetail.setSteps(steps);
+            recipe.setRecipeDetail(recipeDetail);
         }
         return recipe;
     }
+
+    public void getOrInsertEquipment(Equipment equipment) {
+        if(equipmentDao.getEquipmentById(equipment.getId()) == null) {
+            equipmentDao.insertEquipment(equipment);
+        }
+    }
+
+    public void getOrInsertIngredient(Ingredient ingredient) {
+        if(ingredientDao.getIngredientById(ingredient.getId()) == null) {
+            ingredientDao.insertRecipeStepIngredient(ingredient);
+        }
+    }
+
+
 }
