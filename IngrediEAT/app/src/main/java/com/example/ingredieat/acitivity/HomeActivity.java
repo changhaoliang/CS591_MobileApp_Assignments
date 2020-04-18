@@ -76,7 +76,6 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
 
         fragmentManager = getSupportFragmentManager();
         allIngredients = new HashMap<>();
-        allRecipes = new ArrayList<>();
         // Get the data of all ingredients from the server side by sending a GET request.
         getAllIngredients();
 

@@ -43,6 +43,6 @@ public class HomeController {
 //                    "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs"));
 //            allRecipes.add(new Recipe("https://spoonacular.com/recipeImages/73420-312x231.jpg", "baking powder"));
 //        }
-        //return allRecipes;
+//        return allRecipes;
     }
 }

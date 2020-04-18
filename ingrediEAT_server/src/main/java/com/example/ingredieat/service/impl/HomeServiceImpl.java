@@ -71,10 +71,12 @@ public class HomeServiceImpl implements HomeService {
                         recipe.setLikes(0);
                         recipe.setRatings(0);
                         recipe.setStars(0);
+                        recipeDao.insertNewRecipe(recipe);
                         // Set up the information related to the user
                         recipe.setLiked(false);
                         recipe.setRated(false);
                         recipe.setUserStars(0);
+                        userRecipeDao.insertNewUserRecipeRecord(googleId, recipe);
                         // Create a new recipeDetail object;
                         RecipeDetail recipeDetail = new RecipeDetail();
                         // Get the data of steps of the recipe
@@ -87,6 +89,8 @@ public class HomeServiceImpl implements HomeService {
                                 JSONArray stepsInfo = info.getJSONObject(0).getJSONArray("steps");
                                 for (int j = 0; j < stepsInfo.size(); j++) {
                                     Step step = new Step();
+                                    step.setId(id);
+
                                     JSONObject stepInfo = stepsInfo.getJSONObject(j);
                                     // Get the equipments of the current step
                                     JSONArray equipmentsInfo = stepInfo.getJSONArray("equipment");
