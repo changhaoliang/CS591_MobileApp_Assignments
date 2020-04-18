@@ -134,8 +134,6 @@ public class IngredientsFragment extends Fragment {
         return myView;
     }
 
-
-
     public void setIngredients(List<Ingredient> ingredients) {
         this.ingredients = ingredients;
     }

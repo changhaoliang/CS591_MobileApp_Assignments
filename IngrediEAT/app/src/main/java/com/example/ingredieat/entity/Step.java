@@ -4,8 +4,8 @@ import java.util.List;
 
 public class Step {
     private int id;
-    private List<String> ingredients;
-    private List<String> equipments;
+    private List<Ingredient> ingredients;
+    private List<Equipment> equipments;
     private String instruction;
 
     public Step() {
@@ -20,19 +20,19 @@ public class Step {
         this.id = id;
     }
 
-    public List<String> getIngredients() {
+    public List<Ingredient> getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(List<String> ingredients) {
+    public void setIngredients(List<Ingredient> ingredients) {
         this.ingredients = ingredients;
     }
 
-    public List<String> getEquipments() {
+    public List<Equipment> getEquipments() {
         return equipments;
     }
 
-    public void setEquipments(List<String> equipments) {
+    public void setEquipments(List<Equipment> equipments) {
         this.equipments = equipments;
     }
 
