@@ -204,6 +204,9 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
                 stringBuilder.append(ingredientsNames).append(",+");
             }
             stringBuilder.delete(stringBuilder.length()-2, stringBuilder.length());
+            if(allRecipes != null) { // Remove the original data;
+                recipeFragment.setRecipes(new ArrayList<Recipe>());
+            }
         }else{
             return;
         }
