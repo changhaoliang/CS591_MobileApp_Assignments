@@ -1,6 +1,7 @@
 package com.example.ingredieat.dao;
 
 
+import com.example.ingredieat.entity.Equipment;
 import com.example.ingredieat.entity.Step;
 import org.apache.ibatis.annotations.*;
 
