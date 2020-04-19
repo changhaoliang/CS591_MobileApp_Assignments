@@ -65,6 +65,8 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
     private RecipeFragment recipeFragment;
     private RecipeDetailFragment recipeDetailFragment;
 
+    private HashMap<String, HashSet<String>> previousSelectedIngredients;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +82,8 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
 
         fragmentManager = getSupportFragmentManager();
         allIngredients = new HashMap<>();
+        previousSelectedIngredients = new HashMap<>();
+
         // Get the data of all ingredients from the server side by sending a GET request.
         getAllIngredients();
         menuView.setOnNavigationItemSelectedListener(this);
@@ -87,22 +91,16 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        System.out.println(fragmentManager.getBackStackEntryCount());
         if (fragmentManager.getBackStackEntryCount() > 1) {
             getSupportFragmentManager().popBackStackImmediate();
         }
-        System.out.println(fragmentManager.getBackStackEntryCount());
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
 //        fragmentTransaction.hide(categoryItemFragment);
         switch (item.getItemId()) {
             case R.id.fridge:
                 if (Setting.currentMenu != R.id.fridge) {
                     Setting.currentMenu = R.id.fridge;
-                    System.out.println("1212142");
-//                    if (fragmentManager.getBackStackEntryCount() > 2) {
-//                        getSupportFragmentManager().popBackStack();
-//                    }
-                    System.out.println("pantry");
+
                     fragmentTransaction.replace(R.id.fragment_container, categoryItemFragment);
                     break;
                 } else
@@ -110,7 +108,6 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
             case R.id.cart:
                 if (Setting.currentMenu != R.id.cart) {
                     Setting.currentMenu = R.id.cart;
-                    System.out.println("cart");
                     fragmentTransaction.replace(R.id.fragment_container, cartFragment);
                     HashMap<String, HashSet<String>> ingredients = categoryItemFragment.getSelectedTotalIngredients();
                     cartFragment.setTotalIngredients(ingredients);
@@ -120,7 +117,12 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
             case R.id.cook:
                 if (Setting.currentMenu != R.id.cook) {
                     Setting.currentMenu = R.id.cook;
-                    getAllRecipes();
+
+                    System.out.println(checkIfIngChanged());
+
+                    if (checkIfIngChanged()) {
+                        getAllRecipes();
+                    }
                     fragmentTransaction.replace(R.id.fragment_container, recipeFragment);
                     break;
                 } else
@@ -208,7 +210,7 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
         params.put("googleId", Setting.googleId);
         params.put("selectedIngredients", stringBuilder.toString());
 
-
+        System.out.println("post request");
         HttpUtils.postRequest("/home/listRecipesByIngredientsNames", params, new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
@@ -272,7 +274,6 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
     @Override
     public void onBackPressed() {
         if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
-//            menuView.setSelectedItemId(R.id.fridge);
             getSupportFragmentManager().popBackStackImmediate();
 
 
@@ -324,4 +325,48 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
             recipeFragment.setRecipes(allRecipes);
         }
     };
+
+    public void setPreviousSelectedIngredients(HashMap<String, HashSet<String>> newSelectedIngredients) {
+        previousSelectedIngredients.clear();
+        previousSelectedIngredients.putAll(newSelectedIngredients);
+    }
+
+    public boolean checkIfIngChanged() {
+        boolean res = false;
+        HashMap<String, HashSet<String>> newSelectedIngredients = categoryItemFragment.getSelectedTotalIngredients();
+
+        if (previousSelectedIngredients.size() == 0) {
+            setPreviousSelectedIngredients(newSelectedIngredients);
+            return true;
+        }
+
+        if (newSelectedIngredients.keySet().size() != previousSelectedIngredients.keySet().size()) {
+            setPreviousSelectedIngredients(newSelectedIngredients);
+            return true;
+        }
+
+        for (String key : newSelectedIngredients.keySet()) {
+            if (!previousSelectedIngredients.containsKey(key)) {
+
+                setPreviousSelectedIngredients(newSelectedIngredients);
+                return true;
+            }
+            else {
+                if (previousSelectedIngredients.get(key).size() == newSelectedIngredients.get(key).size()) {
+                    for (String s : newSelectedIngredients.get(key)) {
+                        if (!previousSelectedIngredients.get(key).contains(s)) {
+
+                            setPreviousSelectedIngredients(newSelectedIngredients);
+                            return true;
+                        }
+                    }
+                } else {
+                    setPreviousSelectedIngredients(newSelectedIngredients);
+                    return true;
+                }
+            }
+        }
+        return false;
+
+    }
 }

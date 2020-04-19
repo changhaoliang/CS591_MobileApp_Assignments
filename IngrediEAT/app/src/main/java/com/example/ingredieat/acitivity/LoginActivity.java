@@ -26,6 +26,7 @@ import com.google.android.gms.tasks.Task;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
+import java.util.Set;
 
 public class LoginActivity extends BaseActivity {
     private static final int RC_SIGN_IN = 0;
@@ -80,6 +81,7 @@ public class LoginActivity extends BaseActivity {
             editor.apply();
 
             User user = new User(Setting.googleId, Setting.email, Setting.givenName, Setting.familyName);
+
             String jsonString = JSON.toJSONString(user);
 
             HttpUtils.postRequest("/login/findOrAddUser", jsonString, new Callback() {
