@@ -170,8 +170,13 @@ public class HomeServiceImpl implements HomeService {
             UserRecipe userRecipe = userRecipeDao.findUserRecipe(googleId, recipeId);
             if (userRecipe != null) {
                 recipe.setLiked(userRecipe.isLiked());
-                recipe.setLiked(userRecipe.isRated());
+                recipe.setRated(userRecipe.isRated());
                 recipe.setUserStars(userRecipe.getUserStars());
+            }else{
+                recipe.setLiked(false);
+                recipe.setRated(false);
+                recipe.setUserStars(0);
+                userRecipeDao.insertUserRecipe(googleId, recipe);
             }
             RecipeDetail recipeDetail = new RecipeDetail();
             List<Step> steps = stepDao.listStepsByRecipeId(recipeId);
@@ -205,4 +210,5 @@ public class HomeServiceImpl implements HomeService {
             ingredientDao.insertRecipeStepIngredient(ingredient);
         }
     }
+
 }
