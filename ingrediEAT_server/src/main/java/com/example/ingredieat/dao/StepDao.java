@@ -17,9 +17,6 @@ public interface StepDao {
     List<Step> listStepsByRecipeId(int recipeId);
 
     @Options(useGeneratedKeys = true, keyProperty = "id")
-    @Insert("INSERT INTO `step`(`recipe_id`) values(#{recipeId})")
+    @Insert("INSERT INTO `step`(`recipe_id`, `instruction`) values(#{recipeId}, #{instruction})")
     void insertStep(Step step);
-
-    @Update("UPDATE `step` SET `instruction` = #{instruction} WHERE `id` = #{id}")
-    void updateStepInstruction(int id, String instruction);
 }
