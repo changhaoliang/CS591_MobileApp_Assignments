@@ -136,10 +136,10 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
         }
 //        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
-
-//                if (item.getItemId() == R.id.cook){
-//                    recipeFragment.setRecipes(searchRecipes());
-//                }
+//
+////                if (item.getItemId() == R.id.cook){
+////                    recipeFragment.setRecipes(searchRecipes());
+////                }
 
         return true;
     }
