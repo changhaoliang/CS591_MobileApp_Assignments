@@ -31,6 +31,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Map;
 
 
 public class CartFragment extends Fragment {
@@ -90,9 +91,13 @@ public class CartFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Iterator<HashMap.Entry<String, HashSet<Chip>>> iterator = totalChips.entrySet().iterator();
+
+
                 while (iterator.hasNext()){
-                    String key = iterator.next().getKey();
-                    Iterator<Chip> chipIterator = totalChips.get(key).iterator();
+
+                    Map.Entry<String, HashSet<Chip>> item = iterator.next();
+                    String key = item.getKey();
+                    Iterator<Chip> chipIterator = item.getValue().iterator();
                     while(chipIterator.hasNext()){
                         Chip c = chipIterator.next();
                         if (!c.isChecked()) {
@@ -105,13 +110,17 @@ public class CartFragment extends Fragment {
                         }
                     }
 
-                    if (totalChips.get(key).size() == 0) {
+
+                    if (item.getValue().size() == 0) {
                         iterator.remove();
-                        totalIngredients.remove(key);
+                        totalIngredients.remove(item.getKey());
+
+                        names.remove(item.getKey());
                     }
-                    listView.setAdapter(new MyAdapter(getContext()));
                 }
+
                 cartFragmentListner.updateSelected(totalIngredients);
+                listView.setAdapter(new MyAdapter(getContext()));
             }
         });
         return myView;
