@@ -1,6 +1,7 @@
 package com.example.ingredieat.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,6 +47,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeHold
 
     @Override
     public void onBindViewHolder(@NonNull final RecipeHolder holder, final int position) {
+        Log.d("Boston University", "onBindViewHolder");
         final Recipe recipe = recipes.get(position);
         holder.title.setText(recipe.getTitle());
         holder.likes.setText(recipe.getLikes());
