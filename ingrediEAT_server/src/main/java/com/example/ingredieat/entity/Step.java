@@ -7,6 +7,7 @@ import java.util.List;
 @Data
 public class Step {
     private int id;
+    private int recipeId;
     private List<Ingredient> ingredients;
     private List<Equipment> equipments;
     private String instruction;

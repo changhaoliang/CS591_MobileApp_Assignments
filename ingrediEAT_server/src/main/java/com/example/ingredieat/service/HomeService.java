@@ -11,5 +11,4 @@ public interface HomeService {
 
     List<Recipe> listRecipesByIngredientsNames(String googleId, String selectedIngredients);
 
-
 }

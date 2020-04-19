@@ -1,5 +1,8 @@
 package com.example.ingredieat.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Recipe {
     private int id;
     private String imgUrl;
@@ -102,6 +105,12 @@ public class Recipe {
     public RecipeDetail getRecipeDetail(){
         if (recipeDetail == null) {
             this.recipeDetail = new RecipeDetail();
+            List<Ingredient> usedIngredients = new ArrayList<>();
+            List<Ingredient> missedIngredients = new ArrayList<>();
+            List<Step> steps = new ArrayList<>();
+            recipeDetail.setUsedIngredients(usedIngredients);
+            recipeDetail.setMissedIngredients(missedIngredients);
+            recipeDetail.setSteps(steps);
         }
         return recipeDetail;
     }

@@ -4,6 +4,7 @@ import java.util.List;
 
 public class Step {
     private int id;
+    private int recipeId;
     private List<Ingredient> ingredients;
     private List<Equipment> equipments;
     private String instruction;
@@ -12,12 +13,17 @@ public class Step {
 
     }
 
+
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public void setRecipeId(int recipeId) {
+        this.recipeId = recipeId;
     }
 
     public List<Ingredient> getIngredients() {

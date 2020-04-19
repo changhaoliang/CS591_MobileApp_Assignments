@@ -80,7 +80,6 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
 
         fragmentManager = getSupportFragmentManager();
         allIngredients = new HashMap<>();
-        allRecipes = new ArrayList<>();
         // Get the data of all ingredients from the server side by sending a GET request.
         getAllIngredients();
         menuView.setOnNavigationItemSelectedListener(this);
@@ -145,9 +144,8 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
     }
 
     /**
-     * This method is used to get the data of all ingredients from the server side by sending a GET request.
-     *
-     * @return an ArrayList storing all the ingredient objects;
+     * This method is used to get the data of all ingredients from the server side
+     * by sending a GET request.
      */
     private void getAllIngredients() {
         String requestUrl = "/home/ingredients";
@@ -184,6 +182,10 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
         });
     }
 
+    /**
+     * This method is used to get the data of recommended recipes from the server side
+     * by passing the selected ingredients.
+     */
     private void getAllRecipes(){
         // Get the selected ingredients of the current user.
         Map<String, String> params = new HashMap<>();
@@ -202,7 +204,7 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
             }
             stringBuilder.delete(stringBuilder.length()-2, stringBuilder.length());
         }
-        // Set up the parameters
+        // Set up the parameters.
         params.put("googleId", Setting.googleId);
         params.put("selectedIngredients", stringBuilder.toString());
 
@@ -219,7 +221,7 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
                     ResponseBody body = response.body();
                     if(body != null) {
                         String data = body.string();
-                        // Here we use Fastjson to parse json string
+                        // Here we use Fastjson to parse json string.
                         allRecipes = JSON.parseArray(data, Recipe.class);
                         Message msg = Message.obtain();
                         handler2.sendMessage(msg);

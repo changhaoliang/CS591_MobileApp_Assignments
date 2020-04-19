@@ -8,7 +8,12 @@ import org.apache.ibatis.annotations.*;
 public interface UserDao {
 
     @Select("SELECT * FROM `user` WHERE `google_id` = #{googleId}")
-    User findUserByGoogleId(@Param("googleId") String googleId);
+    @Results(value = {
+            @Result(column = "google_id", property = "googleId"),
+            @Result(column = "given_name", property = "givenName"),
+            @Result(column = "family_name", property = "familyName")
+    })
+    User getUserByGoogleId(@Param("googleId") String googleId);
 
     @Insert("INSERT INTO `user`(`google_id`, `email`, `given_name`, `family_name`) values(#{googleId}, #{email}, #{givenName}, #{familyName})")
     void insertUser(User user);

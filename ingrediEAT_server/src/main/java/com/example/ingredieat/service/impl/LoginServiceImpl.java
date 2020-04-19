@@ -14,8 +14,8 @@ public class LoginServiceImpl implements LoginService {
     UserDao userDao;
 
     @Override
-    public void findOrAddUser(User user) {
-        if(userDao.findUserByGoogleId(user.getGoogleId()) == null) {
+    public void getOrInsertUser(User user) {
+        if(userDao.getUserByGoogleId(user.getGoogleId()) == null) {
             userDao.insertUser(user);
         }
     }

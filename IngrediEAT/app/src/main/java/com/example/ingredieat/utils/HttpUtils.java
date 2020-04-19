@@ -64,7 +64,8 @@ public class HttpUtils {
 
         // create a okHttpClient
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
-//                .connectTimeout(10000, TimeUnit.MILLISECONDS)
+                .connectTimeout(10000, TimeUnit.MILLISECONDS)
+                .readTimeout(60000, TimeUnit.MILLISECONDS)
                 .build();
 
         MediaType mediaType = MediaType.get("application/json; charset=utf-8");
