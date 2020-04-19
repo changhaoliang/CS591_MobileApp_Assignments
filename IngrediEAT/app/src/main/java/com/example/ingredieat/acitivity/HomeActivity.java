@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.alibaba.fastjson.JSON;
+import com.blankj.utilcode.util.FragmentUtils;
 import com.example.ingredieat.base.Category;
 import com.example.ingredieat.entity.Recipe;
 import com.example.ingredieat.entity.Ingredient;
@@ -118,7 +119,7 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
                 if (Setting.currentMenu != R.id.cook) {
                     Setting.currentMenu = R.id.cook;
 
-                    System.out.println(checkIfIngChanged());
+                    //System.out.println(checkIfIngChanged());
 
                     if (checkIfIngChanged()) {
                         getAllRecipes();
@@ -205,6 +206,8 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
                 stringBuilder.append(ingredientsNames).append(",+");
             }
             stringBuilder.delete(stringBuilder.length()-2, stringBuilder.length());
+        }else{
+            return;
         }
         // Set up the parameters.
         params.put("googleId", Setting.googleId);

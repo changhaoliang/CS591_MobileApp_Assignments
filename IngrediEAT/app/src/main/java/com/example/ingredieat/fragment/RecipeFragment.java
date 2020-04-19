@@ -78,6 +78,10 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.MyClickLis
         System.out.println("2:"+recipes.size());
     }
 
+    public List<Recipe> getRecipes() {
+        return recipes;
+    }
+
     public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
 
         private int spacing;

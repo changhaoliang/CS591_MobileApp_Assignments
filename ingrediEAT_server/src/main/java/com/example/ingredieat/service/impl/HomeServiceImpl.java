@@ -7,8 +7,14 @@ import com.example.ingredieat.entity.*;
 import com.example.ingredieat.service.AsyncService;
 import com.example.ingredieat.service.HomeService;
 import com.example.ingredieat.utils.ApiKeyUtils;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
@@ -16,6 +22,7 @@ import java.util.List;
 
 
 @Service
+@Transactional
 public class HomeServiceImpl implements HomeService {
 
     @Autowired
@@ -55,7 +62,12 @@ public class HomeServiceImpl implements HomeService {
         RestTemplate rt = new RestTemplate();
         if (!selectedIngredients.isEmpty()) {
             String url = String.format("https://api.spoonacular.com/recipes/findByIngredients?ingredients=%s&apiKey=%s", selectedIngredients, ApiKeyUtils.getApiKey());
-            String data = rt.getForObject(url, String.class);
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36");
+            RestTemplate restTemplate = new RestTemplate();
+            HttpEntity<String> requestEntity = new HttpEntity<String>(null, httpHeaders);
+            ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, requestEntity, String.class);
+            String data = response.getBody();
             if (data != null) {
                 JSONArray recipesInfo = JSONArray.parseArray(data);
                 for (int i = 0; i < recipesInfo.size(); i++) {
