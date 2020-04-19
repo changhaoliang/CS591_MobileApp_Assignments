@@ -256,7 +256,9 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
     public void showDetails(Recipe recipe) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         recipeDetailFragment = new RecipeDetailFragment(recipe, true);
-        fragmentTransaction.replace(R.id.fragment_container, recipeDetailFragment);
+        fragmentTransaction.add(R.id.fragment_container, recipeDetailFragment);
+        fragmentTransaction.show(recipeDetailFragment);
+        fragmentTransaction.hide(recipeFragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
@@ -271,7 +273,7 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
     public void onBackPressed() {
         if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
 //            menuView.setSelectedItemId(R.id.fridge);
-            getSupportFragmentManager().popBackStack();
+            getSupportFragmentManager().popBackStackImmediate();
 
 
         } else {
