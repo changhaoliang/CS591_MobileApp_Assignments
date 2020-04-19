@@ -119,8 +119,6 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
                 if (Setting.currentMenu != R.id.cook) {
                     Setting.currentMenu = R.id.cook;
 
-                    //System.out.println(checkIfIngChanged());
-
                     if (checkIfIngChanged()) {
                         getAllRecipes();
                     }

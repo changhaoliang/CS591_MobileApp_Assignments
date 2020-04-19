@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,13 +58,14 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.MyClickLis
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.addItemDecoration(new GridSpacingItemDecoration());
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recipes = new ArrayList<>();
+        if(recipes == null) {
+            recipes = new ArrayList<>();
+        }
         recipeAdapter = new RecipeAdapter(getContext(), recipes, this);
         recyclerView.setAdapter(recipeAdapter);
 
         return myView;
     }
-
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -80,6 +82,10 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.MyClickLis
 
     public List<Recipe> getRecipes() {
         return recipes;
+    }
+
+    public RecipeAdapter getRecipeAdapter() {
+        return recipeAdapter;
     }
 
     public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
