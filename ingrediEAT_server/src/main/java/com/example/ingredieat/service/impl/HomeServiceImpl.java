@@ -95,7 +95,8 @@ public class HomeServiceImpl implements HomeService {
                         RecipeDetail recipeDetail = new RecipeDetail();
                         // Get the data of steps of the recipe
                         url = String.format("https://api.spoonacular.com/recipes/%d/analyzedInstructions?apiKey=%s", id, ApiKeyUtils.getApiKey());
-                        data = rt.getForObject(url, String.class);
+                        response = restTemplate.exchange(url, HttpMethod.GET, requestEntity, String.class);
+                        data = response.getBody();
                         List<Step> steps = new ArrayList<>();
                         if (data != null) {
                             JSONArray info = JSONArray.parseArray(data);
