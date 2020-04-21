@@ -1,6 +1,7 @@
 package com.example.ingredieat.fragment;
 
 import android.content.Context;
+import android.graphics.ColorFilter;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -41,6 +42,7 @@ public class CartFragment extends Fragment {
     private Button editButton;
     private LinearLayout bottomLayout;
     private CartFragmentListner cartFragmentListner;
+    private Button clearButton;
 
     private HashMap<String, HashSet<Chip>> totalChips;
 
@@ -83,15 +85,23 @@ public class CartFragment extends Fragment {
         listView.setAdapter(new MyAdapter(getContext()));
 
         editButton = (Button)myView.findViewById(R.id.edit_btn);
+        clearButton = (Button)myView.findViewById(R.id.clear_btn);
         bottomLayout = (LinearLayout) myView.findViewById(R.id.bottom);
-        bottomLayout.setVisibility(View.INVISIBLE);
+        editButton.setEnabled(false);
 
-
+        clearButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                totalIngredients.clear();
+                names.clear();
+                cartFragmentListner.updateSelected(totalIngredients);
+                listView.setAdapter(new MyAdapter(getContext()));
+            }
+        });
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Iterator<HashMap.Entry<String, HashSet<Chip>>> iterator = totalChips.entrySet().iterator();
-
 
                 while (iterator.hasNext()){
 
@@ -109,7 +119,6 @@ public class CartFragment extends Fragment {
 
                         }
                     }
-
 
                     if (item.getValue().size() == 0) {
                         iterator.remove();
@@ -180,7 +189,7 @@ public class CartFragment extends Fragment {
                     c.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                         @Override
                         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                            bottomLayout.setVisibility(View.VISIBLE);
+                            editButton.setEnabled(true);
                         }
                     });
                 }

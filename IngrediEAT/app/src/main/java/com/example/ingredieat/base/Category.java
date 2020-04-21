@@ -9,7 +9,9 @@ public enum Category {
     BAKING("Baking"),
     BEVERAGE("Beverages"),
     OIL_VINEGAR_SALAD_DRESSING("Oil, Vinegar, Salad Dressing"),
-    SPICES_AND_SEASONINGS("Spices and Seasonings");
+    SPICES_AND_SEASONINGS("Spices and Seasonings"),
+    CONDIMENTS("Condiments"),
+    OTHERS("Others");
 
     private String categoryValue;
 

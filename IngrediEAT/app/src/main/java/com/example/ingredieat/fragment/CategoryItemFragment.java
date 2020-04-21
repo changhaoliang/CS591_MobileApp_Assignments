@@ -89,8 +89,10 @@ public class CategoryItemFragment extends Fragment implements CategoryItemAdapte
         ingredients.put(Category.MILK_EGGS_OTHER_DAIRY, new ArrayList<Ingredient>());
         ingredients.put(Category.BAKING, new ArrayList<Ingredient>());
         ingredients.put(Category.BEVERAGE, new ArrayList<Ingredient>());
-        ingredients.put(Category.OIL_VINEGAR_SALAD_DRESSING, new ArrayList<Ingredient>());
         ingredients.put(Category.SPICES_AND_SEASONINGS, new ArrayList<Ingredient>());
+        ingredients.put(Category.CONDIMENTS, new ArrayList<Ingredient>());
+        ingredients.put(Category.OIL_VINEGAR_SALAD_DRESSING, new ArrayList<Ingredient>());
+        ingredients.put(Category.OTHERS, new ArrayList<Ingredient>());
 
         categories = new ArrayList<>();
         addCategoryItem(Category.MEAT, getResources().getDrawable(R.drawable.meat, null));
@@ -100,7 +102,10 @@ public class CategoryItemFragment extends Fragment implements CategoryItemAdapte
         addCategoryItem(Category.BAKING, getResources().getDrawable(R.drawable.baking, null));
         addCategoryItem(Category.BEVERAGE, getResources().getDrawable(R.drawable.drinking, null));
         addCategoryItem(Category.SPICES_AND_SEASONINGS, getResources().getDrawable(R.drawable.spice, null));
+        addCategoryItem(Category.CONDIMENTS, getResources().getDrawable(R.drawable.ketchup, null));
         addCategoryItem(Category.OIL_VINEGAR_SALAD_DRESSING, getResources().getDrawable(R.drawable.oil, null));
+        addCategoryItem(Category.OTHERS, getResources().getDrawable(R.drawable.others, null));
+
 
 
         listAdapter = new CategoryItemAdapter(getContext(), R.layout.item, categories, this);
