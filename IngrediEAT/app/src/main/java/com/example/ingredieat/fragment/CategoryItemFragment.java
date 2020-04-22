@@ -5,23 +5,29 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 
+import android.renderscript.ScriptIntrinsicYuvToRGB;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Spinner;
 
 import com.example.ingredieat.base.Category;
 import com.example.ingredieat.base.CategoryItem;
 import com.example.ingredieat.R;
 import com.example.ingredieat.adapter.CategoryItemAdapter;
 import com.example.ingredieat.entity.Ingredient;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 
 public class CategoryItemFragment extends Fragment implements CategoryItemAdapter.MyClickListener {
     private ListView listView;
@@ -30,10 +36,13 @@ public class CategoryItemFragment extends Fragment implements CategoryItemAdapte
     private HashMap<Category, ArrayList<Ingredient>> ingredients;
     private itemFragmentListener itemFragmentListener;
     private HashMap<String, HashSet<String>> selectedTotalIngredients;
+    private SearchView searchView;
+    private HashMap<Category, HashSet<Ingredient>> searchList;
 
+    private HashMap<String, List<Ingredient>> allIngrediens;
 
     public interface itemFragmentListener {
-        void setFragment(boolean flag, Category category);
+        void setFragment(boolean flag, Category category, boolean ifAll, HashMap<Category, HashSet<Ingredient>> searchList);
     }
 
     @Override
@@ -48,8 +57,55 @@ public class CategoryItemFragment extends Fragment implements CategoryItemAdapte
         listView = (ListView) myView.findViewById(R.id.list_view);
         if (selectedTotalIngredients == null) selectedTotalIngredients = new HashMap<>();
         ingredients = new HashMap<>();
+        categories = new ArrayList<>();
 
-        initializeList();
+        searchView = (SearchView) myView.findViewById(R.id.search);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                searchList = new HashMap<>();
+
+                for (Category key : ingredients.keySet()) {
+                    for (Ingredient i : ingredients.get(key)) {
+                        if (i.getName().indexOf(query) == 0) {
+//                            if (!checkContain(i.getName())) {
+                                if (!searchList.containsKey(key)) {
+                                    searchList.put(key, new HashSet<Ingredient>());
+                                }
+                                searchList.get(key).add(i);
+
+                        }
+                    }
+                }
+                itemFragmentListener.setFragment(true, Category.ALL, true, searchList);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+
+                return false;
+            }
+        });
+
+        searchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener()
+        {
+            @Override
+            public void onFocusChange(final View v, final boolean hasFocus)
+            {
+                BottomNavigationView menuView = getActivity().findViewById(R.id.bottom_menu);
+                if(hasFocus){
+
+                    menuView.setVisibility(View.INVISIBLE);
+                }
+                else if(!hasFocus)
+                {
+                    menuView.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
+        initializeList(allIngrediens);
         return myView;
     }
 
@@ -61,6 +117,7 @@ public class CategoryItemFragment extends Fragment implements CategoryItemAdapte
 
     public void addCategoryItem(Category category, Drawable picture) {
         CategoryItem newCategoryItem = new CategoryItem(category, picture);
+
         categories.add(newCategoryItem);
     }
 
@@ -71,54 +128,50 @@ public class CategoryItemFragment extends Fragment implements CategoryItemAdapte
 
     @Override
     public void clickListener(View v, Category category) {
-        itemFragmentListener.setFragment(true, category);
+        itemFragmentListener.setFragment(true, category, false, null );
     }
 
     public HashMap<Category, ArrayList<Ingredient>> getIngredients() {
         return ingredients;
     }
 
-    public ListAdapter getListAdapter() {
-        return listAdapter;
-    }
+    public void initializeList(HashMap<String, List<Ingredient>> allIngrediens) {
+        for (String key : allIngrediens.keySet()) {
+            if (key.equals("Others") || key.equals("Condiments")) {
+                continue;
+            }
 
-    public void initializeList() {
-        ingredients.put(Category.MEAT, new ArrayList<Ingredient>());
-        ingredients.put(Category.PRODUCE, new ArrayList<Ingredient>());
-        ingredients.put(Category.SEAFOOD, new ArrayList<Ingredient>());
-        ingredients.put(Category.MILK_EGGS_OTHER_DAIRY, new ArrayList<Ingredient>());
-        ingredients.put(Category.BAKING, new ArrayList<Ingredient>());
-        ingredients.put(Category.BEVERAGE, new ArrayList<Ingredient>());
-        ingredients.put(Category.OIL_VINEGAR_SALAD_DRESSING, new ArrayList<Ingredient>());
-        ingredients.put(Category.SPICES_AND_SEASONINGS, new ArrayList<Ingredient>());
+            String[] s = key.split(",");
+            s = s[0].split(" ");
+            String filename = s[0].toLowerCase();
 
-        categories = new ArrayList<>();
-        addCategoryItem(Category.MEAT, getResources().getDrawable(R.drawable.meat, null));
-        addCategoryItem(Category.PRODUCE, getResources().getDrawable(R.drawable.vegetables, null));
-        addCategoryItem(Category.SEAFOOD, getResources().getDrawable(R.drawable.seafood, null));
-        addCategoryItem(Category.MILK_EGGS_OTHER_DAIRY, getResources().getDrawable(R.drawable.dairy2, null));
-        addCategoryItem(Category.BAKING, getResources().getDrawable(R.drawable.baking, null));
-        addCategoryItem(Category.BEVERAGE, getResources().getDrawable(R.drawable.drinking, null));
-        addCategoryItem(Category.SPICES_AND_SEASONINGS, getResources().getDrawable(R.drawable.spice, null));
-        addCategoryItem(Category.OIL_VINEGAR_SALAD_DRESSING, getResources().getDrawable(R.drawable.oil, null));
+            int resId = getResources().getIdentifier(filename, "drawable" , getContext().getPackageName());
 
+            ingredients.put(Category.getCategoryName(key), (ArrayList<Ingredient>) allIngrediens.get(key));
+            addCategoryItem(Category.getCategoryName(key), getResources().getDrawable(resId, null));
+
+         }
 
         listAdapter = new CategoryItemAdapter(getContext(), R.layout.item, categories, this);
         listView.setAdapter(listAdapter);
     }
 
     public void updateTotalIngredients(Category category, HashSet<String> newIngredients) {
+
         if (!selectedTotalIngredients.keySet().contains(category.getCategoryValue())) {
             selectedTotalIngredients.put(category.getCategoryValue(), new HashSet<String>());
         }
         selectedTotalIngredients.put(category.getCategoryValue(), newIngredients);
-        System.out.println(selectedTotalIngredients.get(category.getCategoryValue()).size() + "total");
+
+        System.out.println(category.getCategoryValue() + "==============");
+
     }
 
     public boolean checkSelect(Category category, String ingredient) {
         if (selectedTotalIngredients.keySet().contains(category.getCategoryValue())) {
             return selectedTotalIngredients.get(category.getCategoryValue()).contains(ingredient);
         }
+
 
         return false;
     }
@@ -129,5 +182,20 @@ public class CategoryItemFragment extends Fragment implements CategoryItemAdapte
 
     public void setSelectedTotalIngredients(HashMap<String, HashSet<String>> selectedTotalIngredients) {
         this.selectedTotalIngredients = selectedTotalIngredients;
+    }
+
+    public boolean checkContain(String ingredient) {
+        for (String key : selectedTotalIngredients.keySet()) {
+            for (String s : selectedTotalIngredients.get(key)) {
+                if (s.equals(ingredient)) {
+                    return  true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public void setAllIngrediens(HashMap<String, List<Ingredient>> allIngrediens) {
+        this.allIngrediens = allIngrediens;
     }
 }

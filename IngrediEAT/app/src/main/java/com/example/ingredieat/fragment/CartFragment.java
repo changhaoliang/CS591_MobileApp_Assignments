@@ -207,32 +207,13 @@ public class CartFragment extends Fragment {
     }
 
     public void setIcon(String name, ImageView icon) {
-        switch (name) {
-            case "Meat":
-                icon.setImageDrawable(getResources().getDrawable(R.drawable.meat, null));
-                break;
-            case "Produce":
-                icon.setImageDrawable(getResources().getDrawable(R.drawable.vegetables, null));
-                break;
-            case "Seafood":
-                icon.setImageDrawable(getResources().getDrawable(R.drawable.seafood, null));
-                break;
-            case "Milk, Eggs, Other Dairy":
-                icon.setImageDrawable(getResources().getDrawable(R.drawable.dairy2, null));
-                break;
-            case "Baking":
-                icon.setImageDrawable(getResources().getDrawable(R.drawable.baking, null));
-                break;
-            case "Beverages":
-                icon.setImageDrawable(getResources().getDrawable(R.drawable.drinking, null));
-                break;
-            case "Oil, Vinegar, Salad Dressing":
-                icon.setImageDrawable(getResources().getDrawable(R.drawable.oil, null));
-                break;
-            case "Spices and Seasonings":
-                icon.setImageDrawable(getResources().getDrawable(R.drawable.spice, null));
-                break;
-        }
+        String[] s = name.split(",");
+        s = s[0].split(" ");
+        String filename = s[0].toLowerCase();
+
+        int resId = getResources().getIdentifier(filename, "drawable" , getContext().getPackageName());
+
+        icon.setImageDrawable(getResources().getDrawable(resId, null));
     }
 
     @Override
