@@ -86,13 +86,23 @@ public class CartFragment extends Fragment {
 
         editButton = (Button)myView.findViewById(R.id.edit_btn);
         clearButton = (Button)myView.findViewById(R.id.clear_btn);
+
         bottomLayout = (LinearLayout) myView.findViewById(R.id.bottom);
+        if (totalIngredients.size() == 0) {
+            clearButton.setEnabled(false);
+        } else {
+            clearButton.setEnabled(true);
+        }
 
         clearButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                totalIngredients.clear();
-                names.clear();
+                if (totalIngredients.size() != 0 ) {
+                    totalIngredients.clear();
+                    names.clear();
+                    clearButton.setEnabled(false);
+                }
+
                 cartFragmentListner.updateSelected(totalIngredients);
                 listView.setAdapter(new MyAdapter(getContext()));
             }
