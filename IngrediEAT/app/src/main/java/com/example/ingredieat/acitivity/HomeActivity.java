@@ -18,6 +18,8 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.alibaba.fastjson.JSON;
+import com.example.ingredieat.adapter.FavoriteAdapter;
+import com.example.ingredieat.adapter.RecipeAdapter;
 import com.example.ingredieat.base.Category;
 import com.example.ingredieat.entity.Recipe;
 import com.example.ingredieat.entity.Ingredient;
@@ -233,7 +235,6 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
         params.put("selectedIngredients", stringBuilder.toString());
 
         progressBar.setVisibility(View.VISIBLE);
-        System.out.println("post request");
         HttpUtils.postRequest("/home/listRecipesByIngredientsNames", params, new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
@@ -273,7 +274,7 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
 
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             this.ingredientsFragment = new IngredientsFragment();
-            ingredientsFragment.setAllIngrediens(allIngredients);
+            ingredientsFragment.setAllIngredients(allIngredients);
             fragmentTransaction.replace(R.id.fragment_container, ingredientsFragment);
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
@@ -290,7 +291,7 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
 
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             this.ingredientsFragment = new IngredientsFragment();
-            ingredientsFragment.setAllIngrediens(allIngredients);
+            ingredientsFragment.setAllIngredients(allIngredients);
             fragmentTransaction.replace(R.id.fragment_container, ingredientsFragment);
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
@@ -308,9 +309,9 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
 
 
     @Override
-    public void showDetails(Recipe recipe) {
+    public void showDetails(Recipe recipe, RecipeAdapter recipeAdapter) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        recipeDetailFragment = new RecipeDetailFragment(recipe, true);
+        recipeDetailFragment = new RecipeDetailFragment(recipe, recipeAdapter);
         fragmentTransaction.add(R.id.fragment_container, recipeDetailFragment);
         fragmentTransaction.show(recipeDetailFragment);
         fragmentTransaction.hide(recipeFragment);
@@ -333,9 +334,9 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
     }
 
     @Override
-    public void showFavoriteDetails(Recipe recipe) {
+    public void showFavoriteDetails(Recipe recipe, FavoriteAdapter favoriteAdapter) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        recipeDetailFragment = new RecipeDetailFragment(recipe, false);
+        recipeDetailFragment = new RecipeDetailFragment(recipe, favoriteAdapter);
         fragmentTransaction.add(R.id.fragment_container, recipeDetailFragment);
         fragmentTransaction.show(recipeDetailFragment);
         fragmentTransaction.hide(favoriteFragment);
@@ -352,8 +353,6 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
     public void onBackPressed() {
         if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
             getSupportFragmentManager().popBackStackImmediate();
-
-
         } else {
             long currentTime = System.currentTimeMillis();
             if (Math.abs(currentTime - mLastBackPress) > mBackPressThreshold) {

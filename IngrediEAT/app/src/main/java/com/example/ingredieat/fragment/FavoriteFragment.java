@@ -33,7 +33,7 @@ public class FavoriteFragment extends Fragment implements FavoriteAdapter.MyClic
 
     @Override
     public void clickListener(View v, Recipe recipe) {
-        favoriteFragmentListener.showFavoriteDetails(recipe);
+        favoriteFragmentListener.showFavoriteDetails(recipe, favoriteAdapter);
     }
 
     @Override
@@ -45,7 +45,7 @@ public class FavoriteFragment extends Fragment implements FavoriteAdapter.MyClic
     }
 
     public interface FavoriteFragmentListener {
-        void showFavoriteDetails(Recipe recipe);
+        void showFavoriteDetails(Recipe recipe, FavoriteAdapter favoriteAdapter);
         void addLikes(Recipe recipe);
         void removeLikes(Recipe recipe);
     }

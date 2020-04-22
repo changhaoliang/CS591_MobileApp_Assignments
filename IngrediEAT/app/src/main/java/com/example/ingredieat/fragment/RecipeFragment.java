@@ -36,7 +36,7 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.MyClickLis
 
     @Override
     public void clickListener(View v, Recipe recipe) {
-        recipeFragmentListener.showDetails(recipe);
+        recipeFragmentListener.showDetails(recipe, recipeAdapter);
     }
 
     @Override
@@ -48,9 +48,9 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.MyClickLis
     }
 
     public interface RecipeFragmentListener {
-        void showDetails(Recipe recipe);
         void addLikes(Recipe recipe);
         void removeLikes(Recipe recipe);
+        void showDetails(Recipe recipe, RecipeAdapter recipeAdapter);
     }
 
     @Override

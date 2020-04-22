@@ -7,7 +7,6 @@ import com.example.ingredieat.entity.*;
 import com.example.ingredieat.service.AsyncService;
 import com.example.ingredieat.service.HomeService;
 import com.example.ingredieat.utils.ApiKeyUtils;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -224,4 +223,33 @@ public class HomeServiceImpl implements HomeService {
         }
     }
 
+    @Override
+    public void updateUserRecipeLiked(UserRecipe userRecipe) {
+        userRecipeDao.updateUserRecipeLiked(userRecipe);
+        if(userRecipe.isLiked()) {
+            recipeDao.increaseRecipeLikesBy1(userRecipe.getRecipeId());
+        }else{
+            recipeDao.decreaseRecipeLikesBy1(userRecipe.getRecipeId());
+        }
+    }
+
+    @Override
+    public float ratingRecipe(UserRecipe userRecipe) {
+        // Get the original recipe data.
+        Recipe recipe = recipeDao.getRecipeById(userRecipe.getRecipeId());
+        int ratings = recipe.getRatings();
+        float stars = recipe.getStars();
+
+        // Get the user recipe data
+        float userStars = (float)(Math.round(userRecipe.getUserStars() * 1000) / 1000);
+        stars = (ratings * stars + userStars) / (ratings + 1);
+
+        // Update the data in the database
+        recipe.setRatings(ratings+1);
+        recipe.setStars(stars);
+        recipeDao.updateRecipe(recipe);
+        userRecipeDao.updateUserRecipe(userRecipe);
+
+        return stars;
+    }
 }

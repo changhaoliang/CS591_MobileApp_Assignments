@@ -9,4 +9,5 @@ public class UserRecipe {
     private boolean liked;
     private boolean rated;
     private float userStars;
+
 }

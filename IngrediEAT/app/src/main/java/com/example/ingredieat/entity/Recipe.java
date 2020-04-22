@@ -106,10 +106,9 @@ public class Recipe {
         liked = false;
     }
 
-    public void updateStars(float myStar){
+    public void updateUserStars(float myStar){
         userStars = myStar;
         rated = true;
-        stars = (stars*ratings+myStar)/(++ratings);
     }
 
     public RecipeDetail getRecipeDetail(){

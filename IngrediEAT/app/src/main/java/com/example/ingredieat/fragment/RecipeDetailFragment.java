@@ -1,8 +1,11 @@
 package com.example.ingredieat.fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,13 +16,19 @@ import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.example.ingredieat.adapter.FavoriteAdapter;
+import com.example.ingredieat.adapter.RecipeAdapter;
 import com.example.ingredieat.entity.Equipment;
 import com.example.ingredieat.entity.Ingredient;
-import com.example.ingredieat.entity.Step;
+import com.example.ingredieat.utils.HttpUtils;
 import com.google.android.material.chip.Chip;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 import com.bumptech.glide.Glide;
 import com.example.ingredieat.R;
@@ -30,16 +39,21 @@ import com.example.ingredieat.entity.RecipeDetail;
 import com.google.android.material.chip.ChipDrawable;
 import com.google.android.material.chip.ChipGroup;
 
-import org.w3c.dom.Text;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.example.ingredieat.setting.Setting.dpToPx;
+import static com.example.ingredieat.setting.Setting.googleId;
 
 
 public class RecipeDetailFragment extends Fragment {
     private Recipe recipe;
+    private RecipeAdapter recipeAdapter;
+    private FavoriteAdapter favorateAdapter;
     private RecipeDetail recipeDetail;
 
     private ImageButton like, liked;
@@ -50,10 +64,18 @@ public class RecipeDetailFragment extends Fragment {
 
     private boolean showIngredients;
 
-    public RecipeDetailFragment(Recipe recipe, boolean showIngredients){
+    public RecipeDetailFragment(Recipe recipe, RecipeAdapter recipeAdapter){
         this.recipe = recipe;
+        this.recipeAdapter = recipeAdapter;
         recipeDetail = recipe.getRecipeDetail();
-        this.showIngredients = showIngredients;
+        this.showIngredients = true;
+    }
+
+    public RecipeDetailFragment(Recipe recipe, FavoriteAdapter favoriteAdapter){
+        this.recipe = recipe;
+        this.favorateAdapter = favoriteAdapter;
+        recipeDetail = recipe.getRecipeDetail();
+        this.showIngredients = false;
     }
 
     public interface DetailFragmentListener {
@@ -78,7 +100,7 @@ public class RecipeDetailFragment extends Fragment {
         }
         loadSteps(myView);
 
-        ImageView recipeImg = myView.findViewById(R.id.detail_recipe_img);
+        final ImageView recipeImg = myView.findViewById(R.id.detail_recipe_img);
         TextView title = myView.findViewById(R.id.detail_recipe_title);
         final Button submit = myView.findViewById(R.id.btn_submit);
         final TextView rating_title = myView.findViewById(R.id.rating_title);
@@ -99,31 +121,42 @@ public class RecipeDetailFragment extends Fragment {
         if (recipe.getRated()) {  //only one chance to rate
             myRating.setRating(recipe.getUserStars());
             myRating.setIsIndicator(true);
+            submit.setVisibility(View.INVISIBLE);
             rating_title.setText("MY RATING: " + recipe.getUserStars());
             submit.setVisibility(View.INVISIBLE);
         }
 
-//        myRating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-//            @Override
-//            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
-//                if (b) {
-//                    recipe.updateStars(v);
-//                    rating.setRating(recipe.getStars());
-//                    ratings.setText(String.valueOf(recipe.getStars()));
-//                    myRating.setIsIndicator(true);
-//                }
-//            }
-//        });
-
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                recipe.updateStars(myRating.getRating());
-                rating.setRating(recipe.getStars());
-                ratings.setText(String.valueOf(recipe.getStars()));
+                recipe.updateUserStars(myRating.getRating());
                 myRating.setIsIndicator(true);
                 submit.setVisibility(View.INVISIBLE);
                 rating_title.setText("MY RATING: "+ recipe.getUserStars());
+                Map<String, String> params = new HashMap<>();
+                params.put("googleId", googleId);
+                params.put("recipeId", String.valueOf(recipe.getId()));
+                params.put("rated", String.valueOf(recipe.getRated()));
+                params.put("userStars", String.valueOf(recipe.getUserStars()));
+                HttpUtils.postRequest("/home//ratingRecipe", params, new Callback() {
+                    @Override
+                    public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+                    }
+
+                    @Override
+                    public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                        ResponseBody body = response.body();
+                        if(body != null) {
+                            String data = body.string();
+                            // Here we use Fastjson to parse json string.
+                            float stars = Float.valueOf(data);
+                            recipe.setStars(stars);
+                            Message msg = Message.obtain();
+                            handler2.sendMessage(msg);
+                        }
+                    }
+                });
             }
         });
 
@@ -139,23 +172,58 @@ public class RecipeDetailFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 recipe.like();
+                likes.setText(recipe.getLikes());
                 like.setVisibility(View.INVISIBLE);
                 liked.setVisibility(View.VISIBLE);
                 likes.setText(recipe.getLikes());
                 detailFragmentListener.addLikes(recipe);
+
+                Map<String, String> params = new HashMap<>();
+                params.put("googleId", googleId);
+                params.put("recipeId", String.valueOf(recipe.getId()));
+                params.put("liked", String.valueOf(recipe.getLiked()));
+                HttpUtils.postRequest("/home/updateUserRecipeLiked", params, new Callback() {
+                    @Override
+                    public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+                    }
+
+                    @Override
+                    public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                        Message msg = Message.obtain();
+                        handler1.sendMessage(msg);
+                    }
+                });
             }
         });
         liked.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 recipe.unlike();
+                likes.setText(recipe.getLikes());
                 like.setVisibility(View.VISIBLE);
                 liked.setVisibility(View.INVISIBLE);
                 likes.setText(recipe.getLikes());
                 detailFragmentListener.removeLikes(recipe);
+
+                Map<String, String> params = new HashMap<>();
+                params.put("googleId", googleId);
+                params.put("recipeId", String.valueOf(recipe.getId()));
+                params.put("liked", String.valueOf(recipe.getLiked()));
+                HttpUtils.postRequest("/home/updateUserRecipeLiked", params, new Callback() {
+                    @Override
+                    public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+                    }
+
+                    @Override
+                    public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                        Message msg = Message.obtain();
+                        handler1.sendMessage(msg);
+                    }
+                });
             }
         });
-
 
         return myView;
     }
@@ -280,4 +348,28 @@ public class RecipeDetailFragment extends Fragment {
             container.addView(myLayout);
         }
     }
+
+    @SuppressLint("HandlerLeak")
+    private Handler handler1 = new Handler() {
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            if (showIngredients)
+                recipeAdapter.notifyDataSetChanged();
+            else
+                favorateAdapter.notifyDataSetChanged();
+        }
+    };
+
+    @SuppressLint("HandlerLeak")
+    private Handler handler2 = new Handler() {
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            rating.setRating(recipe.getStars());
+            ratings.setText(String.valueOf(recipe.getStars()));
+            if (showIngredients)
+                recipeAdapter.notifyDataSetChanged();
+            else
+                favorateAdapter.notifyDataSetChanged();
+        }
+    };
 }
