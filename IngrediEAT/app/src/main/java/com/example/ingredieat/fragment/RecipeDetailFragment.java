@@ -105,7 +105,6 @@ public class RecipeDetailFragment extends Fragment {
         if (recipe.getRated()) {  //only one chance to rate
             myRating.setRating(recipe.getUserStars());
             myRating.setIsIndicator(true);
-            submit.setVisibility(View.INVISIBLE);
             rating_title.setText("MY RATING: " + recipe.getUserStars());
         }
 
