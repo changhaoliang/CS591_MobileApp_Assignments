@@ -247,7 +247,7 @@ public class HomeServiceImpl implements HomeService {
         stars = (ratings * stars + userStars) / (ratings + 1);
 
         // Update the data in the database
-        recipe.setLikes(ratings+1);
+        recipe.setRatings(ratings+1);
         recipe.setStars(stars);
         recipeDao.updateRecipe(recipe);
         userRecipeDao.updateUserRecipe(userRecipe);
