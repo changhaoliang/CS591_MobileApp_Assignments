@@ -1,7 +1,6 @@
 package com.example.ingredieat.acitivity;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import okhttp3.Call;
@@ -10,7 +9,6 @@ import okhttp3.Response;
 import okhttp3.ResponseBody;
 
 import android.annotation.SuppressLint;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -20,7 +18,6 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.alibaba.fastjson.JSON;
-import com.blankj.utilcode.util.FragmentUtils;
 import com.example.ingredieat.adapter.RecipeAdapter;
 import com.example.ingredieat.base.Category;
 import com.example.ingredieat.entity.Recipe;
@@ -34,8 +31,6 @@ import com.example.ingredieat.fragment.RecipeFragment;
 import com.example.ingredieat.fragment.UserFragment;
 import com.example.ingredieat.setting.Setting;
 import com.example.ingredieat.utils.HttpUtils;
-import com.google.android.material.bottomnavigation.BottomNavigationItemView;
-import com.google.android.material.bottomnavigation.BottomNavigationMenuView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.jetbrains.annotations.NotNull;
@@ -256,7 +251,7 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
 
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             this.ingredientsFragment = new IngredientsFragment();
-            ingredientsFragment.setAllIngrediens(allIngredients);
+            ingredientsFragment.setAllIngredients(allIngredients);
             fragmentTransaction.replace(R.id.fragment_container, ingredientsFragment);
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
@@ -273,7 +268,7 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
 
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             this.ingredientsFragment = new IngredientsFragment();
-            ingredientsFragment.setAllIngrediens(allIngredients);
+            ingredientsFragment.setAllIngredients(allIngredients);
             fragmentTransaction.replace(R.id.fragment_container, ingredientsFragment);
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
