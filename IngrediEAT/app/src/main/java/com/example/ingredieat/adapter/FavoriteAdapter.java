@@ -14,21 +14,23 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.ingredieat.R;
 import com.example.ingredieat.entity.Recipe;
 
-import com.bumptech.glide.Glide;
-
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
-public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeHolder> {
+public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.FavoriteHolder> {
+
     private List<Recipe> recipes;
     private Context context;
     private MyClickListener myClickListener;
 
-    public RecipeAdapter(Context context, List<Recipe> recipes, MyClickListener myClickListener) {
+    public FavoriteAdapter(Context context, HashSet<Recipe> recipes, MyClickListener myClickListener) {
         this.context = context;
-        this.recipes = recipes;
+        this.recipes = new ArrayList<>(recipes);
         this.myClickListener = myClickListener;
     }
 
@@ -39,20 +41,21 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeHold
 
     @NonNull
     @Override
-    public RecipeHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public FavoriteHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.recipe, parent, false);
+                .inflate(R.layout.favorite_recipe, parent, false);
 
-        return new RecipeHolder(view);
+        return new FavoriteHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final RecipeHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final FavoriteHolder holder, final int position) {
         Log.d("Boston University", "onBindViewHolder");
         final Recipe recipe = recipes.get(position);
         holder.title.setText(recipe.getTitle());
         holder.likes.setText(recipe.getLikes());
-        holder.rating.setRating(recipe.getStars());
+        holder.rating_bar.setRating(recipe.getStars());
+        holder.rating_point.setText(String.valueOf(recipe.getStars()));
 
         Glide.with(context).load(recipe.getImg()).into(holder.recipeImg);
 
@@ -103,26 +106,31 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeHold
         return recipes.size();
     }
 
-    public class RecipeHolder extends RecyclerView.ViewHolder {
+    public class FavoriteHolder extends RecyclerView.ViewHolder {
         private ImageButton like, liked;
-        private TextView title, likes;
-        private RatingBar rating;
+        private TextView title, likes, rating_point;
+        private RatingBar rating_bar;
         private ImageView recipeImg;
         private CardView cardView;
 
-        public RecipeHolder(View view) {
+        public FavoriteHolder(View view) {
             super(view);
-            recipeImg = view.findViewById(R.id.recipe_img);
-            like = view.findViewById(R.id.like);
-            liked = view.findViewById(R.id.liked);
-            title = view.findViewById(R.id.recipe_title);
-            likes = view.findViewById(R.id.like_count);
-            rating = view.findViewById(R.id.rating_bar);
-            cardView = view.findViewById(R.id.recipe);
+            recipeImg = view.findViewById(R.id.favorite_img);
+            like = view.findViewById(R.id.favorite_like);
+            liked = view.findViewById(R.id.favorite_liked);
+            title = view.findViewById(R.id.favorite_title);
+            likes = view.findViewById(R.id.favorite_like_count);
+            rating_bar = view.findViewById(R.id.favorite_rating_bar);
+            rating_point = view.findViewById(R.id.favorite_rating);
+            cardView = view.findViewById(R.id.favorite_recipe);
         }
     }
 
     public void setRecipes(List<Recipe> recipes){
         this.recipes = recipes;
+    }
+
+    public void setRecipes(HashSet<Recipe> recipes) {
+        this.recipes = new ArrayList<>(recipes);
     }
 }

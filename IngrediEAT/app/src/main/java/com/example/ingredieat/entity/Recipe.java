@@ -1,5 +1,7 @@
 package com.example.ingredieat.entity;
 
+import androidx.annotation.Nullable;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -121,5 +123,11 @@ public class Recipe {
             recipeDetail.setSteps(steps);
         }
         return recipeDetail;
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        Recipe compared = (Recipe)obj;
+        return this.id == compared.id;
     }
 }

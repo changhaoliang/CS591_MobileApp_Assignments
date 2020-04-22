@@ -46,12 +46,19 @@ public class RecipeDetailFragment extends Fragment {
     private TextView likes, ratings;
     private RatingBar rating, myRating;
 
+    private DetailFragmentListener detailFragmentListener;
+
     private boolean showIngredients;
 
     public RecipeDetailFragment(Recipe recipe, boolean showIngredients){
         this.recipe = recipe;
         recipeDetail = recipe.getRecipeDetail();
         this.showIngredients = showIngredients;
+    }
+
+    public interface DetailFragmentListener {
+        void addLikes(Recipe recipe);
+        void removeLikes(Recipe recipe);
     }
 
     @Override
@@ -93,6 +100,7 @@ public class RecipeDetailFragment extends Fragment {
             myRating.setRating(recipe.getUserStars());
             myRating.setIsIndicator(true);
             rating_title.setText("MY RATING: " + recipe.getUserStars());
+            submit.setVisibility(View.INVISIBLE);
         }
 
 //        myRating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
@@ -122,12 +130,10 @@ public class RecipeDetailFragment extends Fragment {
         if (recipe.getLiked()) {
             like.setVisibility(View.INVISIBLE);
             liked.setVisibility(View.VISIBLE);
-            submit.setVisibility(View.INVISIBLE);
         }
         else{
             like.setVisibility(View.VISIBLE);
             liked.setVisibility(View.INVISIBLE);
-            submit.setVisibility(View.VISIBLE);
         }
         like.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,6 +142,7 @@ public class RecipeDetailFragment extends Fragment {
                 like.setVisibility(View.INVISIBLE);
                 liked.setVisibility(View.VISIBLE);
                 likes.setText(recipe.getLikes());
+                detailFragmentListener.addLikes(recipe);
             }
         });
         liked.setOnClickListener(new View.OnClickListener() {
@@ -145,6 +152,7 @@ public class RecipeDetailFragment extends Fragment {
                 like.setVisibility(View.VISIBLE);
                 liked.setVisibility(View.INVISIBLE);
                 likes.setText(recipe.getLikes());
+                detailFragmentListener.removeLikes(recipe);
             }
         });
 
@@ -156,6 +164,7 @@ public class RecipeDetailFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
+        detailFragmentListener = (DetailFragmentListener) context;
     }
 
     private void loadIngredients(View myView){
