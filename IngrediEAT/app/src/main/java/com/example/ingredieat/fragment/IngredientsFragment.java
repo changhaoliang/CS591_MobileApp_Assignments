@@ -92,11 +92,13 @@ public class IngredientsFragment extends Fragment {
                 if (!category.equals(Category.ALL)) {
                     if (ingredientFragmentListener.getSelected(category, chip.getText().toString())) {
                         chip.setChecked(true);
+                        chip.setEnabled(false);
                     }
                 } else {
                     for (Category c : Category.values()) {
                         if (ingredientFragmentListener.getSelected(c, chip.getText().toString())) {
                             chip.setChecked(true);
+                            chip.setEnabled(false);
                             System.out.println(chip.getText().toString());
                         }
                     }
@@ -219,11 +221,13 @@ public class IngredientsFragment extends Fragment {
                 for (Category c : Category.values()) {
                     if (ingredientFragmentListener.getSelected(c, chip.getText().toString())) {
                         chip.setChecked(true);
+                        chip.setEnabled(false);
                     }
                 }
             } else {
                 if (ingredientFragmentListener.getSelected(category, chip.getText().toString())) {
                     chip.setChecked(true);
+                    chip.setEnabled(false);
                 }
 
             }
