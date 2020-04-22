@@ -224,15 +224,13 @@ public class HomeServiceImpl implements HomeService {
     }
 
     @Override
-    public int updateUserRecipeLiked(UserRecipe userRecipe) {
+    public void updateUserRecipeLiked(UserRecipe userRecipe) {
         userRecipeDao.updateUserRecipeLiked(userRecipe);
         if(userRecipe.isLiked()) {
             recipeDao.increaseRecipeLikesBy1(userRecipe.getRecipeId());
         }else{
             recipeDao.decreaseRecipeLikesBy1(userRecipe.getRecipeId());
         }
-
-        return recipeDao.getRecipeLikesByRecipeId(userRecipe.getRecipeId());
     }
 
     @Override
@@ -243,7 +241,7 @@ public class HomeServiceImpl implements HomeService {
         float stars = recipe.getStars();
 
         // Get the user recipe data
-        float userStars = userRecipe.getUserStars();
+        float userStars = (float)(Math.round(userRecipe.getUserStars() * 1000) / 1000);
         stars = (ratings * stars + userStars) / (ratings + 1);
 
         // Update the data in the database

@@ -48,9 +48,9 @@ public class HomeController {
     }
 
     @PostMapping("/updateUserRecipeLiked")
-    public int updateUserRecipeLiked(@RequestBody UserRecipe userRecipe) {
+    public void updateUserRecipeLiked(@RequestBody UserRecipe userRecipe) {
 
-        return homeService.updateUserRecipeLiked(userRecipe);
+        homeService.updateUserRecipeLiked(userRecipe);
     }
 
     @PostMapping("/ratingRecipe")

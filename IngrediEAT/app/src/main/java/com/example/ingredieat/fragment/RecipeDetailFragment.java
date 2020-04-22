@@ -105,20 +105,9 @@ public class RecipeDetailFragment extends Fragment {
         if (recipe.getRated()) {  //only one chance to rate
             myRating.setRating(recipe.getUserStars());
             myRating.setIsIndicator(true);
+            submit.setVisibility(View.INVISIBLE);
             rating_title.setText("MY RATING: " + recipe.getUserStars());
         }
-
-//        myRating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-//            @Override
-//            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
-//                if (b) {
-//                    recipe.updateUserStars(v);
-//                    rating.setRating(recipe.getStars());
-//                    ratings.setText(String.valueOf(recipe.getStars()));
-//                    myRating.setIsIndicator(true);
-//                }
-//            }
-//        });
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -168,6 +157,7 @@ public class RecipeDetailFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 recipe.like();
+                likes.setText(recipe.getLikes());
                 like.setVisibility(View.INVISIBLE);
                 liked.setVisibility(View.VISIBLE);
                 Map<String, String> params = new HashMap<>();
@@ -182,15 +172,8 @@ public class RecipeDetailFragment extends Fragment {
 
                     @Override
                     public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                        ResponseBody body = response.body();
-                        if(body != null) {
-                            String data = body.string();
-                            // Here we use Fastjson to parse json string.
-                            int likes = Integer.valueOf(data);
-                            recipe.setLikes(likes);
-                            Message msg = Message.obtain();
-                            handler1.sendMessage(msg);
-                        }
+                        Message msg = Message.obtain();
+                        handler1.sendMessage(msg);
                     }
                 });
             }
@@ -199,6 +182,7 @@ public class RecipeDetailFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 recipe.unlike();
+                likes.setText(recipe.getLikes());
                 like.setVisibility(View.VISIBLE);
                 liked.setVisibility(View.INVISIBLE);
                 Map<String, String> params = new HashMap<>();
@@ -213,15 +197,8 @@ public class RecipeDetailFragment extends Fragment {
 
                     @Override
                     public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                        ResponseBody body = response.body();
-                        if(body != null) {
-                            String data = body.string();
-                            // Here we use Fastjson to parse json string.
-                            int likes = Integer.valueOf(data);
-                            recipe.setLikes(likes);
-                            Message msg = Message.obtain();
-                            handler1.sendMessage(msg);
-                        }
+                        Message msg = Message.obtain();
+                        handler1.sendMessage(msg);
                     }
                 });
             }
@@ -354,10 +331,10 @@ public class RecipeDetailFragment extends Fragment {
     private Handler handler1 = new Handler() {
         @Override
         public void handleMessage(@NonNull Message msg) {
-            likes.setText(recipe.getLikes());
             recipeAdapter.notifyDataSetChanged();
         }
     };
+
     @SuppressLint("HandlerLeak")
     private Handler handler2 = new Handler() {
         @Override

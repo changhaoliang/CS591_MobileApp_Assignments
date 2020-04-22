@@ -222,7 +222,6 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
         params.put("selectedIngredients", stringBuilder.toString());
 
         progressBar.setVisibility(View.VISIBLE);
-        System.out.println("post request");
         HttpUtils.postRequest("/home/listRecipesByIngredientsNames", params, new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {

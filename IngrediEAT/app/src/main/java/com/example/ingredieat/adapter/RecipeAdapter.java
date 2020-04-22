@@ -51,7 +51,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeHold
 
     public interface MyClickListener {
         public void clickListener(View v, Recipe recipe);
-        public void updateView();
     }
 
     @NonNull
@@ -85,6 +84,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeHold
             @Override
             public void onClick(View view) {
                 recipe.like();
+                holder.likes.setText(recipe.getLikes());
                 holder.like.setVisibility(View.INVISIBLE);
                 holder.liked.setVisibility(View.VISIBLE);
                 Map<String, String> params = new HashMap<>();
@@ -99,16 +99,10 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeHold
 
                     @Override
                     public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                        ResponseBody body = response.body();
-                        if(body != null) {
-                            String data = body.string();
-                            int likes = Integer.valueOf(data);
-                            recipe.setLikes(likes);
-                            Message msg = Message.obtain();
-                            handler1.sendMessage(msg);
-                        }
+
                     }
                 });
+
             }
         });
 
@@ -118,6 +112,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeHold
                 recipe.unlike();
                 holder.like.setVisibility(View.VISIBLE);
                 holder.liked.setVisibility(View.INVISIBLE);
+                holder.likes.setText(recipe.getLikes());
 
                 Map<String, String> params = new HashMap<>();
                 params.put("googleId", googleId);
@@ -131,14 +126,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeHold
 
                     @Override
                     public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                        ResponseBody body = response.body();
-                        if(body != null) {
-                            String data = body.string();
-                            int likes = Integer.valueOf(data);
-                            recipe.setLikes(likes);
-                            Message msg = Message.obtain();
-                            handler1.sendMessage(msg);
-                        }
+
                     }
                 });
             }
@@ -184,12 +172,4 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeHold
     public void setRecipes(List<Recipe> recipes){
         this.recipes = recipes;
     }
-
-    @SuppressLint("HandlerLeak")
-    private Handler handler1 = new Handler() {
-        @Override
-        public void handleMessage(@NonNull Message msg) {
-            myClickListener.updateView();
-        }
-    };
 }

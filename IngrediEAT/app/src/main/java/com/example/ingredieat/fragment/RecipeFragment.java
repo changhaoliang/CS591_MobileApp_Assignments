@@ -39,11 +39,6 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.MyClickLis
         recipeFragmentListener.showDetails(recipe, recipeAdapter);
     }
 
-    @Override
-    public void updateView() {
-        recipeAdapter.notifyDataSetChanged();
-    }
-
     public interface RecipeFragmentListener {
         void showDetails(Recipe recipe, RecipeAdapter recipeAdapter);
     }

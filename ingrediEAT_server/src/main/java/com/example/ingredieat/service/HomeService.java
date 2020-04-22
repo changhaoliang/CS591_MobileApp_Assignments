@@ -18,7 +18,7 @@ public interface HomeService {
 
     void getOrInsertIngredient(Ingredient ingredient);
 
-    int updateUserRecipeLiked(UserRecipe userRecipe);
+    void updateUserRecipeLiked(UserRecipe userRecipe);
 
     float ratingRecipe(UserRecipe userRecipe);
 }
