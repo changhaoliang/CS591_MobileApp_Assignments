@@ -11,13 +11,11 @@ import com.example.ingredieat.service.HomeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 @Async
-@Transactional
 public class AsyncServiceImpl implements AsyncService {
 
     @Autowired
@@ -48,8 +46,8 @@ public class AsyncServiceImpl implements AsyncService {
     @Override
     public void saveRecipesData(String googleId, List<Recipe> recipes) {
         for(Recipe recipe: recipes) {
-            recipeDao.insertNewRecipe(recipe);
-            userRecipeDao.insertUserRecipe(googleId, recipe);
+//            recipeDao.insertNewRecipe(recipe);
+//            userRecipeDao.insertUserRecipe(googleId, recipe);
 
             for(Step step: recipe.getRecipeDetail().getSteps()) {
                 stepDao.insertStep(step);

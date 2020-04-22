@@ -83,6 +83,7 @@ public class LoginActivity extends BaseActivity {
             User user = new User(Setting.googleId, Setting.email, Setting.givenName, Setting.familyName);
 
             String jsonString = JSON.toJSONString(user);
+            Log.d(TAG, jsonString);
 
             HttpUtils.postRequest("/login/findOrAddUser", jsonString, new Callback() {
                 @Override

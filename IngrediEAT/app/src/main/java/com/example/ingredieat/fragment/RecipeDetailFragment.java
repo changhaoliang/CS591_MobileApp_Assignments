@@ -137,7 +137,7 @@ public class RecipeDetailFragment extends Fragment {
                 params.put("recipeId", String.valueOf(recipe.getId()));
                 params.put("rated", String.valueOf(recipe.getRated()));
                 params.put("userStars", String.valueOf(recipe.getUserStars()));
-                HttpUtils.postRequest("/home//ratingRecipe", params, new Callback() {
+                HttpUtils.postRequest("/home/ratingRecipe", params, new Callback() {
                     @Override
                     public void onFailure(@NotNull Call call, @NotNull IOException e) {
 

@@ -17,11 +17,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 
 @Service
-@Transactional
 public class HomeServiceImpl implements HomeService {
 
     @Autowired
@@ -84,12 +84,12 @@ public class HomeServiceImpl implements HomeService {
                         recipe.setLikes(0);
                         recipe.setRatings(0);
                         recipe.setStars(0);
-                        // recipeDao.insertNewRecipe(recipe);
+                        recipeDao.insertNewRecipe(recipe);
                         // Set up the information related to the user
                         recipe.setLiked(false);
                         recipe.setRated(false);
                         recipe.setUserStars(0);
-                        // userRecipeDao.insertUserRecipe(googleId, recipe);
+                        userRecipeDao.insertUserRecipe(googleId, recipe);
                         // Create a new recipeDetail object;
                         RecipeDetail recipeDetail = new RecipeDetail();
                         // Get the data of steps of the recipe
@@ -108,25 +108,36 @@ public class HomeServiceImpl implements HomeService {
                                     JSONObject stepInfo = stepsInfo.getJSONObject(j);
                                     // Get the equipments of the current step
                                     JSONArray equipmentsInfo = stepInfo.getJSONArray("equipment");
+                                    HashSet<Integer> equipmentsIds = new HashSet<>();
                                     List<Equipment> equipments = new ArrayList<>();
                                     for (int t = 0; t < equipmentsInfo.size(); t++) {
                                         JSONObject equipmentInfo = equipmentsInfo.getJSONObject(t);
-                                        Equipment equipment = new Equipment(equipmentInfo.getInteger("id"), equipmentInfo.getString("name"));
-                                        //getOrInsertEquipment(equipment);
-                                        //stepEquipmentDao.insertStepEquipment(step.getId(), equipment.getId());
-                                        equipments.add(equipment);
+                                        int equipment_id = equipmentInfo.getInteger("id");
+                                        if(!equipmentsIds.contains(equipment_id)) {
+                                            Equipment equipment = new Equipment(equipmentInfo.getInteger("id"), equipmentInfo.getString("name"));
+                                            //getOrInsertEquipment(equipment);
+                                            //stepEquipmentDao.insertStepEquipment(step.getId(), equipment.getId());
+                                            equipments.add(equipment);
+                                            equipmentsIds.add(equipment_id);
+                                        }
                                     }
                                     step.setEquipments(equipments);
 
                                     // Get the ingredients of the current step
                                     JSONArray ingredientsInfo = stepInfo.getJSONArray("ingredients");
                                     List<Ingredient> ingredients = new ArrayList<>();
+                                    HashSet<Integer> ingredientsIds = new HashSet<>();
                                     for (int t = 0; t < ingredientsInfo.size(); t++) {
                                         JSONObject ingredientInfo = ingredientsInfo.getJSONObject(t);
-                                        Ingredient ingredient = new Ingredient(ingredientInfo.getInteger("id"), ingredientInfo.getString("name"));
-                                        //getOrInsertIngredient(ingredient);
-                                        //stepIngredientDao.insertStepIngredient(step.getId(), ingredient.getId());
-                                        ingredients.add(ingredient);
+                                        int ingredient_id = ingredientInfo.getInteger("id");
+                                        if(!ingredientsIds.contains(ingredient_id)) {
+                                            ingredientsIds.add(ingredient_id);
+                                            String ingredient_name = ingredientInfo.getString("name");
+                                            Ingredient ingredient = new Ingredient(ingredient_id, ingredient_name);
+                                            //getOrInsertIngredient(ingredient);
+                                            //stepIngredientDao.insertStepIngredient(step.getId(), ingredient.getId());
+                                            ingredients.add(ingredient);
+                                        }
                                     }
                                     step.setIngredients(ingredients);
 
@@ -241,8 +252,9 @@ public class HomeServiceImpl implements HomeService {
         float stars = recipe.getStars();
 
         // Get the user recipe data
-        float userStars = (float)(Math.round(userRecipe.getUserStars() * 1000) / 1000);
+        float userStars = userRecipe.getUserStars();
         stars = (ratings * stars + userStars) / (ratings + 1);
+        stars = (float)(Math.round(stars * 1000) / 1000);
 
         // Update the data in the database
         recipe.setRatings(ratings+1);
