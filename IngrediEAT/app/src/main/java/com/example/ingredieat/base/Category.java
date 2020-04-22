@@ -10,6 +10,7 @@ public enum Category {
     BEVERAGE("Beverages"),
     OIL_VINEGAR_SALAD_DRESSING("Oil, Vinegar, Salad Dressing"),
     SPICES_AND_SEASONINGS("Spices and Seasonings"),
+    ALL("all"),
     CONDIMENTS("Condiments"),
     OTHERS("Others");
 
@@ -23,4 +24,12 @@ public enum Category {
         return categoryValue;
     }
 
+    public static Category getCategoryName(String categoryValue){
+        for (Category s : Category.values()) {
+            if(categoryValue.equals(s.getCategoryValue())){
+                return s;
+            }
+        }
+        return null;
+    }
 }
