@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.*;
 @Mapper
 public interface UserRecipeDao {
 
+
     @Select("SELECT * FROM `user_recipe` WHERE `google_id` = #{googleId} AND `recipe_id` = #{recipeId}")
     @Results(value = {
             @Result(column = "user_stars", property = "userStars")
@@ -19,4 +20,7 @@ public interface UserRecipeDao {
 
     @Update("UPDATE `user_recipe` SET `liked` = #{liked} WHERE `google_id` = #{googleId} AND `recipe_id` = #{recipeId}")
     void updateUserRecipeLiked(UserRecipe userRecipe);
+
+    @Update("UPDATE `user_recipe` SET `rated` = #{rated}, `user_stars` = #{userStars} WHERE `google_id` = #{googleId} AND `recipe_id` = #{recipeId}")
+    void updateUserRecipe(UserRecipe userRecipe);
 }
