@@ -25,6 +25,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -136,7 +137,10 @@ public class CategoryItemFragment extends Fragment implements CategoryItemAdapte
     }
 
     public void initializeList(HashMap<String, List<Ingredient>> allIngrediens) {
-        for (String key : allIngrediens.keySet()) {
+        List<String> keys = new ArrayList<>(allIngrediens.keySet());
+        Collections.sort(keys);
+
+        for (String key : keys) {
             String[] s = key.split(",");
             s = s[0].split(" ");
             String filename = s[0].toLowerCase();
