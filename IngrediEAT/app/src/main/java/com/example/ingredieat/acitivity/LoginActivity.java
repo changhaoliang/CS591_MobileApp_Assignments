@@ -80,6 +80,12 @@ public class LoginActivity extends BaseActivity {
             editor.putBoolean(Setting.Strings.if_signin_succ, true);
             editor.apply();
 
+            Setting.googleId = account.getId();
+            Setting.email = account.getEmail();
+            Setting.familyName = account.getFamilyName();
+            Setting.givenName = account.getFamilyName();
+            Setting.ifSignIn = true;
+
             User user = new User(Setting.googleId, Setting.email, Setting.givenName, Setting.familyName);
 
             String jsonString = JSON.toJSONString(user);

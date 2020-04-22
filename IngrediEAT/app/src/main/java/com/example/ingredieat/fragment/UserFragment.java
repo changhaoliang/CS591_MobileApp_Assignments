@@ -55,6 +55,7 @@ public class UserFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 mGoogleSignInClient.signOut();
+                Setting.currentMenu = -1;
                 SharedPreferences settings = getActivity().getSharedPreferences(Setting.PREF_NAME, Activity.MODE_PRIVATE);
                 SharedPreferences.Editor editor = settings.edit();
                 editor.putBoolean(Setting.Strings.if_signin_succ, false);

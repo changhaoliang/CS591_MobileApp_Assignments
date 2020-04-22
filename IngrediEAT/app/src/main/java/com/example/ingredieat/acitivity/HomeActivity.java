@@ -9,6 +9,7 @@ import okhttp3.Response;
 import okhttp3.ResponseBody;
 
 import android.annotation.SuppressLint;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -145,6 +146,7 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
                 } else
                     return true;
             case R.id.user:
+                Log.d(TAG, String.valueOf(Setting.currentMenu));
                 if (Setting.currentMenu != R.id.user) {
                     Setting.currentMenu = R.id.user;
                     fragmentTransaction.replace(R.id.fragment_container, userFragment);
