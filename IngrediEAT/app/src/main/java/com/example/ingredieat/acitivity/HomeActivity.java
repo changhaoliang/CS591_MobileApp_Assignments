@@ -336,7 +336,7 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
     }
 
     public boolean checkIfIngChanged() {
-        boolean res = false;
+//        boolean res = false;
         HashMap<String, HashSet<String>> newSelectedIngredients = categoryItemFragment.getSelectedTotalIngredients();
 
         if (previousSelectedIngredients.size() == 0) {
@@ -371,6 +371,5 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
             }
         }
         return false;
-
     }
 }
