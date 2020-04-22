@@ -115,7 +115,10 @@ public class RecipeDetailFragment extends Fragment {
         Glide.with(this).load(recipe.getImg()).into(recipeImg);
         title.setText(recipe.getTitle());
         likes.setText(String.valueOf(recipe.getLikes()));
-        ratings.setText(String.valueOf(recipe.getStars()));
+        if (recipe.getStars() == 0)
+            ratings.setVisibility(View.INVISIBLE);
+        else
+            ratings.setText(String.valueOf(recipe.getStars()));
         rating.setRating(recipe.getStars());
 
         if (recipe.getRated()) {  //only one chance to rate

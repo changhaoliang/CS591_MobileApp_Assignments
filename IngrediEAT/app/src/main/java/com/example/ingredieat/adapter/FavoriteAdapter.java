@@ -55,7 +55,10 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
         holder.title.setText(recipe.getTitle());
         holder.likes.setText(recipe.getLikes());
         holder.rating_bar.setRating(recipe.getStars());
-        holder.rating_point.setText(String.valueOf(recipe.getStars()));
+        if (recipe.getStars() == 0)
+            holder.rating_point.setVisibility(View.INVISIBLE);
+        else
+            holder.rating_point.setText(String.valueOf(recipe.getStars()));
 
         Glide.with(context).load(recipe.getImg()).into(holder.recipeImg);
 
