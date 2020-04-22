@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.example.ingredieat.adapter.FavoriteAdapter;
 import com.example.ingredieat.adapter.RecipeAdapter;
 import com.example.ingredieat.entity.Equipment;
 import com.example.ingredieat.entity.Ingredient;
@@ -52,19 +53,34 @@ import static com.example.ingredieat.setting.Setting.googleId;
 public class RecipeDetailFragment extends Fragment {
     private Recipe recipe;
     private RecipeAdapter recipeAdapter;
+    private FavoriteAdapter favorateAdapter;
     private RecipeDetail recipeDetail;
 
     private ImageButton like, liked;
     private TextView likes, ratings;
     private RatingBar rating, myRating;
 
+    private DetailFragmentListener detailFragmentListener;
+
     private boolean showIngredients;
 
-    public RecipeDetailFragment(Recipe recipe, RecipeAdapter recipeAdapter, boolean showIngredients){
+    public RecipeDetailFragment(Recipe recipe, RecipeAdapter recipeAdapter){
         this.recipe = recipe;
         this.recipeAdapter = recipeAdapter;
         recipeDetail = recipe.getRecipeDetail();
-        this.showIngredients = showIngredients;
+        this.showIngredients = true;
+    }
+
+    public RecipeDetailFragment(Recipe recipe, FavoriteAdapter favoriteAdapter){
+        this.recipe = recipe;
+        this.favorateAdapter = favoriteAdapter;
+        recipeDetail = recipe.getRecipeDetail();
+        this.showIngredients = false;
+    }
+
+    public interface DetailFragmentListener {
+        void addLikes(Recipe recipe);
+        void removeLikes(Recipe recipe);
     }
 
     @Override
@@ -106,6 +122,7 @@ public class RecipeDetailFragment extends Fragment {
             myRating.setRating(recipe.getUserStars());
             myRating.setIsIndicator(true);
             rating_title.setText("MY RATING: " + recipe.getUserStars());
+            submit.setVisibility(View.INVISIBLE);
         }
 
         submit.setOnClickListener(new View.OnClickListener() {
@@ -145,12 +162,10 @@ public class RecipeDetailFragment extends Fragment {
         if (recipe.getLiked()) {
             like.setVisibility(View.INVISIBLE);
             liked.setVisibility(View.VISIBLE);
-            submit.setVisibility(View.INVISIBLE);
         }
         else{
             like.setVisibility(View.VISIBLE);
             liked.setVisibility(View.INVISIBLE);
-            submit.setVisibility(View.VISIBLE);
         }
         like.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -159,6 +174,9 @@ public class RecipeDetailFragment extends Fragment {
                 likes.setText(recipe.getLikes());
                 like.setVisibility(View.INVISIBLE);
                 liked.setVisibility(View.VISIBLE);
+                likes.setText(recipe.getLikes());
+                detailFragmentListener.addLikes(recipe);
+
                 Map<String, String> params = new HashMap<>();
                 params.put("googleId", googleId);
                 params.put("recipeId", String.valueOf(recipe.getId()));
@@ -184,6 +202,9 @@ public class RecipeDetailFragment extends Fragment {
                 likes.setText(recipe.getLikes());
                 like.setVisibility(View.VISIBLE);
                 liked.setVisibility(View.INVISIBLE);
+                likes.setText(recipe.getLikes());
+                detailFragmentListener.removeLikes(recipe);
+
                 Map<String, String> params = new HashMap<>();
                 params.put("googleId", googleId);
                 params.put("recipeId", String.valueOf(recipe.getId()));
@@ -210,6 +231,7 @@ public class RecipeDetailFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
+        detailFragmentListener = (DetailFragmentListener) context;
     }
 
     private void loadIngredients(View myView){
@@ -330,7 +352,10 @@ public class RecipeDetailFragment extends Fragment {
     private Handler handler1 = new Handler() {
         @Override
         public void handleMessage(@NonNull Message msg) {
-            recipeAdapter.notifyDataSetChanged();
+            if (showIngredients)
+                recipeAdapter.notifyDataSetChanged();
+            else
+                favorateAdapter.notifyDataSetChanged();
         }
     };
 
@@ -340,7 +365,10 @@ public class RecipeDetailFragment extends Fragment {
         public void handleMessage(@NonNull Message msg) {
             rating.setRating(recipe.getStars());
             ratings.setText(String.valueOf(recipe.getStars()));
-            recipeAdapter.notifyDataSetChanged();
+            if (showIngredients)
+                recipeAdapter.notifyDataSetChanged();
+            else
+                favorateAdapter.notifyDataSetChanged();
         }
     };
 }

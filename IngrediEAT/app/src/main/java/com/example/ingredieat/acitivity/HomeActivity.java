@@ -18,11 +18,13 @@ import android.view.View;
 import android.widget.ProgressBar;
 
 import com.alibaba.fastjson.JSON;
+import com.example.ingredieat.adapter.FavoriteAdapter;
 import com.example.ingredieat.adapter.RecipeAdapter;
 import com.example.ingredieat.base.Category;
 import com.example.ingredieat.entity.Recipe;
 import com.example.ingredieat.entity.Ingredient;
 import com.example.ingredieat.fragment.CartFragment;
+import com.example.ingredieat.fragment.FavoriteFragment;
 import com.example.ingredieat.fragment.IngredientsFragment;
 import com.example.ingredieat.fragment.CategoryItemFragment;
 import com.example.ingredieat.R;
@@ -45,7 +47,8 @@ import java.util.Map;
 
 public class HomeActivity extends BaseActivity implements CategoryItemFragment.itemFragmentListener,
         IngredientsFragment.IngredientFragmentListener, BottomNavigationView.OnNavigationItemSelectedListener,
-        CartFragment.CartFragmentListner, RecipeFragment.RecipeFragmentListener{
+        CartFragment.CartFragmentListner, RecipeFragment.RecipeFragmentListener, FavoriteFragment.FavoriteFragmentListener
+        , RecipeDetailFragment.DetailFragmentListener {
     private BottomNavigationView menuView;
 
     private static final long mBackPressThreshold = 3500;
@@ -53,6 +56,7 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
 
     private HashMap<String, List<Ingredient>> allIngredients;
     private List<Recipe> allRecipes;
+    private HashSet<Recipe> favoriteRecipes;                        //for favorite
     private Category category;
     private long mLastBackPress;
 
@@ -61,6 +65,7 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
     private UserFragment userFragment;
     private CartFragment cartFragment;
     private RecipeFragment recipeFragment;
+    private FavoriteFragment favoriteFragment;
     private RecipeDetailFragment recipeDetailFragment;
     private ProgressBar progressBar;
 
@@ -78,6 +83,7 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
         userFragment = new UserFragment();
         cartFragment = new CartFragment();
         recipeFragment = new RecipeFragment();
+        favoriteFragment = new FavoriteFragment();
 
         fragmentManager = getSupportFragmentManager();
         allIngredients = new HashMap<>();
@@ -85,6 +91,7 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
         progressBar = findViewById(R.id.progress_loader);
         // Get the data of all ingredients from the server side by sending a GET request.
         getAllIngredients();
+        getFavorite();
         categoryItemFragment.setAllIngrediens(allIngredients);
         menuView.setOnNavigationItemSelectedListener(this);
     }
@@ -123,6 +130,17 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
                         getAllRecipes();
                     }
                     fragmentTransaction.replace(R.id.fragment_container, recipeFragment);
+                    break;
+                } else
+                    return true;
+            case R.id.favourite:
+                if (Setting.currentMenu != R.id.favourite) {
+                    Setting.currentMenu = R.id.favourite;
+
+                    if (checkIfIngChanged() && favoriteRecipes!=null) {
+                        favoriteFragment.setRecipes(favoriteRecipes);                      //for favorite testing
+                    }
+                    fragmentTransaction.replace(R.id.fragment_container, favoriteFragment);
                     break;
                 } else
                     return true;
@@ -240,6 +258,12 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
         });
     }
 
+    private void getFavorite(){
+        favoriteRecipes = new HashSet<>();
+        //get favorite from server side
+        favoriteFragment.setRecipes(favoriteRecipes);
+    }
+
     @Override
     public void setFragment(boolean flag, final Category category, boolean ifAll, HashMap<Category, HashSet<Ingredient>> searchList) {
         if (flag && !ifAll) {
@@ -287,7 +311,7 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
     @Override
     public void showDetails(Recipe recipe, RecipeAdapter recipeAdapter) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        recipeDetailFragment = new RecipeDetailFragment(recipe, recipeAdapter, true);
+        recipeDetailFragment = new RecipeDetailFragment(recipe, recipeAdapter);
         fragmentTransaction.add(R.id.fragment_container, recipeDetailFragment);
         fragmentTransaction.show(recipeDetailFragment);
         fragmentTransaction.hide(recipeFragment);
@@ -295,6 +319,30 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
         fragmentTransaction.commit();
     }
 
+    @Override
+    public void addLikes(Recipe recipe) {
+        if (favoriteRecipes == null)
+            favoriteRecipes = new HashSet<>();
+        favoriteRecipes.add(recipe);
+    }
+
+    @Override
+    public void removeLikes(Recipe recipe) {
+        if (favoriteRecipes == null)
+            favoriteRecipes = new HashSet<>();
+        favoriteRecipes.remove(recipe);
+    }
+
+    @Override
+    public void showFavoriteDetails(Recipe recipe, FavoriteAdapter favoriteAdapter) {
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        recipeDetailFragment = new RecipeDetailFragment(recipe, favoriteAdapter);
+        fragmentTransaction.add(R.id.fragment_container, recipeDetailFragment);
+        fragmentTransaction.show(recipeDetailFragment);
+        fragmentTransaction.hide(favoriteFragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }
 
     @Override
     public boolean getSelected(Category category, String ingredient) {
