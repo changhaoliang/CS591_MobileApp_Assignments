@@ -27,30 +27,35 @@ public class HomeController {
 
     @PostMapping("/listRecipesByIngredientsNames")
     public List<Recipe> listRecipesByIngredientsNames(@RequestBody Params1 params1) {
+        return homeService.listRecipesByIngredientsNames(params1.getGoogleId(), params1.getSelectedIngredients());
 
-//        return homeService.listRecipesByIngredientsNames(params1.getGoogleId(), params1.getSelectedIngredients());
 
-
-        List<Recipe> allRecipes = new ArrayList<>();
-        for(int i = 0; i < 10; i++) {
-            allRecipes.add(new Recipe("https://spoonacular.com/recipeImages/716429-556x370.jpg",
-                    "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs", 12000, 4.5f));
-            allRecipes.add(new Recipe("https://spoonacular.com/recipeImages/716429-556x370.jpg",
-                    "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs", 200, 3));
-            allRecipes.add(new Recipe("https://spoonacular.com/recipeImages/73420-312x231.jpg", "baking powder"));
-            allRecipes.add(new Recipe("https://spoonacular.com/recipeImages/716429-556x370.jpg",
-                    "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs"));
-            allRecipes.add(new Recipe("https://spoonacular.com/recipeImages/73420-312x231.jpg", "baking powder"));
-            allRecipes.add(new Recipe("https://spoonacular.com/recipeImages/716429-556x370.jpg",
-                    "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs"));
-            allRecipes.add(new Recipe("https://spoonacular.com/recipeImages/73420-312x231.jpg", "baking powder"));
-        }
-        return allRecipes;
+//        List<Recipe> allRecipes = new ArrayList<>();
+//        for(int i = 0; i < 10; i++) {
+//            allRecipes.add(new Recipe("https://spoonacular.com/recipeImages/716429-556x370.jpg",
+//                    "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs", 12000, 4.5f));
+//            allRecipes.add(new Recipe("https://spoonacular.com/recipeImages/716429-556x370.jpg",
+//                    "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs", 200, 3));
+//            allRecipes.add(new Recipe("https://spoonacular.com/recipeImages/73420-312x231.jpg", "baking powder"));
+//            allRecipes.add(new Recipe("https://spoonacular.com/recipeImages/716429-556x370.jpg",
+//                    "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs"));
+//            allRecipes.add(new Recipe("https://spoonacular.com/recipeImages/73420-312x231.jpg", "baking powder"));
+//            allRecipes.add(new Recipe("https://spoonacular.com/recipeImages/716429-556x370.jpg",
+//                    "Pasta with Garlic, Scallions, Cauliflower & Breadcrumbs"));
+//            allRecipes.add(new Recipe("https://spoonacular.com/recipeImages/73420-312x231.jpg", "baking powder"));
+//        }
+//        return allRecipes;
     }
 
     @PostMapping("/updateUserRecipeLiked")
     public int updateUserRecipeLiked(@RequestBody UserRecipe userRecipe) {
 
         return homeService.updateUserRecipeLiked(userRecipe);
+    }
+
+    @PostMapping("/ratingRecipe")
+    public float ratingRecipe(@RequestBody UserRecipe userRecipe) {
+
+        return homeService.ratingRecipe(userRecipe);
     }
 }

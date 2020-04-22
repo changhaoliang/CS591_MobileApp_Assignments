@@ -2,7 +2,6 @@ package com.example.ingredieat.fragment;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,17 +16,14 @@ import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSON;
 import com.example.ingredieat.adapter.RecipeAdapter;
 import com.example.ingredieat.entity.Equipment;
 import com.example.ingredieat.entity.Ingredient;
-import com.example.ingredieat.entity.Step;
 import com.example.ingredieat.utils.HttpUtils;
 import com.google.android.material.chip.Chip;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -88,7 +84,7 @@ public class RecipeDetailFragment extends Fragment {
         }
         loadSteps(myView);
 
-        ImageView recipeImg = myView.findViewById(R.id.detail_recipe_img);
+        final ImageView recipeImg = myView.findViewById(R.id.detail_recipe_img);
         TextView title = myView.findViewById(R.id.detail_recipe_title);
         final Button submit = myView.findViewById(R.id.btn_submit);
         final TextView rating_title = myView.findViewById(R.id.rating_title);
@@ -116,7 +112,7 @@ public class RecipeDetailFragment extends Fragment {
 //            @Override
 //            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
 //                if (b) {
-//                    recipe.updateStars(v);
+//                    recipe.updateUserStars(v);
 //                    rating.setRating(recipe.getStars());
 //                    ratings.setText(String.valueOf(recipe.getStars()));
 //                    myRating.setIsIndicator(true);
@@ -127,12 +123,34 @@ public class RecipeDetailFragment extends Fragment {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                recipe.updateStars(myRating.getRating());
-                rating.setRating(recipe.getStars());
-                ratings.setText(String.valueOf(recipe.getStars()));
+                recipe.updateUserStars(myRating.getRating());
                 myRating.setIsIndicator(true);
                 submit.setVisibility(View.INVISIBLE);
                 rating_title.setText("MY RATING: "+ recipe.getUserStars());
+                Map<String, String> params = new HashMap<>();
+                params.put("googleId", googleId);
+                params.put("recipeId", String.valueOf(recipe.getId()));
+                params.put("rated", String.valueOf(recipe.getRated()));
+                params.put("userStars", String.valueOf(recipe.getUserStars()));
+                HttpUtils.postRequest("/home//ratingRecipe", params, new Callback() {
+                    @Override
+                    public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+                    }
+
+                    @Override
+                    public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                        ResponseBody body = response.body();
+                        if(body != null) {
+                            String data = body.string();
+                            // Here we use Fastjson to parse json string.
+                            float stars = Float.valueOf(data);
+                            recipe.setStars(stars);
+                            Message msg = Message.obtain();
+                            handler2.sendMessage(msg);
+                        }
+                    }
+                });
             }
         });
 
@@ -337,6 +355,15 @@ public class RecipeDetailFragment extends Fragment {
         @Override
         public void handleMessage(@NonNull Message msg) {
             likes.setText(recipe.getLikes());
+            recipeAdapter.notifyDataSetChanged();
+        }
+    };
+    @SuppressLint("HandlerLeak")
+    private Handler handler2 = new Handler() {
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            rating.setRating(recipe.getStars());
+            ratings.setText(String.valueOf(recipe.getStars()));
             recipeAdapter.notifyDataSetChanged();
         }
     };

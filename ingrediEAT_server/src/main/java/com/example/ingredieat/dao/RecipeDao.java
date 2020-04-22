@@ -25,4 +25,6 @@ public interface RecipeDao {
     @Update("UPDATE `recipe` SET `likes` = `likes` - 1 WHERE `id` = #{recipeId}")
     void decreaseRecipeLikesBy1(int recipeId);
 
+    @Update("UPDATE `recipe` SET `ratings` = #{ratings}, `stars` = #{stars} WHERE `id` = #{id}")
+    void updateRecipe(Recipe recipe);
 }

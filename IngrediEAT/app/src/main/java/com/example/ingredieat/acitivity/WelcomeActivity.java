@@ -44,11 +44,6 @@ public class WelcomeActivity extends BaseActivity {
         retrieveSharedPreferenceInfo();
         System.out.println(Setting.ifSignIn);
 
-//        if (!Setting.ifSignIn) {
-//            startIntent = new Intent(this, LoginActivity.class);
-//        } else {
-//            startIntent = new Intent(this, HomeActivity.class);
-//        }
         startIntent = new Intent(this, LoginActivity.class);
         componentReady = true;
     }
