@@ -87,7 +87,6 @@ public class CartFragment extends Fragment {
         editButton = (Button)myView.findViewById(R.id.edit_btn);
         clearButton = (Button)myView.findViewById(R.id.clear_btn);
         bottomLayout = (LinearLayout) myView.findViewById(R.id.bottom);
-        editButton.setEnabled(false);
 
         clearButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -186,12 +185,6 @@ public class CartFragment extends Fragment {
                         ((ChipGroup)c.getParent()).removeView(c);
                     }
                     holder.chipGroup.addView(c);
-                    c.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                        @Override
-                        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                            editButton.setEnabled(true);
-                        }
-                    });
                 }
             }
             setIcon(names.get(position), holder.icon);
