@@ -7,7 +7,6 @@ import com.example.ingredieat.entity.*;
 import com.example.ingredieat.service.AsyncService;
 import com.example.ingredieat.service.HomeService;
 import com.example.ingredieat.utils.ApiKeyUtils;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -222,6 +221,18 @@ public class HomeServiceImpl implements HomeService {
         if (ingredientDao.getIngredientById(ingredient.getId()) == null) {
             ingredientDao.insertRecipeStepIngredient(ingredient);
         }
+    }
+
+    @Override
+    public int updateUserRecipeLiked(UserRecipe userRecipe) {
+        userRecipeDao.updateUserRecipeLiked(userRecipe);
+        if(userRecipe.isLiked()) {
+            recipeDao.increaseRecipeLikesBy1(userRecipe.getRecipeId());
+        }else{
+            recipeDao.decreaseRecipeLikesBy1(userRecipe.getRecipeId());
+        }
+
+        return recipeDao.getRecipeLikesByRecipeId(userRecipe.getRecipeId());
     }
 
 }

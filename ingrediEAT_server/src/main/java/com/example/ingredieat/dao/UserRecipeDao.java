@@ -16,4 +16,7 @@ public interface UserRecipeDao {
 
     @Insert("INSERT INTO `user_recipe`(`google_id`, `recipe_id`, `liked`, `rated`, `user_stars`) values(#{googleId}, #{recipe.id}, #{recipe.liked}, #{recipe.rated}, #{recipe.userStars})")
     void insertUserRecipe(String googleId, Recipe recipe);
+
+    @Update("UPDATE `user_recipe` SET `liked` = #{liked} WHERE `google_id` = #{googleId} AND `recipe_id` = #{recipeId}")
+    void updateUserRecipeLiked(UserRecipe userRecipe);
 }

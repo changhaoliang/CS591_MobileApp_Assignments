@@ -95,12 +95,10 @@ public class Recipe {
     public String getImg(){return imgUrl;}
 
     public void like(){
-        likes++;
         liked = true;
     }
 
     public void unlike(){
-        likes--;
         liked = false;
     }
 

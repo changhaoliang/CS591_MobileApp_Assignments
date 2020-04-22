@@ -10,6 +10,7 @@ class IngrediEATApplicationTests {
 
     @Test
     void contextLoads() {
+        System.out.println(String.valueOf(true));
     }
 
 }

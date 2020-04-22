@@ -21,6 +21,7 @@ import android.widget.ProgressBar;
 
 import com.alibaba.fastjson.JSON;
 import com.blankj.utilcode.util.FragmentUtils;
+import com.example.ingredieat.adapter.RecipeAdapter;
 import com.example.ingredieat.base.Category;
 import com.example.ingredieat.entity.Recipe;
 import com.example.ingredieat.entity.Ingredient;
@@ -266,9 +267,9 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
 
 
     @Override
-    public void showDetails(Recipe recipe) {
+    public void showDetails(Recipe recipe, RecipeAdapter recipeAdapter) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        recipeDetailFragment = new RecipeDetailFragment(recipe, true);
+        recipeDetailFragment = new RecipeDetailFragment(recipe, recipeAdapter, true);
         fragmentTransaction.add(R.id.fragment_container, recipeDetailFragment);
         fragmentTransaction.show(recipeDetailFragment);
         fragmentTransaction.hide(recipeFragment);
@@ -286,8 +287,6 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
     public void onBackPressed() {
         if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
             getSupportFragmentManager().popBackStackImmediate();
-
-
         } else {
             long currentTime = System.currentTimeMillis();
             if (Math.abs(currentTime - mLastBackPress) > mBackPressThreshold) {

@@ -1,8 +1,12 @@
 package com.example.ingredieat.fragment;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,13 +17,21 @@ import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
+import com.example.ingredieat.adapter.RecipeAdapter;
 import com.example.ingredieat.entity.Equipment;
 import com.example.ingredieat.entity.Ingredient;
 import com.example.ingredieat.entity.Step;
+import com.example.ingredieat.utils.HttpUtils;
 import com.google.android.material.chip.Chip;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 import com.bumptech.glide.Glide;
 import com.example.ingredieat.R;
@@ -30,16 +42,20 @@ import com.example.ingredieat.entity.RecipeDetail;
 import com.google.android.material.chip.ChipDrawable;
 import com.google.android.material.chip.ChipGroup;
 
-import org.w3c.dom.Text;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.example.ingredieat.setting.Setting.dpToPx;
+import static com.example.ingredieat.setting.Setting.googleId;
 
 
 public class RecipeDetailFragment extends Fragment {
     private Recipe recipe;
+    private RecipeAdapter recipeAdapter;
     private RecipeDetail recipeDetail;
 
     private ImageButton like, liked;
@@ -48,8 +64,9 @@ public class RecipeDetailFragment extends Fragment {
 
     private boolean showIngredients;
 
-    public RecipeDetailFragment(Recipe recipe, boolean showIngredients){
+    public RecipeDetailFragment(Recipe recipe, RecipeAdapter recipeAdapter, boolean showIngredients){
         this.recipe = recipe;
+        this.recipeAdapter = recipeAdapter;
         recipeDetail = recipe.getRecipeDetail();
         this.showIngredients = showIngredients;
     }
@@ -135,7 +152,29 @@ public class RecipeDetailFragment extends Fragment {
                 recipe.like();
                 like.setVisibility(View.INVISIBLE);
                 liked.setVisibility(View.VISIBLE);
-                likes.setText(recipe.getLikes());
+                Map<String, String> params = new HashMap<>();
+                params.put("googleId", googleId);
+                params.put("recipeId", String.valueOf(recipe.getId()));
+                params.put("liked", String.valueOf(recipe.getLiked()));
+                HttpUtils.postRequest("/home/updateUserRecipeLiked", params, new Callback() {
+                    @Override
+                    public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+                    }
+
+                    @Override
+                    public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                        ResponseBody body = response.body();
+                        if(body != null) {
+                            String data = body.string();
+                            // Here we use Fastjson to parse json string.
+                            int likes = Integer.valueOf(data);
+                            recipe.setLikes(likes);
+                            Message msg = Message.obtain();
+                            handler1.sendMessage(msg);
+                        }
+                    }
+                });
             }
         });
         liked.setOnClickListener(new View.OnClickListener() {
@@ -144,10 +183,31 @@ public class RecipeDetailFragment extends Fragment {
                 recipe.unlike();
                 like.setVisibility(View.VISIBLE);
                 liked.setVisibility(View.INVISIBLE);
-                likes.setText(recipe.getLikes());
+                Map<String, String> params = new HashMap<>();
+                params.put("googleId", googleId);
+                params.put("recipeId", String.valueOf(recipe.getId()));
+                params.put("liked", String.valueOf(recipe.getLiked()));
+                HttpUtils.postRequest("/home/updateUserRecipeLiked", params, new Callback() {
+                    @Override
+                    public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+                    }
+
+                    @Override
+                    public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                        ResponseBody body = response.body();
+                        if(body != null) {
+                            String data = body.string();
+                            // Here we use Fastjson to parse json string.
+                            int likes = Integer.valueOf(data);
+                            recipe.setLikes(likes);
+                            Message msg = Message.obtain();
+                            handler1.sendMessage(msg);
+                        }
+                    }
+                });
             }
         });
-
 
         return myView;
     }
@@ -271,4 +331,13 @@ public class RecipeDetailFragment extends Fragment {
             container.addView(myLayout);
         }
     }
+
+    @SuppressLint("HandlerLeak")
+    private Handler handler1 = new Handler() {
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            likes.setText(recipe.getLikes());
+            recipeAdapter.notifyDataSetChanged();
+        }
+    };
 }
