@@ -40,6 +40,19 @@
 
         </LinearLayout>
 
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:queryHint="Search for anything"
+            android:showDividers="end|middle|beginning">
+
+        </androidx.appcompat.widget.SearchView>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"

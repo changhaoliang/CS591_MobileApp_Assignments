@@ -23,6 +23,7 @@ import com.google.android.material.chip.ChipDrawable;
 import com.google.android.material.chip.ChipGroup;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
@@ -33,17 +34,21 @@ public class IngredientsFragment extends Fragment {
     private List<Ingredient> searchIngredients;
 
     private ChipGroup chipsGroup;
-    private HashSet<String> selectedIngredients;
+    private HashMap<String, HashSet<String>> selectedIngredients;
     private Category category;
+    private LinearLayout layout;
     private Button add_btn;
     private SearchView searchView;
     private TextView title;
+
+    private HashMap<String, List<Ingredient>> allIngrediens;
+
 
     private IngredientFragmentListener ingredientFragmentListener;
 
     public interface IngredientFragmentListener {
         boolean getSelected(Category category, String ingredient);
-        void updateTotalSelected();
+        void updateTotalSelected(Category category);
     }
 
     @Override
@@ -58,15 +63,25 @@ public class IngredientsFragment extends Fragment {
         if (ingredients == null) {
             ingredients = new ArrayList<>();
         }
-        selectedIngredients = new HashSet<>();
+        selectedIngredients = new HashMap<>();
+        layout = (LinearLayout)myView.findViewById(R.id.layout);
         chipsGroup = (ChipGroup) myView.findViewById(R.id.chip_group);
         add_btn = (Button) myView.findViewById(R.id.button_ok);
         searchView = (SearchView) myView.findViewById(R.id.search);
         title = (TextView) myView.findViewById(R.id.title_txt);
-        title.setText(category.getCategoryValue());
+
+        if (category.equals(Category.ALL)) {
+            layout.removeView(searchView);
+            title.setText("Search Results");
+        }
+
+        else {
+            title.setText(category.getCategoryValue());
+            selectedIngredients.put(category.getCategoryValue(), new HashSet<String>());
+        }
+
         if (ingredients.size() != 0) {
             for (Ingredient ingredient : ingredients) {
-                //System.out.println(ingredient.getName());
                 final Chip chip = new Chip(getContext());
                 ChipDrawable chipDrawable = ChipDrawable.createFromAttributes(getContext(), null, 0, R.style.Widget_MaterialComponents_Chip_Choice);
                 chip.setChipDrawable(chipDrawable);
@@ -74,8 +89,19 @@ public class IngredientsFragment extends Fragment {
                 chip.setText(ingredient.getName());
                 chipsGroup.addView(chip);
 
-                if (ingredientFragmentListener.getSelected(category, chip.getText().toString())) {
-                    chip.setChecked(true);
+                if (!category.equals(Category.ALL)) {
+                    if (ingredientFragmentListener.getSelected(category, chip.getText().toString())) {
+                        chip.setChecked(true);
+                        chip.setEnabled(false);
+                    }
+                } else {
+                    for (Category c : Category.values()) {
+                        if (ingredientFragmentListener.getSelected(c, chip.getText().toString())) {
+                            chip.setChecked(true);
+                            chip.setEnabled(false);
+                            System.out.println(chip.getText().toString());
+                        }
+                    }
                 }
             }
             setChips(ingredients);
@@ -84,7 +110,7 @@ public class IngredientsFragment extends Fragment {
         add_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ingredientFragmentListener.updateTotalSelected();
+                ingredientFragmentListener.updateTotalSelected(category);
             }
         });
 
@@ -138,20 +164,38 @@ public class IngredientsFragment extends Fragment {
         this.ingredients = ingredients;
     }
 
-    public HashSet<String> getSelectedIngredients() {
+    public HashMap<String, HashSet<String>> getSelectedIngredients() {
         for (int i = 0; i < chipsGroup.getChildCount(); i++) {
             Chip chip = (Chip) chipsGroup.getChildAt(i);
             String s = chip.getText().toString();
 
-            if (!chip.isChecked() && selectedIngredients.contains(s)) {
+            if (!category.equals(Category.ALL)) {
+                if (!chip.isChecked() && selectedIngredients.get(category.getCategoryValue()).contains(s)) {
+                    selectedIngredients.remove(s);
+                }
+                if (chip.isChecked()) {
+                    selectedIngredients.get(category.getCategoryValue()).add(s);
+                }
+            } else {
+                for (String c : allIngrediens.keySet()) {
+                    for (Ingredient ingredient : allIngrediens.get(c)) {
+                        if (chip.isChecked() && ingredient.getName().equals(s)) {
+                            if (!selectedIngredients.containsKey(c)) {
+                                selectedIngredients.put(c, new HashSet<String>());
+                            }
+                            selectedIngredients.get(c).add(s);
 
-                selectedIngredients.remove(s);
-            }
-            if (chip.isChecked()) {
-                System.out.println(s);
-                selectedIngredients.add(s);
+                        }
+                        if (!chip.isChecked() && ingredient.getName().equals(s)) {
+                            if (selectedIngredients.containsKey(c) && selectedIngredients.get(c).contains(s)) {
+                                selectedIngredients.get(c).remove(s);
+                            }
+                        }
+                    }
+                }
             }
         }
+        System.out.println(selectedIngredients.size());
         return selectedIngredients;
     }
 
@@ -160,10 +204,6 @@ public class IngredientsFragment extends Fragment {
         super.onAttach(context);
         ingredientFragmentListener = (IngredientFragmentListener) context;
     }
-
-//    public void setView(Category category) {
-//        this.category = category;
-//    }
 
     private void setChips(List<Ingredient> ingredients) {
         if (chipsGroup.getChildCount() > 0) {
@@ -177,14 +217,29 @@ public class IngredientsFragment extends Fragment {
             chip.setText(ingredient.getName());
             chipsGroup.addView(chip);
 
-            if (ingredientFragmentListener.getSelected(category, chip.getText().toString())) {
-                chip.setChecked(true);
+            if (category.equals(Category.ALL)) {
+                for (Category c : Category.values()) {
+                    if (ingredientFragmentListener.getSelected(c, chip.getText().toString())) {
+                        chip.setChecked(true);
+                        chip.setEnabled(false);
+                    }
+                }
+            } else {
+                if (ingredientFragmentListener.getSelected(category, chip.getText().toString())) {
+                    chip.setChecked(true);
+                    chip.setEnabled(false);
+                }
+
             }
         }
     }
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public void setAllIngrediens(HashMap<String, List<Ingredient>> allIngrediens) {
+        this.allIngrediens = allIngrediens;
     }
 
 }

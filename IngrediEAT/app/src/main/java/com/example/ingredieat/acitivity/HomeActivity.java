@@ -56,7 +56,7 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
     private static final long mBackPressThreshold = 3500;
     private FragmentManager fragmentManager;
 
-    private Map<String, List<Ingredient>> allIngredients;
+    private HashMap<String, List<Ingredient>> allIngredients;
     private List<Recipe> allRecipes;
     private Category category;
     private long mLastBackPress;
@@ -90,6 +90,7 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
         progressBar = findViewById(R.id.progress_loader);
         // Get the data of all ingredients from the server side by sending a GET request.
         getAllIngredients();
+        categoryItemFragment.setAllIngrediens(allIngredients);
         menuView.setOnNavigationItemSelectedListener(this);
     }
 
@@ -246,8 +247,8 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
     }
 
     @Override
-    public void setFragment(boolean flag, final Category category) {
-        if (flag) {
+    public void setFragment(boolean flag, final Category category, boolean ifAll, HashMap<Category, HashSet<Ingredient>> searchList) {
+        if (flag && !ifAll) {
             this.category = category;
             if (fragmentManager.getBackStackEntryCount() > 1) {
                 getSupportFragmentManager().popBackStack();
@@ -255,6 +256,7 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
 
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             this.ingredientsFragment = new IngredientsFragment();
+            ingredientsFragment.setAllIngrediens(allIngredients);
             fragmentTransaction.replace(R.id.fragment_container, ingredientsFragment);
             fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
@@ -262,6 +264,28 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
             List<Ingredient> categoryIngredients = allIngredients.get(category.getCategoryValue());
             ingredientsFragment.setIngredients(categoryIngredients);
             ingredientsFragment.setCategory(category);
+        }
+
+        else if (flag && ifAll) {
+            if (fragmentManager.getBackStackEntryCount() > 1) {
+                getSupportFragmentManager().popBackStack();
+            }
+
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            this.ingredientsFragment = new IngredientsFragment();
+            ingredientsFragment.setAllIngrediens(allIngredients);
+            fragmentTransaction.replace(R.id.fragment_container, ingredientsFragment);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+
+            List<Ingredient> list = new ArrayList<>();
+            for (Category key : searchList.keySet()) {
+                for (Ingredient i : searchList.get(key)) {
+                    list.add(i);
+                }
+            }
+            ingredientsFragment.setIngredients(list);
+            ingredientsFragment.setCategory(Category.ALL);
         }
     }
 
@@ -298,7 +322,8 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
     }
 
     @Override
-    public void updateTotalSelected() {
+    public void updateTotalSelected(Category c) {
+
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         if (fragmentManager.getBackStackEntryCount() > 1) {
             getSupportFragmentManager().popBackStack();
@@ -306,8 +331,18 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
         fragmentTransaction.replace(R.id.fragment_container, categoryItemFragment);
         fragmentTransaction.commit();
 
-        HashSet<String> newIngredients = ingredientsFragment.getSelectedIngredients();
-        categoryItemFragment.updateTotalIngredients(category, newIngredients);
+        HashMap<String, HashSet<String>> newIngredients = ingredientsFragment.getSelectedIngredients();
+
+
+
+        if (c.equals(Category.ALL)) {
+            for (String key : newIngredients.keySet()) {
+                categoryItemFragment.updateTotalIngredients(Category.getCategoryName(key), newIngredients.get(key));
+            }
+        }
+        else {
+            categoryItemFragment.updateTotalIngredients(category, newIngredients.get(category.getCategoryValue()));
+        }
     }
 
     @Override

@@ -86,14 +86,23 @@ public class CartFragment extends Fragment {
 
         editButton = (Button)myView.findViewById(R.id.edit_btn);
         clearButton = (Button)myView.findViewById(R.id.clear_btn);
+
         bottomLayout = (LinearLayout) myView.findViewById(R.id.bottom);
-        editButton.setEnabled(false);
+        if (totalIngredients.size() == 0) {
+            clearButton.setEnabled(false);
+        } else {
+            clearButton.setEnabled(true);
+        }
 
         clearButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                totalIngredients.clear();
-                names.clear();
+                if (totalIngredients.size() != 0 ) {
+                    totalIngredients.clear();
+                    names.clear();
+                    clearButton.setEnabled(false);
+                }
+
                 cartFragmentListner.updateSelected(totalIngredients);
                 listView.setAdapter(new MyAdapter(getContext()));
             }
@@ -186,12 +195,6 @@ public class CartFragment extends Fragment {
                         ((ChipGroup)c.getParent()).removeView(c);
                     }
                     holder.chipGroup.addView(c);
-                    c.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                        @Override
-                        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                            editButton.setEnabled(true);
-                        }
-                    });
                 }
             }
             setIcon(names.get(position), holder.icon);
@@ -207,32 +210,13 @@ public class CartFragment extends Fragment {
     }
 
     public void setIcon(String name, ImageView icon) {
-        switch (name) {
-            case "Meat":
-                icon.setImageDrawable(getResources().getDrawable(R.drawable.meat, null));
-                break;
-            case "Produce":
-                icon.setImageDrawable(getResources().getDrawable(R.drawable.vegetables, null));
-                break;
-            case "Seafood":
-                icon.setImageDrawable(getResources().getDrawable(R.drawable.seafood, null));
-                break;
-            case "Milk, Eggs, Other Dairy":
-                icon.setImageDrawable(getResources().getDrawable(R.drawable.dairy2, null));
-                break;
-            case "Baking":
-                icon.setImageDrawable(getResources().getDrawable(R.drawable.baking, null));
-                break;
-            case "Beverages":
-                icon.setImageDrawable(getResources().getDrawable(R.drawable.drinking, null));
-                break;
-            case "Oil, Vinegar, Salad Dressing":
-                icon.setImageDrawable(getResources().getDrawable(R.drawable.oil, null));
-                break;
-            case "Spices and Seasonings":
-                icon.setImageDrawable(getResources().getDrawable(R.drawable.spice, null));
-                break;
-        }
+        String[] s = name.split(",");
+        s = s[0].split(" ");
+        String filename = s[0].toLowerCase();
+
+        int resId = getResources().getIdentifier(filename, "drawable" , getContext().getPackageName());
+
+        icon.setImageDrawable(getResources().getDrawable(resId, null));
     }
 
     @Override
