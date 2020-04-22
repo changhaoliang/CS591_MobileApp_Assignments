@@ -1,6 +1,5 @@
 package com.example.ingredieat.fragment;
 
-import android.app.SearchManager;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -23,8 +22,11 @@ import com.google.android.material.chip.ChipDrawable;
 import com.google.android.material.chip.ChipGroup;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 
 import androidx.appcompat.widget.SearchView;
@@ -41,7 +43,7 @@ public class IngredientsFragment extends Fragment {
     private SearchView searchView;
     private TextView title;
 
-    private HashMap<String, List<Ingredient>> allIngrediens;
+    private HashMap<String, List<Ingredient>> allIngredients;
 
 
     private IngredientFragmentListener ingredientFragmentListener;
@@ -122,17 +124,24 @@ public class IngredientsFragment extends Fragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                HashSet<Ingredient> searchIngredientsSet = new HashSet<>();
                 searchIngredients = new ArrayList<>();
                 for (Ingredient i : ingredients) {
                     String name = i.getName();
                     String[] words = name.split(" ");
                     for (String word : words) {
                         if (word.indexOf(newText) == 0) {
-                            searchIngredients.add(i);
+                            searchIngredientsSet.add(i);
                         }
                     }
                 }
-
+                searchIngredients.addAll(searchIngredientsSet);
+                Collections.sort(searchIngredients, new Comparator<Ingredient>() {
+                    @Override
+                    public int compare(Ingredient o1, Ingredient o2) {
+                        return o1.getName().compareTo(o2.getName());
+                    }
+                });
                 if (searchIngredients.size() != 0) {
                     setChips(searchIngredients);
                 }
@@ -177,8 +186,8 @@ public class IngredientsFragment extends Fragment {
                     selectedIngredients.get(category.getCategoryValue()).add(s);
                 }
             } else {
-                for (String c : allIngrediens.keySet()) {
-                    for (Ingredient ingredient : allIngrediens.get(c)) {
+                for (String c : allIngredients.keySet()) {
+                    for (Ingredient ingredient : allIngredients.get(c)) {
                         if (chip.isChecked() && ingredient.getName().equals(s)) {
                             if (!selectedIngredients.containsKey(c)) {
                                 selectedIngredients.put(c, new HashSet<String>());
@@ -238,8 +247,8 @@ public class IngredientsFragment extends Fragment {
         this.category = category;
     }
 
-    public void setAllIngrediens(HashMap<String, List<Ingredient>> allIngrediens) {
-        this.allIngrediens = allIngrediens;
+    public void setAllIngredients(HashMap<String, List<Ingredient>> allIngredients) {
+        this.allIngredients = allIngredients;
     }
 
 }
