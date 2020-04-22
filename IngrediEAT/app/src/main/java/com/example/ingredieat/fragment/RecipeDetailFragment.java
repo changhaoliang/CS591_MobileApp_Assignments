@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -28,6 +29,8 @@ import com.example.ingredieat.entity.RecipeDetail;
 
 import com.google.android.material.chip.ChipDrawable;
 import com.google.android.material.chip.ChipGroup;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,6 +73,8 @@ public class RecipeDetailFragment extends Fragment {
 
         ImageView recipeImg = myView.findViewById(R.id.detail_recipe_img);
         TextView title = myView.findViewById(R.id.detail_recipe_title);
+        final Button submit = myView.findViewById(R.id.btn_submit);
+        final TextView rating_title = myView.findViewById(R.id.rating_title);
 
         like = myView.findViewById(R.id.detail_like);
         liked = myView.findViewById(R.id.detail_liked);
@@ -87,27 +92,42 @@ public class RecipeDetailFragment extends Fragment {
         if (recipe.getRated()) {  //only one chance to rate
             myRating.setRating(recipe.getUserStars());
             myRating.setIsIndicator(true);
+            rating_title.setText("MY RATING: " + recipe.getUserStars());
         }
 
-        myRating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+//        myRating.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+//            @Override
+//            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
+//                if (b) {
+//                    recipe.updateStars(v);
+//                    rating.setRating(recipe.getStars());
+//                    ratings.setText(String.valueOf(recipe.getStars()));
+//                    myRating.setIsIndicator(true);
+//                }
+//            }
+//        });
+
+        submit.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
-                if (b) {
-                    recipe.updateStars(v);
-                    rating.setRating(recipe.getStars());
-                    ratings.setText(String.valueOf(recipe.getStars()));
-                    myRating.setIsIndicator(true);
-                }
+            public void onClick(View v) {
+                recipe.updateStars(myRating.getRating());
+                rating.setRating(recipe.getStars());
+                ratings.setText(String.valueOf(recipe.getStars()));
+                myRating.setIsIndicator(true);
+                submit.setVisibility(View.INVISIBLE);
+                rating_title.setText("MY RATING: "+ recipe.getUserStars());
             }
         });
 
         if (recipe.getLiked()) {
             like.setVisibility(View.INVISIBLE);
             liked.setVisibility(View.VISIBLE);
+            submit.setVisibility(View.INVISIBLE);
         }
         else{
             like.setVisibility(View.VISIBLE);
             liked.setVisibility(View.INVISIBLE);
+            submit.setVisibility(View.VISIBLE);
         }
         like.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,6 +147,7 @@ public class RecipeDetailFragment extends Fragment {
                 likes.setText(recipe.getLikes());
             }
         });
+
 
         return myView;
     }

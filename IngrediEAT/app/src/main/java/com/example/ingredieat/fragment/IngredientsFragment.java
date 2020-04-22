@@ -72,6 +72,7 @@ public class IngredientsFragment extends Fragment {
 
         if (category.equals(Category.ALL)) {
             layout.removeView(searchView);
+            title.setText("Search Results");
         }
 
         else {

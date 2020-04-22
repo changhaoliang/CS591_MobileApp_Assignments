@@ -137,10 +137,6 @@ public class CategoryItemFragment extends Fragment implements CategoryItemAdapte
 
     public void initializeList(HashMap<String, List<Ingredient>> allIngrediens) {
         for (String key : allIngrediens.keySet()) {
-            if (key.equals("Others") || key.equals("Condiments")) {
-                continue;
-            }
-
             String[] s = key.split(",");
             s = s[0].split(" ");
             String filename = s[0].toLowerCase();
@@ -162,8 +158,6 @@ public class CategoryItemFragment extends Fragment implements CategoryItemAdapte
             selectedTotalIngredients.put(category.getCategoryValue(), new HashSet<String>());
         }
         selectedTotalIngredients.put(category.getCategoryValue(), newIngredients);
-
-        System.out.println(category.getCategoryValue() + "==============");
 
     }
 

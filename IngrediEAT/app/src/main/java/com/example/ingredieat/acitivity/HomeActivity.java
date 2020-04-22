@@ -17,6 +17,7 @@ import android.os.Message;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import com.alibaba.fastjson.JSON;
 import com.blankj.utilcode.util.FragmentUtils;
@@ -65,6 +66,7 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
     private CartFragment cartFragment;
     private RecipeFragment recipeFragment;
     private RecipeDetailFragment recipeDetailFragment;
+    private ProgressBar progressBar;
 
     private HashMap<String, HashSet<String>> previousSelectedIngredients;
 
@@ -84,7 +86,7 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
         fragmentManager = getSupportFragmentManager();
         allIngredients = new HashMap<>();
         previousSelectedIngredients = new HashMap<>();
-
+        progressBar = findViewById(R.id.progress_loader);
         // Get the data of all ingredients from the server side by sending a GET request.
         getAllIngredients();
         categoryItemFragment.setAllIngrediens(allIngredients);
@@ -121,6 +123,7 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
                     Setting.currentMenu = R.id.cook;
 
                     if (checkIfIngChanged()) {
+                        System.out.println("12345667");
                         getAllRecipes();
                     }
                     fragmentTransaction.replace(R.id.fragment_container, recipeFragment);
@@ -151,6 +154,7 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
      */
     private void getAllIngredients() {
         String requestUrl = "/home/ingredients";
+        progressBar.setVisibility(View.VISIBLE);
         HttpUtils.getRequest(requestUrl, new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
@@ -160,6 +164,7 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 if(response.isSuccessful()) {
+                    progressBar.setVisibility(View.INVISIBLE);
                     ResponseBody body = response.body();
                     if(body != null) {
                         String data = body.string();
@@ -215,6 +220,7 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
         params.put("googleId", Setting.googleId);
         params.put("selectedIngredients", stringBuilder.toString());
 
+        progressBar.setVisibility(View.VISIBLE);
         System.out.println("post request");
         HttpUtils.postRequest("/home/listRecipesByIngredientsNames", params, new Callback() {
             @Override
@@ -225,6 +231,7 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 if(response.isSuccessful()) {
+                    progressBar.setVisibility(View.INVISIBLE);
                     ResponseBody body = response.body();
                     if(body != null) {
                         String data = body.string();
@@ -366,13 +373,32 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
     };
 
     public void setPreviousSelectedIngredients(HashMap<String, HashSet<String>> newSelectedIngredients) {
+        System.out.println("clear previous");
         previousSelectedIngredients.clear();
-        previousSelectedIngredients.putAll(newSelectedIngredients);
+        for(String key: newSelectedIngredients.keySet()){
+            HashSet<String> hashSet1 = newSelectedIngredients.get(key);
+            HashSet<String> hashSet2 = new HashSet<>(hashSet1);
+            previousSelectedIngredients.put(key, hashSet2);
+        }
     }
 
     public boolean checkIfIngChanged() {
-        boolean res = false;
+//        boolean res = false;
         HashMap<String, HashSet<String>> newSelectedIngredients = categoryItemFragment.getSelectedTotalIngredients();
+
+        for(String key : previousSelectedIngredients.keySet()) {
+            HashSet<String> category = previousSelectedIngredients.get(key);
+            for (String ing : category) {
+                System.out.println(ing);
+            }
+        }
+
+        for(String key : newSelectedIngredients.keySet()) {
+            HashSet<String> category = newSelectedIngredients.get(key);
+            for (String ing : category) {
+                System.out.println(ing);
+            }
+        }
 
         if (previousSelectedIngredients.size() == 0) {
             setPreviousSelectedIngredients(newSelectedIngredients);
@@ -406,6 +432,5 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
             }
         }
         return false;
-
     }
 }
