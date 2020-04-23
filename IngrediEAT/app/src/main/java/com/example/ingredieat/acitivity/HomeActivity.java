@@ -420,19 +420,19 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
     private Handler handler1 = new Handler() {
         @Override
         public void handleMessage(@NonNull Message msg) {
-            while(!favoriteFlag) {
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                if(favoriteFlag) {
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.add(R.id.fragment_container, categoryItemFragment, "item fragment");
-                    fragmentTransaction.addToBackStack(null);
-                    fragmentTransaction.commit();
+            if (!favoriteFlag) {
+                while (!favoriteFlag) {
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.add(R.id.fragment_container, categoryItemFragment, "item fragment");
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
         }
     };
 

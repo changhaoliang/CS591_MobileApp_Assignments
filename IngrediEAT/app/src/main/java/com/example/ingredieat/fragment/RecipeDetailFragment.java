@@ -53,7 +53,7 @@ import static com.example.ingredieat.setting.Setting.googleId;
 public class RecipeDetailFragment extends Fragment {
     private Recipe recipe;
     private RecipeAdapter recipeAdapter;
-    private FavoriteAdapter favorateAdapter;
+    private FavoriteAdapter favoriteAdapter;
     private RecipeDetail recipeDetail;
 
     private ImageButton like, liked;
@@ -73,7 +73,7 @@ public class RecipeDetailFragment extends Fragment {
 
     public RecipeDetailFragment(Recipe recipe, FavoriteAdapter favoriteAdapter){
         this.recipe = recipe;
-        this.favorateAdapter = favoriteAdapter;
+        this.favoriteAdapter = favoriteAdapter;
         recipeDetail = recipe.getRecipeDetail();
         this.showIngredients = false;
     }
@@ -358,7 +358,7 @@ public class RecipeDetailFragment extends Fragment {
             if (showIngredients)
                 recipeAdapter.notifyDataSetChanged();
             else {
-                favorateAdapter.notifyDataSetChanged();
+                favoriteAdapter.notifyDataSetChanged();
             }
         }
     };
@@ -372,7 +372,7 @@ public class RecipeDetailFragment extends Fragment {
             if (showIngredients)
                 recipeAdapter.notifyDataSetChanged();
             else {
-                favorateAdapter.notifyDataSetChanged();
+                favoriteAdapter.notifyDataSetChanged();
             }
         }
     };
