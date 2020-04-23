@@ -56,7 +56,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
         holder.likes.setText(recipe.getLikes());
         holder.rating_bar.setRating(recipe.getStars());
         if (recipe.getStars() == 0)
-            holder.rating_point.setVisibility(View.INVISIBLE);
+            holder.rating_point.setText("");
         else
             holder.rating_point.setText(String.valueOf(recipe.getStars()));
 

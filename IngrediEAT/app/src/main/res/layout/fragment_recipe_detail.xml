@@ -92,7 +92,6 @@
                         android:layout_toRightOf="@+id/detail_rating_bar"
                         android:paddingLeft="5dp"
                         android:paddingBottom="5dp"
-                        android:text="233"
                         android:textSize="16dp" />
 
                     <ImageButton

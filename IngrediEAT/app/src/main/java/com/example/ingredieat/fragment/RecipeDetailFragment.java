@@ -116,7 +116,7 @@ public class RecipeDetailFragment extends Fragment {
         title.setText(recipe.getTitle());
         likes.setText(String.valueOf(recipe.getLikes()));
         if (recipe.getStars() == 0)
-            ratings.setVisibility(View.INVISIBLE);
+            ratings.setText("");
         else
             ratings.setText(String.valueOf(recipe.getStars()));
         rating.setRating(recipe.getStars());
@@ -357,8 +357,9 @@ public class RecipeDetailFragment extends Fragment {
         public void handleMessage(@NonNull Message msg) {
             if (showIngredients)
                 recipeAdapter.notifyDataSetChanged();
-            else
+            else {
                 favorateAdapter.notifyDataSetChanged();
+            }
         }
     };
 
@@ -370,8 +371,9 @@ public class RecipeDetailFragment extends Fragment {
             ratings.setText(String.valueOf(recipe.getStars()));
             if (showIngredients)
                 recipeAdapter.notifyDataSetChanged();
-            else
+            else {
                 favorateAdapter.notifyDataSetChanged();
+            }
         }
     };
 }
