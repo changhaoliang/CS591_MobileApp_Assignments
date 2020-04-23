@@ -205,22 +205,7 @@ public class HomeServiceImpl implements HomeService {
                 recipe.setUserStars(0);
                 userRecipeDao.insertUserRecipe(googleId, recipe);
             }
-            RecipeDetail recipeDetail = new RecipeDetail();
-            List<Step> steps = stepDao.listStepsByRecipeId(recipeId);
-            if (steps != null) {
-                for (Step step : steps) {
-                    // Find the ingredients of the current step;
-                    List<Ingredient> ingredients = ingredientDao.listIngredientsByStepId(step.getId());
-                    step.setIngredients(ingredients);
-
-                    // Find the equipments of the current step;
-                    List<Equipment> equipments = equipmentDao.listEquipmentsByStepId(step.getId());
-                    step.setEquipments(equipments);
-                }
-            } else {
-                steps = new ArrayList<>();
-            }
-            recipeDetail.setSteps(steps);
+            RecipeDetail recipeDetail = getRecipeDetail(recipeId);
             recipe.setRecipeDetail(recipeDetail);
         }
         return recipe;
@@ -236,6 +221,27 @@ public class HomeServiceImpl implements HomeService {
         if (ingredientDao.getIngredientById(ingredient.getId()) == null) {
             ingredientDao.insertRecipeStepIngredient(ingredient);
         }
+    }
+
+    private RecipeDetail getRecipeDetail(int recipeId) {
+        RecipeDetail recipeDetail = new RecipeDetail();
+        List<Step> steps = stepDao.listStepsByRecipeId(recipeId);
+        if (steps != null) {
+            for (Step step : steps) {
+                // Find the ingredients of the current step;
+                List<Ingredient> ingredients = ingredientDao.listIngredientsByStepId(step.getId());
+                step.setIngredients(ingredients);
+
+                // Find the equipments of the current step;
+                List<Equipment> equipments = equipmentDao.listEquipmentsByStepId(step.getId());
+                step.setEquipments(equipments);
+            }
+        } else {
+            steps = new ArrayList<>();
+        }
+        recipeDetail.setSteps(steps);
+
+        return recipeDetail;
     }
 
     @Override
@@ -270,5 +276,16 @@ public class HomeServiceImpl implements HomeService {
         userRecipeDao.updateUserRecipe(userRecipe);
 
         return stars;
+    }
+
+    @Override
+    public List<Recipe> listFavoriteRecipesByGoogleId(String googleId) {
+        List<Recipe> recipes = recipeDao.listFavoriteRecipesByGoogleId(googleId);
+        for(Recipe recipe: recipes) {
+            RecipeDetail recipeDetail = getRecipeDetail(recipe.getId());
+            recipe.setRecipeDetail(recipeDetail);
+        }
+
+        return recipes;
     }
 }

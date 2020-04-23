@@ -56,10 +56,6 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.MyClickLis
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(recipes == null) {
-            recipes = new ArrayList<>();
-        }
-        recipeAdapter = new RecipeAdapter(getContext(), recipes, this);
     }
 
     @Override
@@ -72,7 +68,12 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.MyClickLis
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.addItemDecoration(new GridSpacingItemDecoration());
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+        if(recipes == null) {
+            recipes = new ArrayList<>();
+        }
+        recipeAdapter = new RecipeAdapter(getContext(), recipes, this);
         recyclerView.setAdapter(recipeAdapter);
+
         return myView;
     }
 

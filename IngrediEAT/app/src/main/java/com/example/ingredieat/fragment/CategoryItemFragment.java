@@ -8,13 +8,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 
-import android.renderscript.ScriptIntrinsicYuvToRGB;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.Spinner;
 
 import com.example.ingredieat.base.Category;
 import com.example.ingredieat.base.CategoryItem;
@@ -23,7 +21,6 @@ import com.example.ingredieat.adapter.CategoryItemAdapter;
 import com.example.ingredieat.entity.Ingredient;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -40,7 +37,7 @@ public class CategoryItemFragment extends Fragment implements CategoryItemAdapte
     private SearchView searchView;
     private HashMap<Category, HashSet<Ingredient>> searchList;
 
-    private HashMap<String, List<Ingredient>> allIngrediens;
+    private HashMap<String, List<Ingredient>> allIngredients;
 
     public interface itemFragmentListener {
         void setFragment(boolean flag, Category category, boolean ifAll, HashMap<Category, HashSet<Ingredient>> searchList);
@@ -106,7 +103,7 @@ public class CategoryItemFragment extends Fragment implements CategoryItemAdapte
             }
         });
 
-        initializeList(allIngrediens);
+        initializeList(allIngredients);
         return myView;
     }
 
@@ -193,7 +190,7 @@ public class CategoryItemFragment extends Fragment implements CategoryItemAdapte
         return false;
     }
 
-    public void setAllIngrediens(HashMap<String, List<Ingredient>> allIngrediens) {
-        this.allIngrediens = allIngrediens;
+    public void setAllIngredients(HashMap<String, List<Ingredient>> allIngrediens) {
+        this.allIngredients = allIngrediens;
     }
 }

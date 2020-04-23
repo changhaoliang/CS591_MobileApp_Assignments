@@ -21,4 +21,6 @@ public interface HomeService {
     void updateUserRecipeLiked(UserRecipe userRecipe);
 
     float ratingRecipe(UserRecipe userRecipe);
+
+    List<Recipe> listFavoriteRecipesByGoogleId(String googleId);
 }

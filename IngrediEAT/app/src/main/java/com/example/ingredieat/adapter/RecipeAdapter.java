@@ -41,12 +41,24 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeHold
     private List<Recipe> recipes;
     private Context context;
     private MyClickListener myClickListener;
-    private RecipeHolder holder;
+    private Callback callback;
+
 
     public RecipeAdapter(Context context, List<Recipe> recipes, MyClickListener myClickListener) {
         this.context = context;
         this.recipes = recipes;
         this.myClickListener = myClickListener;
+        callback = new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+
+            }
+        };
     }
 
     public interface MyClickListener {
@@ -65,7 +77,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeHold
 
     @Override
     public void onBindViewHolder(@NonNull final RecipeHolder holder, final int position) {
-        this.holder = holder;
         final Recipe recipe = recipes.get(position);
         holder.title.setText(recipe.getTitle());
         holder.likes.setText(recipe.getLikes());
@@ -81,6 +92,19 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeHold
             holder.like.setVisibility(View.VISIBLE);
             holder.liked.setVisibility(View.INVISIBLE);
         }
+
+         final Callback callback = new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+
+            }
+        };
+
         holder.like.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -90,22 +114,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeHold
                 holder.liked.setVisibility(View.VISIBLE);
                 holder.likes.setText(recipe.getLikes());
                 myClickListener.likeListener(view, recipes.get(position), true);
-                Map<String, String> params = new HashMap<>();
-                params.put("googleId", googleId);
-                params.put("recipeId", String.valueOf(recipe.getId()));
-                params.put("liked", String.valueOf(recipe.getLiked()));
-                HttpUtils.postRequest("/home/updateUserRecipeLiked", params, new Callback() {
-                    @Override
-                    public void onFailure(@NotNull Call call, @NotNull IOException e) {
-
-                    }
-
-                    @Override
-                    public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-
-                    }
-                });
-
+                updateLikeStatus(recipe);
             }
         });
 
@@ -117,22 +126,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeHold
                 holder.liked.setVisibility(View.INVISIBLE);
                 holder.likes.setText(recipe.getLikes());
                 myClickListener.likeListener(view, recipes.get(position), false);
-
-                Map<String, String> params = new HashMap<>();
-                params.put("googleId", googleId);
-                params.put("recipeId", String.valueOf(recipe.getId()));
-                params.put("liked", String.valueOf(recipe.getLiked()));
-                HttpUtils.postRequest("/home/updateUserRecipeLiked", params, new Callback() {
-                    @Override
-                    public void onFailure(@NotNull Call call, @NotNull IOException e) {
-
-                    }
-
-                    @Override
-                    public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-
-                    }
-                });
+                updateLikeStatus(recipe);
             }
         });
         holder.recipeImg.setOnClickListener(new View.OnClickListener() {
@@ -175,5 +169,13 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeHold
 
     public void setRecipes(List<Recipe> recipes){
         this.recipes = recipes;
+    }
+
+    private void updateLikeStatus(Recipe recipe) {
+        Map<String, String> params = new HashMap<>();
+        params.put("googleId", googleId);
+        params.put("recipeId", String.valueOf(recipe.getId()));
+        params.put("liked", String.valueOf(recipe.getLiked()));
+        HttpUtils.postRequest("/home/updateUserRecipeLiked", params, callback);
     }
 }

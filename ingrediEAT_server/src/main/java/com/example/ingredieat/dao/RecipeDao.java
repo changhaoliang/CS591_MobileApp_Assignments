@@ -4,6 +4,8 @@ package com.example.ingredieat.dao;
 import com.example.ingredieat.entity.Recipe;
 import org.apache.ibatis.annotations.*;
 
+import java.util.List;
+
 @Mapper
 public interface RecipeDao {
 
@@ -12,6 +14,15 @@ public interface RecipeDao {
             @Result(column = "img_url", property = "imgUrl")
     })
     Recipe getRecipeById(int id);
+
+    @Select("SELECT * FROM `recipe`, `user_recipe`" +
+            "WHERE `recipe`.`id` = `user_recipe`.`recipe_id`" +
+            "AND `user_recipe`.`google_id` = #{googleId}" +
+            "AND `user_recipe`.`liked` = 1")
+    @Results(value = {
+            @Result(column = "img_url", property = "imgUrl")
+    })
+    List<Recipe> listFavoriteRecipesByGoogleId(String googleId);
 
     @Select("SELECT `likes` FROM `recipe` WHERE `id` = #{recipeId}")
     int getRecipeLikesByRecipeId(int recipeId);
@@ -27,4 +38,5 @@ public interface RecipeDao {
 
     @Update("UPDATE `recipe` SET `ratings` = #{ratings}, `stars` = #{stars} WHERE `id` = #{id}")
     void updateRecipe(Recipe recipe);
+
 }

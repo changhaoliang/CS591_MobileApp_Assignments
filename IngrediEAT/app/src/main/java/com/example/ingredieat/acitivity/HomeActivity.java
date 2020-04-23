@@ -9,7 +9,6 @@ import okhttp3.Response;
 import okhttp3.ResponseBody;
 
 import android.annotation.SuppressLint;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -60,6 +59,7 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
     private HashSet<Recipe> favoriteRecipes;                        //for favorite
     private Category category;
     private long mLastBackPress;
+    private boolean favoriteFlag;
 
     private CategoryItemFragment categoryItemFragment;
     private IngredientsFragment ingredientsFragment;
@@ -92,8 +92,11 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
         progressBar = findViewById(R.id.progress_loader);
         // Get the data of all ingredients from the server side by sending a GET request.
         getAllIngredients();
+        // Get the data of all favorite recipes of the current user from the server side by sending a POST request.
+        favoriteRecipes = new HashSet<>();
+        favoriteFragment.setRecipes(favoriteRecipes);
         getFavorite();
-        categoryItemFragment.setAllIngrediens(allIngredients);
+        categoryItemFragment.setAllIngredients(allIngredients);
         menuView.setOnNavigationItemSelectedListener(this);
     }
 
@@ -108,7 +111,6 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
             case R.id.fridge:
                 if (Setting.currentMenu != R.id.fridge) {
                     Setting.currentMenu = R.id.fridge;
-
                     fragmentTransaction.replace(R.id.fragment_container, categoryItemFragment);
                     break;
                 } else
@@ -130,6 +132,7 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
                         System.out.println("12345667");
                         getAllRecipes();
                     }
+
                     fragmentTransaction.replace(R.id.fragment_container, recipeFragment);
                     break;
                 } else
@@ -137,10 +140,6 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
             case R.id.favourite:
                 if (Setting.currentMenu != R.id.favourite) {
                     Setting.currentMenu = R.id.favourite;
-
-                    if (checkIfIngChanged() && favoriteRecipes!=null) {
-                        favoriteFragment.setRecipes(favoriteRecipes);                      //for favorite testing
-                    }
                     fragmentTransaction.replace(R.id.fragment_container, favoriteFragment);
                     break;
                 } else
@@ -180,7 +179,6 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 if(response.isSuccessful()) {
-                    progressBar.setVisibility(View.INVISIBLE);
                     ResponseBody body = response.body();
                     if(body != null) {
                         String data = body.string();
@@ -260,10 +258,34 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
         });
     }
 
+    /**
+     * This method is used to get the data of all favorite recipes of the current user from the server side
+     * by sending a POST request.
+     */
     private void getFavorite(){
-        favoriteRecipes = new HashSet<>();
-        //get favorite from server side
-        favoriteFragment.setRecipes(favoriteRecipes);
+       Map<String, String> params = new HashMap<>();
+       params.put("googleId", Setting.googleId);
+       HttpUtils.postRequest("/home/listFavoriteRecipesByGoogleId", params, new Callback() {
+           @Override
+           public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+           }
+
+           @Override
+           public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+               if(response.isSuccessful()) {
+                   progressBar.setVisibility(View.INVISIBLE);
+                   ResponseBody body = response.body();
+                   if(body != null) {
+                       String data = body.string();
+                       // Here we use Fastjson to parse json string.
+                       List<Recipe> recipes = JSON.parseArray(data, Recipe.class);
+                       favoriteRecipes.addAll(recipes);
+                       favoriteFlag = true;
+                   }
+               }
+           }
+       });
     }
 
     @Override
@@ -398,10 +420,19 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
     private Handler handler1 = new Handler() {
         @Override
         public void handleMessage(@NonNull Message msg) {
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.add(R.id.fragment_container, categoryItemFragment, "item fragment");
-            fragmentTransaction.addToBackStack(null);
-            fragmentTransaction.commit();
+            while(!favoriteFlag) {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                if(favoriteFlag) {
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.add(R.id.fragment_container, categoryItemFragment, "item fragment");
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+                }
+            }
         }
     };
 
@@ -414,6 +445,7 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
             recipeFragment.setRecipes(allRecipes);
         }
     };
+
 
     public void setPreviousSelectedIngredients(HashMap<String, HashSet<String>> newSelectedIngredients) {
         System.out.println("clear previous");

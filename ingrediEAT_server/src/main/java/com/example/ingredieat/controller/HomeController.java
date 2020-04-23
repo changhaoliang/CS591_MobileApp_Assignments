@@ -3,6 +3,7 @@ package com.example.ingredieat.controller;
 import com.example.ingredieat.bean.Params1;
 import com.example.ingredieat.entity.Recipe;
 import com.example.ingredieat.entity.Ingredient;
+import com.example.ingredieat.entity.User;
 import com.example.ingredieat.entity.UserRecipe;
 import com.example.ingredieat.service.HomeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,5 +58,11 @@ public class HomeController {
     public float ratingRecipe(@RequestBody UserRecipe userRecipe) {
 
         return homeService.ratingRecipe(userRecipe);
+    }
+
+    @PostMapping("/listFavoriteRecipesByGoogleId")
+    public List<Recipe> listFavoriteRecipesByGoogleId(@RequestBody User user) {
+
+        return homeService.listFavoriteRecipesByGoogleId(user.getGoogleId());
     }
 }

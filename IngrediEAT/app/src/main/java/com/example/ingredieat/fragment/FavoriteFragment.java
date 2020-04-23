@@ -53,10 +53,6 @@ public class FavoriteFragment extends Fragment implements FavoriteAdapter.MyClic
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(favoriteRecipes == null) {
-            favoriteRecipes = new HashSet<>();
-        }
-        favoriteAdapter = new FavoriteAdapter(getContext(), favoriteRecipes, this);
     }
 
     @Override
@@ -69,8 +65,12 @@ public class FavoriteFragment extends Fragment implements FavoriteAdapter.MyClic
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.addItemDecoration(new GridSpacingItemDecoration());
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+        if(favoriteRecipes == null) {
+            favoriteRecipes = new HashSet<>();
+        }
+        favoriteAdapter = new FavoriteAdapter(getContext(), favoriteRecipes, this);
         recyclerView.setAdapter(favoriteAdapter);
-        favoriteAdapter.setRecipes(favoriteRecipes);
+
         return myView;
     }
 
