@@ -16,6 +16,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
+import java.awt.*;
+import java.awt.geom.Rectangle2D;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -254,7 +258,10 @@ public class HomeServiceImpl implements HomeService {
         // Get the user recipe data
         float userStars = userRecipe.getUserStars();
         stars = (ratings * stars + userStars) / (ratings + 1);
-        stars = (float)(Math.round(stars * 1000) / 1000);
+        DecimalFormat df = new DecimalFormat("0.00");
+        df.setRoundingMode(RoundingMode.HALF_UP);
+        String starsString = df.format(stars);
+        stars = Float.valueOf(starsString);
 
         // Update the data in the database
         recipe.setRatings(ratings+1);
