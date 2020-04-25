@@ -8,7 +8,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.example.ingredieat.R;
@@ -90,10 +92,12 @@ public class LoginActivity extends BaseActivity {
 
             String jsonString = JSON.toJSONString(user);
             Log.d(TAG, jsonString);
-
+            final Toast toast = Toast.makeText(getApplicationContext(), "Cannot connect to server",Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.CENTER, 0, 0);
             HttpUtils.postRequest("/login/findOrAddUser", jsonString, new Callback() {
                 @Override
                 public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                    toast.show();
                     Log.d(TAG, "onFailure -- >" + e.toString());
                 }
 
