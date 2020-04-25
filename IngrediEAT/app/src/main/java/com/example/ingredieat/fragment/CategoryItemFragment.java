@@ -8,11 +8,14 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.ingredieat.base.Category;
 import com.example.ingredieat.base.CategoryItem;
@@ -134,6 +137,12 @@ public class CategoryItemFragment extends Fragment implements CategoryItemAdapte
     }
 
     public void initializeList(HashMap<String, List<Ingredient>> allIngrediens) {
+        if(allIngredients == null){
+            //Log.d(getTag(), "initialize null" );
+            Toast toast = Toast.makeText(getActivity().getApplicationContext(), "Cannot connect to Server",Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.show();
+        }
         List<String> keys = new ArrayList<>(allIngrediens.keySet());
         Collections.sort(keys);
 
