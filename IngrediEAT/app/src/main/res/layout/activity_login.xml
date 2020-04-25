@@ -12,16 +12,7 @@
             android:layout_width="224dp"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="500dp"
-            android:alpha="0.8"
-            app:buttonSize="wide"/>
-
-    <com.google.android.gms.common.SignInButton
-            android:id="@+id/sign_in_fb"
-            android:layout_width="224dp"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="600dp"
+            android:layout_marginTop="550dp"
             android:alpha="0.8"
             app:buttonSize="wide"/>
 
