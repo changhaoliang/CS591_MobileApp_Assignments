@@ -1,15 +1,14 @@
 package com.example.ingredieat.controller;
 
 import com.example.ingredieat.bean.Params1;
-import com.example.ingredieat.entity.Recipe;
 import com.example.ingredieat.entity.Ingredient;
+import com.example.ingredieat.entity.Recipe;
 import com.example.ingredieat.entity.User;
 import com.example.ingredieat.entity.UserRecipe;
 import com.example.ingredieat.service.HomeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 

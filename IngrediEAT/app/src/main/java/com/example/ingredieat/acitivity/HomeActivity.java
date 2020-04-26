@@ -13,9 +13,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.example.ingredieat.adapter.FavoriteAdapter;
@@ -170,15 +172,21 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
     private void getAllIngredients() {
         String requestUrl = "/home/ingredients";
         progressBar.setVisibility(View.VISIBLE);
+        final Toast toast = Toast.makeText(getApplicationContext(), "Cannot connect to server",Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.CENTER, 0, 0);
         HttpUtils.getRequest(requestUrl, new Callback() {
+
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                Log.d(TAG, "onFailure -- >" + e.toString());
+                progressBar.setVisibility(View.INVISIBLE);
+                e.printStackTrace();
+                toast.show();
             }
 
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 if(response.isSuccessful()) {
+                    progressBar.setVisibility(View.INVISIBLE);
                     ResponseBody body = response.body();
                     if(body != null) {
                         String data = body.string();
@@ -214,10 +222,11 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
         List<String> selectedIngredientsNames = new ArrayList<>();
         Map<String, HashSet<String>> selectedTotalIngredients = categoryItemFragment.getSelectedTotalIngredients();
 
-        for(String category: selectedTotalIngredients.keySet()) {
-            selectedIngredientsNames.addAll(selectedTotalIngredients.get(category));
+        if(selectedTotalIngredients != null) {
+            for (String category : selectedTotalIngredients.keySet()) {
+                selectedIngredientsNames.addAll(selectedTotalIngredients.get(category));
+            }
         }
-
         if(!selectedIngredientsNames.isEmpty()) {
             Collections.sort(selectedIngredientsNames);
             for(String ingredientsNames: selectedIngredientsNames) {
@@ -235,10 +244,13 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
         params.put("selectedIngredients", stringBuilder.toString());
 
         progressBar.setVisibility(View.VISIBLE);
+        final Toast toast = Toast.makeText(getApplicationContext(), "Cannot connect to server",Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.CENTER, 0, 0);
         HttpUtils.postRequest("/home/listRecipesByIngredientsNames", params, new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                Log.d(TAG, "onFailure -- >" + e.toString());
+                progressBar.setVisibility(View.INVISIBLE);
+                toast.show();
             }
 
             @Override
@@ -265,10 +277,13 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
     private void getFavorite(){
        Map<String, String> params = new HashMap<>();
        params.put("googleId", Setting.googleId);
+       final Toast toast = Toast.makeText(getApplicationContext(), "Cannot connect to server",Toast.LENGTH_LONG);
+       toast.setGravity(Gravity.CENTER, 0, 0);
        HttpUtils.postRequest("/home/listFavoriteRecipesByGoogleId", params, new Callback() {
            @Override
            public void onFailure(@NotNull Call call, @NotNull IOException e) {
 
+               toast.show();
            }
 
            @Override
@@ -450,10 +465,12 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
     public void setPreviousSelectedIngredients(HashMap<String, HashSet<String>> newSelectedIngredients) {
         System.out.println("clear previous");
         previousSelectedIngredients.clear();
-        for(String key: newSelectedIngredients.keySet()){
-            HashSet<String> hashSet1 = newSelectedIngredients.get(key);
-            HashSet<String> hashSet2 = new HashSet<>(hashSet1);
-            previousSelectedIngredients.put(key, hashSet2);
+        if(newSelectedIngredients != null){
+            for(String key: newSelectedIngredients.keySet()){
+                HashSet<String> hashSet1 = newSelectedIngredients.get(key);
+                HashSet<String> hashSet2 = new HashSet<>(hashSet1);
+                previousSelectedIngredients.put(key, hashSet2);
+            }
         }
     }
 
@@ -467,14 +484,14 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
                 System.out.println(ing);
             }
         }
-
-        for(String key : newSelectedIngredients.keySet()) {
-            HashSet<String> category = newSelectedIngredients.get(key);
-            for (String ing : category) {
-                System.out.println(ing);
+        if( newSelectedIngredients!= null ) {
+            for (String key : newSelectedIngredients.keySet()) {
+                HashSet<String> category = newSelectedIngredients.get(key);
+                for (String ing : category) {
+                    System.out.println(ing);
+                }
             }
         }
-
         if (previousSelectedIngredients.size() == 0) {
             setPreviousSelectedIngredients(newSelectedIngredients);
             return true;

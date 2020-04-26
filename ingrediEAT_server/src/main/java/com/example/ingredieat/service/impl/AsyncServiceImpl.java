@@ -45,18 +45,18 @@ public class AsyncServiceImpl implements AsyncService {
 
     @Override
     public void saveRecipesData(String googleId, List<Recipe> recipes) {
-        for(Recipe recipe: recipes) {
+        for (Recipe recipe : recipes) {
 //            recipeDao.insertNewRecipe(recipe);
 //            userRecipeDao.insertUserRecipe(googleId, recipe);
 
-            for(Step step: recipe.getRecipeDetail().getSteps()) {
+            for (Step step : recipe.getRecipeDetail().getSteps()) {
                 stepDao.insertStep(step);
-                for(Ingredient ingredient: step.getIngredients()) {
+                for (Ingredient ingredient : step.getIngredients()) {
                     homeService.getOrInsertIngredient(ingredient);
                     stepIngredientDao.insertStepIngredient(step.getId(), ingredient.getId());
                 }
 
-                for(Equipment equipment: step.getEquipments()) {
+                for (Equipment equipment : step.getEquipments()) {
                     homeService.getOrInsertEquipment(equipment);
                     stepEquipmentDao.insertStepEquipment(step.getId(), equipment.getId());
                 }

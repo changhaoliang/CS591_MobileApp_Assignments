@@ -13,11 +13,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
-import java.awt.*;
-import java.awt.geom.Rectangle2D;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -117,7 +114,7 @@ public class HomeServiceImpl implements HomeService {
                                     for (int t = 0; t < equipmentsInfo.size(); t++) {
                                         JSONObject equipmentInfo = equipmentsInfo.getJSONObject(t);
                                         int equipment_id = equipmentInfo.getInteger("id");
-                                        if(!equipmentsIds.contains(equipment_id)) {
+                                        if (!equipmentsIds.contains(equipment_id)) {
                                             Equipment equipment = new Equipment(equipmentInfo.getInteger("id"), equipmentInfo.getString("name"));
                                             //getOrInsertEquipment(equipment);
                                             //stepEquipmentDao.insertStepEquipment(step.getId(), equipment.getId());
@@ -134,7 +131,7 @@ public class HomeServiceImpl implements HomeService {
                                     for (int t = 0; t < ingredientsInfo.size(); t++) {
                                         JSONObject ingredientInfo = ingredientsInfo.getJSONObject(t);
                                         int ingredient_id = ingredientInfo.getInteger("id");
-                                        if(!ingredientsIds.contains(ingredient_id)) {
+                                        if (!ingredientsIds.contains(ingredient_id)) {
                                             ingredientsIds.add(ingredient_id);
                                             String ingredient_name = ingredientInfo.getString("name");
                                             Ingredient ingredient = new Ingredient(ingredient_id, ingredient_name);
@@ -181,7 +178,7 @@ public class HomeServiceImpl implements HomeService {
                     allRecipes.add(recipe);
                 }
             }
-            if(!newRecipes.isEmpty()) {
+            if (!newRecipes.isEmpty()) {
                 asyncService.saveRecipesData(googleId, newRecipes);
             }
         }
@@ -199,7 +196,7 @@ public class HomeServiceImpl implements HomeService {
                 recipe.setLiked(userRecipe.isLiked());
                 recipe.setRated(userRecipe.isRated());
                 recipe.setUserStars(userRecipe.getUserStars());
-            }else{
+            } else {
                 recipe.setLiked(false);
                 recipe.setRated(false);
                 recipe.setUserStars(0);
@@ -247,9 +244,9 @@ public class HomeServiceImpl implements HomeService {
     @Override
     public void updateUserRecipeLiked(UserRecipe userRecipe) {
         userRecipeDao.updateUserRecipeLiked(userRecipe);
-        if(userRecipe.isLiked()) {
+        if (userRecipe.isLiked()) {
             recipeDao.increaseRecipeLikesBy1(userRecipe.getRecipeId());
-        }else{
+        } else {
             recipeDao.decreaseRecipeLikesBy1(userRecipe.getRecipeId());
         }
     }
@@ -270,7 +267,7 @@ public class HomeServiceImpl implements HomeService {
         stars = Float.valueOf(starsString);
 
         // Update the data in the database
-        recipe.setRatings(ratings+1);
+        recipe.setRatings(ratings + 1);
         recipe.setStars(stars);
         recipeDao.updateRecipe(recipe);
         userRecipeDao.updateUserRecipe(userRecipe);
@@ -281,7 +278,7 @@ public class HomeServiceImpl implements HomeService {
     @Override
     public List<Recipe> listFavoriteRecipesByGoogleId(String googleId) {
         List<Recipe> recipes = recipeDao.listFavoriteRecipesByGoogleId(googleId);
-        for(Recipe recipe: recipes) {
+        for (Recipe recipe : recipes) {
             RecipeDetail recipeDetail = getRecipeDetail(recipe.getId());
             recipe.setRecipeDetail(recipeDetail);
         }

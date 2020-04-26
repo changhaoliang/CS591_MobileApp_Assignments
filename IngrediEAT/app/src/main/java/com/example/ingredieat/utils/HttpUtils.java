@@ -13,7 +13,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 
 public class HttpUtils {
-    public static final String BASE_URL = "http://10.0.2.2:8080";
+    public static final String BASE_URL = "http://3.17.56.44:8080";
 
     // GET request, no params
     public static void getRequest(String requestUrl, Callback callback)  {

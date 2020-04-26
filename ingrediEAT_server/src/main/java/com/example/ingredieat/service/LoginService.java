@@ -4,5 +4,5 @@ import com.example.ingredieat.entity.User;
 
 public interface LoginService {
 
-     void getOrInsertUser(User user);
+    void getOrInsertUser(User user);
 }

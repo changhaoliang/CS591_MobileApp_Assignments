@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ingredieat.R;
 import com.example.ingredieat.base.Category;
@@ -64,7 +66,6 @@ public class CartFragment extends Fragment {
                              Bundle savedInstanceState) {
         View myView = inflater.inflate(R.layout.fragment_cart, container, false);
         totalChips = new HashMap<>();
-
         if (totalIngredients != null && totalIngredients.size() > 0) {
             this.names = new ArrayList<>(totalIngredients.keySet());
             for (String s : totalIngredients.keySet()) {
@@ -88,7 +89,7 @@ public class CartFragment extends Fragment {
         clearButton = (Button)myView.findViewById(R.id.clear_btn);
 
         bottomLayout = (LinearLayout) myView.findViewById(R.id.bottom);
-        if (totalIngredients.size() == 0) {
+        if (totalIngredients==null ||totalIngredients.size() == 0  ) {
             clearButton.setEnabled(false);
         } else {
             clearButton.setEnabled(true);
@@ -154,6 +155,7 @@ public class CartFragment extends Fragment {
 
         @Override
         public int getCount() {
+            if(totalIngredients == null) return 0;
             return totalIngredients.size();
         }
 

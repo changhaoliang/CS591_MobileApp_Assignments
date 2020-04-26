@@ -17,7 +17,7 @@ public class Recipe {
 
     }
 
-    public Recipe(String imgUrl, String title){
+    public Recipe(String imgUrl, String title) {
         this.imgUrl = imgUrl;
         this.title = title;
         this.likes = 0;
@@ -28,7 +28,7 @@ public class Recipe {
         this.userStars = 0;
     }
 
-    public Recipe(String imgUrl, String title, int likes, float stars){
+    public Recipe(String imgUrl, String title, int likes, float stars) {
         this.imgUrl = imgUrl;
         this.title = title;
         this.likes = likes;
