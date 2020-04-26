@@ -8,6 +8,11 @@ public class Equipment {
     private int id;
     private String name;
 
+    public Equipment() {
+
+    }
+
+
     public Equipment(int id, String name) {
         this.id = id;
         this.name = name;
