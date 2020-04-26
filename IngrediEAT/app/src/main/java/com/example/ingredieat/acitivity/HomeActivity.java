@@ -131,7 +131,6 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
                     Setting.currentMenu = R.id.cook;
 
                     if (checkIfIngChanged()) {
-                        System.out.println("12345667");
                         getAllRecipes();
                     }
 
@@ -171,14 +170,14 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
      */
     private void getAllIngredients() {
         String requestUrl = "/home/ingredients";
-        progressBar.setVisibility(View.VISIBLE);
+        progressBarVisibility(View.VISIBLE);
         final Toast toast = Toast.makeText(getApplicationContext(), "Cannot connect to server",Toast.LENGTH_LONG);
         toast.setGravity(Gravity.CENTER, 0, 0);
         HttpUtils.getRequest(requestUrl, new Callback() {
 
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                progressBar.setVisibility(View.INVISIBLE);
+                progressBarVisibility(View.INVISIBLE);
                 e.printStackTrace();
                 toast.show();
             }
@@ -186,7 +185,7 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 if(response.isSuccessful()) {
-                    progressBar.setVisibility(View.INVISIBLE);
+                    progressBarVisibility(View.INVISIBLE);
                     ResponseBody body = response.body();
                     if(body != null) {
                         String data = body.string();
@@ -243,20 +242,20 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
         params.put("googleId", Setting.googleId);
         params.put("selectedIngredients", stringBuilder.toString());
 
-        progressBar.setVisibility(View.VISIBLE);
+        progressBarVisibility(View.VISIBLE);
         final Toast toast = Toast.makeText(getApplicationContext(), "Cannot connect to server",Toast.LENGTH_LONG);
         toast.setGravity(Gravity.CENTER, 0, 0);
         HttpUtils.postRequest("/home/listRecipesByIngredientsNames", params, new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                progressBar.setVisibility(View.INVISIBLE);
+                progressBarVisibility(View.INVISIBLE);
                 toast.show();
             }
 
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 if(response.isSuccessful()) {
-                    progressBar.setVisibility(View.INVISIBLE);
+                    progressBarVisibility(View.INVISIBLE);
                     ResponseBody body = response.body();
                     if(body != null) {
                         String data = body.string();
@@ -524,5 +523,14 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
             }
         }
         return false;
+    }
+
+    private void progressBarVisibility(final int visibility) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                progressBar.setVisibility(visibility);
+            }
+        });
     }
 }
