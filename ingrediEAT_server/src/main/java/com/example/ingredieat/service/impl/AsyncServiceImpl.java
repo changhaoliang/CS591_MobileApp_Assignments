@@ -9,6 +9,7 @@ import com.example.ingredieat.entity.Step;
 import com.example.ingredieat.service.AsyncService;
 import com.example.ingredieat.service.HomeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +20,7 @@ import java.util.List;
 public class AsyncServiceImpl implements AsyncService {
 
     @Autowired
+    @Lazy
     HomeService homeService;
 
     @Autowired
