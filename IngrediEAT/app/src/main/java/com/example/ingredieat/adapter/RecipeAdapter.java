@@ -93,18 +93,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeHold
             holder.liked.setVisibility(View.INVISIBLE);
         }
 
-         final Callback callback = new Callback() {
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-
-            }
-
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-
-            }
-        };
-
         holder.like.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
