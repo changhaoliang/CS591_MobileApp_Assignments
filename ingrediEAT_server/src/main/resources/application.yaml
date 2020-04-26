@@ -22,6 +22,6 @@ spring:
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
 
 
-logging:
-  level:
-     com.example.ingredieat.dao: debug
+#logging:
+#  level:
+#     com.example.ingredieat.dao: debug

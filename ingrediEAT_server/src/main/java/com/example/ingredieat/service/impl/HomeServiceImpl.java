@@ -8,6 +8,7 @@ import com.example.ingredieat.service.AsyncService;
 import com.example.ingredieat.service.HomeService;
 import com.example.ingredieat.utils.ApiKeyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -47,6 +48,7 @@ public class HomeServiceImpl implements HomeService {
     StepEquipmentDao stepEquipmentDao;
 
     @Autowired
+    @Lazy
     AsyncService asyncService;
 
     @Override
