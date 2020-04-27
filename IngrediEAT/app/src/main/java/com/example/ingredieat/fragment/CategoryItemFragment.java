@@ -1,18 +1,23 @@
 package com.example.ingredieat.fragment;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 
+import android.speech.RecognizerIntent;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -38,9 +43,11 @@ public class CategoryItemFragment extends Fragment implements CategoryItemAdapte
     private itemFragmentListener itemFragmentListener;
     private HashMap<String, HashSet<String>> selectedTotalIngredients;
     private SearchView searchView;
+    private ImageButton imageButton;
     private HashMap<Category, HashSet<Ingredient>> searchList;
 
     private HashMap<String, List<Ingredient>> allIngredients;
+    private String searchSpeechInput;
 
     public interface itemFragmentListener {
         void setFragment(boolean flag, Category category, boolean ifAll, HashMap<Category, HashSet<Ingredient>> searchList);
@@ -60,6 +67,25 @@ public class CategoryItemFragment extends Fragment implements CategoryItemAdapte
         ingredients = new HashMap<>();
         categories = new ArrayList<>();
 
+        imageButton = (ImageButton) myView.findViewById(R.id.audio_btn);
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+                intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+                intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Please start your voice");
+                try {
+                    startActivityForResult(intent, 1);
+                } catch (ActivityNotFoundException a) {
+                    Toast t = Toast.makeText(getContext(),
+                            "Opps! Your device doesn't support Speech to Text",
+                            Toast.LENGTH_SHORT);
+                    t.show();
+                }
+            }
+        });
+
+
         searchView = (SearchView) myView.findViewById(R.id.search);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -69,17 +95,15 @@ public class CategoryItemFragment extends Fragment implements CategoryItemAdapte
                 for (Category key : ingredients.keySet()) {
                     for (Ingredient i : ingredients.get(key)) {
                         if (i.getName().indexOf(query) == 0) {
-//                            if (!checkContain(i.getName())) {
-                                if (!searchList.containsKey(key)) {
-                                    searchList.put(key, new HashSet<Ingredient>());
-                                }
-                                searchList.get(key).add(i);
-
+                            if (!searchList.containsKey(key)) {
+                                searchList.put(key, new HashSet<Ingredient>());
+                            }
+                            searchList.get(key).add(i);
                         }
                     }
                 }
                 itemFragmentListener.setFragment(true, Category.ALL, true, searchList);
-                return false;
+                return true;
             }
 
             @Override
@@ -120,6 +144,22 @@ public class CategoryItemFragment extends Fragment implements CategoryItemAdapte
         CategoryItem newCategoryItem = new CategoryItem(category, picture);
 
         categories.add(newCategoryItem);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case 1: {
+                if (data != null) {
+                    ArrayList<String> text = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                    searchSpeechInput = text.get(0);
+                    searchView.setQuery(searchSpeechInput, true);
+
+                }
+                break;
+            }
+        }
     }
 
     public void updateList() {
@@ -175,8 +215,6 @@ public class CategoryItemFragment extends Fragment implements CategoryItemAdapte
         if (selectedTotalIngredients.keySet().contains(category.getCategoryValue())) {
             return selectedTotalIngredients.get(category.getCategoryValue()).contains(ingredient);
         }
-
-
         return false;
     }
 
@@ -202,4 +240,10 @@ public class CategoryItemFragment extends Fragment implements CategoryItemAdapte
     public void setAllIngredients(HashMap<String, List<Ingredient>> allIngrediens) {
         this.allIngredients = allIngrediens;
     }
+
+    public void setSpeechInput(String input) {
+        System.out.println(input);
+        this.searchSpeechInput = input;
+    }
+
 }
