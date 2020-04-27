@@ -27,6 +27,7 @@ import com.example.ingredieat.base.CategoryItem;
 import com.example.ingredieat.R;
 import com.example.ingredieat.adapter.CategoryItemAdapter;
 import com.example.ingredieat.entity.Ingredient;
+import com.example.ingredieat.setting.Setting;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
@@ -67,6 +68,8 @@ public class CategoryItemFragment extends Fragment implements CategoryItemAdapte
         ingredients = new HashMap<>();
         categories = new ArrayList<>();
 
+
+
         imageButton = (ImageButton) myView.findViewById(R.id.audio_btn);
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,7 +78,7 @@ public class CategoryItemFragment extends Fragment implements CategoryItemAdapte
                 intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
                 intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Please start your voice");
                 try {
-                    startActivityForResult(intent, 1);
+                    startActivityForResult(intent, Setting.SPEECH_REQ);
                 } catch (ActivityNotFoundException a) {
                     Toast t = Toast.makeText(getContext(),
                             "Opps! Your device doesn't support Speech to Text",
@@ -84,6 +87,9 @@ public class CategoryItemFragment extends Fragment implements CategoryItemAdapte
                 }
             }
         });
+
+        //----------------------------------------------
+        imageButton.setEnabled(false);
 
 
         searchView = (SearchView) myView.findViewById(R.id.search);
@@ -146,20 +152,22 @@ public class CategoryItemFragment extends Fragment implements CategoryItemAdapte
         categories.add(newCategoryItem);
     }
 
+
+
+    //------------------------------------------------------------
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode) {
-            case 1: {
-                if (data != null) {
-                    ArrayList<String> text = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                    searchSpeechInput = text.get(0);
+        if (requestCode == Setting.SPEECH_REQ) {
+            if (data != null) {
+                ArrayList<String> text = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                searchSpeechInput = text.get(0);
+                if (searchSpeechInput != null) {
                     searchView.setQuery(searchSpeechInput, true);
-
                 }
-                break;
             }
         }
+
     }
 
     public void updateList() {

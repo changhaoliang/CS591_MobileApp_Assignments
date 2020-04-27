@@ -27,6 +27,8 @@ public class Setting {
         public final static String if_signin_succ = "if_signin_succ";
     }
 
+    public static int SPEECH_REQ = 10086;
+
     public static int dpToPx(int dp, Resources r) {
         return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics()));
     }
