@@ -536,4 +536,10 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
             }
         });
     }
+
+    @Override
+    public void refresh() {
+        getAllRecipes();
+        System.out.println("=======================");
+    }
 }

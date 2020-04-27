@@ -13,7 +13,9 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -27,12 +29,14 @@ import java.util.List;
 import static com.example.ingredieat.setting.Setting.dpToPx;
 
 
-public class RecipeFragment extends Fragment implements RecipeAdapter.MyClickListener{
+public class RecipeFragment extends Fragment implements RecipeAdapter.MyClickListener, GestureDetector.OnGestureListener{
     private RecyclerView recyclerView;
     private RecipeAdapter recipeAdapter;
     private List<Recipe> recipes;
+    private GestureDetector gestureDetector;
 
     private RecipeFragmentListener recipeFragmentListener;
+
 
     @Override
     public void clickListener(View v, Recipe recipe) {
@@ -51,6 +55,7 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.MyClickLis
         void addLikes(Recipe recipe);
         void removeLikes(Recipe recipe);
         void showDetails(Recipe recipe, RecipeAdapter recipeAdapter);
+        void refresh();
     }
 
     @Override
@@ -73,7 +78,14 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.MyClickLis
         }
         recipeAdapter = new RecipeAdapter(getContext(), recipes, this);
         recyclerView.setAdapter(recipeAdapter);
+        gestureDetector = new GestureDetector(getContext(), this);
 
+        myView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return gestureDetector.onTouchEvent(event);
+            }
+        });
         return myView;
     }
 
@@ -126,5 +138,42 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.MyClickLis
                 outRect.top = spacing;
             outRect.bottom = spacing;
         }
+    }
+
+    @Override
+    public boolean onSingleTapUp(MotionEvent e) {
+        return false;
+    }
+
+    @Override
+    public void onShowPress(MotionEvent e) {
+
+    }
+
+    @Override
+    public void onLongPress(MotionEvent e) {
+
+    }
+
+    @Override
+    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+        return false;
+    }
+
+    @Override
+    public boolean onDown(MotionEvent e) {
+        return true;
+    }
+
+
+
+    @Override
+    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+        System.out.println("1234");
+        if (e2.getY() - e1.getY() > 20 && Math.abs(velocityY) > 1) {
+            // refresh recipes
+            recipeFragmentListener.refresh();
+        }
+        return false;
     }
 }
