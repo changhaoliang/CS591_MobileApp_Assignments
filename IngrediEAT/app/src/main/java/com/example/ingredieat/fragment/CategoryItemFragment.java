@@ -192,7 +192,10 @@ public class CategoryItemFragment extends Fragment implements CategoryItemAdapte
             toast.show();
         }
         List<String> keys = new ArrayList<>(allIngrediens.keySet());
+
         Collections.sort(keys);
+        keys.remove(Category.OTHERS.getCategoryValue());
+        keys.add(Category.OTHERS.getCategoryValue());
 
         for (String key : keys) {
             String[] s = key.split(",");
