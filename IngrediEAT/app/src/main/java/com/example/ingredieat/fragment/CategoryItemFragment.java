@@ -36,6 +36,9 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
+/*
+    Pantry Interface
+ */
 public class CategoryItemFragment extends Fragment implements CategoryItemAdapter.MyClickListener {
     private ListView listView;
     private ListAdapter listAdapter;
@@ -51,7 +54,7 @@ public class CategoryItemFragment extends Fragment implements CategoryItemAdapte
     private String searchSpeechInput;
 
     public interface itemFragmentListener {
-        void setFragment(boolean flag, Category category, boolean ifAll, HashMap<Category, HashSet<Ingredient>> searchList);
+        void setFragment(Category category, boolean ifAll, HashMap<Category, HashSet<Ingredient>> searchList);
     }
 
     @Override
@@ -67,8 +70,6 @@ public class CategoryItemFragment extends Fragment implements CategoryItemAdapte
         if (selectedTotalIngredients == null) selectedTotalIngredients = new HashMap<>();
         ingredients = new HashMap<>();
         categories = new ArrayList<>();
-
-
 
         imageButton = (ImageButton) myView.findViewById(R.id.audio_btn);
         imageButton.setOnClickListener(new View.OnClickListener() {
@@ -89,9 +90,10 @@ public class CategoryItemFragment extends Fragment implements CategoryItemAdapte
         });
 
         //----------------------------------------------
+        // Speech to text (disable in API22)
         imageButton.setEnabled(false);
 
-
+        // general search
         searchView = (SearchView) myView.findViewById(R.id.search);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -108,13 +110,12 @@ public class CategoryItemFragment extends Fragment implements CategoryItemAdapte
                         }
                     }
                 }
-                itemFragmentListener.setFragment(true, Category.ALL, true, searchList);
+                itemFragmentListener.setFragment(Category.ALL, true, searchList);
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-
                 return false;
             }
         });
@@ -158,6 +159,7 @@ public class CategoryItemFragment extends Fragment implements CategoryItemAdapte
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        // If Speech Request, set search view text
         if (requestCode == Setting.SPEECH_REQ) {
             if (data != null) {
                 ArrayList<String> text = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
@@ -177,16 +179,16 @@ public class CategoryItemFragment extends Fragment implements CategoryItemAdapte
 
     @Override
     public void clickListener(View v, Category category) {
-        itemFragmentListener.setFragment(true, category, false, null );
+        itemFragmentListener.setFragment(category, false, null );
     }
 
     public HashMap<Category, ArrayList<Ingredient>> getIngredients() {
         return ingredients;
     }
 
+    // Initialize ListView
     public void initializeList(HashMap<String, List<Ingredient>> allIngrediens) {
         if(allIngredients == null){
-            //Log.d(getTag(), "initialize null" );
             Toast toast = Toast.makeText(getActivity().getApplicationContext(), "Cannot connect to Server",Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.CENTER, 0, 0);
             toast.show();
@@ -219,9 +221,9 @@ public class CategoryItemFragment extends Fragment implements CategoryItemAdapte
             selectedTotalIngredients.put(category.getCategoryValue(), new HashSet<String>());
         }
         selectedTotalIngredients.put(category.getCategoryValue(), newIngredients);
-
     }
 
+    // Check if an ingredient has been selected
     public boolean checkSelect(Category category, String ingredient) {
         if (selectedTotalIngredients.keySet().contains(category.getCategoryValue())) {
             return selectedTotalIngredients.get(category.getCategoryValue()).contains(ingredient);
@@ -229,6 +231,7 @@ public class CategoryItemFragment extends Fragment implements CategoryItemAdapte
         return false;
     }
 
+    // Get all selected ingredients -> Cart Fragment
     public HashMap<String, HashSet<String>> getSelectedTotalIngredients() {
         return selectedTotalIngredients;
     }
@@ -237,24 +240,9 @@ public class CategoryItemFragment extends Fragment implements CategoryItemAdapte
         this.selectedTotalIngredients = selectedTotalIngredients;
     }
 
-    public boolean checkContain(String ingredient) {
-        for (String key : selectedTotalIngredients.keySet()) {
-            for (String s : selectedTotalIngredients.get(key)) {
-                if (s.equals(ingredient)) {
-                    return  true;
-                }
-            }
-        }
-        return false;
-    }
-
     public void setAllIngredients(HashMap<String, List<Ingredient>> allIngrediens) {
         this.allIngredients = allIngrediens;
     }
 
-    public void setSpeechInput(String input) {
-        System.out.println(input);
-        this.searchSpeechInput = input;
-    }
 
 }

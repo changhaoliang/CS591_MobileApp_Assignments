@@ -36,7 +36,9 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 
-
+/*
+    Cart Interface
+ */
 public class CartFragment extends Fragment {
     private ListView listView;
     private HashMap<String, HashSet<String>> totalIngredients;
@@ -65,6 +67,8 @@ public class CartFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View myView = inflater.inflate(R.layout.fragment_cart, container, false);
+
+        // add chips into view by previous status (selected / unselected)
         totalChips = new HashMap<>();
         if (totalIngredients != null && totalIngredients.size() > 0) {
             this.names = new ArrayList<>(totalIngredients.keySet());
@@ -108,6 +112,7 @@ public class CartFragment extends Fragment {
                 listView.setAdapter(new MyAdapter(getContext()));
             }
         });
+
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -178,17 +183,18 @@ public class CartFragment extends Fragment {
             } else {
                 row = convertView;
             }
+
             holder = new ViewHolder();
             holder.title = (TextView) row.findViewById(R.id.name_txt);
             holder.chipGroup = (ChipGroup) row.findViewById(R.id.chip_group);
             holder.icon = (ImageView) row.findViewById(R.id.icon_img);
-
             holder.title.setText(names.get(position));
 
             if (holder.chipGroup.getChildCount() > 0) {
                 holder.chipGroup.removeAllViews();
             }
 
+            // update chips, synchronize data if user changes selected in other fragment
             String key = names.get(position);
             if (totalIngredients.get(key) != null && totalIngredients.get(key).size() > 0) {
                 HashSet<Chip> chips = totalChips.get(key);
@@ -205,12 +211,18 @@ public class CartFragment extends Fragment {
         }
     }
 
+    /**
+     * One category item view content
+     */
     class ViewHolder {
         TextView title;
         ImageView icon;
         ChipGroup chipGroup;
     }
 
+    /**
+     * set icon by category
+     */
     public void setIcon(String name, ImageView icon) {
         String[] s = name.split(",");
         s = s[0].split(" ");

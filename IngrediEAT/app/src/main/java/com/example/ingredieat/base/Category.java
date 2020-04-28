@@ -1,5 +1,8 @@
 package com.example.ingredieat.base;
 
+/*
+   List all categories
+ */
 public enum Category {
     // category name, category value
     MEAT("Meat"),
@@ -10,7 +13,7 @@ public enum Category {
     BEVERAGE("Beverages"),
     OIL_VINEGAR_SALAD_DRESSING("Oil, Vinegar, Salad Dressing"),
     SPICES_AND_SEASONINGS("Spices and Seasonings"),
-    ALL("all"),
+    ALL("all"), // For general search
     CONDIMENTS("Condiments"),
     OTHERS("Others");
 

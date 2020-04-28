@@ -17,6 +17,9 @@ import com.example.ingredieat.R;
 
 import java.util.List;
 
+/*
+    ListAdapter for Category Fragment ListView
+ */
 public class CategoryItemAdapter extends ArrayAdapter<CategoryItem> {
     private int layoutId;
     private List<CategoryItem> categoryItems;
