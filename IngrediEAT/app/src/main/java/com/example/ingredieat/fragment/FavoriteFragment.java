@@ -86,7 +86,6 @@ public class FavoriteFragment extends Fragment implements FavoriteAdapter.MyClic
             favoriteAdapter.setRecipes(recipes);
             favoriteAdapter.notifyDataSetChanged();
         }
-        System.out.println("2:"+recipes.size());
     }
 
     public HashSet<Recipe> getRecipes() {

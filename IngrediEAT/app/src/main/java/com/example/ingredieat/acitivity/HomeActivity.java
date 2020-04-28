@@ -466,7 +466,6 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
 
 
     public void setPreviousSelectedIngredients(HashMap<String, HashSet<String>> newSelectedIngredients) {
-        System.out.println("clear previous");
         previousSelectedIngredients.clear();
         if(newSelectedIngredients != null){
             for(String key: newSelectedIngredients.keySet()){
