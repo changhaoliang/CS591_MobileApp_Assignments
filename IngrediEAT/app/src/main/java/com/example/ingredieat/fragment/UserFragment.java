@@ -22,7 +22,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.material.button.MaterialButton;
 
-
+/*
+    User Interface
+ */
 public class UserFragment extends Fragment {
 
     public UserFragment() {

@@ -31,6 +31,9 @@ import java.util.List;
 
 import androidx.appcompat.widget.SearchView;
 
+/*
+    Ingredient Fragment (Fragment shown after clicking a categroy)
+ */
 public class IngredientsFragment extends Fragment {
     private List<Ingredient> ingredients;
     private List<Ingredient> searchIngredients;
@@ -44,7 +47,6 @@ public class IngredientsFragment extends Fragment {
     private TextView title;
 
     private HashMap<String, List<Ingredient>> allIngredients;
-
 
     private IngredientFragmentListener ingredientFragmentListener;
 
@@ -72,6 +74,7 @@ public class IngredientsFragment extends Fragment {
         searchView = (SearchView) myView.findViewById(R.id.search);
         title = (TextView) myView.findViewById(R.id.title_txt);
 
+        // For general search -> Category.ALL check
         if (category.equals(Category.ALL)) {
             layout.removeView(searchView);
             title.setText("Search Results");
@@ -83,32 +86,33 @@ public class IngredientsFragment extends Fragment {
         }
 
         if (ingredients.size() != 0) {
-            for (Ingredient ingredient : ingredients) {
-                final Chip chip = new Chip(getContext());
-                ChipDrawable chipDrawable = ChipDrawable.createFromAttributes(getContext(), null, 0, R.style.Widget_MaterialComponents_Chip_Choice);
-                chip.setChipDrawable(chipDrawable);
-                chip.setLayoutParams((new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)));
-                chip.setText(ingredient.getName());
-                chipsGroup.addView(chip);
-
-                if (!category.equals(Category.ALL)) {
-                    if (ingredientFragmentListener.getSelected(category, chip.getText().toString())) {
-                        chip.setChecked(true);
-                        chip.setEnabled(false);
-                    }
-                } else {
-                    for (Category c : Category.values()) {
-                        if (ingredientFragmentListener.getSelected(c, chip.getText().toString())) {
-                            chip.setChecked(true);
-                            chip.setEnabled(false);
-                            System.out.println(chip.getText().toString());
-                        }
-                    }
-                }
-            }
+//            for (Ingredient ingredient : ingredients) {
+//                final Chip chip = new Chip(getContext());
+//                ChipDrawable chipDrawable = ChipDrawable.createFromAttributes(getContext(), null, 0, R.style.Widget_MaterialComponents_Chip_Choice);
+//                chip.setChipDrawable(chipDrawable);
+//                chip.setLayoutParams((new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)));
+//                chip.setText(ingredient.getName());
+//                chipsGroup.addView(chip);
+//
+//                if (!category.equals(Category.ALL)) {
+//                    if (ingredientFragmentListener.getSelected(category, chip.getText().toString())) {
+//                        chip.setChecked(true);
+//                        chip.setEnabled(false);
+//                    }
+//                } else {
+//                    for (Category c : Category.values()) {
+//                        if (ingredientFragmentListener.getSelected(c, chip.getText().toString())) {
+//                            chip.setChecked(true);
+//                            chip.setEnabled(false);
+//                            System.out.println(chip.getText().toString());
+//                        }
+//                    }
+//                }
+//            }
             setChips(ingredients);
         }
 
+        // add ingredients
         add_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -116,6 +120,7 @@ public class IngredientsFragment extends Fragment {
             }
         });
 
+        // search ingredients from current fragment
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -147,8 +152,6 @@ public class IngredientsFragment extends Fragment {
                 }
                 return false;
             }
-
-
         });
         searchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener()
         {
@@ -173,6 +176,9 @@ public class IngredientsFragment extends Fragment {
         this.ingredients = ingredients;
     }
 
+    /**
+     * get selected ingredients -> Update Cart Fragment
+     */
     public HashMap<String, HashSet<String>> getSelectedIngredients() {
         for (int i = 0; i < chipsGroup.getChildCount(); i++) {
             Chip chip = (Chip) chipsGroup.getChildAt(i);
@@ -193,7 +199,6 @@ public class IngredientsFragment extends Fragment {
                                 selectedIngredients.put(c, new HashSet<String>());
                             }
                             selectedIngredients.get(c).add(s);
-
                         }
                         if (!chip.isChecked() && ingredient.getName().equals(s)) {
                             if (selectedIngredients.containsKey(c) && selectedIngredients.get(c).contains(s)) {
@@ -204,7 +209,6 @@ public class IngredientsFragment extends Fragment {
                 }
             }
         }
-        System.out.println(selectedIngredients.size());
         return selectedIngredients;
     }
 
@@ -214,6 +218,9 @@ public class IngredientsFragment extends Fragment {
         ingredientFragmentListener = (IngredientFragmentListener) context;
     }
 
+    /**
+     * set chipgroups status
+     */
     private void setChips(List<Ingredient> ingredients) {
         if (chipsGroup.getChildCount() > 0) {
             chipsGroup.removeAllViews();
@@ -238,7 +245,6 @@ public class IngredientsFragment extends Fragment {
                     chip.setChecked(true);
                     chip.setEnabled(false);
                 }
-
             }
         }
     }

@@ -2,7 +2,9 @@ package com.example.ingredieat.base;
 
 import android.graphics.drawable.Drawable;
 
-
+/*
+    For store Category information including its picture
+ */
 public class CategoryItem {
     private Category category;
     private Drawable picture;
