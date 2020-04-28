@@ -288,7 +288,7 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
            @Override
            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                if(response.isSuccessful()) {
-                   progressBar.setVisibility(View.INVISIBLE);
+                   progressBarVisibility(View.INVISIBLE);
                    ResponseBody body = response.body();
                    if(body != null) {
                        String data = body.string();

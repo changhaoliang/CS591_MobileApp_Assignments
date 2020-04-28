@@ -25,3 +25,7 @@ spring:
 #logging:
 #  level:
 #     com.example.ingredieat.dao: debug
+server:
+  tomcat:
+      uri-encoding: UTF-8
+      max-http-header-size: 8096
