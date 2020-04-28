@@ -6,6 +6,9 @@ import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
+/**
+ * This interface is used to operate the `step` table.
+ */
 @Mapper
 public interface StepDao {
 

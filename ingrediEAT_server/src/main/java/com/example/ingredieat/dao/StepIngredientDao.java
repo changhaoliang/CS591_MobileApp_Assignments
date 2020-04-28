@@ -7,6 +7,9 @@ import org.apache.ibatis.annotations.Select;
 import java.util.List;
 
 
+/**
+ * This interface is used to operate the `step_ingredient` table.
+ */
 @Mapper
 public interface StepIngredientDao {
 
