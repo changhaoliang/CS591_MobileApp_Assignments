@@ -1,6 +1,7 @@
 package com.example.ingredieat.acitivity;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import okhttp3.Call;
@@ -9,9 +10,11 @@ import okhttp3.Response;
 import okhttp3.ResponseBody;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.speech.RecognizerIntent;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -532,5 +535,11 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
                 progressBar.setVisibility(visibility);
             }
         });
+    }
+
+    @Override
+    public void refresh() {
+        getAllRecipes();
+        System.out.println("=======================");
     }
 }
