@@ -44,13 +44,14 @@ public class AsyncServiceImpl implements AsyncService {
     @Autowired
     StepEquipmentDao stepEquipmentDao;
 
-
+    /**
+     * Use another thread to save the data of the given recipes to the database.
+     * @param googleId
+     * @param recipes
+     */
     @Override
     public void saveRecipesData(String googleId, List<Recipe> recipes) {
         for (Recipe recipe : recipes) {
-//            recipeDao.insertNewRecipe(recipe);
-//            userRecipeDao.insertUserRecipe(googleId, recipe);
-
             for (Step step : recipe.getRecipeDetail().getSteps()) {
                 stepDao.insertStep(step);
                 for (Ingredient ingredient : step.getIngredients()) {

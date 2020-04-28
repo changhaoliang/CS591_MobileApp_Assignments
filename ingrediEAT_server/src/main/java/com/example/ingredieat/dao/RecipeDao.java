@@ -6,6 +6,10 @@ import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
+
+/**
+ * This interface is used to operate the `recipe` table.
+ */
 @Mapper
 public interface RecipeDao {
 

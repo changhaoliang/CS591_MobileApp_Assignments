@@ -7,6 +7,9 @@ import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
+/**
+ * This interface is used to operate the `ingredient` table.
+ */
 @Mapper
 public interface IngredientDao {
 

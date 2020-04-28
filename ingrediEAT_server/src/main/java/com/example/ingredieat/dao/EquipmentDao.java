@@ -8,6 +8,9 @@ import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
+/**
+ * This interface is used to operate the `equipment` table.
+ */
 @Mapper
 public interface EquipmentDao {
 

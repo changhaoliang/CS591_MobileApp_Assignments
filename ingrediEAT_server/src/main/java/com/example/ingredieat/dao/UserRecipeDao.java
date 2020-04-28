@@ -5,6 +5,9 @@ import com.example.ingredieat.entity.Recipe;
 import com.example.ingredieat.entity.UserRecipe;
 import org.apache.ibatis.annotations.*;
 
+/**
+ * This interface is used to operate the `user_recipe` table.
+ */
 @Mapper
 public interface UserRecipeDao {
 

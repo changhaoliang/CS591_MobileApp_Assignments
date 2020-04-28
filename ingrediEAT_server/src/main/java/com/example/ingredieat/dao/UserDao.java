@@ -4,6 +4,10 @@ package com.example.ingredieat.dao;
 import com.example.ingredieat.entity.User;
 import org.apache.ibatis.annotations.*;
 
+
+/**
+ * This interface is used to operate the `user` table.
+ */
 @Mapper
 public interface UserDao {
 

@@ -6,6 +6,9 @@ import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
+/**
+ * This interface is used to operate the `step_equipment` table.
+ */
 @Mapper
 public interface StepEquipmentDao {
 
