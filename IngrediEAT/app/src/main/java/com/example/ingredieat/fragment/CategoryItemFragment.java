@@ -154,8 +154,6 @@ public class CategoryItemFragment extends Fragment implements CategoryItemAdapte
     }
 
 
-
-    //------------------------------------------------------------
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -227,7 +225,6 @@ public class CategoryItemFragment extends Fragment implements CategoryItemAdapte
                 }
             }
         }
-//        selectedTotalIngredients.put(category.getCategoryValue(), newIngredients);
     }
 
     // Check if an ingredient has been selected

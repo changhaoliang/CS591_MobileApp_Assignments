@@ -34,7 +34,6 @@ public class LoginActivity extends BaseActivity {
     private static final int RC_SIGN_IN = 0;
     private GoogleSignInOptions gso;
     private GoogleSignInClient mGoogleSignInClient;
-    //private GoogleSignInAccount account;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +48,7 @@ public class LoginActivity extends BaseActivity {
 
             gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
             mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-            //account = GoogleSignIn.getLastSignedInAccount(this);
+
             signInButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
