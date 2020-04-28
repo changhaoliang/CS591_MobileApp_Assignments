@@ -65,6 +65,7 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
     private Category category;
     private long mLastBackPress;
     private boolean favoriteFlag;
+    private HashMap<String, HashSet<String>> selectedTotalIngredients;
 
     private CategoryItemFragment categoryItemFragment;
     private IngredientsFragment ingredientsFragment;
@@ -352,7 +353,6 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
         }
     }
 
-
     @Override
     public void showDetails(Recipe recipe, RecipeAdapter recipeAdapter) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -417,15 +417,15 @@ public class HomeActivity extends BaseActivity implements CategoryItemFragment.i
         fragmentTransaction.replace(R.id.fragment_container, categoryItemFragment);
         fragmentTransaction.commit();
 
-        HashMap<String, HashSet<String>> newIngredients = ingredientsFragment.getSelectedIngredients();
+        HashMap<String, HashSet<String>> oldIngredients = ingredientsFragment.getSelectedIngredients();
 
         if (c.equals(Category.ALL)) {
-            for (String key : newIngredients.keySet()) {
-                categoryItemFragment.updateTotalIngredients(Category.getCategoryName(key), newIngredients.get(key));
+            for (String key : oldIngredients.keySet()) {
+                categoryItemFragment.updateTotalIngredients(Category.getCategoryName(key), oldIngredients.get(key));
             }
         }
         else {
-            categoryItemFragment.updateTotalIngredients(category, newIngredients.get(category.getCategoryValue()));
+            categoryItemFragment.updateTotalIngredients(category, oldIngredients.get(category.getCategoryValue()));
         }
     }
 

@@ -218,9 +218,16 @@ public class CategoryItemFragment extends Fragment implements CategoryItemAdapte
     public void updateTotalIngredients(Category category, HashSet<String> newIngredients) {
 
         if (!selectedTotalIngredients.keySet().contains(category.getCategoryValue())) {
-            selectedTotalIngredients.put(category.getCategoryValue(), new HashSet<String>());
+            selectedTotalIngredients.put(category.getCategoryValue(), newIngredients);
         }
-        selectedTotalIngredients.put(category.getCategoryValue(), newIngredients);
+        else {
+            for (String i : newIngredients) {
+                if (!selectedTotalIngredients.get(category.getCategoryValue()).contains(i)) {
+                    selectedTotalIngredients.get(category.getCategoryValue()).add(i);
+                }
+            }
+        }
+//        selectedTotalIngredients.put(category.getCategoryValue(), newIngredients);
     }
 
     // Check if an ingredient has been selected

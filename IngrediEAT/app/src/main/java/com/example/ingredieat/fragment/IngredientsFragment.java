@@ -40,11 +40,13 @@ public class IngredientsFragment extends Fragment {
 
     private ChipGroup chipsGroup;
     private HashMap<String, HashSet<String>> selectedIngredients;
+    private HashMap<String, HashSet<String>> selectedSearchIngredients;
     private Category category;
     private LinearLayout layout;
     private Button add_btn;
     private SearchView searchView;
     private TextView title;
+    private boolean ifSearch;
 
     private HashMap<String, List<Ingredient>> allIngredients;
 
@@ -86,29 +88,6 @@ public class IngredientsFragment extends Fragment {
         }
 
         if (ingredients.size() != 0) {
-//            for (Ingredient ingredient : ingredients) {
-//                final Chip chip = new Chip(getContext());
-//                ChipDrawable chipDrawable = ChipDrawable.createFromAttributes(getContext(), null, 0, R.style.Widget_MaterialComponents_Chip_Choice);
-//                chip.setChipDrawable(chipDrawable);
-//                chip.setLayoutParams((new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)));
-//                chip.setText(ingredient.getName());
-//                chipsGroup.addView(chip);
-//
-//                if (!category.equals(Category.ALL)) {
-//                    if (ingredientFragmentListener.getSelected(category, chip.getText().toString())) {
-//                        chip.setChecked(true);
-//                        chip.setEnabled(false);
-//                    }
-//                } else {
-//                    for (Category c : Category.values()) {
-//                        if (ingredientFragmentListener.getSelected(c, chip.getText().toString())) {
-//                            chip.setChecked(true);
-//                            chip.setEnabled(false);
-//                            System.out.println(chip.getText().toString());
-//                        }
-//                    }
-//                }
-//            }
             setChips(ingredients);
         }
 
@@ -150,6 +129,7 @@ public class IngredientsFragment extends Fragment {
                 if (searchIngredients.size() != 0) {
                     setChips(searchIngredients);
                 }
+                ifSearch = true;
                 return false;
             }
         });
@@ -160,7 +140,6 @@ public class IngredientsFragment extends Fragment {
             {
                 BottomNavigationView menuView = getActivity().findViewById(R.id.bottom_menu);
                 if(hasFocus){
-
                     menuView.setVisibility(View.INVISIBLE);
                 }
                 else if(!hasFocus)
@@ -180,14 +159,17 @@ public class IngredientsFragment extends Fragment {
      * get selected ingredients -> Update Cart Fragment
      */
     public HashMap<String, HashSet<String>> getSelectedIngredients() {
+        System.out.println("================================================");
+        for (String key : selectedIngredients.keySet()) {
+            for (String i  : selectedIngredients.get(key)) {
+                System.out.println(key + "===" + i);
+            }
+        }
         for (int i = 0; i < chipsGroup.getChildCount(); i++) {
             Chip chip = (Chip) chipsGroup.getChildAt(i);
             String s = chip.getText().toString();
 
             if (!category.equals(Category.ALL)) {
-                if (!chip.isChecked() && selectedIngredients.get(category.getCategoryValue()).contains(s)) {
-                    selectedIngredients.remove(s);
-                }
                 if (chip.isChecked()) {
                     selectedIngredients.get(category.getCategoryValue()).add(s);
                 }
@@ -201,9 +183,6 @@ public class IngredientsFragment extends Fragment {
                             selectedIngredients.get(c).add(s);
                         }
                         if (!chip.isChecked() && ingredient.getName().equals(s)) {
-                            if (selectedIngredients.containsKey(c) && selectedIngredients.get(c).contains(s)) {
-                                selectedIngredients.get(c).remove(s);
-                            }
                         }
                     }
                 }
@@ -211,6 +190,32 @@ public class IngredientsFragment extends Fragment {
         }
         return selectedIngredients;
     }
+
+    public HashMap<String, HashSet<String>> getSelectedSearchIngredients() {
+        for (int i = 0; i < chipsGroup.getChildCount(); i++) {
+            Chip chip = (Chip) chipsGroup.getChildAt(i);
+            String s = chip.getText().toString();
+
+            if (!category.equals(Category.ALL)) {
+                if (chip.isChecked()) {
+                    selectedIngredients.get(category.getCategoryValue()).add(s);
+                }
+            } else {
+                for (String c : allIngredients.keySet()) {
+                    for (Ingredient ingredient : allIngredients.get(c)) {
+                        if (chip.isChecked() && ingredient.getName().equals(s)) {
+                            if (!selectedIngredients.containsKey(c)) {
+                                selectedIngredients.put(c, new HashSet<String>());
+                            }
+                            selectedIngredients.get(c).add(s);
+                        }
+                    }
+                }
+            }
+        }
+        return selectedIngredients;
+    }
+
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -255,6 +260,10 @@ public class IngredientsFragment extends Fragment {
 
     public void setAllIngredients(HashMap<String, List<Ingredient>> allIngredients) {
         this.allIngredients = allIngredients;
+    }
+
+    public void setIfSearch(boolean flag) {
+        ifSearch = flag;
     }
 
 }
