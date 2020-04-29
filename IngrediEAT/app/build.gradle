@@ -14,13 +14,13 @@ android {
     }
     signingConfigs {
         debug {
-            storeFile file('/home/changhao/Documents/CS591E1/CS591_MobileApp_Assignments/IngrediEAT/app/keystore.jks')
+            storeFile file('keystore.jks')
             storePassword 'wwcd591'
             keyAlias 'key0'
             keyPassword 'wwcd591'
         }
         release {
-            storeFile file('/home/changhao/Documents/CS591E1/CS591_MobileApp_Assignments/IngrediEAT/app/keystore.jks')
+            storeFile file('keystore.jks')
             storePassword 'wwcd591'
             keyAlias 'key0'
             keyPassword 'wwcd591'

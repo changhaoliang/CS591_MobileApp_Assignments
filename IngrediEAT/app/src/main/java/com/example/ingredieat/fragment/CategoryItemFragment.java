@@ -91,7 +91,7 @@ public class CategoryItemFragment extends Fragment implements CategoryItemAdapte
 
         //----------------------------------------------
         // Speech to text (disable in API22)
-        imageButton.setEnabled(true);
+        imageButton.setEnabled(false);
 
         // general search
         searchView = (SearchView) myView.findViewById(R.id.search);
