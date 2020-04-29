@@ -45,7 +45,7 @@ public class LoginActivity extends BaseActivity {
         }else {
             setContentView(R.layout.activity_login);
             SignInButton signInButton = findViewById(R.id.sign_in_button);
-            signInButton.setSize(SignInButton.SIZE_STANDARD);
+            signInButton.setSize(SignInButton.SIZE_WIDE);
 
             gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build();
             mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
