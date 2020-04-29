@@ -57,12 +57,12 @@ public class RecipeDetailFragment extends Fragment {
     private RecipeDetail recipeDetail;
 
     private ImageButton like, liked;
-    private TextView likes, ratings;
+    private TextView likes, ratings;//show num of likes, average rating points
     private RatingBar rating, myRating;
 
     private DetailFragmentListener detailFragmentListener;
 
-    private boolean showIngredients;
+    private boolean showIngredients;    //True from recipe fragment, False from favorate fragment
 
     public RecipeDetailFragment(Recipe recipe, RecipeAdapter recipeAdapter){
         this.recipe = recipe;
@@ -92,9 +92,9 @@ public class RecipeDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View myView = inflater.inflate(R.layout.fragment_recipe_detail, container, false);
-        if (showIngredients)
+        if (showIngredients) //recipe fragment
             loadIngredients(myView);
-        else{
+        else{   //favorate fragment
             LinearLayout scroll = myView.findViewById(R.id.layout_scroll);
             scroll.removeView(myView.findViewById(R.id.layout_ingredients));
         }
@@ -237,6 +237,7 @@ public class RecipeDetailFragment extends Fragment {
         detailFragmentListener = (DetailFragmentListener) context;
     }
 
+    //used & unused ingredients
     private void loadIngredients(View myView){
         ChipGroup chipsGroup = (ChipGroup) myView.findViewById(R.id.chip_ingredients);
         String hintText;
@@ -275,6 +276,7 @@ public class RecipeDetailFragment extends Fragment {
         hint.setText(hintText);
     }
 
+    //load recipe contents
     private void loadSteps(View myView){
         LinearLayout container = myView.findViewById(R.id.layout_steps);
         for (int i=0; i< recipeDetail.getSteps().size(); i++){
@@ -351,6 +353,7 @@ public class RecipeDetailFragment extends Fragment {
         }
     }
 
+    //update recipe fragment
     @SuppressLint("HandlerLeak")
     private Handler handler1 = new Handler() {
         @Override

@@ -34,7 +34,9 @@ import java.util.Map;
 import static com.example.ingredieat.setting.Setting.googleId;
 
 public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.FavoriteHolder> {
-
+/*
+    Similar to recipe adapter but use different view holder
+ */
     private List<Recipe> recipes;
     private Context context;
     private MyClickListener myClickListener;

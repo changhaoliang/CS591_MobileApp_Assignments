@@ -99,7 +99,6 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.MyClickLis
         this.recipes = recipes;
         recipeAdapter.setRecipes(recipes);
         recipeAdapter.notifyDataSetChanged();
-        System.out.println("2:"+recipes.size());
     }
 
     public List<Recipe> getRecipes() {
@@ -169,7 +168,6 @@ public class RecipeFragment extends Fragment implements RecipeAdapter.MyClickLis
 
     @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-        System.out.println("1234");
         if (e2.getY() - e1.getY() > 20 && Math.abs(velocityY) > 1) {
             // refresh recipes
             recipeFragmentListener.refresh();
